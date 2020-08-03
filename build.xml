@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="STG Hall of Records" default="all">
+
+    <target name="all" depends="tests,analyse,cs"/>
+
+    <target name="tests">
+	<exec
+	    executable="vendor/bin/phpunit"
+	    logoutput="true"
+	    passthru="true"
+	    checkreturn="true"
+	>
+	</exec>
+    </target>
+
+    <target name="analyse">
+	<exec
+	    executable="vendor/bin/phpstan"
+	    logoutput="true"
+	    passthru="true"
+	    checkreturn="true"
+	>
+	    <arg value="analyse"/>
+	    <arg value="-c"/>
+	    <arg path="phpstan.neon"/>
+	</exec>
+    </target>
+
+    <target name="cs">
+	<exec
+	    executable="vendor/bin/phpcs"
+	    logoutput="true"
+	    passthru="true"
+	    checkreturn="true"
+	/>
+    </target>
+
+</project>
