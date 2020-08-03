@@ -1,0 +1,65 @@
+Some introduction text Some introduction text Some introduction text Some introduction text Some introduction text Some introduction text Some introduction text Some introduction text Some introduction text.
+Some introduction text Some introduction text Some introduction text Some introduction text Some introduction text.
+Some introduction text Some introduction text Some introduction text Some introduction text.
+
+== Global ==
+Values defined in this section will apply to all the games in the database. Its main purpose is to reduce redundant translations for reocurring values (e.g. company names, common column names, ...).
+
+<div style="display:none"><nowiki>
+
+locale:
+  - property: company
+    value: Cave
+    value-jp: ケイブ
+
+</nowiki></div>
+
+== Mushihimesama Futari v1.5 ==
+<div style="display:none"><nowiki>
+name: Mushihimesama Futari 1.5
+name-jp: 虫姫さまふたりVer 1.5
+company: Cave
+
+entries:
+  - mode: Original
+    character: Palm
+    weapon: Normal
+    score: 530,358,660
+    player: ABI
+    date: "2008-01"
+    source: Arcadia January 2008
+
+  - mode: Original
+    character: Palm
+    weapon: Abnormal
+    score: 518,902,716
+    player: ISO / Niboshi
+    date: "2007"
+    source: Superplay DVD
+
+</nowiki></div>
+
+== Ketsui ==
+<div style="display:none"><nowiki>
+name: "Ketsui: Kizuna Jigoku Tachi"
+name-jp: ケツイ ～絆地獄たち～
+company: Cave
+
+entries:
+  - character: Type A
+    stage: Omote
+    score: 507,780,433
+    player: SPS
+    date: "2014-08"
+    source: Arcadia August 2014
+    comment:
+      
+  - character: Type A
+    stage: Ura
+    score: 583,614,753
+    player: SPS
+    date: "2014-05-27"
+    source: Arcadia September 2014 / [https://twitter.com/SPSPUYO/status/471312775843561472 Twitter]
+    comment: 6L 0B remaining; 1st loop 285m
+
+</nowiki></div>
