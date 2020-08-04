@@ -13,56 +13,78 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Parser;
 
+use Stg\HallOfRecords\Data\Score;
+use Stg\HallOfRecords\Data\Scores;
 use Stg\HallOfRecords\Data\Game;
 use Stg\HallOfRecords\Data\Games;
 use Stg\HallOfRecords\Data\GlobalProperties;
 
 final class YamlParser
 {
-    /**
-     * @var array<string,mixed>
-     */
-    private array $globalProperties;
+    private string $locale;
+    private ?GlobalProperties $globalProperties;
+    private ?Games $games;
 
-    /**
-     * @var array<string,mixed>[]
-     */
-    private array $games;
+    public function __construct(string $locale = '')
+    {
+        $this->locale = $locale;
+        $this->globalProperties = null;
+        $this->games = null;
+    }
 
     /**
      * @param array<string,mixed>[] $sections
      */
-    public function __construct(array $sections)
+    public function parse(array $sections): void
     {
-        $this->globalProperties = [];
-        $this->games = [];
+        $this->globalProperties = new GlobalProperties(
+            $this->extractGlobalProperties($sections),
+            $this->locale
+        );
 
-        $this->import($sections);
-    }
-
-    public function parseGlobalProperties(): GlobalProperties
-    {
-        return new GlobalProperties($this->globalProperties);
-    }
-
-    /**
-     * @return Games
-     */
-    public function parseGames(): Games
-    {
-        return new Games(array_map(
-            fn (array $section) => new Game($section),
-            $this->games
+        $this->games = new Games(array_map(
+            fn (array $properties) => new Game(
+                $this->localizeValue($properties, 'name'),
+                $this->localizeValue($properties, 'company'),
+                new Scores(array_map(
+                    fn (array $entry) => new Score($entry),
+                    $properties['entries'] ?? []
+                ))
+            ),
+            $this->extractGames($sections)
         ));
     }
 
+    public function globalProperties(): GlobalProperties
+    {
+        if ($this->globalProperties === null) {
+            throw new \LogicException(
+                'Function `parse` must be called before accessing global properties.'
+            );
+        }
+
+        return $this->globalProperties;
+    }
+
+    public function games(): Games
+    {
+        if ($this->games === null) {
+            throw new \LogicException(
+                'Function `parse` must be called before accessing games.'
+            );
+        }
+
+        return $this->games;
+    }
+
     /**
      * @param array<string,mixed>[] $sections
+     * @return array<string,mixed>
      */
-    private function import(array $sections): void
+    private function extractGlobalProperties(array $sections): array
     {
         if ($sections == null) {
-            return;
+            return [];
         }
 
         if (
@@ -76,7 +98,32 @@ final class YamlParser
             );
         }
 
-        $this->globalProperties = $sections[0];
-        $this->games = array_slice($sections, 1);
+        return $sections[0];
+    }
+
+    /**
+     * @param array<string,mixed>[] $sections
+     * @return array<string,mixed>[]
+     */
+    private function extractGames(array $sections): array
+    {
+        return array_slice($sections, 1);
+    }
+
+    /**
+     * @param array<string,mixed> $properties
+     */
+    private function localizeValue(array $properties, string $name): string
+    {
+        // If there's no value for the property, there's nothing to localize.
+        if (!isset($properties[$name])) {
+            return '';
+        }
+
+        if (isset($properties["{$name}-{$this->locale}"])) {
+            return $properties["{$name}-{$this->locale}"];
+        }
+
+        return $this->globalProperties()->localizeValue($name, $properties[$name]);
     }
 }

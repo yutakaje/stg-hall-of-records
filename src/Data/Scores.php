@@ -13,19 +13,18 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Data;
 
-final class Game
+final class Scores
 {
-    private string $name;
-    private string $company;
-    private Scores $scores;
+    /**
+     * @var Score[]
+     */
+    private array $scores;
 
-    public function __construct(
-        string $name,
-        string $company,
-        Scores $scores
-    ) {
-        $this->name = $name;
-        $this->company = $company;
+    /**
+     * @param Score[] $scores
+     */
+    public function __construct(array $scores)
+    {
         $this->scores = $scores;
     }
 }

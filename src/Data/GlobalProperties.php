@@ -15,6 +15,8 @@ namespace Stg\HallOfRecords\Data;
 
 final class GlobalProperties
 {
+    private string $locale;
+
     /**
      * @var array<string,mixed>
      */
@@ -23,8 +25,26 @@ final class GlobalProperties
     /**
      * @param array<string,mixed> $properties
      */
-    public function __construct(array $properties = [])
+    public function __construct(array $properties = [], string $locale = '')
     {
         $this->properties = $properties;
+        $this->locale = $locale;
+    }
+
+    public function localizeValue(string $property, string $value): string
+    {
+        foreach ($this->properties['locale'] ?? [] as $entry) {
+            if (!is_array($entry)) {
+                throw new \UnexpectedValueException(
+                    'Global property `locale` should be an array of arrays.'
+                );
+            }
+
+            if ($entry['property'] === $property && $entry['value'] === $value) {
+                return $entry["value-{$this->locale}"] ?? $value;
+            }
+        }
+
+        return $value;
     }
 }
