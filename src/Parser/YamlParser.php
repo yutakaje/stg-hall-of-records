@@ -17,7 +17,7 @@ use Stg\HallOfRecords\Data\Game;
 use Stg\HallOfRecords\Data\Games;
 use Stg\HallOfRecords\Data\GlobalProperties;
 
-final class Parser
+final class YamlParser
 {
     /**
      * @var array<string,mixed>

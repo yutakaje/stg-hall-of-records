@@ -16,13 +16,13 @@ namespace Tests\HallOfRecords\Parser;
 use Stg\HallOfRecords\Data\Game;
 use Stg\HallOfRecords\Data\Games;
 use Stg\HallOfRecords\Data\GlobalProperties;
-use Stg\HallOfRecords\Parser\Parser;
+use Stg\HallOfRecords\Parser\YamlParser;
 
-class ParserTest extends \Tests\TestCase
+class YamlParserTest extends \Tests\TestCase
 {
     public function testWithNoSections(): void
     {
-        $parser = new Parser([]);
+        $parser = new YamlParser([]);
 
         self::assertEquals(new GlobalProperties(), $parser->parseGlobalProperties());
         self::assertEquals(new Games([]), $parser->parseGames());
@@ -39,7 +39,7 @@ class ParserTest extends \Tests\TestCase
             ],
         ];
 
-        $parser = new Parser([
+        $parser = new YamlParser([
             $global,
         ]);
 
@@ -55,7 +55,7 @@ class ParserTest extends \Tests\TestCase
         $global = $this->globalPropertiesInput();
         $games = $this->gamesInput();
 
-        $parser = new Parser(array_merge(
+        $parser = new YamlParser(array_merge(
             [$global],
             $games
         ));
