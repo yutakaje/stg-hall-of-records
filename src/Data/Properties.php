@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Data;
 
-final class GlobalProperties
+final class Properties
 {
     private string $locale;
 
@@ -36,7 +36,7 @@ final class GlobalProperties
         foreach ($this->properties['locale'] ?? [] as $entry) {
             if (!is_array($entry)) {
                 throw new \UnexpectedValueException(
-                    'Global property `locale` should be an array of arrays.'
+                    'Property `locale` should be an array of arrays.'
                 );
             }
 
