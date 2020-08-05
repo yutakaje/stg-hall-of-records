@@ -47,7 +47,17 @@ final class YamlParser
                 $this->localizeValue($properties, 'name'),
                 $this->localizeValue($properties, 'company'),
                 new Scores(array_map(
-                    fn (array $entry) => new Score($entry),
+                    fn (array $entry) => new Score(
+                        $this->localizeValue($entry, 'player'),
+                        $this->localizeValue($entry, 'score'),
+                        $this->localizeValue($entry, 'mode'),
+                        $this->localizeValue($entry, 'character'),
+                        $this->localizeValue($entry, 'weapon'),
+                        $this->localizeValue($entry, 'stage'),
+                        $this->localizeValue($entry, 'date'),
+                        $this->localizeValue($entry, 'source'),
+                        $this->localizeValue($entry, 'comment')
+                    ),
                     $properties['entries'] ?? []
                 ))
             ),
