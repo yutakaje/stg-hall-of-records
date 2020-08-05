@@ -109,15 +109,15 @@ class YamlParserTest extends \Tests\TestCase
                             ''
                         ),
                         new Score(
-                            'SPS',
-                            '583,614,753',
+                            'GAN',
+                            '569,741,232',
                             '',
-                            'Type A',
+                            'Type B',
                             '',
                             'Ura',
-                            '2014-05-27',
-                            'Arcadia September 2014',
-                            '6L 0B remaining; 1st loop 285m'
+                            '2016-03',
+                            'JHA March 2016',
+                            '6L remaining'
                         ),
                     ])
                 ),
@@ -180,7 +180,7 @@ class YamlParserTest extends \Tests\TestCase
                             'SPS',
                             '507,780,433',
                             '',
-                            'Type A',
+                            'Tiger Schwert',
                             '',
                             'Omote',
                             '2014-08',
@@ -188,15 +188,15 @@ class YamlParserTest extends \Tests\TestCase
                             ''
                         ),
                         new Score(
-                            'SPS',
-                            '583,614,753',
+                            'GAN',
+                            '569,741,232',
                             '',
-                            'Type A',
+                            'Panzer Jäger',
                             '',
                             'Ura',
-                            '2014-05-27',
-                            'Arcadia September 2014',
-                            '6L 0B remaining; 1st loop 285m'
+                            '2016-03',
+                            'JHA March 2016',
+                            '6L remaining'
                         ),
                     ])
                 ),
@@ -259,23 +259,23 @@ class YamlParserTest extends \Tests\TestCase
                             'SPS',
                             '507,780,433',
                             '',
-                            'Type A',
+                            'TYPE-A ティーゲルシュベルト',
                             '',
-                            'Omote',
+                            '表2週目',
                             '2014-08',
                             'Arcadia August 2014',
                             ''
                         ),
                         new Score(
-                            'SPS',
-                            '583,614,753',
+                            'GAN',
+                            '569,741,232',
                             '',
-                            'Type A',
+                            'TYPE-B パンツァーイェーガー',
                             '',
-                            'Ura',
-                            '2014-05-27',
-                            'Arcadia September 2014',
-                            '6L 0B remaining; 1st loop 285m'
+                            '裏2週目',
+                            '2016-03',
+                            'JHA March 2016',
+                            '6L remaining'
                         ),
                     ])
                 ),
@@ -347,13 +347,37 @@ class YamlParserTest extends \Tests\TestCase
                         'comment' => '',
                     ],
                     [
-                        'character' => 'Type A',
+                        'character' => 'Type B',
                         'stage' => 'Ura',
-                        'score' => '583,614,753',
-                        'player' => 'SPS',
-                        'date' => '2014-05-27',
-                        'source' => 'Arcadia September 2014',
-                        'comment' => '6L 0B remaining; 1st loop 285m',
+                        'score' => '569,741,232',
+                        'player' => 'GAN',
+                        'date' => '2016-03',
+                        'source' => 'JHA March 2016',
+                        'comment' => '6L remaining',
+                    ],
+                ],
+                'locale' => [
+                    [
+                        'property' => 'character',
+                        'value' => 'Type A',
+                        'value-en' => 'Tiger Schwert',
+                        'value-jp' => 'TYPE-A ティーゲルシュベルト',
+                    ],
+                    [
+                        'property' => 'character',
+                        'value' => 'Type B',
+                        'value-en' => 'Panzer Jäger',
+                        'value-jp' => 'TYPE-B パンツァーイェーガー',
+                    ],
+                    [
+                        'property' => 'stage',
+                        'value' => 'Omote',
+                        'value-jp' => '表2週目',
+                    ],
+                    [
+                        'property' => 'stage',
+                        'value' => 'Ura',
+                        'value-jp' => '裏2週目',
                     ],
                 ],
             ],

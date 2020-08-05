@@ -31,7 +31,7 @@ final class Properties
         $this->locale = $locale;
     }
 
-    public function localizeValue(string $property, string $value): string
+    public function localizeValue(string $property, string $value): ?string
     {
         foreach ($this->properties['locale'] ?? [] as $entry) {
             if (!is_array($entry)) {
@@ -40,11 +40,15 @@ final class Properties
                 );
             }
 
-            if ($entry['property'] === $property && $entry['value'] === $value) {
-                return $entry["value-{$this->locale}"] ?? $value;
+            if (
+                $entry['property'] === $property
+                && $entry['value'] === $value
+                && isset($entry["value-{$this->locale}"])
+            ) {
+                return $entry["value-{$this->locale}"];
             }
         }
 
-        return $value;
+        return null;
     }
 }

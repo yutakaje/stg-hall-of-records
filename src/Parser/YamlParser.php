@@ -54,20 +54,25 @@ final class YamlParser
      */
     private function parseGame(array $properties): Game
     {
+        $localizations = [
+            new Properties($properties, $this->locale),
+            $this->globalProperties()
+        ];
+
         return new Game(
-            $this->localizeValue($properties, 'name'),
-            $this->localizeValue($properties, 'company'),
+            $this->localizeValue($properties, 'name', $localizations),
+            $this->localizeValue($properties, 'company', $localizations),
             new Scores(array_map(
                 fn (array $entry) => new Score(
-                    $this->localizeValue($entry, 'player'),
-                    $this->localizeValue($entry, 'score'),
-                    $this->localizeValue($entry, 'mode'),
-                    $this->localizeValue($entry, 'character'),
-                    $this->localizeValue($entry, 'weapon'),
-                    $this->localizeValue($entry, 'stage'),
-                    $this->localizeValue($entry, 'date'),
-                    $this->localizeValue($entry, 'source'),
-                    $this->localizeValue($entry, 'comment')
+                    $this->localizeValue($entry, 'player', $localizations),
+                    $this->localizeValue($entry, 'score', $localizations),
+                    $this->localizeValue($entry, 'mode', $localizations),
+                    $this->localizeValue($entry, 'character', $localizations),
+                    $this->localizeValue($entry, 'weapon', $localizations),
+                    $this->localizeValue($entry, 'stage', $localizations),
+                    $this->localizeValue($entry, 'date', $localizations),
+                    $this->localizeValue($entry, 'source', $localizations),
+                    $this->localizeValue($entry, 'comment', $localizations)
                 ),
                 $properties['entries'] ?? []
             ))
@@ -131,18 +136,32 @@ final class YamlParser
 
     /**
      * @param array<string,mixed> $properties
+     * @param Properties[] $localizations
      */
-    private function localizeValue(array $properties, string $name): string
-    {
+    private function localizeValue(
+        array $properties,
+        string $name,
+        array $localizations
+    ): string {
         // If there's no value for the property, there's nothing to localize.
         if (!isset($properties[$name])) {
             return '';
         }
 
+        // Localization on property level.
         if (isset($properties["{$name}-{$this->locale}"])) {
             return $properties["{$name}-{$this->locale}"];
         }
 
-        return $this->globalProperties()->localizeValue($name, $properties[$name]);
+        // Localization on game or global level.
+        foreach ($localizations as $localization) {
+            $value = $localization->localizeValue($name, $properties[$name]);
+            if ($value !== null) {
+                return $value;
+            }
+        }
+
+        // No localization found, return value verbatim.
+        return $properties[$name];
     }
 }
