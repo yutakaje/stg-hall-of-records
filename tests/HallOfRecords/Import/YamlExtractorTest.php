@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 /*
  * This file is part of the stg/hall-of-records package.
-n *
+ *
  * (c) YTK <yutakaje@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Tests\HallOfRecords\Parser;
+namespace Tests\HallOfRecords\Import;
 
-use Stg\HallOfRecords\Parser\YamlExtractor;
+use Stg\HallOfRecords\Import\YamlExtractor;
 use Symfony\Component\Yaml\Yaml;
 
 class YamlExtractorTest extends \Tests\TestCase

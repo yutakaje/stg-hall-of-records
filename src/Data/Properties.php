@@ -16,10 +16,7 @@ namespace Stg\HallOfRecords\Data;
 final class Properties
 {
     private string $locale;
-
-    /**
-     * @var array<string,mixed>
-     */
+    /** @var array<string,mixed> */
     private array $properties;
 
     /**

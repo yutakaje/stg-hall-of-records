@@ -11,14 +11,14 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Tests\HallOfRecords\Parser;
+namespace Tests\HallOfRecords\Import;
 
 use Stg\HallOfRecords\Data\Score;
 use Stg\HallOfRecords\Data\Scores;
 use Stg\HallOfRecords\Data\Game;
 use Stg\HallOfRecords\Data\Games;
 use Stg\HallOfRecords\Data\Properties;
-use Stg\HallOfRecords\Parser\YamlParser;
+use Stg\HallOfRecords\Import\YamlParser;
 
 class YamlParserTest extends \Tests\TestCase
 {

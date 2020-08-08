@@ -15,9 +15,7 @@ namespace Stg\HallOfRecords\Data;
 
 final class Scores
 {
-    /**
-     * @var Score[]
-     */
+    /** @var Score[] */
     private array $scores;
 
     /**

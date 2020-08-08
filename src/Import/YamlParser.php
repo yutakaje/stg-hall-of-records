@@ -11,7 +11,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Stg\HallOfRecords\Parser;
+namespace Stg\HallOfRecords\Import;
 
 use Stg\HallOfRecords\Data\Score;
 use Stg\HallOfRecords\Data\Scores;
