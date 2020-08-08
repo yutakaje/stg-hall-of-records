@@ -69,52 +69,50 @@ class YamlParserTest extends \Tests\TestCase
                     'Mushihimesama Futari 1.5',
                     'Cave',
                     new Scores([
-                        new Score(
-                            'ABI',
-                            '530,358,660',
-                            'Palm',
-                            'Original',
-                            'Normal',
-                            '2008-01',
-                            'Arcadia January 2008',
-                            ''
-                        ),
-                        new Score(
-                            'ISO / Niboshi',
-                            '518,902,716',
-                            'Palm',
-                            'Original',
-                            'Abnormal',
-                            '2007',
-                            'Superplay DVD',
-                            ''
-                        ),
+                        $this->createScore([
+                            'player' => 'ABI',
+                            'score' => '530,358,660',
+                            'ship' => 'Palm',
+                            'mode' => 'Original',
+                            'weapon' => 'Normal',
+                            'scored-date' => '2008-01',
+                            'source' => 'Arcadia January 2008',
+                        ]),
+                        $this->createScore([
+                            'player' => 'ISO / Niboshi',
+                            'score' => '518,902,716',
+                            'ship' => 'Palm',
+                            'mode' => 'Original',
+                            'weapon' => 'Abnormal',
+                            'scored-date' => '2007',
+                            'source' => 'Superplay DVD',
+                        ]),
                     ]),
                 ),
                 new Game(
                     'Ketsui: Kizuna Jigoku Tachi',
                     'Cave',
                     new Scores([
-                        new Score(
-                            'SPS',
-                            '507,780,433',
-                            'Type A',
-                            'Omote',
-                            '',
-                            '2014-08',
-                            'Arcadia August 2014',
-                            ''
-                        ),
-                        new Score(
-                            'GAN',
-                            '569,741,232',
-                            'Type B',
-                            'Ura',
-                            '',
-                            '2016-03',
-                            'JHA March 2016',
-                            '6L remaining'
-                        ),
+                        $this->createScore([
+                            'player' => 'SPS',
+                            'score' => '507,780,433',
+                            'ship' => 'Type A',
+                            'mode' => 'Omote',
+                            'scored-date' => '2014-08',
+                            'source' => 'Arcadia August 2014',
+                        ]),
+                        $this->createScore([
+                            'player' => 'GAN',
+                            'score' => '569,741,232',
+                            'ship' => 'Type B',
+                            'mode' => 'Ura',
+                            'scored-date' => '2016-03',
+                            'source' => 'JHA March 2016',
+                            'comments' => [
+                                '6L remaining',
+                                '1st loop 285m',
+                            ],
+                        ]),
                     ])
                 ),
             ]),
@@ -144,52 +142,50 @@ class YamlParserTest extends \Tests\TestCase
                     'Mushihimesama Futari 1.5',
                     'Cave',
                     new Scores([
-                        new Score(
-                            'ABI',
-                            '530,358,660',
-                            'Palm',
-                            'Original',
-                            'Normal',
-                            '2008-01',
-                            'Arcadia January 2008',
-                            ''
-                        ),
-                        new Score(
-                            'ISO / Niboshi',
-                            '518,902,716',
-                            'Palm',
-                            'Original',
-                            'Abnormal',
-                            '2007',
-                            'Superplay DVD',
-                            ''
-                        ),
+                        $this->createScore([
+                            'player' => 'ABI',
+                            'score' => '530,358,660',
+                            'ship' => 'Palm',
+                            'mode' => 'Original',
+                            'weapon' => 'Normal',
+                            'scored-date' => '2008-01',
+                            'source' => 'Arcadia January 2008',
+                        ]),
+                        $this->createScore([
+                            'player' => 'ISO / Niboshi',
+                            'score' => '518,902,716',
+                            'ship' => 'Palm',
+                            'mode' => 'Original',
+                            'weapon' => 'Abnormal',
+                            'scored-date' => '2007',
+                            'source' => 'Superplay DVD',
+                        ]),
                     ]),
                 ),
                 new Game(
                     'Ketsui: Kizuna Jigoku Tachi',
                     'Cave',
                     new Scores([
-                        new Score(
-                            'SPS',
-                            '507,780,433',
-                            'Tiger Schwert',
-                            'Omote',
-                            '',
-                            '2014-08',
-                            'Arcadia August 2014',
-                            ''
-                        ),
-                        new Score(
-                            'GAN',
-                            '569,741,232',
-                            'Panzer Jäger',
-                            'Ura',
-                            '',
-                            '2016-03',
-                            'JHA March 2016',
-                            '6L remaining'
-                        ),
+                        $this->createScore([
+                            'player' => 'SPS',
+                            'score' => '507,780,433',
+                            'ship' => 'Tiger Schwert',
+                            'mode' => 'Omote',
+                            'scored-date' => '2014-08',
+                            'source' => 'Arcadia August 2014',
+                        ]),
+                        $this->createScore([
+                            'player' => 'GAN',
+                            'score' => '569,741,232',
+                            'ship' => 'Panzer Jäger',
+                            'mode' => 'Ura',
+                            'scored-date' => '2016-03',
+                            'source' => 'JHA March 2016',
+                            'comments' => [
+                                '6L remaining',
+                                '1st loop 285m',
+                            ],
+                        ]),
                     ])
                 ),
             ]),
@@ -219,56 +215,71 @@ class YamlParserTest extends \Tests\TestCase
                     '虫姫さまふたりVer 1.5',
                     'ケイブ',
                     new Scores([
-                        new Score(
-                            'ABI',
-                            '530,358,660',
-                            'Palm',
-                            'Original',
-                            'Normal',
-                            '2008-01',
-                            'Arcadia January 2008',
-                            ''
-                        ),
-                        new Score(
-                            'ISO / Niboshi',
-                            '518,902,716',
-                            'Palm',
-                            'Original',
-                            'Abnormal',
-                            '2007',
-                            'Superplay DVD',
-                            ''
-                        ),
+                        $this->createScore([
+                            'player' => 'ABI',
+                            'score' => '530,358,660',
+                            'ship' => 'Palm',
+                            'mode' => 'Original',
+                            'weapon' => 'Normal',
+                            'scored-date' => '2008-01',
+                            'source' => 'Arcadia January 2008',
+                        ]),
+                        $this->createScore([
+                            'player' => 'ISO / Niboshi',
+                            'score' => '518,902,716',
+                            'ship' => 'Palm',
+                            'mode' => 'Original',
+                            'weapon' => 'Abnormal',
+                            'scored-date' => '2007',
+                            'source' => 'Superplay DVD',
+                        ]),
                     ]),
                 ),
                 new Game(
                     'ケツイ ～絆地獄たち～',
                     'ケイブ',
                     new Scores([
-                        new Score(
-                            'SPS',
-                            '507,780,433',
-                            'TYPE-A ティーゲルシュベルト',
-                            '表2週目',
-                            '',
-                            '2014-08',
-                            'Arcadia August 2014',
-                            ''
-                        ),
-                        new Score(
-                            'GAN',
-                            '569,741,232',
-                            'TYPE-B パンツァーイェーガー',
-                            '裏2週目',
-                            '',
-                            '2016-03',
-                            'JHA March 2016',
-                            '6L remaining'
-                        ),
+                        $this->createScore([
+                            'player' => 'SPS',
+                            'score' => '507,780,433',
+                            'ship' => 'TYPE-A ティーゲルシュベルト',
+                            'mode' => '表2週',
+                            'scored-date' => '2014-08',
+                            'source' => 'Arcadia August 2014',
+                        ]),
+                        $this->createScore([
+                            'player' => 'GAN',
+                            'score' => '569,741,232',
+                            'ship' => 'TYPE-B パンツァーイェーガー',
+                            'mode' => '裏2週',
+                            'scored-date' => '2016-03',
+                            'source' => 'JHA March 2016',
+                            'comments' => [
+                                '残6機',
+                                '1周 2.85億',
+                            ],
+                        ]),
                     ])
                 ),
             ]),
             $parser->games()
+        );
+    }
+
+    /**
+     * @param array<string,mixed> $properties
+     */
+    private function createScore(array $properties): Score
+    {
+        return new Score(
+            $properties['player'],
+            $properties['score'],
+            $properties['ship'],
+            $properties['mode'],
+            $properties['weapon'] ?? '',
+            $properties['scored-date'],
+            $properties['source'],
+            $properties['comments'] ?? []
         );
     }
 
@@ -332,7 +343,7 @@ class YamlParserTest extends \Tests\TestCase
                         'mode' => 'Omote',
                         'scored-date' => '2014-08',
                         'source' => 'Arcadia August 2014',
-                        'comment' => '',
+                        'comments' => [],
                     ],
                     [
                         'player' => 'GAN',
@@ -341,7 +352,14 @@ class YamlParserTest extends \Tests\TestCase
                         'mode' => 'Ura',
                         'scored-date' => '2016-03',
                         'source' => 'JHA March 2016',
-                        'comment' => '6L remaining',
+                        'comments' => [
+                            '6L remaining',
+                            '1st loop 285m',
+                        ],
+                        'comments-jp' => [
+                            '残6機',
+                            '1周 2.85億',
+                        ],
                     ],
                 ],
                 'locale' => [
@@ -360,12 +378,12 @@ class YamlParserTest extends \Tests\TestCase
                     [
                         'property' => 'mode',
                         'value' => 'Omote',
-                        'value-jp' => '表2週目',
+                        'value-jp' => '表2週',
                     ],
                     [
                         'property' => 'mode',
                         'value' => 'Ura',
-                        'value-jp' => '裏2週目',
+                        'value-jp' => '裏2週',
                     ],
                 ],
             ],

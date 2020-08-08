@@ -71,7 +71,7 @@ final class YamlParser
                     $this->localizeValue($entry, 'weapon', $localizations),
                     $this->localizeValue($entry, 'scored-date', $localizations),
                     $this->localizeValue($entry, 'source', $localizations),
-                    $this->localizeValue($entry, 'comment', $localizations)
+                    $this->localizeArrayValue($entry, 'comments', $localizations)
                 ),
                 $properties['entries'] ?? []
             ))
@@ -159,6 +159,32 @@ final class YamlParser
                 return $value;
             }
         }
+
+        // No localization found, return value verbatim.
+        return $properties[$name];
+    }
+
+    /**
+     * @param array<string,mixed> $properties
+     * @param Properties[] $localizations
+     * @return string[]
+     */
+    private function localizeArrayValue(
+        array $properties,
+        string $name,
+        array $localizations
+    ): array {
+        // If there's no value for the property, there's nothing to localize.
+        if (!isset($properties[$name])) {
+            return [];
+        }
+
+        // Localization on property level.
+        if (isset($properties["{$name}-{$this->locale}"])) {
+            return $properties["{$name}-{$this->locale}"];
+        }
+
+        // Localization on game or global level is not available for comments.
 
         // No localization found, return value verbatim.
         return $properties[$name];

@@ -27,8 +27,12 @@ final class Score
     private string $scoredDate;
     /** Information source */
     private string $source;
-    private string $comment;
+    /** @var string[] */
+    private array $comments;
 
+    /**
+     * @param string[] $comments
+     */
     public function __construct(
         string $player,
         string $score,
@@ -37,7 +41,7 @@ final class Score
         string $weapon,
         string $scoredDate,
         string $source,
-        string $comment
+        array $comments
     ) {
         $this->player = $player;
         $this->score = $score;
@@ -46,6 +50,6 @@ final class Score
         $this->weapon = $weapon;
         $this->scoredDate = $scoredDate;
         $this->source = $source;
-        $this->comment = $comment;
+        $this->comments = $comments;
     }
 }

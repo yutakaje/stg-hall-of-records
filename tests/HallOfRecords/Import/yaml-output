@@ -39,7 +39,7 @@ entries:
     mode: Omote
     scored-date: "2014-08"
     source: Arcadia August 2014
-    comment:
+    comments:
 
   - player: SPS
     score: 583,614,753
@@ -47,4 +47,6 @@ entries:
     mode: Ura
     scored-date: "2014-05-27"
     source: Arcadia September 2014 / [https://twitter.com/SPSPUYO/status/471312775843561472 Twitter]
-    comment: 6L 0B remaining; 1st loop 285m
+    comments:
+      - 6L 0B remaining
+      - 1st loop 285m
