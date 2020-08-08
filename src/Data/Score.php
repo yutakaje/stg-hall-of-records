@@ -17,16 +17,14 @@ final class Score
 {
     private string $player;
     private string $score;
+    /** Ship / Character  */
+    private string $ship;
     /** Game mode / Difficulty (e.g. Original, Maniac, Normal, Expert, ...) */
     private string $mode;
-    /** Character / Ship */
-    private string $character;
     /** Weapon / Style */
     private string $weapon;
-    /** Stage reached / Loop information */
-    private string $stage;
     /** Format: YYYY-MM-DD|YYYY-MM|YYYY */
-    private string $date;
+    private string $scoredDate;
     /** Information source */
     private string $source;
     private string $comment;
@@ -34,21 +32,19 @@ final class Score
     public function __construct(
         string $player,
         string $score,
+        string $ship,
         string $mode,
-        string $character,
         string $weapon,
-        string $stage,
-        string $date,
+        string $scoredDate,
         string $source,
         string $comment
     ) {
         $this->player = $player;
         $this->score = $score;
+        $this->ship = $ship;
         $this->mode = $mode;
-        $this->character = $character;
         $this->weapon = $weapon;
-        $this->stage = $stage;
-        $this->date = $date;
+        $this->scoredDate = $scoredDate;
         $this->source = $source;
         $this->comment = $comment;
     }

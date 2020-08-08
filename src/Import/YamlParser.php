@@ -66,11 +66,10 @@ final class YamlParser
                 fn (array $entry) => new Score(
                     $this->localizeValue($entry, 'player', $localizations),
                     $this->localizeValue($entry, 'score', $localizations),
+                    $this->localizeValue($entry, 'ship', $localizations),
                     $this->localizeValue($entry, 'mode', $localizations),
-                    $this->localizeValue($entry, 'character', $localizations),
                     $this->localizeValue($entry, 'weapon', $localizations),
-                    $this->localizeValue($entry, 'stage', $localizations),
-                    $this->localizeValue($entry, 'date', $localizations),
+                    $this->localizeValue($entry, 'scored-date', $localizations),
                     $this->localizeValue($entry, 'source', $localizations),
                     $this->localizeValue($entry, 'comment', $localizations)
                 ),

@@ -10,20 +10,20 @@ name-jp: 虫姫さまふたりVer 1.5
 company: Cave
 
 entries:
-  - mode: Original
-    character: Palm
-    weapon: Normal
+  - player: ABI
     score: 530,358,660
-    player: ABI
-    date: "2008-01"
+    ship: Palm
+    mode: Original
+    weapon: Normal
+    scored-date: "2008-01"
     source: Arcadia January 2008
 
-  - mode: Original
-    character: Palm
-    weapon: Abnormal
+  - player: ISO / Niboshi
     score: 518,902,716
-    player: ISO / Niboshi
-    date: "2007"
+    ship: Palm
+    mode: Original
+    weapon: Abnormal
+    scored-date: "2007"
     source: Superplay DVD
 
 <<<<<<<<<<==========>>>>>>>>>>
@@ -33,18 +33,18 @@ name-jp: ケツイ ～絆地獄たち～
 company: Cave
 
 entries:
-  - character: Type A
-    stage: Omote
+  - player: SPS
     score: 507,780,433
-    player: SPS
-    date: "2014-08"
+    ship: Type A
+    mode: Omote
+    scored-date: "2014-08"
     source: Arcadia August 2014
     comment:
 
-  - character: Type A
-    stage: Ura
+  - player: SPS
     score: 583,614,753
-    player: SPS
-    date: "2014-05-27"
+    ship: Type A
+    mode: Ura
+    scored-date: "2014-05-27"
     source: Arcadia September 2014 / [https://twitter.com/SPSPUYO/status/471312775843561472 Twitter]
     comment: 6L 0B remaining; 1st loop 285m

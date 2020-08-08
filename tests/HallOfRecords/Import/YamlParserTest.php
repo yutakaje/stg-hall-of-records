@@ -72,10 +72,9 @@ class YamlParserTest extends \Tests\TestCase
                         new Score(
                             'ABI',
                             '530,358,660',
-                            'Original',
                             'Palm',
+                            'Original',
                             'Normal',
-                            '',
                             '2008-01',
                             'Arcadia January 2008',
                             ''
@@ -83,10 +82,9 @@ class YamlParserTest extends \Tests\TestCase
                         new Score(
                             'ISO / Niboshi',
                             '518,902,716',
-                            'Original',
                             'Palm',
+                            'Original',
                             'Abnormal',
-                            '',
                             '2007',
                             'Superplay DVD',
                             ''
@@ -100,10 +98,9 @@ class YamlParserTest extends \Tests\TestCase
                         new Score(
                             'SPS',
                             '507,780,433',
-                            '',
                             'Type A',
-                            '',
                             'Omote',
+                            '',
                             '2014-08',
                             'Arcadia August 2014',
                             ''
@@ -111,10 +108,9 @@ class YamlParserTest extends \Tests\TestCase
                         new Score(
                             'GAN',
                             '569,741,232',
-                            '',
                             'Type B',
-                            '',
                             'Ura',
+                            '',
                             '2016-03',
                             'JHA March 2016',
                             '6L remaining'
@@ -151,10 +147,9 @@ class YamlParserTest extends \Tests\TestCase
                         new Score(
                             'ABI',
                             '530,358,660',
-                            'Original',
                             'Palm',
+                            'Original',
                             'Normal',
-                            '',
                             '2008-01',
                             'Arcadia January 2008',
                             ''
@@ -162,10 +157,9 @@ class YamlParserTest extends \Tests\TestCase
                         new Score(
                             'ISO / Niboshi',
                             '518,902,716',
-                            'Original',
                             'Palm',
+                            'Original',
                             'Abnormal',
-                            '',
                             '2007',
                             'Superplay DVD',
                             ''
@@ -179,10 +173,9 @@ class YamlParserTest extends \Tests\TestCase
                         new Score(
                             'SPS',
                             '507,780,433',
-                            '',
                             'Tiger Schwert',
-                            '',
                             'Omote',
+                            '',
                             '2014-08',
                             'Arcadia August 2014',
                             ''
@@ -190,10 +183,9 @@ class YamlParserTest extends \Tests\TestCase
                         new Score(
                             'GAN',
                             '569,741,232',
-                            '',
                             'Panzer Jäger',
-                            '',
                             'Ura',
+                            '',
                             '2016-03',
                             'JHA March 2016',
                             '6L remaining'
@@ -230,10 +222,9 @@ class YamlParserTest extends \Tests\TestCase
                         new Score(
                             'ABI',
                             '530,358,660',
-                            'Original',
                             'Palm',
+                            'Original',
                             'Normal',
-                            '',
                             '2008-01',
                             'Arcadia January 2008',
                             ''
@@ -241,10 +232,9 @@ class YamlParserTest extends \Tests\TestCase
                         new Score(
                             'ISO / Niboshi',
                             '518,902,716',
-                            'Original',
                             'Palm',
+                            'Original',
                             'Abnormal',
-                            '',
                             '2007',
                             'Superplay DVD',
                             ''
@@ -258,10 +248,9 @@ class YamlParserTest extends \Tests\TestCase
                         new Score(
                             'SPS',
                             '507,780,433',
-                            '',
                             'TYPE-A ティーゲルシュベルト',
-                            '',
                             '表2週目',
+                            '',
                             '2014-08',
                             'Arcadia August 2014',
                             ''
@@ -269,10 +258,9 @@ class YamlParserTest extends \Tests\TestCase
                         new Score(
                             'GAN',
                             '569,741,232',
-                            '',
                             'TYPE-B パンツァーイェーガー',
-                            '',
                             '裏2週目',
+                            '',
                             '2016-03',
                             'JHA March 2016',
                             '6L remaining'
@@ -313,21 +301,21 @@ class YamlParserTest extends \Tests\TestCase
                 'company' => 'Cave',
                 'entries' => [
                     [
-                        'mode' => 'Original',
-                        'character' => 'Palm',
-                        'weapon' => 'Normal',
-                        'score' => '530,358,660',
                         'player' => 'ABI',
-                        'date' => '2008-01',
+                        'score' => '530,358,660',
+                        'ship' => 'Palm',
+                        'mode' => 'Original',
+                        'weapon' => 'Normal',
+                        'scored-date' => '2008-01',
                         'source' => 'Arcadia January 2008',
                     ],
                     [
-                        'mode' => 'Original',
-                        'character' => 'Palm',
-                        'weapon' => 'Abnormal',
-                        'score' => '518,902,716',
                         'player' => 'ISO / Niboshi',
-                        'date' => '2007',
+                        'score' => '518,902,716',
+                        'ship' => 'Palm',
+                        'mode' => 'Original',
+                        'weapon' => 'Abnormal',
+                        'scored-date' => '2007',
                         'source' => 'Superplay DVD',
                     ],
                 ],
@@ -338,44 +326,44 @@ class YamlParserTest extends \Tests\TestCase
                 'company' => 'Cave',
                 'entries' => [
                     [
-                        'character' => 'Type A',
-                        'stage' => 'Omote',
-                        'score' => '507,780,433',
                         'player' => 'SPS',
-                        'date' => '2014-08',
+                        'score' => '507,780,433',
+                        'ship' => 'Type A',
+                        'mode' => 'Omote',
+                        'scored-date' => '2014-08',
                         'source' => 'Arcadia August 2014',
                         'comment' => '',
                     ],
                     [
-                        'character' => 'Type B',
-                        'stage' => 'Ura',
-                        'score' => '569,741,232',
                         'player' => 'GAN',
-                        'date' => '2016-03',
+                        'score' => '569,741,232',
+                        'ship' => 'Type B',
+                        'mode' => 'Ura',
+                        'scored-date' => '2016-03',
                         'source' => 'JHA March 2016',
                         'comment' => '6L remaining',
                     ],
                 ],
                 'locale' => [
                     [
-                        'property' => 'character',
+                        'property' => 'ship',
                         'value' => 'Type A',
                         'value-en' => 'Tiger Schwert',
                         'value-jp' => 'TYPE-A ティーゲルシュベルト',
                     ],
                     [
-                        'property' => 'character',
+                        'property' => 'ship',
                         'value' => 'Type B',
                         'value-en' => 'Panzer Jäger',
                         'value-jp' => 'TYPE-B パンツァーイェーガー',
                     ],
                     [
-                        'property' => 'stage',
+                        'property' => 'mode',
                         'value' => 'Omote',
                         'value-jp' => '表2週目',
                     ],
                     [
-                        'property' => 'stage',
+                        'property' => 'mode',
                         'value' => 'Ura',
                         'value-jp' => '裏2週目',
                     ],
