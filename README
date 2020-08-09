@@ -1,0 +1,38 @@
+STG Hall of Records
+
+Each game is defined by the following properties:
+
+* name: Name of the game
+* company: Developer / Publisher
+* entries: Score entries
+* links: Links
+* layout: Layout information
+
+The following properties are available by default for each entry. Their values are game-dependent.
+
+* player: Name of the player
+* score: Score
+* ship: Selected ship / character
+* mode: Game mode / Difficulty (e.g. Original, Maniac, Normal, Expert, ...)
+* weapon: Weapon / Style
+* version: Version (1P, 2P, Japan, World, Old, New, ...)
+* autofire: Flag whether autofire was used or not
+* scored-date: Date the score was achieved (YYYY-MM-DD|YYYY-MM|YYYY)
+* published-date: Date the score was published (YYYY-MM-DD|YYYY-MM|YYYY)
+* source: Information source
+* added-date: Date the score was added to the HoR
+* comments: Additional comments
+* links: Links to replay, Blog, ...
+* image-url: URL pointing to a screenshot of the score
+
+Additional properties may be specified. In this case the generator will treat their values verbatim.
+
+For every property a property with the same name and a locale suffix can be specified. Its value will be used on the page in the corresponding language instead of the value of the original property. Currently only '-jp' for Japanese is used but this can be extended to support more languages.
+
+Generated English output: https://shmups.wiki/library/STG_Hall_of_Records/Database/en
+
+Generated Japanese output: https://shmups.wiki/library/STG_Hall_of_Records/Database/jp
+
+
+TODO
+* Implement backup tool for screenshots stored in property `image-url`
