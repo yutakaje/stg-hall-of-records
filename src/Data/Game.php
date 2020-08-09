@@ -28,4 +28,19 @@ final class Game
         $this->company = $company;
         $this->scores = $scores;
     }
+
+    public function name(): string
+    {
+        return $this->name;
+    }
+
+    public function company(): string
+    {
+        return $this->company;
+    }
+
+    public function scores(): Scores
+    {
+        return $this->scores;
+    }
 }

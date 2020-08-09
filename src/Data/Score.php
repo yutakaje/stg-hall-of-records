@@ -52,4 +52,14 @@ final class Score
         $this->source = $source;
         $this->comments = $comments;
     }
+
+    public function player(): string
+    {
+        return $this->player;
+    }
+
+    public function score(): string
+    {
+        return $this->score;
+    }
 }

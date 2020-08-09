@@ -15,14 +15,22 @@ namespace Stg\HallOfRecords\Data;
 
 final class Scores
 {
-    /** @var Score[] */
-    private array $scores;
+    /** @var \ArrayIterator<int,Score> */
+    private \ArrayIterator $scores;
 
     /**
      * @param Score[] $scores
      */
     public function __construct(array $scores)
     {
-        $this->scores = $scores;
+        $this->scores = new \ArrayIterator($scores);
+    }
+
+    /**
+     * @return \ArrayIterator<int,Score>
+     */
+    public function iterator(): \ArrayIterator
+    {
+        return $this->scores;
     }
 }
