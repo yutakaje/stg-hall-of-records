@@ -18,7 +18,7 @@ use Stg\HallOfRecords\Data\Score;
 use Stg\HallOfRecords\Data\Game;
 use Stg\HallOfRecords\Data\Games;
 
-final class DataImporter
+final class DataWriter
 {
     private Connection $connection;
 

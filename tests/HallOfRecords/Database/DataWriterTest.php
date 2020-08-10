@@ -19,11 +19,11 @@ use Stg\HallOfRecords\Data\Scores;
 use Stg\HallOfRecords\Data\Game;
 use Stg\HallOfRecords\Data\Games;
 use Stg\HallOfRecords\Database\ConnectionFactory;
-use Stg\HallOfRecords\Database\DataImporter;
+use Stg\HallOfRecords\Database\DataWriter;
 use Stg\HallOfRecords\Database\InMemoryDatabaseCreator;
 use Stg\HallOfRecords\Import\YamlParser;
 
-class DataImporterTest extends \Tests\TestCase
+class DataWriterTest extends \Tests\TestCase
 {
     public function testWithGamesJpLocale(): void
     {
@@ -33,7 +33,7 @@ class DataImporterTest extends \Tests\TestCase
         $games = $parser->games();
 
         $connection = $this->prepareDatabase();
-        $importer = new DataImporter($connection);
+        $importer = new DataWriter($connection);
         $importer->import($games);
 
         $this->assertGames($connection, $this->sortGames($games));
