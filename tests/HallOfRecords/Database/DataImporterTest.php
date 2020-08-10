@@ -180,7 +180,7 @@ class DataImporterTest extends \Tests\TestCase
     {
         return [
             'name' => 'global',
-            'locale' => [
+            'translations' => [
                 [
                     'property' => 'company',
                     'value' => 'Cave',
@@ -252,7 +252,7 @@ class DataImporterTest extends \Tests\TestCase
                         ],
                     ],
                 ],
-                'locale' => [
+                'translations' => [
                     [
                         'property' => 'ship',
                         'value' => 'Type A',

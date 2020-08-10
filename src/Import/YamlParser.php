@@ -17,12 +17,13 @@ use Stg\HallOfRecords\Data\Score;
 use Stg\HallOfRecords\Data\Scores;
 use Stg\HallOfRecords\Data\Game;
 use Stg\HallOfRecords\Data\Games;
-use Stg\HallOfRecords\Data\Properties;
+use Stg\HallOfRecords\Data\GlobalProperties;
+use Stg\HallOfRecords\Locale\Translator;
 
 final class YamlParser
 {
     private string $locale;
-    private ?Properties $globalProperties;
+    private ?GlobalProperties $globalProperties;
     private ?Games $games;
 
     public function __construct(string $locale = '')
@@ -32,53 +33,7 @@ final class YamlParser
         $this->games = null;
     }
 
-    /**
-     * @param array<string,mixed>[] $sections
-     */
-    public function parse(array $sections): void
-    {
-        $this->globalProperties = new Properties(
-            $this->extractGlobalProperties($sections),
-            $this->locale
-        );
-
-        /** @TODO: Game specific values should be taken into account here */
-        $this->games = new Games(array_map(
-            fn (array $properties) => $this->parseGame($properties),
-            $this->extractGames($sections)
-        ));
-    }
-
-    /**
-     * @param array<string,mixed> $properties
-     */
-    private function parseGame(array $properties): Game
-    {
-        $localizations = [
-            new Properties($properties, $this->locale),
-            $this->globalProperties()
-        ];
-
-        return new Game(
-            $this->localizeValue($properties, 'name', $localizations),
-            $this->localizeValue($properties, 'company', $localizations),
-            new Scores(array_map(
-                fn (array $entry) => new Score(
-                    $this->localizeValue($entry, 'player', $localizations),
-                    $this->localizeValue($entry, 'score', $localizations),
-                    $this->localizeValue($entry, 'ship', $localizations),
-                    $this->localizeValue($entry, 'mode', $localizations),
-                    $this->localizeValue($entry, 'weapon', $localizations),
-                    $this->localizeValue($entry, 'scored-date', $localizations),
-                    $this->localizeValue($entry, 'source', $localizations),
-                    $this->localizeArrayValue($entry, 'comments', $localizations)
-                ),
-                $properties['entries'] ?? []
-            ))
-        );
-    }
-
-    public function globalProperties(): Properties
+    public function globalProperties(): GlobalProperties
     {
         if ($this->globalProperties === null) {
             throw new \LogicException(
@@ -98,6 +53,139 @@ final class YamlParser
         }
 
         return $this->games;
+    }
+
+    /**
+     * @param array<string,mixed>[] $sections
+     */
+    public function parse(array $sections): void
+    {
+        $globalTranslator = $this->parseTranslations(
+            $this->extractGlobalProperties($sections)
+        );
+
+        $this->globalProperties = $this->parseGlobalProperties(
+            $this->extractGlobalProperties($sections),
+            $globalTranslator
+        );
+
+        $this->games = $this->parseGames(
+            $this->extractGames($sections),
+            $globalTranslator
+        );
+    }
+
+    /**
+     * @param array<string,mixed> $properties
+     */
+    private function parseGlobalProperties(
+        array $properties,
+        Translator $translator
+    ): GlobalProperties {
+        $translator = $this->parseLocalTranslations($properties, $translator);
+
+        return new GlobalProperties(
+            $translator->translate('description', $properties['description'] ?? ''),
+        );
+    }
+
+    /**
+     * @param array<string,mixed>[] $games
+     */
+    private function parseGames(array $games, Translator $translator): Games
+    {
+        return new Games(array_map(
+            fn (array $properties) => $this->parseGame(
+                $properties,
+                $translator
+            ),
+            $games
+        ));
+    }
+
+    /**
+     * @param array<string,mixed> $properties
+     */
+    private function parseGame(array $properties, Translator $translator): Game
+    {
+        $translator = $this->parseLocalTranslations(
+            $properties,
+            $this->parseTranslations($properties, $translator),
+        );
+
+        return new Game(
+            $translator->translate('name', $properties['name'] ?? ''),
+            $translator->translate('company', $properties['company'] ?? ''),
+            new Scores(array_map(
+                fn (array $entry) => $this->parseScore($entry, $translator),
+                $properties['entries'] ?? []
+            ))
+        );
+    }
+
+    /**
+     * @param array<string,mixed> $properties
+     */
+    private function parseScore(array $properties, Translator $translator): Score
+    {
+        $translator = $this->parseLocalTranslations($properties, $translator);
+
+        return new Score(
+            $translator->translate('player', $properties['player'] ?? ''),
+            $translator->translate('score', $properties['score'] ?? ''),
+            $translator->translate('ship', $properties['ship'] ?? ''),
+            $translator->translate('mode', $properties['mode'] ?? ''),
+            $translator->translate('weapon', $properties['weapon'] ?? ''),
+            $translator->translate('scored-date', $properties['scored-date'] ?? ''),
+            $translator->translate('source', $properties['source'] ?? ''),
+            $translator->translateArray('comments', $properties['comments'] ?? [])
+        );
+    }
+
+    /**
+     * @param array<string,mixed> $properties
+     */
+    private function parseTranslations(
+        array $properties,
+        ?Translator $fallbackTranslator = null
+    ): Translator {
+        return array_reduce(
+            array_filter(
+                $properties['translations'] ?? [],
+                fn ($entry) => is_array($entry)
+                    && isset($entry['property'])
+                    && isset($entry['value'])
+                    && isset($entry["value-{$this->locale}"])
+            ),
+            fn (Translator $translator, array $entry) => $translator->add(
+                $entry['property'],
+                $entry['value'],
+                $entry["value-{$this->locale}"]
+            ),
+            new Translator($fallbackTranslator)
+        );
+    }
+
+    /**
+     * @param array<string,mixed> $properties
+     */
+    private function parseLocalTranslations(
+        array $properties,
+        Translator $fallbackTranslator
+    ): Translator {
+        return array_reduce(
+            array_filter(
+                array_keys($properties),
+                fn ($name) => is_string($name)
+                    && isset($properties["{$name}-{$this->locale}"])
+            ),
+            fn (Translator $translator, string $name) => $translator->add(
+                $name,
+                $properties[$name],
+                $properties["{$name}-{$this->locale}"]
+            ),
+            new Translator($fallbackTranslator)
+        );
     }
 
     /**
@@ -131,62 +219,5 @@ final class YamlParser
     private function extractGames(array $sections): array
     {
         return array_slice($sections, 1);
-    }
-
-    /**
-     * @param array<string,mixed> $properties
-     * @param Properties[] $localizations
-     */
-    private function localizeValue(
-        array $properties,
-        string $name,
-        array $localizations
-    ): string {
-        // If there's no value for the property, there's nothing to localize.
-        if (!isset($properties[$name])) {
-            return '';
-        }
-
-        // Localization on property level.
-        if (isset($properties["{$name}-{$this->locale}"])) {
-            return $properties["{$name}-{$this->locale}"];
-        }
-
-        // Localization on game or global level.
-        foreach ($localizations as $localization) {
-            $value = $localization->localizeValue($name, $properties[$name]);
-            if ($value !== null) {
-                return $value;
-            }
-        }
-
-        // No localization found, return value verbatim.
-        return $properties[$name];
-    }
-
-    /**
-     * @param array<string,mixed> $properties
-     * @param Properties[] $localizations
-     * @return string[]
-     */
-    private function localizeArrayValue(
-        array $properties,
-        string $name,
-        array $localizations
-    ): array {
-        // If there's no value for the property, there's nothing to localize.
-        if (!isset($properties[$name])) {
-            return [];
-        }
-
-        // Localization on property level.
-        if (isset($properties["{$name}-{$this->locale}"])) {
-            return $properties["{$name}-{$this->locale}"];
-        }
-
-        // Localization on game or global level is not available for comments.
-
-        // No localization found, return value verbatim.
-        return $properties[$name];
     }
 }

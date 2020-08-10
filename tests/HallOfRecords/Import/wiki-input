@@ -7,7 +7,7 @@ Values defined in this section will apply to all the games in the database. Its 
 
 <div style="display:none"><nowiki>
 
-locale:
+translations:
   - property: company
     value: Cave
     value-jp: ケイブ

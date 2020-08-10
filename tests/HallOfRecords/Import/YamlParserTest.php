@@ -17,7 +17,7 @@ use Stg\HallOfRecords\Data\Score;
 use Stg\HallOfRecords\Data\Scores;
 use Stg\HallOfRecords\Data\Game;
 use Stg\HallOfRecords\Data\Games;
-use Stg\HallOfRecords\Data\Properties;
+use Stg\HallOfRecords\Data\GlobalProperties;
 use Stg\HallOfRecords\Import\YamlParser;
 
 class YamlParserTest extends \Tests\TestCase
@@ -27,27 +27,23 @@ class YamlParserTest extends \Tests\TestCase
         $parser = new YamlParser();
         $parser->parse([]);
 
-        self::assertEquals(new Properties(), $parser->globalProperties());
+        self::assertEquals(new GlobalProperties(), $parser->globalProperties());
         self::assertEquals(new Games([]), $parser->games());
     }
 
     public function testWithNoGames(): void
     {
-        $global = [
-            'name' => 'global',
-            'locale' => [
-                'property' => 'company',
-                'value' => 'Cave',
-                'value-jp' => 'ケイブ',
-            ],
-        ];
+        $global = $this->globalPropertiesInput();
 
         $parser = new YamlParser();
         $parser->parse([
             $global,
         ]);
 
-        self::assertEquals(new Properties($global), $parser->globalProperties());
+        self::assertEquals(
+            new GlobalProperties('some description'),
+            $parser->globalProperties()
+        );
         self::assertEquals(new Games([]), $parser->games());
     }
 
@@ -62,7 +58,10 @@ class YamlParserTest extends \Tests\TestCase
             $games
         ));
 
-        self::assertEquals(new Properties($global), $parser->globalProperties());
+        self::assertEquals(
+            new GlobalProperties('some description'),
+            $parser->globalProperties()
+        );
         self::assertEquals(
             new Games([
                 new Game(
@@ -133,7 +132,7 @@ class YamlParserTest extends \Tests\TestCase
         ));
 
         self::assertEquals(
-            new Properties($global, $locale),
+            new GlobalProperties('some description'),
             $parser->globalProperties()
         );
         self::assertEquals(
@@ -206,7 +205,7 @@ class YamlParserTest extends \Tests\TestCase
         ));
 
         self::assertEquals(
-            new Properties($global, $locale),
+            new GlobalProperties('ある説明'),
             $parser->globalProperties()
         );
         self::assertEquals(
@@ -290,7 +289,9 @@ class YamlParserTest extends \Tests\TestCase
     {
         return [
             'name' => 'global',
-            'locale' => [
+            'description' => 'some description',
+            'description-jp' => 'ある説明',
+            'translations' => [
                 [
                     'property' => 'company',
                     'value' => 'Cave',
@@ -362,7 +363,7 @@ class YamlParserTest extends \Tests\TestCase
                         ],
                     ],
                 ],
-                'locale' => [
+                'translations' => [
                     [
                         'property' => 'ship',
                         'value' => 'Type A',

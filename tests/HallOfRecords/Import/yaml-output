@@ -1,4 +1,4 @@
-locale:
+translations:
   - property: company
     value: Cave
     value-jp: ケイブ
