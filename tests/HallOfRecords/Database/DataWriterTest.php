@@ -33,8 +33,8 @@ class DataWriterTest extends \Tests\TestCase
         $games = $parser->games();
 
         $connection = $this->prepareDatabase();
-        $importer = new DataWriter($connection);
-        $importer->import($games);
+        $writer = new DataWriter($connection);
+        $writer->write($games);
 
         $this->assertGames($connection, $this->sortGames($games));
         $this->assertScores($connection, $this->sortScores($games));

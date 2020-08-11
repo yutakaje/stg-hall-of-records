@@ -27,7 +27,7 @@ final class DataWriter
         $this->connection = $connection;
     }
 
-    public function import(Games $games): void
+    public function write(Games $games): void
     {
         foreach ($games->iterator() as $game) {
             $this->insertGame($game);
