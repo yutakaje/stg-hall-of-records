@@ -13,22 +13,28 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Import;
 
-use Stg\HallOfRecords\Data\Score;
-use Stg\HallOfRecords\Data\Scores;
 use Stg\HallOfRecords\Data\Game;
+use Stg\HallOfRecords\Data\GameFactory;
 use Stg\HallOfRecords\Data\Games;
+use Stg\HallOfRecords\Data\Score;
+use Stg\HallOfRecords\Data\ScoreFactory;
+use Stg\HallOfRecords\Data\Scores;
 use Stg\HallOfRecords\Data\GlobalProperties;
 use Stg\HallOfRecords\Locale\Translator;
 
 final class YamlParser
 {
     private string $locale;
+    private GameFactory $gameFactory;
+    private ScoreFactory $scoreFactory;
     private ?GlobalProperties $globalProperties;
     private ?Games $games;
 
     public function __construct(string $locale = '')
     {
         $this->locale = $locale;
+        $this->gameFactory = new GameFactory();
+        $this->scoreFactory = new ScoreFactory();
         $this->globalProperties = null;
         $this->games = null;
     }
@@ -113,7 +119,7 @@ final class YamlParser
             $this->parseTranslations($properties, $translator),
         );
 
-        return new Game(
+        return $this->gameFactory->create(
             $translator->translate('name', $properties['name'] ?? ''),
             $translator->translate('company', $properties['company'] ?? ''),
             new Scores(array_map(
@@ -130,7 +136,7 @@ final class YamlParser
     {
         $translator = $this->parseLocalTranslations($properties, $translator);
 
-        return new Score(
+        return $this->scoreFactory->create(
             $translator->translate('player', $properties['player'] ?? ''),
             $translator->translate('score', $properties['score'] ?? ''),
             $translator->translate('ship', $properties['ship'] ?? ''),
