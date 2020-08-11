@@ -13,10 +13,13 @@ declare(strict_types=1);
 
 namespace Tests;
 
+use Doctrine\DBAL\Connection;
 use Stg\HallOfRecords\Data\Game;
 use Stg\HallOfRecords\Data\GameFactory;
 use Stg\HallOfRecords\Data\Score;
 use Stg\HallOfRecords\Data\ScoreFactory;
+use Stg\HallOfRecords\Database\ConnectionFactory;
+use Stg\HallOfRecords\Database\InMemoryDatabaseCreator;
 
 abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
@@ -32,13 +35,21 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         $this->scoreFactory = new ScoreFactory();
     }
 
+    protected function prepareDatabase(): Connection
+    {
+        $connection = (new ConnectionFactory())->create();
+        $dbCreator = new InMemoryDatabaseCreator($connection);
+        $dbCreator->create();
+        return $connection;
+    }
+
     /**
      * @param array<string,mixed> $properties
      */
     protected function createGame(array $properties): Game
     {
         return $this->gameFactory->create(
-            $this->gameFactory->nextId(),
+            $properties['id'] ?? $this->gameFactory->nextId(),
             $properties['name'],
             $properties['company'],
             $properties['scores']
@@ -51,7 +62,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     protected function createScore(array $properties): Score
     {
         return $this->scoreFactory->create(
-            $this->scoreFactory->nextId(),
+            $properties['id'] ?? $this->scoreFactory->nextId(),
             $properties['player'],
             $properties['score'],
             $properties['ship'],

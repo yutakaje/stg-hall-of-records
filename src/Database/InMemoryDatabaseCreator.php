@@ -43,14 +43,14 @@ final class InMemoryDatabaseCreator
         $scores->addColumn('game_id', 'integer');
         $scores->addColumn('player', 'string', ['length' => 32]);
         $scores->addColumn('score', 'string', ['length' => 32]);
-        //        $scores->addColumn('ship', 'string', ['length' => 32]);
-        //        $scores->addColumn('mode', 'string', ['length' => 32]);
-        //        $scores->addColumn('weapon', 'string', ['length' => 32]);
-        //        $scores->addColumn('scored_date', 'datetime');
-        //        $scores->addColumn('source', 'string', ['length' => 64]);
-        //        $scores->addColumn('comments', 'json');
+        $scores->addColumn('ship', 'string', ['length' => 32]);
+        $scores->addColumn('mode', 'string', ['length' => 32]);
+        $scores->addColumn('weapon', 'string', ['length' => 32]);
+        $scores->addColumn('scored_date', 'datetime');
+        $scores->addColumn('source', 'string', ['length' => 64]);
+        $scores->addColumn('comments', 'json');
         $scores->setPrimaryKey(['id']);
-        //$scores->addForeignKeyConstraint($games, ['game_id'], ['id']);
+        $scores->addForeignKeyConstraint($games, ['game_id'], ['id']);
         $schemaManager->createTable($scores);
     }
 }

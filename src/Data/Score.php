@@ -70,4 +70,37 @@ final class Score
     {
         return $this->score;
     }
+
+    public function ship(): string
+    {
+        return $this->ship;
+    }
+
+    public function mode(): string
+    {
+        return $this->mode;
+    }
+
+    public function weapon(): string
+    {
+        return $this->weapon;
+    }
+
+    public function scoredDate(): string
+    {
+        return $this->scoredDate;
+    }
+
+    public function source(): string
+    {
+        return $this->source;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function comments(): array
+    {
+        return $this->comments;
+    }
 }

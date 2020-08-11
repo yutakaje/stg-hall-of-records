@@ -14,196 +14,106 @@ declare(strict_types=1);
 namespace Tests\HallOfRecords\Database;
 
 use Doctrine\DBAL\Connection;
-use Stg\HallOfRecords\Data\Score;
-use Stg\HallOfRecords\Data\Scores;
-use Stg\HallOfRecords\Data\Game;
 use Stg\HallOfRecords\Data\Games;
-use Stg\HallOfRecords\Database\ConnectionFactory;
+use Stg\HallOfRecords\Data\Scores;
 use Stg\HallOfRecords\Database\DataWriter;
-use Stg\HallOfRecords\Database\InMemoryDatabaseCreator;
-use Stg\HallOfRecords\Import\YamlParser;
 
 class DataWriterTest extends \Tests\TestCase
 {
     public function testWithGamesJpLocale(): void
     {
-        $locale = 'jp';
-        $parser = $this->parseInput($locale);
-
-        $games = $parser->games();
+        $games = $this->createGames();
 
         $connection = $this->prepareDatabase();
         $writer = new DataWriter($connection);
         $writer->write($games);
 
-        $this->assertGames($connection, $this->sortGames($games));
-        $this->assertScores($connection, $this->sortScores($games));
+        $gameRecords = $this->readGames($connection);
+        $scoreRecords = $this->readScores($connection);
+
+        self::assertEquals($games, new Games(array_map(
+            fn (array $gameRecord) => $this->createGame([
+                'id' => (int)$gameRecord['id'],
+                'name' => $gameRecord['name'],
+                'company' => $gameRecord['company'],
+                'scores' => new Scores(array_map(
+                    fn (array $scoreRecord) => $this->createScore([
+                        'id' => (int)$scoreRecord['id'],
+                        'player' => $scoreRecord['player'],
+                        'score' => $scoreRecord['score'],
+                        'ship' => $scoreRecord['ship'],
+                        'mode' => $scoreRecord['mode'],
+                        'weapon' => $scoreRecord['weapon'],
+                        'scored-date' => $scoreRecord['scored_date'],
+                        'source' => $scoreRecord['source'],
+                        'comments' => json_decode($scoreRecord['comments']),
+                    ]),
+                    $this->filterByGame($scoreRecords, $gameRecord['id'])
+                )),
+            ]),
+            $gameRecords
+        )));
     }
 
     /**
-     * @param Game[] $expected
+     * @return array<string,string>[]
      */
-    private function assertGames(Connection $connection, array $expected): void
+    private function readGames(Connection $connection): array
     {
-        $records = $connection->createQueryBuilder()
-            ->select('name', 'company')
+        return $connection->createQueryBuilder()
+            ->select('id', 'name', 'company')
             ->from('games')
-            ->orderBy('name')
+            ->orderBy('id')
             ->execute()
             ->fetchAll();
-
-        self::assertSame(
-            array_map(
-                fn (array $record) => [
-                    'name' => $record['name'],
-                    'company' => $record['company'],
-                ],
-                $records
-            ),
-            array_map(
-                fn (Game $game) => [
-                    'name' => $game->name(),
-                    'company' => $game->company(),
-                ],
-                $expected
-            )
-        );
     }
 
     /**
-     * @param Score[] $expected
+     * @return array<string,string>[]
      */
-    private function assertScores(Connection $connection, array $expected): void
+    private function readScores(Connection $connection): array
     {
-        $qb = $connection->createQueryBuilder();
-
-        $records = $qb->select('s.player', 's.score')
-            ->from('scores', 's')
-            ->join('s', 'games', 'g', $qb->expr()->eq('s.game_id', 'g.id'))
-            ->orderBy('g.name')
-            ->addOrderBy('s.player')
-            ->addOrderBy('s.score')
+        return $connection->createQueryBuilder()
+            ->select(
+                'id',
+                'game_id',
+                'player',
+                'score',
+                'ship',
+                'mode',
+                'weapon',
+                'scored_date',
+                'source',
+                'comments'
+            )
+            ->from('scores')
+            ->orderBy('id')
             ->execute()
             ->fetchAll();
-
-        self::assertSame(
-            array_map(
-                fn (array $record) => [
-                    'player' => $record['player'],
-                    'score' => $record['score'],
-                ],
-                $records
-            ),
-            array_map(
-                fn (Score $score) => [
-                    'player' => $score->player(),
-                    'score' => $score->score(),
-                ],
-                $expected
-            )
-        );
     }
 
     /**
-     * @return Game[]
+     * @param array<string,string>[] $scoreRecords
+     * @return array<string,string>[]
      */
-    private function sortGames(Games $games): array
+    private function filterByGame(array $scoreRecords, string $gameId): array
     {
-        return [
-            $this->gameAtIndex($games, 1),
-            $this->gameAtIndex($games, 0),
-        ];
-    }
-
-    /**
-     * @return Score[]
-     */
-    private function sortScores(Games $games): array
-    {
-        return [
-            $this->scoreAtIndex($this->gameAtIndex($games, 1)->scores(), 1),
-            $this->scoreAtIndex($this->gameAtIndex($games, 1)->scores(), 0),
-            $this->scoreAtIndex($this->gameAtIndex($games, 0)->scores(), 0),
-            $this->scoreAtIndex($this->gameAtIndex($games, 0)->scores(), 1),
-        ];
-    }
-
-    private function gameAtIndex(Games $games, int $index): Game
-    {
-        $iterator = $games->iterator();
-
-        if (!isset($iterator[$index])) {
-            throw new \InvalidArgumentException(
-                "No game found at index `{$index}`"
-            );
-        }
-
-        return $iterator[$index];
-    }
-
-    private function scoreAtIndex(Scores $scores, int $index): Score
-    {
-        $iterator = $scores->iterator();
-
-        if (!isset($iterator[$index])) {
-            throw new \InvalidArgumentException(
-                "No score found at index `{$index}`"
-            );
-        }
-
-        return $iterator[$index];
-    }
-
-    private function parseInput(string $locale): YamlParser
-    {
-        $global = $this->globalPropertiesInput();
-        $games = $this->gamesInput();
-
-        $parser = new YamlParser($locale);
-        $parser->parse(array_merge(
-            [$global],
-            $games
+        return array_values(array_filter(
+            $scoreRecords,
+            fn (array $record) => $record['game_id'] === $gameId
         ));
-        return $parser;
     }
 
-    private function prepareDatabase(): Connection
+    private function createGames(): Games
     {
-        $connection = (new ConnectionFactory())->create();
-        $dbCreator = new InMemoryDatabaseCreator($connection);
-        $dbCreator->create();
-        return $connection;
-    }
-
-    /**
-     * @return array<string,mixed>
-     */
-    private function globalPropertiesInput(): array
-    {
-        return [
-            'name' => 'global',
-            'translations' => [
-                [
-                    'property' => 'company',
-                    'value' => 'Cave',
-                    'value-jp' => 'ケイブ',
-                ],
-            ],
-        ];
-    }
-
-    /**
-     * @return array<string,mixed>[]
-     */
-    private function gamesInput(): array
-    {
-        return [
-            [
+        return new Games([
+            $this->createGame([
+                'id' => 10,
                 'name' => 'Mushihimesama Futari 1.5',
-                'name-jp' => '虫姫さまふたりVer 1.5',
                 'company' => 'Cave',
-                'entries' => [
-                    [
+                'scores' => new Scores([
+                    $this->createScore([
+                        'id' => 21,
                         'player' => 'ABI',
                         'score' => '530,358,660',
                         'ship' => 'Palm',
@@ -211,8 +121,9 @@ class DataWriterTest extends \Tests\TestCase
                         'weapon' => 'Normal',
                         'scored-date' => '2008-01',
                         'source' => 'Arcadia January 2008',
-                    ],
-                    [
+                    ]),
+                    $this->createScore([
+                        'id' => 23,
                         'player' => 'ISO / Niboshi',
                         'score' => '518,902,716',
                         'ship' => 'Palm',
@@ -220,15 +131,16 @@ class DataWriterTest extends \Tests\TestCase
                         'weapon' => 'Abnormal',
                         'scored-date' => '2007',
                         'source' => 'Superplay DVD',
-                    ],
-                ],
-            ],
-            [
+                    ]),
+                ]),
+            ]),
+            $this->createGame([
+                'id' => 23,
                 'name' => 'Ketsui: Kizuna Jigoku Tachi',
-                'name-jp' => 'ケツイ ～絆地獄たち～',
-                'company' => 'Cave',
-                'entries' => [
-                    [
+                'company' => 'ケイブ',
+                'scores' => new Scores([
+                    $this->createScore([
+                        'id' => 25,
                         'player' => 'SPS',
                         'score' => '507,780,433',
                         'ship' => 'Type A',
@@ -236,8 +148,9 @@ class DataWriterTest extends \Tests\TestCase
                         'scored-date' => '2014-08',
                         'source' => 'Arcadia August 2014',
                         'comments' => [],
-                    ],
-                    [
+                    ]),
+                    $this->createScore([
+                        'id' => 28,
                         'player' => 'GAN',
                         'score' => '569,741,232',
                         'ship' => 'Type B',
@@ -252,33 +165,9 @@ class DataWriterTest extends \Tests\TestCase
                             '残6機',
                             '1周 2.85億',
                         ],
-                    ],
-                ],
-                'translations' => [
-                    [
-                        'property' => 'ship',
-                        'value' => 'Type A',
-                        'value-en' => 'Tiger Schwert',
-                        'value-jp' => 'TYPE-A ティーゲルシュベルト',
-                    ],
-                    [
-                        'property' => 'ship',
-                        'value' => 'Type B',
-                        'value-en' => 'Panzer Jäger',
-                        'value-jp' => 'TYPE-B パンツァーイェーガー',
-                    ],
-                    [
-                        'property' => 'mode',
-                        'value' => 'Omote',
-                        'value-jp' => '表2週',
-                    ],
-                    [
-                        'property' => 'mode',
-                        'value' => 'Ura',
-                        'value-jp' => '裏2週',
-                    ],
-                ],
-            ],
-        ];
+                    ]),
+                ]),
+            ]),
+        ]);
     }
 }
