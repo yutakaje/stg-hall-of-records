@@ -69,10 +69,10 @@ class YamlParserTest extends \Tests\TestCase
         );
         self::assertEquals(
             new Games([
-                $gameFactory->create(
-                    'Mushihimesama Futari 1.5',
-                    'Cave',
-                    new Scores([
+                $this->createGame($gameFactory, [
+                    'name' => 'Mushihimesama Futari 1.5',
+                    'company' => 'Cave',
+                    'scores' => new Scores([
                         $this->createScore($scoreFactory, [
                             'player' => 'ABI',
                             'score' => '530,358,660',
@@ -92,11 +92,11 @@ class YamlParserTest extends \Tests\TestCase
                             'source' => 'Superplay DVD',
                         ]),
                     ]),
-                ),
-                $gameFactory->create(
-                    'Ketsui: Kizuna Jigoku Tachi',
-                    'Cave',
-                    new Scores([
+                ]),
+                $this->createGame($gameFactory, [
+                    'name' => 'Ketsui: Kizuna Jigoku Tachi',
+                    'company' => 'Cave',
+                    'scores' => new Scores([
                         $this->createScore($scoreFactory, [
                             'player' => 'SPS',
                             'score' => '507,780,433',
@@ -118,7 +118,7 @@ class YamlParserTest extends \Tests\TestCase
                             ],
                         ]),
                     ])
-                ),
+                ]),
             ]),
             $parser->games()
         );
@@ -145,10 +145,10 @@ class YamlParserTest extends \Tests\TestCase
         );
         self::assertEquals(
             new Games([
-                $gameFactory->create(
-                    'Mushihimesama Futari 1.5',
-                    'Cave',
-                    new Scores([
+                $this->createGame($gameFactory, [
+                    'name' => 'Mushihimesama Futari 1.5',
+                    'company' => 'Cave',
+                    'scores' => new Scores([
                         $this->createScore($scoreFactory, [
                             'player' => 'ABI',
                             'score' => '530,358,660',
@@ -168,11 +168,11 @@ class YamlParserTest extends \Tests\TestCase
                             'source' => 'Superplay DVD',
                         ]),
                     ]),
-                ),
-                $gameFactory->create(
-                    'Ketsui: Kizuna Jigoku Tachi',
-                    'Cave',
-                    new Scores([
+                ]),
+                $this->createGame($gameFactory, [
+                    'name' => 'Ketsui: Kizuna Jigoku Tachi',
+                    'company' => 'Cave',
+                    'scores' => new Scores([
                         $this->createScore($scoreFactory, [
                             'player' => 'SPS',
                             'score' => '507,780,433',
@@ -194,7 +194,7 @@ class YamlParserTest extends \Tests\TestCase
                             ],
                         ]),
                     ])
-                ),
+                ]),
             ]),
             $parser->games()
         );
@@ -221,10 +221,10 @@ class YamlParserTest extends \Tests\TestCase
         );
         self::assertEquals(
             new Games([
-                $gameFactory->create(
-                    '虫姫さまふたりVer 1.5',
-                    'ケイブ',
-                    new Scores([
+                $this->createGame($gameFactory, [
+                    'name' => '虫姫さまふたりVer 1.5',
+                    'company' => 'ケイブ',
+                    'scores' => new Scores([
                         $this->createScore($scoreFactory, [
                             'player' => 'ABI',
                             'score' => '530,358,660',
@@ -244,11 +244,11 @@ class YamlParserTest extends \Tests\TestCase
                             'source' => 'Superplay DVD',
                         ]),
                     ]),
-                ),
-                $gameFactory->create(
-                    'ケツイ ～絆地獄たち～',
-                    'ケイブ',
-                    new Scores([
+                ]),
+                $this->createGame($gameFactory, [
+                    'name' => 'ケツイ ～絆地獄たち～',
+                    'company' => 'ケイブ',
+                    'scores' => new Scores([
                         $this->createScore($scoreFactory, [
                             'player' => 'SPS',
                             'score' => '507,780,433',
@@ -270,9 +270,22 @@ class YamlParserTest extends \Tests\TestCase
                             ],
                         ]),
                     ])
-                ),
+                ]),
             ]),
             $parser->games()
+        );
+    }
+
+    /**
+     * @param array<string,mixed> $properties
+     */
+    private function createGame(GameFactory $factory, array $properties): Game
+    {
+        return $factory->create(
+            $factory->nextId(),
+            $properties['name'],
+            $properties['company'],
+            $properties['scores']
         );
     }
 
@@ -282,6 +295,7 @@ class YamlParserTest extends \Tests\TestCase
     private function createScore(ScoreFactory $factory, array $properties): Score
     {
         return $factory->create(
+            $factory->nextId(),
             $properties['player'],
             $properties['score'],
             $properties['ship'],

@@ -30,7 +30,7 @@ final class InMemoryDatabaseCreator
         $schema = $schemaManager->createSchema();
 
         $games = $schema->createTable('games');
-        $games->addColumn('id', 'integer', ['autoincrement' => true]);
+        $games->addColumn('id', 'integer');
         $games->addColumn('name', 'string', ['length' => 100]);
         $games->addColumn('company', 'string', ['length' => 100]);
         //        $games->addColumn('links', 'json');
@@ -39,8 +39,8 @@ final class InMemoryDatabaseCreator
         $schemaManager->createTable($games);
 
         $scores = $schema->createTable('scores');
-        $scores->addColumn('id', 'integer', ['autoincrement' => true]);
-        $scores->addColumn('game', 'string', ['length' => 100]);
+        $scores->addColumn('id', 'integer');
+        $scores->addColumn('game_id', 'integer');
         $scores->addColumn('player', 'string', ['length' => 32]);
         $scores->addColumn('score', 'string', ['length' => 32]);
         //        $scores->addColumn('ship', 'string', ['length' => 32]);

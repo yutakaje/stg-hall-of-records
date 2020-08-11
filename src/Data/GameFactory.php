@@ -15,9 +15,26 @@ namespace Stg\HallOfRecords\Data;
 
 final class GameFactory
 {
-    public function create(string $name, string $company, Scores $scores): Game
+    private int $nextId;
+
+    public function __construct()
     {
+        $this->nextId = 1;
+    }
+
+    public function nextId(): int
+    {
+        return $this->nextId++;
+    }
+
+    public function create(
+        int $id,
+        string $name,
+        string $company,
+        Scores $scores
+    ): Game {
         return new Game(
+            $id,
             $name,
             $company,
             $scores

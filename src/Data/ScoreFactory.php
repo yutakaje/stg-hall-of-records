@@ -15,10 +15,23 @@ namespace Stg\HallOfRecords\Data;
 
 final class ScoreFactory
 {
+    private int $nextId;
+
+    public function __construct()
+    {
+        $this->nextId = 1;
+    }
+
+    public function nextId(): int
+    {
+        return $this->nextId++;
+    }
+
     /**
      * @param string[] $comments
      */
     public function create(
+        int $id,
         string $player,
         string $score,
         string $ship,
@@ -29,6 +42,7 @@ final class ScoreFactory
         array $comments
     ): Score {
         return new Score(
+            $id,
             $player,
             $score,
             $ship,

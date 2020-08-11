@@ -75,12 +75,14 @@ class DataWriterTest extends \Tests\TestCase
      */
     private function assertScores(Connection $connection, array $expected): void
     {
-        $records = $connection->createQueryBuilder()
-            ->select('player', 'score')
-            ->from('scores')
-            ->orderBy('game')
-            ->addOrderBy('player')
-            ->addOrderBy('score')
+        $qb = $connection->createQueryBuilder();
+
+        $records = $qb->select('s.player', 's.score')
+            ->from('scores', 's')
+            ->join('s', 'games', 'g', $qb->expr()->eq('s.game_id', 'g.id'))
+            ->orderBy('g.name')
+            ->addOrderBy('s.player')
+            ->addOrderBy('s.score')
             ->execute()
             ->fetchAll();
 

@@ -15,6 +15,7 @@ namespace Stg\HallOfRecords\Data;
 
 final class Score
 {
+    private int $id;
     private string $player;
     private string $score;
     /** Ship / Character  */
@@ -34,6 +35,7 @@ final class Score
      * @param string[] $comments
      */
     public function __construct(
+        int $id,
         string $player,
         string $score,
         string $ship,
@@ -43,6 +45,7 @@ final class Score
         string $source,
         array $comments
     ) {
+        $this->id = $id;
         $this->player = $player;
         $this->score = $score;
         $this->ship = $ship;
@@ -51,6 +54,11 @@ final class Score
         $this->scoredDate = $scoredDate;
         $this->source = $source;
         $this->comments = $comments;
+    }
+
+    public function id(): int
+    {
+        return $this->id;
     }
 
     public function player(): string

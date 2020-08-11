@@ -36,13 +36,14 @@ final class DataWriter
 
     private function insertGame(Game $game): void
     {
-        $qb = $this->connection->createQueryBuilder();
-
-        $qb->insert('games')
+        $this->connection->createQueryBuilder()
+            ->insert('games')
             ->values([
+                'id' => ':id',
                 'name' => ':name',
                 'company' => ':company',
             ])
+            ->setParameter(':id', $game->id())
             ->setParameter(':name', $game->name())
             ->setParameter(':company', $game->company())
             ->execute();
@@ -59,15 +60,16 @@ final class DataWriter
 
     private function insertScore(Game $game, Score $score): void
     {
-        $qb = $this->connection->createQueryBuilder();
-
-        $qb->insert('scores')
+        $this->connection->createQueryBuilder()
+            ->insert('scores')
             ->values([
-                'game' => ':game',
+                'id' => ':id',
+                'game_id' => ':gameId',
                 'player' => ':player',
                 'score' => ':score',
             ])
-            ->setParameter(':game', $game->name())
+            ->setParameter(':id', $score->id())
+            ->setParameter(':gameId', $game->id())
             ->setParameter(':player', $score->player())
             ->setParameter(':score', $score->score())
             ->execute();

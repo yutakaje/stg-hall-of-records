@@ -120,6 +120,7 @@ final class YamlParser
         );
 
         return $this->gameFactory->create(
+            $this->gameFactory->nextId(),
             $translator->translate('name', $properties['name'] ?? ''),
             $translator->translate('company', $properties['company'] ?? ''),
             new Scores(array_map(
@@ -137,6 +138,7 @@ final class YamlParser
         $translator = $this->parseLocalTranslations($properties, $translator);
 
         return $this->scoreFactory->create(
+            $this->scoreFactory->nextId(),
             $translator->translate('player', $properties['player'] ?? ''),
             $translator->translate('score', $properties['score'] ?? ''),
             $translator->translate('ship', $properties['ship'] ?? ''),

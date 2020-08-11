@@ -15,18 +15,26 @@ namespace Stg\HallOfRecords\Data;
 
 final class Game
 {
+    private int $id;
     private string $name;
     private string $company;
     private Scores $scores;
 
     public function __construct(
+        int $id,
         string $name,
         string $company,
         Scores $scores
     ) {
+        $this->id = $id;
         $this->name = $name;
         $this->company = $company;
         $this->scores = $scores;
+    }
+
+    public function id(): int
+    {
+        return $this->id;
     }
 
     public function name(): string
