@@ -20,6 +20,9 @@ use Stg\HallOfRecords\Data\Score;
 use Stg\HallOfRecords\Data\ScoreFactory;
 use Stg\HallOfRecords\Database\ConnectionFactory;
 use Stg\HallOfRecords\Database\InMemoryDatabaseCreator;
+use Stg\HallOfRecords\Import\ParsedGame;
+use Stg\HallOfRecords\Import\ParsedGlobalProperties;
+use Stg\HallOfRecords\Import\ParsedScore;
 
 abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
@@ -43,13 +46,33 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         return $connection;
     }
 
+    protected function gameFactory(): GameFactory
+    {
+        return $this->gameFactory;
+    }
+
+    protected function scoreFactory(): ScoreFactory
+    {
+        return $this->scoreFactory;
+    }
+
     /**
      * @param array<string,mixed> $properties
      */
-    protected function createGame(array $properties): Game
+    protected function createParsedGlobalProperties(
+        array $properties
+    ): ParsedGlobalProperties {
+        return new ParsedGlobalProperties(
+            $properties['description'] ?? ''
+        );
+    }
+
+    /**
+     * @param array<string,mixed> $properties
+     */
+    protected function createParsedGame(array $properties): ParsedGame
     {
-        return $this->gameFactory->create(
-            $properties['id'] ?? $this->gameFactory->nextId(),
+        return new ParsedGame(
             $properties['name'],
             $properties['company'],
             $properties['scores']
@@ -59,10 +82,40 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     /**
      * @param array<string,mixed> $properties
      */
-    protected function createScore(array $properties): Score
+    protected function createParsedScore(array $properties): ParsedScore
+    {
+        return new ParsedScore(
+            $properties['player'],
+            $properties['score'],
+            $properties['ship'] ?? '',
+            $properties['mode'] ?? '',
+            $properties['weapon'] ?? '',
+            $properties['scoredDate'] ?? '',
+            $properties['source'] ?? '',
+            $properties['comments'] ?? []
+        );
+    }
+
+    /**
+     * @param array<string,mixed> $properties
+     */
+    protected function createGame(array $properties): Game
+    {
+        return $this->gameFactory->create(
+            $properties['id'] ?? $this->gameFactory->nextId(),
+            $properties['name'],
+            $properties['company']
+        );
+    }
+
+    /**
+     * @param array<string,mixed> $properties
+     */
+    protected function createScore(int $gameId, array $properties): Score
     {
         return $this->scoreFactory->create(
             $properties['id'] ?? $this->scoreFactory->nextId(),
+            $gameId,
             $properties['player'],
             $properties['score'],
             $properties['ship'],

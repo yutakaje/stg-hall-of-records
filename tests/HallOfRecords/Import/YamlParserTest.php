@@ -13,9 +13,6 @@ declare(strict_types=1);
 
 namespace Tests\HallOfRecords\Import;
 
-use Stg\HallOfRecords\Data\Games;
-use Stg\HallOfRecords\Data\GlobalProperties;
-use Stg\HallOfRecords\Data\Scores;
 use Stg\HallOfRecords\Import\YamlParser;
 
 class YamlParserTest extends \Tests\TestCase
@@ -25,8 +22,11 @@ class YamlParserTest extends \Tests\TestCase
         $parser = new YamlParser();
         $parser->parse([]);
 
-        self::assertEquals(new GlobalProperties(), $parser->globalProperties());
-        self::assertEquals(new Games([]), $parser->games());
+        self::assertEquals(
+            $this->createParsedGlobalProperties([]),
+            $parser->parsedGlobalProperties()
+        );
+        self::assertEquals([], $parser->parsedGames());
     }
 
     public function testWithNoGames(): void
@@ -39,10 +39,12 @@ class YamlParserTest extends \Tests\TestCase
         ]);
 
         self::assertEquals(
-            new GlobalProperties('some description'),
-            $parser->globalProperties()
+            $this->createParsedGlobalProperties([
+                'description' => 'some description',
+            ]),
+            $parser->parsedGlobalProperties()
         );
-        self::assertEquals(new Games([]), $parser->games());
+        self::assertEquals([], $parser->parsedGames());
     }
 
     public function testWithGamesAndDefaultLocale(): void
@@ -57,63 +59,65 @@ class YamlParserTest extends \Tests\TestCase
         ));
 
         self::assertEquals(
-            new GlobalProperties('some description'),
-            $parser->globalProperties()
+            $this->createParsedGlobalProperties([
+                'description' => 'some description',
+            ]),
+            $parser->parsedGlobalProperties()
         );
         self::assertEquals(
-            new Games([
-                $this->createGame([
+            [
+                $this->createParsedGame([
                     'name' => 'Mushihimesama Futari 1.5',
                     'company' => 'Cave',
-                    'scores' => new Scores([
-                        $this->createScore([
+                    'scores' => [
+                        $this->createParsedScore([
                             'player' => 'ABI',
                             'score' => '530,358,660',
                             'ship' => 'Palm',
                             'mode' => 'Original',
                             'weapon' => 'Normal',
-                            'scored-date' => '2008-01',
+                            'scoredDate' => '2008-01',
                             'source' => 'Arcadia January 2008',
                         ]),
-                        $this->createScore([
+                        $this->createParsedScore([
                             'player' => 'ISO / Niboshi',
                             'score' => '518,902,716',
                             'ship' => 'Palm',
                             'mode' => 'Original',
                             'weapon' => 'Abnormal',
-                            'scored-date' => '2007',
+                            'scoredDate' => '2007',
                             'source' => 'Superplay DVD',
                         ]),
-                    ]),
+                    ],
                 ]),
-                $this->createGame([
+                $this->createParsedGame([
                     'name' => 'Ketsui: Kizuna Jigoku Tachi',
                     'company' => 'Cave',
-                    'scores' => new Scores([
-                        $this->createScore([
+                    'scores' => [
+                        $this->createParsedScore([
                             'player' => 'SPS',
                             'score' => '507,780,433',
                             'ship' => 'Type A',
                             'mode' => 'Omote',
-                            'scored-date' => '2014-08',
+                            'scoredDate' => '2014-08',
                             'source' => 'Arcadia August 2014',
                         ]),
-                        $this->createScore([
+                        $this->createParsedScore([
                             'player' => 'GAN',
                             'score' => '569,741,232',
                             'ship' => 'Type B',
                             'mode' => 'Ura',
-                            'scored-date' => '2016-03',
+                            'scoredDate' => '2016-03',
                             'source' => 'JHA March 2016',
                             'comments' => [
                                 '6L remaining',
                                 '1st loop 285m',
                             ],
                         ]),
-                    ])
+                    ],
                 ]),
-            ]),
-            $parser->games()
+            ],
+            $parser->parsedGames()
         );
     }
 
@@ -130,63 +134,65 @@ class YamlParserTest extends \Tests\TestCase
         ));
 
         self::assertEquals(
-            new GlobalProperties('some description'),
-            $parser->globalProperties()
+            $this->createParsedGlobalProperties([
+                'description' => 'some description',
+            ]),
+            $parser->parsedGlobalProperties()
         );
         self::assertEquals(
-            new Games([
-                $this->createGame([
+            [
+                $this->createParsedGame([
                     'name' => 'Mushihimesama Futari 1.5',
                     'company' => 'Cave',
-                    'scores' => new Scores([
-                        $this->createScore([
+                    'scores' => [
+                        $this->createParsedScore([
                             'player' => 'ABI',
                             'score' => '530,358,660',
                             'ship' => 'Palm',
                             'mode' => 'Original',
                             'weapon' => 'Normal',
-                            'scored-date' => '2008-01',
+                            'scoredDate' => '2008-01',
                             'source' => 'Arcadia January 2008',
                         ]),
-                        $this->createScore([
+                        $this->createParsedScore([
                             'player' => 'ISO / Niboshi',
                             'score' => '518,902,716',
                             'ship' => 'Palm',
                             'mode' => 'Original',
                             'weapon' => 'Abnormal',
-                            'scored-date' => '2007',
+                            'scoredDate' => '2007',
                             'source' => 'Superplay DVD',
                         ]),
-                    ]),
+                    ],
                 ]),
-                $this->createGame([
+                $this->createParsedGame([
                     'name' => 'Ketsui: Kizuna Jigoku Tachi',
                     'company' => 'Cave',
-                    'scores' => new Scores([
-                        $this->createScore([
+                    'scores' => [
+                        $this->createParsedScore([
                             'player' => 'SPS',
                             'score' => '507,780,433',
                             'ship' => 'Tiger Schwert',
                             'mode' => 'Omote',
-                            'scored-date' => '2014-08',
+                            'scoredDate' => '2014-08',
                             'source' => 'Arcadia August 2014',
                         ]),
-                        $this->createScore([
+                        $this->createParsedScore([
                             'player' => 'GAN',
                             'score' => '569,741,232',
                             'ship' => 'Panzer Jäger',
                             'mode' => 'Ura',
-                            'scored-date' => '2016-03',
+                            'scoredDate' => '2016-03',
                             'source' => 'JHA March 2016',
                             'comments' => [
                                 '6L remaining',
                                 '1st loop 285m',
                             ],
                         ]),
-                    ])
+                    ],
                 ]),
-            ]),
-            $parser->games()
+            ],
+            $parser->parsedGames()
         );
     }
 
@@ -203,63 +209,65 @@ class YamlParserTest extends \Tests\TestCase
         ));
 
         self::assertEquals(
-            new GlobalProperties('ある説明'),
-            $parser->globalProperties()
+            $this->createParsedGlobalProperties([
+                'description' => 'ある説明',
+            ]),
+            $parser->parsedGlobalProperties()
         );
         self::assertEquals(
-            new Games([
-                $this->createGame([
+            [
+                $this->createParsedGame([
                     'name' => '虫姫さまふたりVer 1.5',
                     'company' => 'ケイブ',
-                    'scores' => new Scores([
-                        $this->createScore([
+                    'scores' => [
+                        $this->createParsedScore([
                             'player' => 'ABI',
                             'score' => '530,358,660',
                             'ship' => 'Palm',
                             'mode' => 'Original',
                             'weapon' => 'Normal',
-                            'scored-date' => '2008-01',
+                            'scoredDate' => '2008-01',
                             'source' => 'Arcadia January 2008',
                         ]),
-                        $this->createScore([
+                        $this->createParsedScore([
                             'player' => 'ISO / Niboshi',
                             'score' => '518,902,716',
                             'ship' => 'Palm',
                             'mode' => 'Original',
                             'weapon' => 'Abnormal',
-                            'scored-date' => '2007',
+                            'scoredDate' => '2007',
                             'source' => 'Superplay DVD',
                         ]),
-                    ]),
+                    ],
                 ]),
-                $this->createGame([
+                $this->createParsedGame([
                     'name' => 'ケツイ ～絆地獄たち～',
                     'company' => 'ケイブ',
-                    'scores' => new Scores([
-                        $this->createScore([
+                    'scores' => [
+                        $this->createParsedScore([
                             'player' => 'SPS',
                             'score' => '507,780,433',
                             'ship' => 'TYPE-A ティーゲルシュベルト',
                             'mode' => '表2週',
-                            'scored-date' => '2014-08',
+                            'scoredDate' => '2014-08',
                             'source' => 'Arcadia August 2014',
                         ]),
-                        $this->createScore([
+                        $this->createParsedScore([
                             'player' => 'GAN',
                             'score' => '569,741,232',
                             'ship' => 'TYPE-B パンツァーイェーガー',
                             'mode' => '裏2週',
-                            'scored-date' => '2016-03',
+                            'scoredDate' => '2016-03',
                             'source' => 'JHA March 2016',
                             'comments' => [
                                 '残6機',
                                 '1周 2.85億',
                             ],
                         ]),
-                    ])
+                    ],
                 ]),
-            ]),
-            $parser->games()
+            ],
+            $parser->parsedGames()
         );
     }
 

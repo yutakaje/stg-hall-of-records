@@ -13,51 +13,32 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Import;
 
-use Stg\HallOfRecords\Data\Game;
-use Stg\HallOfRecords\Data\GameFactory;
-use Stg\HallOfRecords\Data\Games;
-use Stg\HallOfRecords\Data\Score;
-use Stg\HallOfRecords\Data\ScoreFactory;
-use Stg\HallOfRecords\Data\Scores;
-use Stg\HallOfRecords\Data\GlobalProperties;
 use Stg\HallOfRecords\Locale\Translator;
 
 final class YamlParser
 {
     private string $locale;
-    private GameFactory $gameFactory;
-    private ScoreFactory $scoreFactory;
-    private ?GlobalProperties $globalProperties;
-    private ?Games $games;
+    private ParsedGlobalProperties $globalProperties;
+    /** @var ParsedGame[] */
+    private array $games;
 
     public function __construct(string $locale = '')
     {
         $this->locale = $locale;
-        $this->gameFactory = new GameFactory();
-        $this->scoreFactory = new ScoreFactory();
-        $this->globalProperties = null;
-        $this->games = null;
+        $this->globalProperties = new ParsedGlobalProperties();
+        $this->games = [];
     }
 
-    public function globalProperties(): GlobalProperties
+    public function parsedGlobalProperties(): ParsedGlobalProperties
     {
-        if ($this->globalProperties === null) {
-            throw new \LogicException(
-                'Function `parse` must be called before accessing global properties.'
-            );
-        }
-
         return $this->globalProperties;
     }
 
-    public function games(): Games
+    /**
+     * @return ParsedGame[]
+     */
+    public function parsedGames(): array
     {
-        if ($this->games === null) {
-            throw new \LogicException(
-                'Function `parse` must be called before accessing games.'
-            );
-        }
-
         return $this->games;
     }
 
@@ -87,58 +68,59 @@ final class YamlParser
     private function parseGlobalProperties(
         array $properties,
         Translator $translator
-    ): GlobalProperties {
+    ): ParsedGlobalProperties {
         $translator = $this->parseLocalTranslations($properties, $translator);
 
-        return new GlobalProperties(
-            $translator->translate('description', $properties['description'] ?? ''),
+        return new ParsedGlobalProperties(
+            $translator->translate('description', $properties['description'] ?? '')
         );
     }
 
     /**
      * @param array<string,mixed>[] $games
+     * @return ParsedGame[]
      */
-    private function parseGames(array $games, Translator $translator): Games
+    private function parseGames(array $games, Translator $translator): array
     {
-        return new Games(array_map(
+        return array_map(
             fn (array $properties) => $this->parseGame(
                 $properties,
                 $translator
             ),
             $games
-        ));
+        );
     }
 
     /**
      * @param array<string,mixed> $properties
      */
-    private function parseGame(array $properties, Translator $translator): Game
+    private function parseGame(array $properties, Translator $translator): ParsedGame
     {
         $translator = $this->parseLocalTranslations(
             $properties,
             $this->parseTranslations($properties, $translator),
         );
 
-        return $this->gameFactory->create(
-            $this->gameFactory->nextId(),
+        return new ParsedGame(
             $translator->translate('name', $properties['name'] ?? ''),
             $translator->translate('company', $properties['company'] ?? ''),
-            new Scores(array_map(
+            array_map(
                 fn (array $entry) => $this->parseScore($entry, $translator),
                 $properties['entries'] ?? []
-            ))
+            )
         );
     }
 
     /**
      * @param array<string,mixed> $properties
      */
-    private function parseScore(array $properties, Translator $translator): Score
-    {
+    private function parseScore(
+        array $properties,
+        Translator $translator
+    ): ParsedScore {
         $translator = $this->parseLocalTranslations($properties, $translator);
 
-        return $this->scoreFactory->create(
-            $this->scoreFactory->nextId(),
+        return new ParsedScore(
             $translator->translate('player', $properties['player'] ?? ''),
             $translator->translate('score', $properties['score'] ?? ''),
             $translator->translate('ship', $properties['ship'] ?? ''),

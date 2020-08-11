@@ -14,28 +14,36 @@ declare(strict_types=1);
 namespace Stg\HallOfRecords\Database;
 
 use Doctrine\DBAL\Connection;
-use Stg\HallOfRecords\Data\Score;
-use Stg\HallOfRecords\Data\Game;
-use Stg\HallOfRecords\Data\Games;
+use Stg\HallOfRecords\Import\ParsedGame;
+use Stg\HallOfRecords\Import\ParsedScore;
 
-final class DataWriter
+final class ParsedDataWriter
 {
     private Connection $connection;
+    private int $nextGameId;
+    private int $nextScoreId;
 
     public function __construct(Connection $connection)
     {
         $this->connection = $connection;
+        $this->nextGameId = 1;
+        $this->nextScoreId = 1;
     }
 
-    public function write(Games $games): void
+    /**
+     * @param ParsedGame[] $games
+     */
+    public function write(array $games): void
     {
-        foreach ($games->iterator() as $game) {
+        foreach ($games as $game) {
             $this->insertGame($game);
         }
     }
 
-    private function insertGame(Game $game): void
+    private function insertGame(ParsedGame $game): void
     {
+        $gameId = $this->nextGameId++;
+
         $this->connection->createQueryBuilder()
             ->insert('games')
             ->values([
@@ -43,23 +51,28 @@ final class DataWriter
                 'name' => ':name',
                 'company' => ':company',
             ])
-            ->setParameter(':id', $game->id())
+            ->setParameter(':id', $gameId)
             ->setParameter(':name', $game->name())
             ->setParameter(':company', $game->company())
             ->execute();
 
-        $this->insertScores($game);
+        $this->insertScores($gameId, $game->scores());
     }
 
-    public function insertScores(Game $game): void
+    /**
+     * @param ParsedScore[] $scores
+     */
+    public function insertScores(int $gameId, array $scores): void
     {
-        foreach ($game->scores()->iterator() as $score) {
-            $this->insertScore($game, $score);
+        foreach ($scores as $score) {
+            $this->insertScore($gameId, $score);
         }
     }
 
-    private function insertScore(Game $game, Score $score): void
+    private function insertScore(int $gameId, ParsedScore $score): void
     {
+        $scoreId = $this->nextScoreId++;
+
         $this->connection->createQueryBuilder()
             ->insert('scores')
             ->values([
@@ -74,8 +87,8 @@ final class DataWriter
                 'source' => ':source',
                 'comments' => ':comments',
             ])
-            ->setParameter(':id', $score->id())
-            ->setParameter(':gameId', $game->id())
+            ->setParameter(':id', $scoreId)
+            ->setParameter(':gameId', $gameId)
             ->setParameter(':player', $score->player())
             ->setParameter(':score', $score->score())
             ->setParameter(':ship', $score->ship())
