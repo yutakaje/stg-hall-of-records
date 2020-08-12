@@ -15,21 +15,21 @@ namespace Stg\HallOfRecords\Data;
 
 final class Games
 {
-    /** @var \ArrayIterator<int,Game> */
-    private \ArrayIterator $games;
+    /** @var Game[] */
+    private array $games;
 
     /**
      * @param Game[] $games
      */
     public function __construct(array $games)
     {
-        $this->games = new \ArrayIterator($games);
+        $this->games = $games;
     }
 
     /**
-     * @return \ArrayIterator<int,Game>
+     * @return Game[]
      */
-    public function iterator(): \ArrayIterator
+    public function asArray(): array
     {
         return $this->games;
     }

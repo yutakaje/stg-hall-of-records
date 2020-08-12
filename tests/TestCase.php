@@ -16,8 +16,10 @@ namespace Tests;
 use Doctrine\DBAL\Connection;
 use Stg\HallOfRecords\Data\Game;
 use Stg\HallOfRecords\Data\GameFactory;
+use Stg\HallOfRecords\Data\Games;
 use Stg\HallOfRecords\Data\Score;
 use Stg\HallOfRecords\Data\ScoreFactory;
+use Stg\HallOfRecords\Data\Scores;
 use Stg\HallOfRecords\Database\ConnectionFactory;
 use Stg\HallOfRecords\Database\InMemoryDatabaseCreator;
 use Stg\HallOfRecords\Import\ParsedGame;
@@ -44,16 +46,6 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         $dbCreator = new InMemoryDatabaseCreator($connection);
         $dbCreator->create();
         return $connection;
-    }
-
-    protected function gameFactory(): GameFactory
-    {
-        return $this->gameFactory;
-    }
-
-    protected function scoreFactory(): ScoreFactory
-    {
-        return $this->scoreFactory;
     }
 
     /**
@@ -111,19 +103,69 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     /**
      * @param array<string,mixed> $properties
      */
-    protected function createScore(int $gameId, array $properties): Score
+    protected function createScore(array $properties): Score
     {
         return $this->scoreFactory->create(
             $properties['id'] ?? $this->scoreFactory->nextId(),
-            $gameId,
+            $properties['gameId'] ?? $this->gameFactory->nextId(),
             $properties['player'],
             $properties['score'],
             $properties['ship'],
             $properties['mode'],
             $properties['weapon'] ?? '',
-            $properties['scored-date'],
+            $properties['scoredDate'],
             $properties['source'],
             $properties['comments'] ?? []
         );
+    }
+
+    protected function insertGames(Connection $connection, Games $games): void
+    {
+        $qb = $connection->createQueryBuilder();
+
+        foreach ($games->asArray() as $game) {
+            $qb->insert('games')
+                ->values([
+                    'id' => ':id',
+                    'name' => ':name',
+                    'company' => ':company',
+                ])
+                ->setParameter(':id', $game->id())
+                ->setParameter(':name', $game->name())
+                ->setParameter(':company', $game->company())
+                ->execute();
+        }
+    }
+
+    protected function insertScores(Connection $connection, Scores $scores): void
+    {
+        $qb = $connection->createQueryBuilder();
+
+        foreach ($scores->asArray() as $score) {
+            $qb->insert('scores')
+                ->values([
+                    'id' => ':id',
+                    'game_id' => ':gameId',
+                    'player' => ':player',
+                    'score' => ':score',
+                    'ship' => ':ship',
+                    'mode' => ':mode',
+                    'weapon' => ':weapon',
+                    'scored_date' => ':scoredDate',
+                    'source' => ':source',
+                    'comments' => ':comments',
+                ])
+                ->setParameter(':id', $score->id())
+                ->setParameter(':gameId', $score->gameId())
+                ->setParameter(':player', $score->player())
+                ->setParameter(':score', $score->score())
+                ->setParameter(':ship', $score->ship())
+                ->setParameter(':mode', $score->mode())
+                ->setParameter(':weapon', $score->weapon())
+                ->setParameter(':scoredDate', $score->scoredDate())
+                ->setParameter(':source', $score->source())
+                ->setParameter(':comments', json_encode($score->comments()))
+                ->execute();
+        }
     }
 }

@@ -32,6 +32,7 @@ final class ScoreFactory
      */
     public function create(
         int $id,
+        int $gameId,
         string $player,
         string $score,
         string $ship,
@@ -43,6 +44,7 @@ final class ScoreFactory
     ): Score {
         return new Score(
             $id,
+            $gameId,
             $player,
             $score,
             $ship,

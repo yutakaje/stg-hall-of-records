@@ -18,18 +18,15 @@ final class Game
     private int $id;
     private string $name;
     private string $company;
-    private Scores $scores;
 
     public function __construct(
         int $id,
         string $name,
-        string $company,
-        Scores $scores
+        string $company
     ) {
         $this->id = $id;
         $this->name = $name;
         $this->company = $company;
-        $this->scores = $scores;
     }
 
     public function id(): int
@@ -45,10 +42,5 @@ final class Game
     public function company(): string
     {
         return $this->company;
-    }
-
-    public function scores(): Scores
-    {
-        return $this->scores;
     }
 }

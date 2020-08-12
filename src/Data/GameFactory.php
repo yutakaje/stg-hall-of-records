@@ -30,14 +30,12 @@ final class GameFactory
     public function create(
         int $id,
         string $name,
-        string $company,
-        Scores $scores
+        string $company
     ): Game {
         return new Game(
             $id,
             $name,
-            $company,
-            $scores
+            $company
         );
     }
 }
