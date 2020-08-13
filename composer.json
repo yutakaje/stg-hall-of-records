@@ -10,12 +10,12 @@
         }
     ],
     "require": {
+        "php": ">=7.4",
         "doctrine/dbal": "^2.8",
         "symfony/yaml": "^5.1"
     },
     "require-dev": {
         "phing/phing": "^2.16",
-        "php": ">=7.4",
         "phpstan/phpstan": "^0.12",
         "phpstan/phpstan-deprecation-rules": "^0.12",
         "phpstan/phpstan-strict-rules": "^0.12",
