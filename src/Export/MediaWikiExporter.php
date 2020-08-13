@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Export;
 
+use Stg\HallOfRecords\Data\Game;
+use Stg\HallOfRecords\Data\Scores;
 use Stg\HallOfRecords\Database\GameRepository;
 use Stg\HallOfRecords\Database\ScoreRepository;
 
@@ -31,6 +33,25 @@ final class MediaWikiExporter
 
     public function export(): string
     {
-        return 'IMPLEMENT ME';
+        return $this->exportGames(array_map(
+            fn (Game $game) => $this->exportGame(
+                $game,
+                $this->scoreRepository->filterByGame($game)
+            ),
+            $this->gameRepository->all()->asArray()
+        ));
+    }
+
+    /**
+     * @param string[] $exportedGames
+     */
+    private function exportGames(array $exportedGames): string
+    {
+        return implode(PHP_EOL, $exportedGames);
+    }
+
+    private function exportGame(Game $game, Scores $scores): string
+    {
+        return $game->name();
     }
 }

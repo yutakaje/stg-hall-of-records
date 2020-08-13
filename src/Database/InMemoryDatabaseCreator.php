@@ -14,19 +14,22 @@ declare(strict_types=1);
 namespace Stg\HallOfRecords\Database;
 
 use Doctrine\DBAL\Connection;
+use Stg\HallOfRecords\Database\ConnectionFactory;
 
 final class InMemoryDatabaseCreator
 {
-    private Connection $connection;
+    private ConnectionFactory $connectionFactory;
 
-    public function __construct(Connection $connection)
+    public function __construct(ConnectionFactory $connectionFactory)
     {
-        $this->connection = $connection;
+        $this->connectionFactory = $connectionFactory;
     }
 
-    public function create(): void
+    public function create(): Connection
     {
-        $schemaManager = $this->connection->getSchemaManager();
+        $connection = $this->connectionFactory->create();
+
+        $schemaManager = $connection->getSchemaManager();
         $schema = $schemaManager->createSchema();
 
         $games = $schema->createTable('games');
@@ -52,5 +55,7 @@ final class InMemoryDatabaseCreator
         $scores->setPrimaryKey(['id']);
         $scores->addForeignKeyConstraint($games, ['game_id'], ['id']);
         $schemaManager->createTable($scores);
+
+        return $connection;
     }
 }

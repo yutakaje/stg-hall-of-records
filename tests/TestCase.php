@@ -39,10 +39,10 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 
     protected function prepareDatabase(): Connection
     {
-        $connection = (new ConnectionFactory())->create();
-        $dbCreator = new InMemoryDatabaseCreator($connection);
-        $dbCreator->create();
-        return $connection;
+        $databaseCreator = new InMemoryDatabaseCreator(
+            new ConnectionFactory()
+        );
+        return $databaseCreator->create();
     }
 
     /**
