@@ -36,3 +36,5 @@ Generated Japanese output: https://shmups.wiki/library/STG_Hall_of_Records/Datab
 
 TODO
 * Implement backup tool for screenshots stored in property `image-url`
+* Implement logger, especially for parsing
+* Improve exception handling
