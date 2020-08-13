@@ -20,17 +20,18 @@ final class YamlParser
     private ParsedDataFactory $parsedDataFactory;
     private string $locale;
 
-    public function __construct(string $locale = '')
+    public function __construct()
     {
         $this->parsedDataFactory = new ParsedDataFactory();
-        $this->locale = $locale;
+        $this->locale = '';
     }
 
     /**
      * @param array<string,mixed>[] $sections
      */
-    public function parse(array $sections): ParsedData
+    public function parse(array $sections, string $locale = ''): ParsedData
     {
+        $this->locale = $locale;
         $globalTranslator = $this->parseTranslations(
             $this->extractGlobalProperties($sections)
         );

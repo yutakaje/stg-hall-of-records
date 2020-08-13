@@ -126,11 +126,14 @@ class YamlParserTest extends \Tests\TestCase
         $games = $this->gamesInput();
         $locale = 'en';
 
-        $parser = new YamlParser($locale);
-        $parsedData = $parser->parse(array_merge(
-            [$global],
-            $games
-        ));
+        $parser = new YamlParser();
+        $parsedData = $parser->parse(
+            array_merge(
+                [$global],
+                $games
+            ),
+            $locale
+        );
 
         $factory = new ParsedDataFactory();
 
@@ -195,11 +198,14 @@ class YamlParserTest extends \Tests\TestCase
         $games = $this->gamesInput();
         $locale = 'jp';
 
-        $parser = new YamlParser($locale);
-        $parsedData = $parser->parse(array_merge(
-            [$global],
-            $games
-        ));
+        $parser = new YamlParser();
+        $parsedData = $parser->parse(
+            array_merge(
+                [$global],
+                $games
+            ),
+            $locale
+        );
 
         $factory = new ParsedDataFactory();
 
