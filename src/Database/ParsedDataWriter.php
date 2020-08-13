@@ -21,14 +21,10 @@ use Stg\HallOfRecords\Import\ParsedScore;
 final class ParsedDataWriter
 {
     private Connection $connection;
-    private int $nextGameId;
-    private int $nextScoreId;
 
     public function __construct(Connection $connection)
     {
         $this->connection = $connection;
-        $this->nextGameId = 1;
-        $this->nextScoreId = 1;
     }
 
     public function write(ParsedData $data): void
@@ -40,8 +36,6 @@ final class ParsedDataWriter
 
     private function insertGame(ParsedGame $game): void
     {
-        $gameId = $this->nextGameId++;
-
         $this->connection->createQueryBuilder()
             ->insert('games')
             ->values([
@@ -49,28 +43,23 @@ final class ParsedDataWriter
                 'name' => ':name',
                 'company' => ':company',
             ])
-            ->setParameter(':id', $gameId)
+            ->setParameter(':id', $game->id())
             ->setParameter(':name', $game->name())
             ->setParameter(':company', $game->company())
             ->execute();
 
-        $this->insertScores($gameId, $game->scores());
+        $this->insertScores($game);
     }
 
-    /**
-     * @param ParsedScore[] $scores
-     */
-    public function insertScores(int $gameId, array $scores): void
+    public function insertScores(ParsedGame $game): void
     {
-        foreach ($scores as $score) {
-            $this->insertScore($gameId, $score);
+        foreach ($game->scores() as $score) {
+            $this->insertScore($game, $score);
         }
     }
 
-    private function insertScore(int $gameId, ParsedScore $score): void
+    private function insertScore(ParsedGame $game, ParsedScore $score): void
     {
-        $scoreId = $this->nextScoreId++;
-
         $this->connection->createQueryBuilder()
             ->insert('scores')
             ->values([
@@ -85,8 +74,8 @@ final class ParsedDataWriter
                 'source' => ':source',
                 'comments' => ':comments',
             ])
-            ->setParameter(':id', $scoreId)
-            ->setParameter(':gameId', $gameId)
+            ->setParameter(':id', $score->id())
+            ->setParameter(':gameId', $game->id())
             ->setParameter(':player', $score->player())
             ->setParameter(':score', $score->score())
             ->setParameter(':ship', $score->ship())

@@ -15,17 +15,14 @@ namespace Tests\HallOfRecords\Database;
 
 use Doctrine\DBAL\Connection;
 use Stg\HallOfRecords\Database\ParsedDataWriter;
+use Stg\HallOfRecords\Import\ParsedDataFactory;
 use Stg\HallOfRecords\Import\ParsedData;
-use Stg\HallOfRecords\Import\ParsedGame;
 
 class ParsedDataWriterTest extends \Tests\TestCase
 {
     public function testWrite(): void
     {
-        $parsedData = new ParsedData(
-            $this->createParsedGlobalProperties([]),
-            $this->createParsedGames()
-        );
+        $parsedData = $this->createParsedData();
 
         $connection = $this->prepareDatabase();
         $writer = new ParsedDataWriter($connection);
@@ -34,24 +31,28 @@ class ParsedDataWriterTest extends \Tests\TestCase
         $gameRecords = $this->readGames($connection);
         $scoreRecords = $this->readScores($connection);
 
+        $factory = new ParsedDataFactory();
+
         self::assertEquals($parsedData->games(), array_map(
-            fn (array $gameRecord) => $this->createParsedGame([
-                'name' => $gameRecord['name'],
-                'company' => $gameRecord['company'],
-                'scores' => array_map(
-                    fn (array $scoreRecord) => $this->createParsedScore([
-                        'player' => $scoreRecord['player'],
-                        'score' => $scoreRecord['score'],
-                        'ship' => $scoreRecord['ship'],
-                        'mode' => $scoreRecord['mode'],
-                        'weapon' => $scoreRecord['weapon'],
-                        'scoredDate' => $scoreRecord['scored_date'],
-                        'source' => $scoreRecord['source'],
-                        'comments' => json_decode($scoreRecord['comments']),
-                    ]),
+            fn (array $gameRecord) => $factory->createGame(
+                $gameRecord['name'],
+                $gameRecord['company'],
+                array_map(
+                    fn (array $scoreRecord) => $factory->createScore(
+                        $scoreRecord['player'],
+                        $scoreRecord['score'],
+                        [
+                            'ship' => $scoreRecord['ship'],
+                            'mode' => $scoreRecord['mode'],
+                            'weapon' => $scoreRecord['weapon'],
+                            'scoredDate' => $scoreRecord['scored_date'],
+                            'source' => $scoreRecord['source'],
+                            'comments' => json_decode($scoreRecord['comments']),
+                        ]
+                    ),
                     $this->filterByGame($scoreRecords, $gameRecord['id'])
                 ),
-            ]),
+            ),
             $gameRecords
         ));
     }
@@ -105,63 +106,57 @@ class ParsedDataWriterTest extends \Tests\TestCase
         ));
     }
 
-    /**
-     * @return ParsedGame[]
-     */
-    private function createParsedGames(): array
+    private function createParsedData(): ParsedData
     {
-        return [
-            $this->createParsedGame([
-                'name' => 'Mushihimesama Futari 1.5',
-                'company' => 'Cave',
-                'scores' => [
-                    $this->createParsedScore([
-                        'player' => 'ABI',
-                        'score' => '530,358,660',
-                        'ship' => 'Palm',
-                        'mode' => 'Original',
-                        'weapon' => 'Normal',
-                        'scoredDate' => '2008-01',
-                        'source' => 'Arcadia January 2008',
-                    ]),
-                    $this->createParsedScore([
-                        'player' => 'ISO / Niboshi',
-                        'score' => '518,902,716',
-                        'ship' => 'Palm',
-                        'mode' => 'Original',
-                        'weapon' => 'Abnormal',
-                        'scoredDate' => '2007',
-                        'source' => 'Superplay DVD',
-                    ]),
-                ],
-            ]),
-            $this->createParsedGame([
-                'name' => 'Ketsui: Kizuna Jigoku Tachi',
-                'company' => 'ケイブ',
-                'scores' => [
-                    $this->createParsedScore([
-                        'player' => 'SPS',
-                        'score' => '507,780,433',
-                        'ship' => 'Type A',
-                        'mode' => 'Omote',
-                        'scoredDate' => '2014-08',
-                        'source' => 'Arcadia August 2014',
-                        'comments' => [],
-                    ]),
-                    $this->createParsedScore([
-                        'player' => 'GAN',
-                        'score' => '569,741,232',
-                        'ship' => 'Type B',
-                        'mode' => 'Ura',
-                        'scoredDate' => '2016-03',
-                        'source' => 'JHA March 2016',
-                        'comments' => [
-                            '残6機',
-                            '1周 2.85億',
-                        ],
-                    ]),
-                ],
-            ]),
-        ];
+        $factory = new ParsedDataFactory();
+
+        return $factory->create(
+            $factory->createGlobalProperties(),
+            [
+                $factory->createGame(
+                    'Mushihimesama Futari 1.5',
+                    'Cave',
+                    [
+                        $factory->createScore('ABI', '530,358,660', [
+                            'ship' => 'Palm',
+                            'mode' => 'Original',
+                            'weapon' => 'Normal',
+                            'scoredDate' => '2008-01',
+                            'source' => 'Arcadia January 2008',
+                        ]),
+                        $factory->createScore('ISO / Niboshi', '518,902,716', [
+                            'ship' => 'Palm',
+                            'mode' => 'Original',
+                            'weapon' => 'Abnormal',
+                            'scoredDate' => '2007',
+                            'source' => 'Superplay DVD',
+                        ]),
+                    ]
+                ),
+                $factory->createGame(
+                    'Ketsui: Kizuna Jigoku Tachi',
+                    'ケイブ',
+                    [
+                        $factory->createScore('SPS', '507,780,433', [
+                            'ship' => 'Type A',
+                            'mode' => 'Omote',
+                            'scoredDate' => '2014-08',
+                            'source' => 'Arcadia August 2014',
+                            'comments' => [],
+                        ]),
+                        $factory->createScore('GAN', '569,741,232', [
+                            'ship' => 'Type B',
+                            'mode' => 'Ura',
+                            'scoredDate' => '2016-03',
+                            'source' => 'JHA March 2016',
+                            'comments' => [
+                                '残6機',
+                                '1周 2.85億',
+                            ],
+                        ]),
+                    ]
+                ),
+            ]
+        );
     }
 }

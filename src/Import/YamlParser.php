@@ -56,9 +56,11 @@ final class YamlParser
     ): ParsedGlobalProperties {
         $translator = $this->parseLocalTranslations($properties, $translator);
 
-        return $this->parsedDataFactory->createGlobalProperties(
-            $translator->translate('description', $properties['description'] ?? '')
-        );
+        $translateString = $this->createStringTranslator($translator, $properties);
+
+        return $this->parsedDataFactory->createGlobalProperties([
+            'description' => $translateString('description'),
+        ]);
     }
 
     /**
@@ -86,9 +88,11 @@ final class YamlParser
             $this->parseTranslations($properties, $translator),
         );
 
+        $translateString = $this->createStringTranslator($translator, $properties);
+
         return $this->parsedDataFactory->createGame(
-            $translator->translate('name', $properties['name'] ?? ''),
-            $translator->translate('company', $properties['company'] ?? ''),
+            $translateString('name'),
+            $translateString('company'),
             array_map(
                 fn (array $entry) => $this->parseScore($entry, $translator),
                 $properties['entries'] ?? []
@@ -105,15 +109,20 @@ final class YamlParser
     ): ParsedScore {
         $translator = $this->parseLocalTranslations($properties, $translator);
 
+        $translateString = $this->createStringTranslator($translator, $properties);
+        $translateArray = $this->createArrayTranslator($translator, $properties);
+
         return $this->parsedDataFactory->createScore(
-            $translator->translate('player', $properties['player'] ?? ''),
-            $translator->translate('score', $properties['score'] ?? ''),
-            $translator->translate('ship', $properties['ship'] ?? ''),
-            $translator->translate('mode', $properties['mode'] ?? ''),
-            $translator->translate('weapon', $properties['weapon'] ?? ''),
-            $translator->translate('scored-date', $properties['scored-date'] ?? ''),
-            $translator->translate('source', $properties['source'] ?? ''),
-            $translator->translateArray('comments', $properties['comments'] ?? [])
+            $translateString('player'),
+            $translateString('score'),
+            [
+                'ship' => $translateString('ship'),
+                'mode' => $translateString('mode'),
+                'weapon' => $translateString('weapon'),
+                'scoredDate' => $translateString('scored-date'),
+                'source' => $translateString('source'),
+                'comments' => $translateArray('comments'),
+            ]
         );
     }
 
@@ -194,5 +203,32 @@ final class YamlParser
     private function extractGames(array $sections): array
     {
         return array_slice($sections, 1);
+    }
+
+
+    /**
+     * @param array<string,mixed> $properties
+     */
+    private function createStringTranslator(
+        Translator $translator,
+        array $properties
+    ): \Closure {
+        return fn (string $name) => $translator->translate(
+            $name,
+            $properties[$name] ?? ''
+        );
+    }
+
+    /**
+     * @param array<string,mixed> $properties
+     */
+    private function createArrayTranslator(
+        Translator $translator,
+        array $properties
+    ): \Closure {
+        return fn (string $name) => $translator->translateArray(
+            $name,
+            $properties[$name] ?? []
+        );
     }
 }

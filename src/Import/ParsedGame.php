@@ -17,6 +17,7 @@ use Stg\HallOfRecords\Locale\Translator;
 
 final class ParsedGame
 {
+    private int $id;
     private string $name;
     private string $company;
     /** @var ParsedScore[] */
@@ -26,13 +27,20 @@ final class ParsedGame
      * @param ParsedScore[] $scores
      */
     public function __construct(
+        int $id,
         string $name,
         string $company,
         array $scores
     ) {
+        $this->id = $id;
         $this->name = $name;
         $this->company = $company;
         $this->scores = $scores;
+    }
+
+    public function id(): int
+    {
+        return $this->id;
     }
 
     public function name(): string

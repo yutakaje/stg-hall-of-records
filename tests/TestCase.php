@@ -22,14 +22,9 @@ use Stg\HallOfRecords\Data\ScoreFactory;
 use Stg\HallOfRecords\Data\Scores;
 use Stg\HallOfRecords\Database\ConnectionFactory;
 use Stg\HallOfRecords\Database\InMemoryDatabaseCreator;
-use Stg\HallOfRecords\Import\ParsedDataFactory;
-use Stg\HallOfRecords\Import\ParsedGame;
-use Stg\HallOfRecords\Import\ParsedGlobalProperties;
-use Stg\HallOfRecords\Import\ParsedScore;
 
 abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
-    private ParsedDataFactory $parsedDataFactory;
     private GameFactory $gameFactory;
     private ScoreFactory $scoreFactory;
 
@@ -38,7 +33,6 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
      */
     protected function setUp(): void
     {
-        $this->parsedDataFactory = new ParsedDataFactory();
         $this->gameFactory = new GameFactory();
         $this->scoreFactory = new ScoreFactory();
     }
@@ -49,46 +43,6 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         $dbCreator = new InMemoryDatabaseCreator($connection);
         $dbCreator->create();
         return $connection;
-    }
-
-    /**
-     * @param array<string,mixed> $properties
-     */
-    protected function createParsedGlobalProperties(
-        array $properties
-    ): ParsedGlobalProperties {
-        return $this->parsedDataFactory->createGlobalProperties(
-            $properties['description'] ?? ''
-        );
-    }
-
-    /**
-     * @param array<string,mixed> $properties
-     */
-    protected function createParsedGame(array $properties): ParsedGame
-    {
-        return $this->parsedDataFactory->createGame(
-            $properties['name'],
-            $properties['company'],
-            $properties['scores']
-        );
-    }
-
-    /**
-     * @param array<string,mixed> $properties
-     */
-    protected function createParsedScore(array $properties): ParsedScore
-    {
-        return $this->parsedDataFactory->createScore(
-            $properties['player'],
-            $properties['score'],
-            $properties['ship'] ?? '',
-            $properties['mode'] ?? '',
-            $properties['weapon'] ?? '',
-            $properties['scoredDate'] ?? '',
-            $properties['source'] ?? '',
-            $properties['comments'] ?? []
-        );
     }
 
     /**

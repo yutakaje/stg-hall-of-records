@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Tests\HallOfRecords\Import;
 
+use Stg\HallOfRecords\Import\ParsedDataFactory;
 use Stg\HallOfRecords\Import\YamlParser;
 
 class YamlParserTest extends \Tests\TestCase
@@ -22,8 +23,10 @@ class YamlParserTest extends \Tests\TestCase
         $parser = new YamlParser();
         $parsedData = $parser->parse([]);
 
+        $factory = new ParsedDataFactory();
+
         self::assertEquals(
-            $this->createParsedGlobalProperties([]),
+            $factory->createGlobalProperties(),
             $parsedData->globalProperties()
         );
         self::assertEquals([], $parsedData->games());
@@ -38,8 +41,10 @@ class YamlParserTest extends \Tests\TestCase
             $global,
         ]);
 
+        $factory = new ParsedDataFactory();
+
         self::assertEquals(
-            $this->createParsedGlobalProperties([
+            $factory->createGlobalProperties([
                 'description' => 'some description',
             ]),
             $parsedData->globalProperties()
@@ -58,30 +63,28 @@ class YamlParserTest extends \Tests\TestCase
             $games
         ));
 
+        $factory = new ParsedDataFactory();
+
         self::assertEquals(
-            $this->createParsedGlobalProperties([
+            $factory->createGlobalProperties([
                 'description' => 'some description',
             ]),
             $parsedData->globalProperties()
         );
         self::assertEquals(
             [
-                $this->createParsedGame([
-                    'name' => 'Mushihimesama Futari 1.5',
-                    'company' => 'Cave',
-                    'scores' => [
-                        $this->createParsedScore([
-                            'player' => 'ABI',
-                            'score' => '530,358,660',
+                $factory->createGame(
+                    'Mushihimesama Futari 1.5',
+                    'Cave',
+                    [
+                        $factory->createScore('ABI', '530,358,660', [
                             'ship' => 'Palm',
                             'mode' => 'Original',
                             'weapon' => 'Normal',
                             'scoredDate' => '2008-01',
                             'source' => 'Arcadia January 2008',
                         ]),
-                        $this->createParsedScore([
-                            'player' => 'ISO / Niboshi',
-                            'score' => '518,902,716',
+                        $factory->createScore('ISO / Niboshi', '518,902,716', [
                             'ship' => 'Palm',
                             'mode' => 'Original',
                             'weapon' => 'Abnormal',
@@ -89,22 +92,18 @@ class YamlParserTest extends \Tests\TestCase
                             'source' => 'Superplay DVD',
                         ]),
                     ],
-                ]),
-                $this->createParsedGame([
-                    'name' => 'Ketsui: Kizuna Jigoku Tachi',
-                    'company' => 'Cave',
-                    'scores' => [
-                        $this->createParsedScore([
-                            'player' => 'SPS',
-                            'score' => '507,780,433',
+                ),
+                $factory->createGame(
+                    'Ketsui: Kizuna Jigoku Tachi',
+                    'Cave',
+                    [
+                        $factory->createScore('SPS', '507,780,433', [
                             'ship' => 'Type A',
                             'mode' => 'Omote',
                             'scoredDate' => '2014-08',
                             'source' => 'Arcadia August 2014',
                         ]),
-                        $this->createParsedScore([
-                            'player' => 'GAN',
-                            'score' => '569,741,232',
+                        $factory->createScore('GAN', '569,741,232', [
                             'ship' => 'Type B',
                             'mode' => 'Ura',
                             'scoredDate' => '2016-03',
@@ -115,7 +114,7 @@ class YamlParserTest extends \Tests\TestCase
                             ],
                         ]),
                     ],
-                ]),
+                ),
             ],
             $parsedData->games()
         );
@@ -133,30 +132,28 @@ class YamlParserTest extends \Tests\TestCase
             $games
         ));
 
+        $factory = new ParsedDataFactory();
+
         self::assertEquals(
-            $this->createParsedGlobalProperties([
+            $factory->createGlobalProperties([
                 'description' => 'some description',
             ]),
             $parsedData->globalProperties()
         );
         self::assertEquals(
             [
-                $this->createParsedGame([
-                    'name' => 'Mushihimesama Futari 1.5',
-                    'company' => 'Cave',
-                    'scores' => [
-                        $this->createParsedScore([
-                            'player' => 'ABI',
-                            'score' => '530,358,660',
+                $factory->createGame(
+                    'Mushihimesama Futari 1.5',
+                    'Cave',
+                    [
+                        $factory->createScore('ABI', '530,358,660', [
                             'ship' => 'Palm',
                             'mode' => 'Original',
                             'weapon' => 'Normal',
                             'scoredDate' => '2008-01',
                             'source' => 'Arcadia January 2008',
                         ]),
-                        $this->createParsedScore([
-                            'player' => 'ISO / Niboshi',
-                            'score' => '518,902,716',
+                        $factory->createScore('ISO / Niboshi', '518,902,716', [
                             'ship' => 'Palm',
                             'mode' => 'Original',
                             'weapon' => 'Abnormal',
@@ -164,22 +161,18 @@ class YamlParserTest extends \Tests\TestCase
                             'source' => 'Superplay DVD',
                         ]),
                     ],
-                ]),
-                $this->createParsedGame([
-                    'name' => 'Ketsui: Kizuna Jigoku Tachi',
-                    'company' => 'Cave',
-                    'scores' => [
-                        $this->createParsedScore([
-                            'player' => 'SPS',
-                            'score' => '507,780,433',
+                ),
+                $factory->createGame(
+                    'Ketsui: Kizuna Jigoku Tachi',
+                    'Cave',
+                    [
+                        $factory->createScore('SPS', '507,780,433', [
                             'ship' => 'Tiger Schwert',
                             'mode' => 'Omote',
                             'scoredDate' => '2014-08',
                             'source' => 'Arcadia August 2014',
                         ]),
-                        $this->createParsedScore([
-                            'player' => 'GAN',
-                            'score' => '569,741,232',
+                        $factory->createScore('GAN', '569,741,232', [
                             'ship' => 'Panzer Jäger',
                             'mode' => 'Ura',
                             'scoredDate' => '2016-03',
@@ -190,7 +183,7 @@ class YamlParserTest extends \Tests\TestCase
                             ],
                         ]),
                     ],
-                ]),
+                ),
             ],
             $parsedData->games()
         );
@@ -208,30 +201,28 @@ class YamlParserTest extends \Tests\TestCase
             $games
         ));
 
+        $factory = new ParsedDataFactory();
+
         self::assertEquals(
-            $this->createParsedGlobalProperties([
+            $factory->createGlobalProperties([
                 'description' => 'ある説明',
             ]),
             $parsedData->globalProperties()
         );
         self::assertEquals(
             [
-                $this->createParsedGame([
-                    'name' => '虫姫さまふたりVer 1.5',
-                    'company' => 'ケイブ',
-                    'scores' => [
-                        $this->createParsedScore([
-                            'player' => 'ABI',
-                            'score' => '530,358,660',
+                $factory->createGame(
+                    '虫姫さまふたりVer 1.5',
+                    'ケイブ',
+                    [
+                        $factory->createScore('ABI', '530,358,660', [
                             'ship' => 'Palm',
                             'mode' => 'Original',
                             'weapon' => 'Normal',
                             'scoredDate' => '2008-01',
                             'source' => 'Arcadia January 2008',
                         ]),
-                        $this->createParsedScore([
-                            'player' => 'ISO / Niboshi',
-                            'score' => '518,902,716',
+                        $factory->createScore('ISO / Niboshi', '518,902,716', [
                             'ship' => 'Palm',
                             'mode' => 'Original',
                             'weapon' => 'Abnormal',
@@ -239,22 +230,18 @@ class YamlParserTest extends \Tests\TestCase
                             'source' => 'Superplay DVD',
                         ]),
                     ],
-                ]),
-                $this->createParsedGame([
-                    'name' => 'ケツイ ～絆地獄たち～',
-                    'company' => 'ケイブ',
-                    'scores' => [
-                        $this->createParsedScore([
-                            'player' => 'SPS',
-                            'score' => '507,780,433',
+                ),
+                $factory->createGame(
+                    'ケツイ ～絆地獄たち～',
+                    'ケイブ',
+                    [
+                        $factory->createScore('SPS', '507,780,433', [
                             'ship' => 'TYPE-A ティーゲルシュベルト',
                             'mode' => '表2週',
                             'scoredDate' => '2014-08',
                             'source' => 'Arcadia August 2014',
                         ]),
-                        $this->createParsedScore([
-                            'player' => 'GAN',
-                            'score' => '569,741,232',
+                        $factory->createScore('GAN', '569,741,232', [
                             'ship' => 'TYPE-B パンツァーイェーガー',
                             'mode' => '裏2週',
                             'scoredDate' => '2016-03',
@@ -265,7 +252,7 @@ class YamlParserTest extends \Tests\TestCase
                             ],
                         ]),
                     ],
-                ]),
+                ),
             ],
             $parsedData->games()
         );

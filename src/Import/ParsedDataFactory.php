@@ -15,6 +15,15 @@ namespace Stg\HallOfRecords\Import;
 
 final class ParsedDataFactory
 {
+    private int $nextGameId;
+    private int $nextScoreId;
+
+    public function __construct()
+    {
+        $this->nextGameId = 1;
+        $this->nextScoreId = 1;
+    }
+
     /**
      * @param ParsedGame[] $games
      */
@@ -25,10 +34,15 @@ final class ParsedDataFactory
         return new ParsedData($globalProperties, $games);
     }
 
+    /**
+     * @param array<string,mixed> $options
+     */
     public function createGlobalProperties(
-        string $description = ''
+        array $options = []
     ): ParsedGlobalProperties {
-        return new ParsedGlobalProperties($description);
+        return new ParsedGlobalProperties(
+            $options['description'] ?? ''
+        );
     }
 
     /**
@@ -37,9 +51,10 @@ final class ParsedDataFactory
     public function createGame(
         string $name,
         string $company,
-        array $scores
+        array $scores = []
     ): ParsedGame {
         return new ParsedGame(
+            $this->nextGameId++,
             $name,
             $company,
             $scores
@@ -47,27 +62,23 @@ final class ParsedDataFactory
     }
 
     /**
-     * @param string[] $comments
+     * @param array<string,mixed> $options
      */
     public function createScore(
         string $player,
         string $score,
-        string $ship,
-        string $mode,
-        string $weapon,
-        string $scoredDate,
-        string $source,
-        array $comments
+        array $options = []
     ): ParsedScore {
         return new ParsedScore(
+            $this->nextScoreId++,
             $player,
             $score,
-            $ship,
-            $mode,
-            $weapon,
-            $scoredDate,
-            $source,
-            $comments
+            $options['ship'] ?? '',
+            $options['mode'] ?? '',
+            $options['weapon'] ?? '',
+            $options['scoredDate'] ?? '',
+            $options['source'] ?? '',
+            $options['comments'] ?? []
         );
     }
 }
