@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Import;
 
-use Stg\HallOfRecords\Locale\Translator;
-
 final class ParsedGame
 {
     private int $id;
@@ -22,6 +20,7 @@ final class ParsedGame
     private string $company;
     /** @var ParsedScore[] */
     private array $scores;
+    private ParsedLayout $layout;
 
     /**
      * @param ParsedScore[] $scores
@@ -30,12 +29,14 @@ final class ParsedGame
         int $id,
         string $name,
         string $company,
-        array $scores
+        array $scores,
+        ParsedLayout $layout
     ) {
         $this->id = $id;
         $this->name = $name;
         $this->company = $company;
         $this->scores = $scores;
+        $this->layout = $layout;
     }
 
     public function id(): int
@@ -59,5 +60,10 @@ final class ParsedGame
     public function scores(): array
     {
         return $this->scores;
+    }
+
+    public function layout(): ParsedLayout
+    {
+        return $this->layout;
     }
 }

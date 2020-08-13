@@ -97,7 +97,8 @@ final class YamlParser
             array_map(
                 fn (array $entry) => $this->parseScore($entry, $translator),
                 $properties['entries'] ?? []
-            )
+            ),
+            $this->parseLayout($properties['layout'] ?? [], $translator)
         );
     }
 
@@ -106,9 +107,9 @@ final class YamlParser
      */
     private function parseScore(
         array $properties,
-        Translator $translator
+        Translator $fallbackTranslator
     ): ParsedScore {
-        $translator = $this->parseLocalTranslations($properties, $translator);
+        $translator = $this->parseLocalTranslations($properties, $fallbackTranslator);
 
         $translateString = $this->createStringTranslator($translator, $properties);
         $translateArray = $this->createArrayTranslator($translator, $properties);
@@ -170,6 +171,45 @@ final class YamlParser
                 $properties["{$name}-{$this->locale}"]
             ),
             new Translator($fallbackTranslator)
+        );
+    }
+
+    /**
+     * @param array<string,mixed> $properties
+     */
+    private function parseLayout(
+        array $properties,
+        Translator $translator
+    ): ParsedLayout {
+        return $this->parsedDataFactory->createLayout(
+            array_map(
+                fn (array $column) => $this->parseColumn($column, $translator),
+                array_filter(
+                    $properties['columns'] ?? [],
+                    fn ($column) => is_array($column)
+                )
+            ),
+            $properties['sort'] ?? []
+        );
+    }
+
+    /**
+     * @param array<string,mixed> $properties
+     */
+    private function parseColumn(
+        array $properties,
+        Translator $fallbackTranslator
+    ): ParsedColumn {
+        $translator = $this->parseLocalTranslations($properties, $fallbackTranslator);
+
+        $translateString = $this->createStringTranslator($translator, $properties);
+
+        return $this->parsedDataFactory->createColumn(
+            $translateString('label'),
+            $translateString('value'),
+            [
+                'groupSameValues' => $properties['groupSameValues'] ?? false,
+            ]
         );
     }
 

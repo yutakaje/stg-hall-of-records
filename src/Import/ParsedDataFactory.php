@@ -51,13 +51,15 @@ final class ParsedDataFactory
     public function createGame(
         string $name,
         string $company,
-        array $scores = []
+        array $scores,
+        ParsedLayout $layout
     ): ParsedGame {
         return new ParsedGame(
             $this->nextGameId++,
             $name,
             $company,
-            $scores
+            $scores,
+            $layout
         );
     }
 
@@ -79,6 +81,35 @@ final class ParsedDataFactory
             $options['scoredDate'] ?? '',
             $options['source'] ?? '',
             $options['comments'] ?? []
+        );
+    }
+
+    /**
+     * @param ParsedColumn[] $columns;
+     * @param array<string,string> $sort
+     */
+    public function createLayout(
+        array $columns = [],
+        array $sort = []
+    ): ParsedLayout {
+        return new ParsedLayout(
+            $columns,
+            $sort
+        );
+    }
+
+    /**
+     * @param array<string,mixed> $options
+     */
+    public function createColumn(
+        string $label,
+        string $value,
+        array $options = []
+    ): ParsedColumn {
+        return new ParsedColumn(
+            $label,
+            $value,
+            ($options['groupSameValues'] ?? false) === true
         );
     }
 }

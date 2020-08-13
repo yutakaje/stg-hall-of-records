@@ -92,6 +92,7 @@ class YamlParserTest extends \Tests\TestCase
                             'source' => 'Superplay DVD',
                         ]),
                     ],
+                    $factory->createLayout()
                 ),
                 $factory->createGame(
                     'Ketsui: Kizuna Jigoku Tachi',
@@ -114,6 +115,28 @@ class YamlParserTest extends \Tests\TestCase
                             ],
                         ]),
                     ],
+                    $factory->createLayout(
+                        [
+                            $factory->createColumn('Ship', '{{ship}}', [
+                                'groupSameValues' => true,
+                            ]),
+                            $factory->createColumn('Loop', '{{mode}}'),
+                            $factory->createColumn('Score', '{{score}}'),
+                            $factory->createColumn('Player', '{{player}}', [
+                                'groupSameValues' => true,
+                            ]),
+                            $factory->createColumn(
+                                'Date / Source',
+                                '{{scored-date}} / {{source}}'
+                            ),
+                            $factory->createColumn('Comment', '{{comments}}'),
+                        ],
+                        [
+                            'ship' => 'asc',
+                            'mode' => 'asc',
+                            'score' => 'desc',
+                        ]
+                    )
                 ),
             ],
             $parsedData->games()
@@ -164,6 +187,7 @@ class YamlParserTest extends \Tests\TestCase
                             'source' => 'Superplay DVD',
                         ]),
                     ],
+                    $factory->createLayout()
                 ),
                 $factory->createGame(
                     'Ketsui: Kizuna Jigoku Tachi',
@@ -186,6 +210,28 @@ class YamlParserTest extends \Tests\TestCase
                             ],
                         ]),
                     ],
+                    $factory->createLayout(
+                        [
+                            $factory->createColumn('Ship', '{{ship}}', [
+                                'groupSameValues' => true,
+                            ]),
+                            $factory->createColumn('Loop', '{{mode}}'),
+                            $factory->createColumn('Score', '{{score}}'),
+                            $factory->createColumn('Player', '{{player}}', [
+                                'groupSameValues' => true,
+                            ]),
+                            $factory->createColumn(
+                                'Date / Source',
+                                '{{scored-date}} / {{source}}'
+                            ),
+                            $factory->createColumn('Comment', '{{comments}}'),
+                        ],
+                        [
+                            'ship' => 'asc',
+                            'mode' => 'asc',
+                            'score' => 'desc',
+                        ]
+                    )
                 ),
             ],
             $parsedData->games()
@@ -236,6 +282,7 @@ class YamlParserTest extends \Tests\TestCase
                             'source' => 'Superplay DVD',
                         ]),
                     ],
+                    $factory->createLayout()
                 ),
                 $factory->createGame(
                     'ケツイ ～絆地獄たち～',
@@ -258,6 +305,28 @@ class YamlParserTest extends \Tests\TestCase
                             ],
                         ]),
                     ],
+                    $factory->createLayout(
+                        [
+                            $factory->createColumn('自機', '{{ship}}', [
+                                'groupSameValues' => true,
+                            ]),
+                            $factory->createColumn('2週種', '{{mode}}'),
+                            $factory->createColumn('スコア', '{{score}}'),
+                            $factory->createColumn('プレイヤー', '{{player}}', [
+                                'groupSameValues' => true,
+                            ]),
+                            $factory->createColumn(
+                                '年月日 / 情報元',
+                                '{{scored-date}} / {{source}}'
+                            ),
+                            $factory->createColumn('備考', '{{comments}}'),
+                        ],
+                        [
+                            'ship' => 'asc',
+                            'mode' => 'asc',
+                            'score' => 'desc',
+                        ]
+                    )
                 ),
             ],
             $parsedData->games()
@@ -367,6 +436,47 @@ class YamlParserTest extends \Tests\TestCase
                         'property' => 'mode',
                         'value' => 'Ura',
                         'value-jp' => '裏2週',
+                    ],
+                ],
+                'layout' => [
+                    'columns' => [
+                        [
+                            'label' => 'Ship',
+                            'label-jp' => '自機',
+                            'value' => '{{ship}}',
+                            'groupSameValues' => true,
+                        ],
+                        [
+                            'label' => 'Loop',
+                            'label-jp' => '2週種',
+                            'value' => '{{mode}}',
+                        ],
+                        [
+                            'label' => 'Score',
+                            'label-jp' => 'スコア',
+                            'value' => '{{score}}',
+                        ],
+                        [
+                            'label' => 'Player',
+                            'label-jp' => 'プレイヤー',
+                            'value' => '{{player}}',
+                            'groupSameValues' => true,
+                        ],
+                        [
+                            'label' => 'Date / Source',
+                            'label-jp' => '年月日 / 情報元',
+                            'value' => '{{scored-date}} / {{source}}',
+                        ],
+                        [
+                            'label' => 'Comment',
+                            'label-jp' => '備考',
+                            'value' => '{{comments}}',
+                        ],
+                    ],
+                    'sort' => [
+                        'ship' => 'asc',
+                        'mode' => 'asc',
+                        'score' => 'desc',
                     ],
                 ],
             ],

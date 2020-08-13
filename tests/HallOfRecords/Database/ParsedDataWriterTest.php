@@ -52,6 +52,7 @@ class ParsedDataWriterTest extends \Tests\TestCase
                     ),
                     $this->filterByGame($scoreRecords, $gameRecord['id'])
                 ),
+                $factory->createLayout()
             ),
             $gameRecords
         ));
@@ -131,7 +132,8 @@ class ParsedDataWriterTest extends \Tests\TestCase
                             'scoredDate' => '2007',
                             'source' => 'Superplay DVD',
                         ]),
-                    ]
+                    ],
+                    $factory->createLayout()
                 ),
                 $factory->createGame(
                     'Ketsui: Kizuna Jigoku Tachi',
@@ -154,7 +156,8 @@ class ParsedDataWriterTest extends \Tests\TestCase
                                 '1周 2.85億',
                             ],
                         ]),
-                    ]
+                    ],
+                    $factory->createLayout()
                 ),
             ]
         );

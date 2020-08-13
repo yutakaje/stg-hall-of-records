@@ -37,7 +37,6 @@ final class InMemoryDatabaseCreator
         $games->addColumn('name', 'string', ['length' => 100]);
         $games->addColumn('company', 'string', ['length' => 100]);
         //        $games->addColumn('links', 'json');
-        //        $games->addColumn('layout', 'json');
         $games->setPrimaryKey(['id']);
         $schemaManager->createTable($games);
 

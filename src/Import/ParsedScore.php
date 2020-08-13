@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Import;
 
-use Stg\HallOfRecords\Locale\Translator;
-
 final class ParsedScore
 {
     private int $id;
