@@ -23,10 +23,10 @@ class YamlExtractorTest extends \Tests\TestCase
         $input = $this->loadFile('wiki-input');
         $expected = $this->loadFile('yaml-output');
 
-        $extractor = new YamlExtractor($input);
+        $extractor = new YamlExtractor();
 
         self::assertSame(
-            $extractor->extract(),
+            $extractor->extract($input),
             array_map(
                 fn (string $yaml) => Yaml::parse($yaml),
                 explode('<<<<<<<<<<==========>>>>>>>>>>', $expected)

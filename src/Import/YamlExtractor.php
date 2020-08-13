@@ -17,19 +17,12 @@ use Symfony\Component\Yaml\Yaml;
 
 final class YamlExtractor
 {
-    private string $input;
-
-    public function __construct(string $input)
-    {
-        $this->input = $input;
-    }
-
     /**
      * @return array[]
      */
-    public function extract(): array
+    public function extract(string $input): array
     {
-        preg_match_all('@<nowiki>(.*?)</nowiki>@us', $this->input, $matches);
+        preg_match_all('@<nowiki>(.*?)</nowiki>@us', $input, $matches);
 
         return array_map(
             fn (string $yaml) => Yaml::parse($yaml),
