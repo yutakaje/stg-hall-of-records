@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Stg\HallOfRecords\Database;
 
 use Doctrine\DBAL\Connection;
+use Stg\HallOfRecords\Import\ParsedData;
 use Stg\HallOfRecords\Import\ParsedGame;
 use Stg\HallOfRecords\Import\ParsedScore;
 
@@ -30,12 +31,9 @@ final class ParsedDataWriter
         $this->nextScoreId = 1;
     }
 
-    /**
-     * @param ParsedGame[] $games
-     */
-    public function write(array $games): void
+    public function write(ParsedData $data): void
     {
-        foreach ($games as $game) {
+        foreach ($data->games() as $game) {
             $this->insertGame($game);
         }
     }

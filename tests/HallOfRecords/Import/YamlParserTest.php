@@ -20,13 +20,13 @@ class YamlParserTest extends \Tests\TestCase
     public function testWithNoSections(): void
     {
         $parser = new YamlParser();
-        $parser->parse([]);
+        $parsedData = $parser->parse([]);
 
         self::assertEquals(
             $this->createParsedGlobalProperties([]),
-            $parser->parsedGlobalProperties()
+            $parsedData->globalProperties()
         );
-        self::assertEquals([], $parser->parsedGames());
+        self::assertEquals([], $parsedData->games());
     }
 
     public function testWithNoGames(): void
@@ -34,7 +34,7 @@ class YamlParserTest extends \Tests\TestCase
         $global = $this->globalPropertiesInput();
 
         $parser = new YamlParser();
-        $parser->parse([
+        $parsedData = $parser->parse([
             $global,
         ]);
 
@@ -42,9 +42,9 @@ class YamlParserTest extends \Tests\TestCase
             $this->createParsedGlobalProperties([
                 'description' => 'some description',
             ]),
-            $parser->parsedGlobalProperties()
+            $parsedData->globalProperties()
         );
-        self::assertEquals([], $parser->parsedGames());
+        self::assertEquals([], $parsedData->games());
     }
 
     public function testWithGamesAndDefaultLocale(): void
@@ -53,7 +53,7 @@ class YamlParserTest extends \Tests\TestCase
         $games = $this->gamesInput();
 
         $parser = new YamlParser();
-        $parser->parse(array_merge(
+        $parsedData = $parser->parse(array_merge(
             [$global],
             $games
         ));
@@ -62,7 +62,7 @@ class YamlParserTest extends \Tests\TestCase
             $this->createParsedGlobalProperties([
                 'description' => 'some description',
             ]),
-            $parser->parsedGlobalProperties()
+            $parsedData->globalProperties()
         );
         self::assertEquals(
             [
@@ -117,7 +117,7 @@ class YamlParserTest extends \Tests\TestCase
                     ],
                 ]),
             ],
-            $parser->parsedGames()
+            $parsedData->games()
         );
     }
 
@@ -128,7 +128,7 @@ class YamlParserTest extends \Tests\TestCase
         $locale = 'en';
 
         $parser = new YamlParser($locale);
-        $parser->parse(array_merge(
+        $parsedData = $parser->parse(array_merge(
             [$global],
             $games
         ));
@@ -137,7 +137,7 @@ class YamlParserTest extends \Tests\TestCase
             $this->createParsedGlobalProperties([
                 'description' => 'some description',
             ]),
-            $parser->parsedGlobalProperties()
+            $parsedData->globalProperties()
         );
         self::assertEquals(
             [
@@ -192,7 +192,7 @@ class YamlParserTest extends \Tests\TestCase
                     ],
                 ]),
             ],
-            $parser->parsedGames()
+            $parsedData->games()
         );
     }
 
@@ -203,7 +203,7 @@ class YamlParserTest extends \Tests\TestCase
         $locale = 'jp';
 
         $parser = new YamlParser($locale);
-        $parser->parse(array_merge(
+        $parsedData = $parser->parse(array_merge(
             [$global],
             $games
         ));
@@ -212,7 +212,7 @@ class YamlParserTest extends \Tests\TestCase
             $this->createParsedGlobalProperties([
                 'description' => 'ある説明',
             ]),
-            $parser->parsedGlobalProperties()
+            $parsedData->globalProperties()
         );
         self::assertEquals(
             [
@@ -267,7 +267,7 @@ class YamlParserTest extends \Tests\TestCase
                     ],
                 ]),
             ],
-            $parser->parsedGames()
+            $parsedData->games()
         );
     }
 

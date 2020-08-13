@@ -18,47 +18,30 @@ use Stg\HallOfRecords\Locale\Translator;
 final class YamlParser
 {
     private string $locale;
-    private ParsedGlobalProperties $globalProperties;
-    /** @var ParsedGame[] */
-    private array $games;
 
     public function __construct(string $locale = '')
     {
         $this->locale = $locale;
-        $this->globalProperties = new ParsedGlobalProperties();
-        $this->games = [];
-    }
-
-    public function parsedGlobalProperties(): ParsedGlobalProperties
-    {
-        return $this->globalProperties;
-    }
-
-    /**
-     * @return ParsedGame[]
-     */
-    public function parsedGames(): array
-    {
-        return $this->games;
     }
 
     /**
      * @param array<string,mixed>[] $sections
      */
-    public function parse(array $sections): void
+    public function parse(array $sections): ParsedData
     {
         $globalTranslator = $this->parseTranslations(
             $this->extractGlobalProperties($sections)
         );
 
-        $this->globalProperties = $this->parseGlobalProperties(
-            $this->extractGlobalProperties($sections),
-            $globalTranslator
-        );
-
-        $this->games = $this->parseGames(
-            $this->extractGames($sections),
-            $globalTranslator
+        return new ParsedData(
+            $this->parseGlobalProperties(
+                $this->extractGlobalProperties($sections),
+                $globalTranslator
+            ),
+            $this->parseGames(
+                $this->extractGames($sections),
+                $globalTranslator
+            )
         );
     }
 

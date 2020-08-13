@@ -15,22 +15,27 @@ namespace Tests\HallOfRecords\Database;
 
 use Doctrine\DBAL\Connection;
 use Stg\HallOfRecords\Database\ParsedDataWriter;
+use Stg\HallOfRecords\Import\ParsedData;
 use Stg\HallOfRecords\Import\ParsedGame;
+use Stg\HallOfRecords\Import\ParsedGlobalProperties;
 
 class ParsedDataWriterTest extends \Tests\TestCase
 {
     public function testWrite(): void
     {
-        $parsedGames = $this->createParsedGames();
+        $parsedData = new ParsedData(
+            new ParsedGlobalProperties(),
+            $this->createParsedGames()
+        );
 
         $connection = $this->prepareDatabase();
         $writer = new ParsedDataWriter($connection);
-        $writer->write($parsedGames);
+        $writer->write($parsedData);
 
         $gameRecords = $this->readGames($connection);
         $scoreRecords = $this->readScores($connection);
 
-        self::assertEquals($parsedGames, array_map(
+        self::assertEquals($parsedData->games(), array_map(
             fn (array $gameRecord) => $this->createParsedGame([
                 'name' => $gameRecord['name'],
                 'company' => $gameRecord['company'],
