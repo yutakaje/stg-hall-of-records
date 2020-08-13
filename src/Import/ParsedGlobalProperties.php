@@ -17,7 +17,7 @@ final class ParsedGlobalProperties
 {
     private string $description;
 
-    public function __construct(string $description = '')
+    public function __construct(string $description)
     {
         $this->description = $description;
     }

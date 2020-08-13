@@ -17,10 +17,12 @@ use Stg\HallOfRecords\Locale\Translator;
 
 final class YamlParser
 {
+    private ParsedDataFactory $parsedDataFactory;
     private string $locale;
 
     public function __construct(string $locale = '')
     {
+        $this->parsedDataFactory = new ParsedDataFactory();
         $this->locale = $locale;
     }
 
@@ -33,7 +35,7 @@ final class YamlParser
             $this->extractGlobalProperties($sections)
         );
 
-        return new ParsedData(
+        return $this->parsedDataFactory->create(
             $this->parseGlobalProperties(
                 $this->extractGlobalProperties($sections),
                 $globalTranslator
@@ -54,7 +56,7 @@ final class YamlParser
     ): ParsedGlobalProperties {
         $translator = $this->parseLocalTranslations($properties, $translator);
 
-        return new ParsedGlobalProperties(
+        return $this->parsedDataFactory->createGlobalProperties(
             $translator->translate('description', $properties['description'] ?? '')
         );
     }
@@ -84,7 +86,7 @@ final class YamlParser
             $this->parseTranslations($properties, $translator),
         );
 
-        return new ParsedGame(
+        return $this->parsedDataFactory->createGame(
             $translator->translate('name', $properties['name'] ?? ''),
             $translator->translate('company', $properties['company'] ?? ''),
             array_map(
@@ -103,7 +105,7 @@ final class YamlParser
     ): ParsedScore {
         $translator = $this->parseLocalTranslations($properties, $translator);
 
-        return new ParsedScore(
+        return $this->parsedDataFactory->createScore(
             $translator->translate('player', $properties['player'] ?? ''),
             $translator->translate('score', $properties['score'] ?? ''),
             $translator->translate('ship', $properties['ship'] ?? ''),

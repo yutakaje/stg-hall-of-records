@@ -22,12 +22,14 @@ use Stg\HallOfRecords\Data\ScoreFactory;
 use Stg\HallOfRecords\Data\Scores;
 use Stg\HallOfRecords\Database\ConnectionFactory;
 use Stg\HallOfRecords\Database\InMemoryDatabaseCreator;
+use Stg\HallOfRecords\Import\ParsedDataFactory;
 use Stg\HallOfRecords\Import\ParsedGame;
 use Stg\HallOfRecords\Import\ParsedGlobalProperties;
 use Stg\HallOfRecords\Import\ParsedScore;
 
 abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
+    private ParsedDataFactory $parsedDataFactory;
     private GameFactory $gameFactory;
     private ScoreFactory $scoreFactory;
 
@@ -36,6 +38,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
      */
     protected function setUp(): void
     {
+        $this->parsedDataFactory = new ParsedDataFactory();
         $this->gameFactory = new GameFactory();
         $this->scoreFactory = new ScoreFactory();
     }
@@ -54,7 +57,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     protected function createParsedGlobalProperties(
         array $properties
     ): ParsedGlobalProperties {
-        return new ParsedGlobalProperties(
+        return $this->parsedDataFactory->createGlobalProperties(
             $properties['description'] ?? ''
         );
     }
@@ -64,7 +67,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
      */
     protected function createParsedGame(array $properties): ParsedGame
     {
-        return new ParsedGame(
+        return $this->parsedDataFactory->createGame(
             $properties['name'],
             $properties['company'],
             $properties['scores']
@@ -76,7 +79,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
      */
     protected function createParsedScore(array $properties): ParsedScore
     {
-        return new ParsedScore(
+        return $this->parsedDataFactory->createScore(
             $properties['player'],
             $properties['score'],
             $properties['ship'] ?? '',

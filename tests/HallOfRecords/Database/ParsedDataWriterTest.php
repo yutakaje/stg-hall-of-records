@@ -17,14 +17,13 @@ use Doctrine\DBAL\Connection;
 use Stg\HallOfRecords\Database\ParsedDataWriter;
 use Stg\HallOfRecords\Import\ParsedData;
 use Stg\HallOfRecords\Import\ParsedGame;
-use Stg\HallOfRecords\Import\ParsedGlobalProperties;
 
 class ParsedDataWriterTest extends \Tests\TestCase
 {
     public function testWrite(): void
     {
         $parsedData = new ParsedData(
-            new ParsedGlobalProperties(),
+            $this->createParsedGlobalProperties([]),
             $this->createParsedGames()
         );
 
