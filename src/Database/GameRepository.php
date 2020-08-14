@@ -15,9 +15,10 @@ namespace Stg\HallOfRecords\Database;
 
 use Doctrine\DBAL\Connection;
 use Stg\HallOfRecords\Data\GameFactory;
+use Stg\HallOfRecords\Data\GameRepositoryInterface;
 use Stg\HallOfRecords\Data\Games;
 
-final class GameRepository extends AbstractRepository
+final class GameRepository extends AbstractRepository implements GameRepositoryInterface
 {
     private GameFactory $gameFactory;
 
