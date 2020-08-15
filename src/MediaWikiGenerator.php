@@ -83,6 +83,6 @@ final class MediaWikiGenerator
             $this->repositoryFactory->createGameRepository($connection),
             $this->repositoryFactory->createScoreRepository($connection)
         );
-        return $exporter->export();
+        return $exporter->export($parsedData->layouts());
     }
 }

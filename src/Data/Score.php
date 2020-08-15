@@ -111,4 +111,35 @@ final class Score
     {
         return $this->comments;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getProperty(string $name)
+    {
+        switch ($name) {
+            case 'id':
+                return $this->id;
+            case 'gameId':
+                return $this->gameId;
+            case 'player':
+                return $this->player;
+            case 'score':
+                return $this->score;
+            case 'ship':
+                return $this->ship;
+            case 'mode':
+                return $this->mode;
+            case 'weapon':
+                return $this->weapon;
+            case 'scoredDate':
+                return $this->scoredDate;
+            case 'source':
+                return $this->source;
+            case 'comments':
+                return $this->comments;
+            default:
+                return null;
+        }
+    }
 }

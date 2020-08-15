@@ -86,7 +86,7 @@ final class ParsedDataFactory
 
     /**
      * @param ParsedColumn[] $columns;
-     * @param array<string,string> $sort
+     * @param array<string,mixed> $sort
      */
     public function createLayout(
         array $columns = [],

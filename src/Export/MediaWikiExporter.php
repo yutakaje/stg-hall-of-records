@@ -14,10 +14,10 @@ declare(strict_types=1);
 namespace Stg\HallOfRecords\Export;
 
 use Stg\HallOfRecords\Data\Game;
+use Stg\HallOfRecords\Data\GameRepositoryInterface;
 use Stg\HallOfRecords\Data\Score;
+use Stg\HallOfRecords\Data\ScoreRepositoryInterface;
 use Stg\HallOfRecords\Data\Scores;
-use Stg\HallOfRecords\Database\GameRepository;
-use Stg\HallOfRecords\Database\ScoreRepository;
 use Stg\HallOfRecords\Import\ParsedColumn;
 use Stg\HallOfRecords\Import\ParsedLayout;
 use Twig\Environment;
@@ -26,19 +26,18 @@ use Twig\Loader\FilesystemLoader;
 
 final class MediaWikiExporter
 {
-    private GameRepository $gameRepository;
-    private ScoreRepository $scoreRepository;
-    private Environment $template;
+    private GameRepositoryInterface $games;
+    private ScoreRepositoryInterface $scores;
+    private Environment $twig;
 
     public function __construct(
-        GameRepository $gameRepository,
-        ScoreRepository $scoreRepository
+        GameRepositoryInterface $games,
+        ScoreRepositoryInterface $scores
     ) {
-        $this->gameRepository = $gameRepository;
-        $this->scoreRepository = $scoreRepository;
-        $this->templates = new Environment(
-            new FilesystemLoader(__DIR__ . '/templates'),
-            ['debug' => true,]
+        $this->games = $games;
+        $this->scores = $scores;
+        $this->twig = new Environment(
+            new FilesystemLoader(__DIR__ . '/templates')
         );
     }
 
@@ -47,81 +46,70 @@ final class MediaWikiExporter
      */
     public function export(array $layouts): string
     {
-        return $this->exportGames(array_map(
-            fn (Game $game) => $this->exportGame(
-                $game,
-                $this->scoreRepository->filterByGame($game),
-                $layouts[$game->id()]->columns()
-            ),
-            $this->gameRepository->all()->asArray()
-        ));
+        return $this->exportGames($layouts);
     }
 
     /**
-     * @param string[] $exportedGames
+     * @param array<int,ParsedLayout> $layouts
      */
-    private function exportGames(array $exportedGames): string
+    private function exportGames(array $layouts): string
     {
-        return implode(PHP_EOL, $exportedGames);
+        return $this->twig->render('games.tpl', [
+            'games' => array_map(
+                fn (Game $game) => $this->createGameVariable(
+                    $game,
+                    $this->scores->filterByGame($game),
+                    $layouts[$game->id()]->columns()
+                ),
+                $this->games->all()->asArray()
+            ),
+        ]);
     }
 
     /**
      * @param ParsedColumn[] $columns
      */
-    private function exportGame(
+    private function createGameVariable(
         Game $game,
         Scores $scores,
         array $columns
-    ): string {
-        return $this->templates->render('game.tpl', [
-            'game' => $game,
-            'headers' => array_map(
-                fn (ParsedColumn $column) => $column->label(),
+    ): \stdClass {
+        $variable = new \stdClass();
+        $variable->game = $game;
+        $variable->headers = array_map(
+            fn (ParsedColumn $column) => $column->label(),
+            $columns
+        );
+        $variable->scores = array_map(
+            fn (Score $score) => $this->createScoreVariable(
+                $score,
                 $columns
             ),
-            'scores' => array_map(
-                fn (Score $score) => $this->exportScore($score, $columns),
-                $scores->asArray()
-            ),
-        ]);
+            $scores->asArray()
+        );
+        return $variable;
     }
 
     /**
      * @param ParsedColumn[] $columns
+     * @return string[]
      */
-    private function exportScore(Score $score, array $columns): string
+    private function createScoreVariable(Score $score, array $columns): array
     {
-        return $this->templates->render('score.tpl', [
-            'columns' => array_map(
-                fn (ParsedColumn $column) => $this->exportScoreColumn(
-                    $score,
-                    $column
-                ),
-                $columns
+        return array_map(
+            fn (ParsedColumn $column) => $this->renderTemplate(
+                $column->value(),
+                $score
             ),
-        ]);
-    }
-
-    private function exportScoreColumn(Score $score, ParsedColumn $column): string
-    {
-        return $this->templates->render('score-column.tpl', [
-            'column' => $this->createScoreColumn($score, $column->value()),
-        ]);
-    }
-
-    private function createScoreColumn(Score $score, string $template): \stdClass
-    {
-        $column = new \stdClass();
-        $column->value = $this->renderTemplate($template, $score);
-        return $column;
+            $columns
+        );
     }
 
     private function renderTemplate(string $template, Score $score): string
     {
-        //print_r($this->preparePlaceholders($template));
         $renderer = new Environment(new ArrayLoader([
             'template' => $this->preparePlaceholders($template),
-        ]), ['debug' => true,]);
+        ]));
 
         return $renderer->render('template', [
             'score' => $score,
@@ -130,40 +118,35 @@ final class MediaWikiExporter
 
     private function preparePlaceholders(string $template): string
     {
-        return str_replace('{{ ', '{{ score.', preg_replace_callback(
-            '/{{([\w-]+)}}/u',
-            fn (array $match) => $this->toCamelCase($match[1]),
-            $template
+        return str_replace('{{ ', '{{ score.', $this->replacePattern(
+            $template,
+            '/{{ ([\w-]+) }}/u',
+            fn (array $match) => "{{ {$this->toCamelCase($match[1])} }}"
         ));
-    }
-
-    /**
-     * @return mixed
-     */
-    private function replacePlaceholders(string $template, Score $score)
-    {
-        print_r(preg_replace_callback(
-            '/{{([\w-]+)}}/u',
-            fn (array $match) => $score->getProperty(
-                $this->toCamelCase($match[1])
-            ),
-            $template
-        ));
-        return preg_replace_callback(
-            '/{{([\w-]+)}}/u',
-            fn (array $match) => $score->getProperty(
-                $this->toCamelCase($match[1])
-            ),
-            $template
-        );
     }
 
     private function toCamelCase(string $propertyName): string
     {
-        return preg_replace_callback(
+        return $this->replacePattern(
+            $propertyName,
             '/-(\w)/',
-            fn (array $match) => strtoupper($match[1]),
-            $propertyName
+            fn (array $match) => strtoupper($match[1])
         );
+    }
+
+    private function replacePattern(
+        string $haystack,
+        string $pattern,
+        \Closure $callback
+    ): string {
+        $replaced = preg_replace_callback($pattern, $callback, $haystack);
+
+        if ($replaced === null) {
+            throw new \UnexpectedValueException(
+                "Error replacing pattern `{$pattern}`"
+            );
+        }
+
+        return $replaced;
     }
 }

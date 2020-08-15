@@ -17,12 +17,12 @@ final class ParsedLayout
 {
     /** @var ParsedColumn[] */
     private array $columns;
-    /** @var array<string,string> */
+    /** @var array<string,mixed> */
     private array $sort;
 
     /**
      * @param ParsedColumn[] $columns;
-     * @param array<string,string> $sort
+     * @param array<string,mixed> $sort
      */
     public function __construct(
         array $columns,
@@ -41,7 +41,7 @@ final class ParsedLayout
     }
 
     /**
-     * @return array<string,string>
+     * @return array<string,mixed>
      */
     public function sort(): array
     {

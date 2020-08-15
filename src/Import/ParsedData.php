@@ -42,4 +42,18 @@ final class ParsedData
     {
         return $this->games;
     }
+
+    /**
+     * @return array<int,ParsedLayout>
+     */
+    public function layouts(): array
+    {
+        $layouts = [];
+
+        foreach ($this->games as $game) {
+            $layouts[$game->id()] = $game->layout();
+        }
+
+        return $layouts;
+    }
 }
