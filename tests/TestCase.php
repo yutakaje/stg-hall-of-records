@@ -125,4 +125,17 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
                 ->execute();
         }
     }
+
+    protected function loadFile(string $filename): string
+    {
+        $contents = file_get_contents($filename);
+
+        if ($contents === false) {
+            throw new \UnexpectedValueException(
+                "Unable to load file: `{$filename}`"
+            );
+        }
+
+        return $contents;
+    }
 }

@@ -20,8 +20,8 @@ class YamlExtractorTest extends \Tests\TestCase
 {
     public function testWithValidInput(): void
     {
-        $input = $this->loadFile('wiki-input');
-        $expected = $this->loadFile('yaml-output');
+        $input = $this->loadFile(__DIR__ . '/wiki-input');
+        $expected = $this->loadFile(__DIR__ . '/yaml-output');
 
         $extractor = new YamlExtractor();
 
@@ -32,18 +32,5 @@ class YamlExtractorTest extends \Tests\TestCase
                 explode('<<<<<<<<<<==========>>>>>>>>>>', $expected)
             )
         );
-    }
-
-    private function loadFile(string $filename): string
-    {
-        $contents = file_get_contents(__DIR__ . "/{$filename}");
-
-        if ($contents === false) {
-            throw new \UnexpectedValueException(
-                "Unable to load file: `{$filename}`"
-            );
-        }
-
-        return $contents;
     }
 }
