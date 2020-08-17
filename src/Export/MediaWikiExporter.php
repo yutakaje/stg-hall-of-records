@@ -22,22 +22,26 @@ use Stg\HallOfRecords\Import\ParsedColumn;
 use Stg\HallOfRecords\Import\ParsedLayout;
 use Twig\Environment;
 use Twig\Loader\ArrayLoader;
-use Twig\Loader\FilesystemLoader;
 
 final class MediaWikiExporter
 {
     private GameRepositoryInterface $games;
     private ScoreRepositoryInterface $scores;
     private Environment $twig;
+    private Environment $globalTemplates;
 
+    /**
+     * @param array<string,string> $globalTemplates
+     */
     public function __construct(
         GameRepositoryInterface $games,
-        ScoreRepositoryInterface $scores
+        ScoreRepositoryInterface $scores,
+        array $globalTemplates
     ) {
         $this->games = $games;
         $this->scores = $scores;
-        $this->twig = new Environment(
-            new FilesystemLoader(__DIR__ . '/templates')
+        $this->globalTemplates = new Environment(
+            new ArrayLoader($globalTemplates)
         );
     }
 
@@ -54,7 +58,7 @@ final class MediaWikiExporter
      */
     private function exportGames(array $layouts): string
     {
-        return $this->twig->render('games.tpl', [
+        return $this->globalTemplates->render('games', [
             'games' => array_map(
                 fn (Game $game) => $this->createGameVariable(
                     $game,

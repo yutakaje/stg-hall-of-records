@@ -26,11 +26,63 @@ class YamlExtractorTest extends \Tests\TestCase
         $extractor = new YamlExtractor();
 
         self::assertSame(
-            $extractor->extract($input),
             array_map(
                 fn (string $yaml) => Yaml::parse($yaml),
                 explode('<<<<<<<<<<==========>>>>>>>>>>', $expected)
-            )
+            ),
+            $extractor->extract($input),
         );
+    }
+
+    public function testWithTemplates(): void
+    {
+        $input = <<<'YAML'
+<nowiki>
+templates:
+    games: |
+        {% for data in games %}
+        {{ include('game') }}
+        {% endfor %}
+    game: |
+        {| class="wikitable" style="text-align: center
+        |-
+        ! colspan="{{ data.headers|length }}" | {{ data.game.name }}
+        |-
+        ! {{ data.headers|join(' !! ') }}
+        {% for columns in data.scores %}
+        |-
+        | {{ columns|join(' || ') }}
+        {% endfor %}
+        |}
+</nowiki>
+
+YAML;
+        $expected = [
+            'templates' => [
+                'games' => <<<'TPL'
+{% for data in games %}
+{{ include('game') }}
+{% endfor %}
+
+TPL,
+                'game' => <<<'TPL'
+{| class="wikitable" style="text-align: center
+|-
+! colspan="{{ data.headers|length }}" | {{ data.game.name }}
+|-
+! {{ data.headers|join(' !! ') }}
+{% for columns in data.scores %}
+|-
+| {{ columns|join(' || ') }}
+{% endfor %}
+|}
+
+TPL,
+            ],
+        ];
+
+        $extractor = new YamlExtractor();
+
+        self::assertSame([$expected], $extractor->extract($input));
     }
 }

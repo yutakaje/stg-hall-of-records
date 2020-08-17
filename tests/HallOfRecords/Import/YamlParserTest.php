@@ -52,6 +52,67 @@ class YamlParserTest extends \Tests\TestCase
         self::assertEquals([], $parsedData->games());
     }
 
+    public function testWithGlobalTemplates(): void
+    {
+        $global = $this->globalPropertiesInput();
+        $global['templates'] = [
+            'games' => <<<'TPL'
+{% for data in games %}
+{{ include('game') }}
+{% endfor %}
+
+TPL,
+            'game' => <<<'TPL'
+{| class="wikitable" style="text-align: center
+|-
+! colspan="{{ data.headers|length }}" | {{ data.game.name }}
+|-
+! {{ data.headers|join(' !! ') }}
+{% for columns in data.scores %}
+|-
+| {{ columns|join(' || ') }}
+{% endfor %}
+|}
+
+TPL,
+        ];
+
+        $parser = new YamlParser();
+        $parsedData = $parser->parse([
+            $global,
+        ]);
+
+        $factory = new ParsedDataFactory();
+
+        self::assertEquals(
+            $factory->createGlobalProperties([
+                'description' => 'some description',
+                'templates' => [
+                    'games' => <<<'TPL'
+{% for data in games %}
+{{ include('game') }}
+{% endfor %}
+
+TPL,
+                    'game' => <<<'TPL'
+{| class="wikitable" style="text-align: center
+|-
+! colspan="{{ data.headers|length }}" | {{ data.game.name }}
+|-
+! {{ data.headers|join(' !! ') }}
+{% for columns in data.scores %}
+|-
+| {{ columns|join(' || ') }}
+{% endfor %}
+|}
+
+TPL,
+                ],
+            ]),
+            $parsedData->globalProperties()
+        );
+    }
+
     public function testWithGamesAndDefaultLocale(): void
     {
         $global = $this->globalPropertiesInput();

@@ -61,6 +61,7 @@ final class YamlParser
 
         return $this->parsedDataFactory->createGlobalProperties([
             'description' => $translateString('description'),
+            'templates' => $properties['templates'] ?? [],
         ]);
     }
 

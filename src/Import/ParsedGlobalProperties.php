@@ -16,14 +16,30 @@ namespace Stg\HallOfRecords\Import;
 final class ParsedGlobalProperties
 {
     private string $description;
+    /** @var array<string,string> */
+    private array $templates;
 
-    public function __construct(string $description)
-    {
+    /**
+     * @param array<string,string> $templates
+     */
+    public function __construct(
+        string $description,
+        array $templates
+    ) {
         $this->description = $description;
+        $this->templates = $templates;
     }
 
     public function description(): string
     {
         return $this->description;
+    }
+
+    /**
+     * @return array<string,string>
+     */
+    public function templates(): array
+    {
+        return $this->templates;
     }
 }

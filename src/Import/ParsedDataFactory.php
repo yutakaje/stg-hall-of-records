@@ -41,7 +41,8 @@ final class ParsedDataFactory
         array $options = []
     ): ParsedGlobalProperties {
         return new ParsedGlobalProperties(
-            $options['description'] ?? ''
+            $options['description'] ?? '',
+            $options['templates'] ?? []
         );
     }
 

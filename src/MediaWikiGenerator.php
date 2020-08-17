@@ -94,7 +94,11 @@ final class MediaWikiGenerator
         ScoreRepositoryInterface $scores,
         ParsedData $parsedData
     ): string {
-        $exporter = new MediaWikiExporter($games, $scores);
+        $exporter = new MediaWikiExporter(
+            $games,
+            $scores,
+            $parsedData->globalProperties()->templates()
+        );
         return $exporter->export($parsedData->layouts());
     }
 }

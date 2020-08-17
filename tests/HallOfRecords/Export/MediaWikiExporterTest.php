@@ -70,7 +70,11 @@ class MediaWikiExporterTest extends \Tests\TestCase
                 }
             ));
 
-        $exporter = new MediaWikiExporter($gameRepository, $scoreRepository);
+        $exporter = new MediaWikiExporter(
+            $gameRepository,
+            $scoreRepository,
+            $parsedData->globalProperties()->templates()
+        );
 
         self::assertSame(
             $this->loadFile(__DIR__ . '/media-wiki-output-en'),
@@ -82,7 +86,29 @@ class MediaWikiExporterTest extends \Tests\TestCase
     {
         $factory = new ParsedDataFactory();
         return $factory->create(
-            $factory->createGlobalProperties(),
+            $factory->createGlobalProperties([
+                'templates' => [
+                    'games' => <<<'TPL'
+{% for data in games %}
+{{ include('game') }}
+{% endfor %}
+
+TPL,
+                    'game' => <<<'TPL'
+{| class="wikitable" style="text-align: center
+|-
+! colspan="{{ data.headers|length }}" | {{ data.game.name }}
+|-
+! {{ data.headers|join(' !! ') }}
+{% for columns in data.scores %}
+|-
+| {{ columns|join(' || ') }}
+{% endfor %}
+|}
+
+TPL,
+                ],
+            ]),
             [
                 $factory->createGame(
                     'Mushihimesama Futari 1.5',
