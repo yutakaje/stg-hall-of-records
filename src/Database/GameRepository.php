@@ -57,4 +57,19 @@ final class GameRepository extends AbstractRepository implements GameRepositoryI
 
         return new Games($games);
     }
+
+    public function add(Game $game): void
+    {
+        $this->connection()->createQueryBuilder()
+            ->insert('games')
+            ->values([
+                'id' => ':id',
+                'name' => ':name',
+                'company' => ':company',
+            ])
+            ->setParameter(':id', $game->id())
+            ->setParameter(':name', $game->name())
+            ->setParameter(':company', $game->company())
+            ->execute();
+    }
 }

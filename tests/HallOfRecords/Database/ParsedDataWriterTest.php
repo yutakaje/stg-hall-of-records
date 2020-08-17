@@ -14,7 +14,9 @@ declare(strict_types=1);
 namespace Tests\HallOfRecords\Database;
 
 use Doctrine\DBAL\Connection;
+use Stg\HallOfRecords\Database\GameRepository;
 use Stg\HallOfRecords\Database\ParsedDataWriter;
+use Stg\HallOfRecords\Database\ScoreRepository;
 use Stg\HallOfRecords\Import\ParsedDataFactory;
 use Stg\HallOfRecords\Import\ParsedData;
 
@@ -25,7 +27,10 @@ class ParsedDataWriterTest extends \Tests\TestCase
         $parsedData = $this->createParsedData();
 
         $connection = $this->prepareDatabase();
-        $writer = new ParsedDataWriter($connection);
+        $gameRepository = new GameRepository($connection);
+        $scoreRepository = new ScoreRepository($connection);
+
+        $writer = new ParsedDataWriter($gameRepository, $scoreRepository);
         $writer->write($parsedData);
 
         $gameRecords = $this->readGames($connection);

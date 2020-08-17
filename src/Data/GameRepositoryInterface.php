@@ -19,4 +19,6 @@ interface GameRepositoryInterface
      * @param array<string,mixed> $sort
      */
     public function all(array $sort = []): Games;
+
+    public function add(Game $game): void;
 }

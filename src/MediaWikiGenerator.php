@@ -13,7 +13,8 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords;
 
-use Doctrine\DBAL\Connection;
+use Stg\HallOfRecords\Data\GameRepositoryInterface;
+use Stg\HallOfRecords\Data\ScoreRepositoryInterface;
 use Stg\HallOfRecords\Database\InMemoryDatabaseCreator;
 use Stg\HallOfRecords\Database\ParsedDataWriter;
 use Stg\HallOfRecords\Database\RepositoryFactory;
@@ -37,16 +38,28 @@ final class MediaWikiGenerator
 
     public function generate(string $input, string $locale): string
     {
-        $connection = $this->databaseCreator->create();
+        return $this->export(
+            $this->parse($input, $locale)
+        );
+    }
 
-        $parsedData = $this->parseYaml(
+    private function parse(string $input, string $locale): ParsedData
+    {
+        return $this->parseYaml(
             $this->extractYaml($input),
             $locale
         );
+    }
 
-        $this->writeToDatabase($connection, $parsedData);
+    private function export(ParsedData $parsedData): string
+    {
+        $connection = $this->databaseCreator->create();
+        $games = $this->repositoryFactory->createGameRepository($connection);
+        $scores = $this->repositoryFactory->createScoreRepository($connection);
 
-        return $this->export($connection, $parsedData);
+        $this->writeToDatabase($games, $scores, $parsedData);
+
+        return $this->exportToWiki($games, $scores, $parsedData);
     }
 
     /**
@@ -68,21 +81,20 @@ final class MediaWikiGenerator
     }
 
     private function writeToDatabase(
-        Connection $connection,
+        GameRepositoryInterface $games,
+        ScoreRepositoryInterface $scores,
         ParsedData $parsedData
     ): void {
-        $writer = new ParsedDataWriter($connection);
+        $writer = new ParsedDataWriter($games, $scores);
         $writer->write($parsedData);
     }
 
-    private function export(
-        Connection $connection,
+    private function exportToWiki(
+        GameRepositoryInterface $games,
+        ScoreRepositoryInterface $scores,
         ParsedData $parsedData
     ): string {
-        $exporter = new MediaWikiExporter(
-            $this->repositoryFactory->createGameRepository($connection),
-            $this->repositoryFactory->createScoreRepository($connection)
-        );
+        $exporter = new MediaWikiExporter($games, $scores);
         return $exporter->export($parsedData->layouts());
     }
 }

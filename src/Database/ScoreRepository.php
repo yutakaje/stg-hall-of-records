@@ -73,4 +73,33 @@ final class ScoreRepository extends AbstractRepository implements ScoreRepositor
 
         return new Scores($scores);
     }
+
+    public function add(Score $score): void
+    {
+        $this->connection()->createQueryBuilder()
+            ->insert('scores')
+            ->values([
+                'id' => ':id',
+                'game_id' => ':gameId',
+                'player' => ':player',
+                'score' => ':score',
+                'ship' => ':ship',
+                'mode' => ':mode',
+                'weapon' => ':weapon',
+                'scored_date' => ':scoredDate',
+                'source' => ':source',
+                'comments' => ':comments',
+            ])
+            ->setParameter(':id', $score->id())
+            ->setParameter(':gameId', $score->gameId())
+            ->setParameter(':player', $score->player())
+            ->setParameter(':score', $score->score())
+            ->setParameter(':ship', $score->ship())
+            ->setParameter(':mode', $score->mode())
+            ->setParameter(':weapon', $score->weapon())
+            ->setParameter(':scoredDate', $score->scoredDate())
+            ->setParameter(':source', $score->source())
+            ->setParameter(':comments', json_encode($score->comments()))
+            ->execute();
+    }
 }

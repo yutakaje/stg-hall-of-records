@@ -13,18 +13,25 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Database;
 
-use Doctrine\DBAL\Connection;
+use Stg\HallOfRecords\Data\Game;
+use Stg\HallOfRecords\Data\GameRepositoryInterface;
+use Stg\HallOfRecords\Data\Score;
+use Stg\HallOfRecords\Data\ScoreRepositoryInterface;
 use Stg\HallOfRecords\Import\ParsedData;
 use Stg\HallOfRecords\Import\ParsedGame;
 use Stg\HallOfRecords\Import\ParsedScore;
 
 final class ParsedDataWriter
 {
-    private Connection $connection;
+    private GameRepositoryInterface $games;
+    private ScoreRepositoryInterface $scores;
 
-    public function __construct(Connection $connection)
-    {
-        $this->connection = $connection;
+    public function __construct(
+        GameRepositoryInterface $games,
+        ScoreRepositoryInterface $scores
+    ) {
+        $this->games = $games;
+        $this->scores = $scores;
     }
 
     public function write(ParsedData $data): void
@@ -36,17 +43,11 @@ final class ParsedDataWriter
 
     private function insertGame(ParsedGame $game): void
     {
-        $this->connection->createQueryBuilder()
-            ->insert('games')
-            ->values([
-                'id' => ':id',
-                'name' => ':name',
-                'company' => ':company',
-            ])
-            ->setParameter(':id', $game->id())
-            ->setParameter(':name', $game->name())
-            ->setParameter(':company', $game->company())
-            ->execute();
+        $this->games->add(new Game(
+            $game->id(),
+            $game->name(),
+            $game->company()
+        ));
 
         $this->insertScores($game);
     }
@@ -60,30 +61,17 @@ final class ParsedDataWriter
 
     private function insertScore(ParsedGame $game, ParsedScore $score): void
     {
-        $this->connection->createQueryBuilder()
-            ->insert('scores')
-            ->values([
-                'id' => ':id',
-                'game_id' => ':gameId',
-                'player' => ':player',
-                'score' => ':score',
-                'ship' => ':ship',
-                'mode' => ':mode',
-                'weapon' => ':weapon',
-                'scored_date' => ':scoredDate',
-                'source' => ':source',
-                'comments' => ':comments',
-            ])
-            ->setParameter(':id', $score->id())
-            ->setParameter(':gameId', $game->id())
-            ->setParameter(':player', $score->player())
-            ->setParameter(':score', $score->score())
-            ->setParameter(':ship', $score->ship())
-            ->setParameter(':mode', $score->mode())
-            ->setParameter(':weapon', $score->weapon())
-            ->setParameter(':scoredDate', $score->scoredDate())
-            ->setParameter(':source', $score->source())
-            ->setParameter(':comments', json_encode($score->comments()))
-            ->execute();
+        $this->scores->add(new Score(
+            $score->id(),
+            $game->id(),
+            $score->player(),
+            $score->score(),
+            $score->ship(),
+            $score->mode(),
+            $score->weapon(),
+            $score->scoredDate(),
+            $score->source(),
+            $score->comments(),
+        ));
     }
 }

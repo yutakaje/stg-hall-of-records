@@ -19,4 +19,6 @@ interface ScoreRepositoryInterface
      * @param array<string,mixed> $sort
      */
     public function filterByGame(Game $game, array $sort = []): Scores;
+
+    public function add(Score $score): void;
 }
