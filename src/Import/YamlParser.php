@@ -96,8 +96,8 @@ final class YamlParser
             $translateString('name'),
             $translateString('company'),
             array_map(
-                fn (array $entry) => $this->parseScore($entry, $translator),
-                $properties['entries'] ?? []
+                fn (array $score) => $this->parseScore($score, $translator),
+                $properties['scores'] ?? []
             ),
             $this->parseLayout($properties['layout'] ?? [], $translator)
         );
@@ -207,7 +207,7 @@ final class YamlParser
 
         return $this->parsedDataFactory->createColumn(
             $translateString('label'),
-            $translateString('value'),
+            $translateString('template'),
             [
                 'groupSameValues' => $properties['groupSameValues'] ?? false,
             ]

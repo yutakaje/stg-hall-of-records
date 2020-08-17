@@ -89,7 +89,7 @@ class MediaWikiExporterTest extends \Tests\TestCase
             $factory->createGlobalProperties([
                 'templates' => [
                     'games' => <<<'TPL'
-{% for data in games %}
+{% for game in games %}
 {{ include('game') }}
 {% endfor %}
 
@@ -97,10 +97,10 @@ TPL,
                     'game' => <<<'TPL'
 {| class="wikitable" style="text-align: center
 |-
-! colspan="{{ data.headers|length }}" | {{ data.game.name }}
+! colspan="{{ game.headers|length }}" | {{ game.properties.name }}
 |-
-! {{ data.headers|join(' !! ') }}
-{% for columns in data.scores %}
+! {{ game.headers|join(' !! ') }}
+{% for columns in game.scores %}
 |-
 | {{ columns|join(' || ') }}
 {% endfor %}

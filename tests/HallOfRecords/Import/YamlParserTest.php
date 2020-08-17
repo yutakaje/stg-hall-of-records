@@ -57,7 +57,7 @@ class YamlParserTest extends \Tests\TestCase
         $global = $this->globalPropertiesInput();
         $global['templates'] = [
             'games' => <<<'TPL'
-{% for data in games %}
+{% for game in games %}
 {{ include('game') }}
 {% endfor %}
 
@@ -65,10 +65,10 @@ TPL,
             'game' => <<<'TPL'
 {| class="wikitable" style="text-align: center
 |-
-! colspan="{{ data.headers|length }}" | {{ data.game.name }}
+! colspan="{{ game.headers|length }}" | {{ game.properties.name }}
 |-
-! {{ data.headers|join(' !! ') }}
-{% for columns in data.scores %}
+! {{ game.headers|join(' !! ') }}
+{% for columns in game.scores %}
 |-
 | {{ columns|join(' || ') }}
 {% endfor %}
@@ -89,7 +89,7 @@ TPL,
                 'description' => 'some description',
                 'templates' => [
                     'games' => <<<'TPL'
-{% for data in games %}
+{% for game in games %}
 {{ include('game') }}
 {% endfor %}
 
@@ -97,10 +97,10 @@ TPL,
                     'game' => <<<'TPL'
 {| class="wikitable" style="text-align: center
 |-
-! colspan="{{ data.headers|length }}" | {{ data.game.name }}
+! colspan="{{ game.headers|length }}" | {{ game.properties.name }}
 |-
-! {{ data.headers|join(' !! ') }}
-{% for columns in data.scores %}
+! {{ game.headers|join(' !! ') }}
+{% for columns in game.scores %}
 |-
 | {{ columns|join(' || ') }}
 {% endfor %}
@@ -178,19 +178,19 @@ TPL,
                     ],
                     $factory->createLayout(
                         [
-                            $factory->createColumn('Ship', '{{ship}}', [
+                            $factory->createColumn('Ship', '{{ ship }}', [
                                 'groupSameValues' => true,
                             ]),
-                            $factory->createColumn('Loop', '{{mode}}'),
-                            $factory->createColumn('Score', '{{score}}'),
-                            $factory->createColumn('Player', '{{player}}', [
+                            $factory->createColumn('Loop', '{{ mode }}'),
+                            $factory->createColumn('Score', '{{ score }}'),
+                            $factory->createColumn('Player', '{{ player }}', [
                                 'groupSameValues' => true,
                             ]),
                             $factory->createColumn(
                                 'Date / Source',
-                                '{{scored-date}} / {{source}}'
+                                '{{ scored-date }} / {{ source }}'
                             ),
-                            $factory->createColumn('Comment', '{{comments}}'),
+                            $factory->createColumn('Comment', '{{ comments }}'),
                         ],
                         [
                             'ship' => 'asc',
@@ -273,19 +273,19 @@ TPL,
                     ],
                     $factory->createLayout(
                         [
-                            $factory->createColumn('Ship', '{{ship}}', [
+                            $factory->createColumn('Ship', '{{ ship }}', [
                                 'groupSameValues' => true,
                             ]),
-                            $factory->createColumn('Loop', '{{mode}}'),
-                            $factory->createColumn('Score', '{{score}}'),
-                            $factory->createColumn('Player', '{{player}}', [
+                            $factory->createColumn('Loop', '{{ mode }}'),
+                            $factory->createColumn('Score', '{{ score }}'),
+                            $factory->createColumn('Player', '{{ player }}', [
                                 'groupSameValues' => true,
                             ]),
                             $factory->createColumn(
                                 'Date / Source',
-                                '{{scored-date}} / {{source}}'
+                                '{{ scored-date }} / {{ source }}'
                             ),
-                            $factory->createColumn('Comment', '{{comments}}'),
+                            $factory->createColumn('Comment', '{{ comments }}'),
                         ],
                         [
                             'ship' => 'asc',
@@ -368,19 +368,19 @@ TPL,
                     ],
                     $factory->createLayout(
                         [
-                            $factory->createColumn('自機', '{{ship}}', [
+                            $factory->createColumn('自機', '{{ ship }}', [
                                 'groupSameValues' => true,
                             ]),
-                            $factory->createColumn('2週種', '{{mode}}'),
-                            $factory->createColumn('スコア', '{{score}}'),
-                            $factory->createColumn('プレイヤー', '{{player}}', [
+                            $factory->createColumn('2週種', '{{ mode }}'),
+                            $factory->createColumn('スコア', '{{ score }}'),
+                            $factory->createColumn('プレイヤー', '{{ player }}', [
                                 'groupSameValues' => true,
                             ]),
                             $factory->createColumn(
                                 '年月日 / 情報元',
-                                '{{scored-date}} / {{source}}'
+                                '{{ scored-date }} / {{ source }}'
                             ),
-                            $factory->createColumn('備考', '{{comments}}'),
+                            $factory->createColumn('備考', '{{ comments }}'),
                         ],
                         [
                             'ship' => 'asc',
@@ -423,7 +423,7 @@ TPL,
                 'name' => 'Mushihimesama Futari 1.5',
                 'name-jp' => '虫姫さまふたりVer 1.5',
                 'company' => 'Cave',
-                'entries' => [
+                'scores' => [
                     [
                         'player' => 'ABI',
                         'score' => '530,358,660',
@@ -448,7 +448,7 @@ TPL,
                 'name' => 'Ketsui: Kizuna Jigoku Tachi',
                 'name-jp' => 'ケツイ ～絆地獄たち～',
                 'company' => 'Cave',
-                'entries' => [
+                'scores' => [
                     [
                         'player' => 'SPS',
                         'score' => '507,780,433',
@@ -504,34 +504,34 @@ TPL,
                         [
                             'label' => 'Ship',
                             'label-jp' => '自機',
-                            'value' => '{{ship}}',
+                            'template' => '{{ ship }}',
                             'groupSameValues' => true,
                         ],
                         [
                             'label' => 'Loop',
                             'label-jp' => '2週種',
-                            'value' => '{{mode}}',
+                            'template' => '{{ mode }}',
                         ],
                         [
                             'label' => 'Score',
                             'label-jp' => 'スコア',
-                            'value' => '{{score}}',
+                            'template' => '{{ score }}',
                         ],
                         [
                             'label' => 'Player',
                             'label-jp' => 'プレイヤー',
-                            'value' => '{{player}}',
+                            'template' => '{{ player }}',
                             'groupSameValues' => true,
                         ],
                         [
                             'label' => 'Date / Source',
                             'label-jp' => '年月日 / 情報元',
-                            'value' => '{{scored-date}} / {{source}}',
+                            'template' => '{{ scored-date }} / {{ source }}',
                         ],
                         [
                             'label' => 'Comment',
                             'label-jp' => '備考',
-                            'value' => '{{comments}}',
+                            'template' => '{{ comments }}',
                         ],
                     ],
                     'sort' => [

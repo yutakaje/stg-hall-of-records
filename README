@@ -4,11 +4,11 @@ Each game is defined by the following properties:
 
 * name: Name of the game
 * company: Developer / Publisher
-* entries: Score entries
+* scores: Score entries
 * links: Links
 * layout: Layout information
 
-The following properties are available by default for each entry. Their values are game-dependent.
+The following properties are available by default for each score entry. Their values are game-dependent.
 
 * player: Name of the player
 * score: Score

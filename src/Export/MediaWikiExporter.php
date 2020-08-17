@@ -79,7 +79,7 @@ final class MediaWikiExporter
         array $columns
     ): \stdClass {
         $variable = new \stdClass();
-        $variable->game = $game;
+        $variable->properties = $game;
         $variable->headers = array_map(
             fn (ParsedColumn $column) => $column->label(),
             $columns

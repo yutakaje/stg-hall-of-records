@@ -20,7 +20,7 @@ name: Mushihimesama Futari 1.5
 name-jp: 虫姫さまふたりVer 1.5
 company: Cave
 
-entries:
+scores:
   - player: ABI
     score: 530,358,660
     ship: Palm
@@ -45,7 +45,7 @@ name: "Ketsui: Kizuna Jigoku Tachi"
 name-jp: ケツイ ～絆地獄たち～
 company: Cave
 
-entries:
+scores:
   - player: SPS
     score: 507,780,433
     ship: Type A
