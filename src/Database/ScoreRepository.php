@@ -13,22 +13,13 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Database;
 
-use Doctrine\DBAL\Connection;
 use Stg\HallOfRecords\Data\Game;
-use Stg\HallOfRecords\Data\ScoreFactory;
+use Stg\HallOfRecords\Data\Score;
 use Stg\HallOfRecords\Data\ScoreRepositoryInterface;
 use Stg\HallOfRecords\Data\Scores;
 
 final class ScoreRepository extends AbstractRepository implements ScoreRepositoryInterface
 {
-    private ScoreFactory $scoreFactory;
-
-    public function __construct(Connection $connection)
-    {
-        parent::__construct($connection);
-        $this->scoreFactory = new ScoreFactory();
-    }
-
     /**
      * @param array<string,mixed> $sort
      */
@@ -66,7 +57,7 @@ final class ScoreRepository extends AbstractRepository implements ScoreRepositor
         $scores = [];
 
         while (($columns = $stmt->fetch()) !== false) {
-            $scores[] = $this->scoreFactory->create(
+            $scores[] = new Score(
                 (int)$columns['id'],
                 $game->id(),
                 $columns['player'],

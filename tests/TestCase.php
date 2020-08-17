@@ -15,26 +15,24 @@ namespace Tests;
 
 use Doctrine\DBAL\Connection;
 use Stg\HallOfRecords\Data\Game;
-use Stg\HallOfRecords\Data\GameFactory;
 use Stg\HallOfRecords\Data\Games;
 use Stg\HallOfRecords\Data\Score;
-use Stg\HallOfRecords\Data\ScoreFactory;
 use Stg\HallOfRecords\Data\Scores;
 use Stg\HallOfRecords\Database\ConnectionFactory;
 use Stg\HallOfRecords\Database\InMemoryDatabaseCreator;
 
 abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
-    private GameFactory $gameFactory;
-    private ScoreFactory $scoreFactory;
+    private int $nextGameId;
+    private int $nextScoreId;
 
     /**
      * This method is called before each test.
      */
     protected function setUp(): void
     {
-        $this->gameFactory = new GameFactory();
-        $this->scoreFactory = new ScoreFactory();
+        $this->nextGameId = 1;
+        $this->nextScoreId = 1;
     }
 
     protected function prepareDatabase(): Connection
@@ -50,8 +48,8 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
      */
     protected function createGame(array $properties): Game
     {
-        return $this->gameFactory->create(
-            $properties['id'] ?? $this->gameFactory->nextId(),
+        return new Game(
+            $properties['id'] ?? $this->nextGameId++,
             $properties['name'],
             $properties['company']
         );
@@ -62,9 +60,9 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
      */
     protected function createScore(array $properties): Score
     {
-        return $this->scoreFactory->create(
-            $properties['id'] ?? $this->scoreFactory->nextId(),
-            $properties['gameId'] ?? $this->gameFactory->nextId(),
+        return new Score(
+            $properties['id'] ?? $this->nextScoreId++,
+            $properties['gameId'] ?? $this->nextGameId++,
             $properties['player'],
             $properties['score'],
             $properties['ship'],

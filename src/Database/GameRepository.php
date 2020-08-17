@@ -13,21 +13,12 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Database;
 
-use Doctrine\DBAL\Connection;
-use Stg\HallOfRecords\Data\GameFactory;
+use Stg\HallOfRecords\Data\Game;
 use Stg\HallOfRecords\Data\GameRepositoryInterface;
 use Stg\HallOfRecords\Data\Games;
 
 final class GameRepository extends AbstractRepository implements GameRepositoryInterface
 {
-    private GameFactory $gameFactory;
-
-    public function __construct(Connection $connection)
-    {
-        parent::__construct($connection);
-        $this->gameFactory = new GameFactory();
-    }
-
     /**
      * @param array<string,mixed> $sort
      */
@@ -57,7 +48,7 @@ final class GameRepository extends AbstractRepository implements GameRepositoryI
         $games = [];
 
         while (($columns = $stmt->fetch()) !== false) {
-            $games[] = $this->gameFactory->create(
+            $games[] = new Game(
                 (int)$columns['id'],
                 $columns['name'],
                 $columns['company']
