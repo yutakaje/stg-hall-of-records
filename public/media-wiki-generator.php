@@ -16,7 +16,7 @@ use Stg\HallOfRecords\MediaWikiGenerator;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
-$rootDir = dirname(dirname(__DIR__));
+$rootDir = dirname(__DIR__);
 require "{$rootDir}/vendor/autoload.php";
 
 try {
@@ -57,7 +57,7 @@ try {
     $twig = new Environment(
         new FilesystemLoader(__DIR__ . '/templates')
     );
-    echo $twig->render('generator.tpl', [
+    echo $twig->render('media-wiki-generator.tpl', [
         'locales' => $locales,
         'input' => $input,
         'output' => $output,
