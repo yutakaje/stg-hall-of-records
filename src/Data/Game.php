@@ -13,7 +13,9 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Data;
 
-final class Game
+use Stg\HallOfRecords\Data\Sorting\SortableInterface;
+
+final class Game implements SortableInterface
 {
     private int $id;
     private string $name;
@@ -42,5 +44,22 @@ final class Game
     public function company(): string
     {
         return $this->company;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProperty(string $name)
+    {
+        switch ($name) {
+            case 'id':
+                return $this->id;
+            case 'name':
+                return $this->name;
+            case 'company':
+                return $this->company;
+            default:
+                return null;
+        }
     }
 }
