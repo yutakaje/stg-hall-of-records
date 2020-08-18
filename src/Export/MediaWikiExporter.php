@@ -27,38 +27,35 @@ final class MediaWikiExporter
 {
     private GameRepositoryInterface $games;
     private ScoreRepositoryInterface $scores;
-    private Environment $twig;
-    private Environment $globalTemplates;
 
-    /**
-     * @param array<string,string> $globalTemplates
-     */
     public function __construct(
         GameRepositoryInterface $games,
-        ScoreRepositoryInterface $scores,
-        array $globalTemplates
+        ScoreRepositoryInterface $scores
     ) {
         $this->games = $games;
         $this->scores = $scores;
-        $this->globalTemplates = new Environment(
+    }
+
+    /**
+     * @param array<int,ParsedLayout> $layouts
+     * @param array<string,string> $globalTemplates
+     */
+    public function export(array $layouts, array $globalTemplates): string
+    {
+        return $this->exportGames($layouts, $globalTemplates);
+    }
+
+    /**
+     * @param array<int,ParsedLayout> $layouts
+     * @param array<string,string> $globalTemplates
+     */
+    private function exportGames(array $layouts, array $globalTemplates): string
+    {
+        $twig = new Environment(
             new ArrayLoader($globalTemplates)
         );
-    }
 
-    /**
-     * @param array<int,ParsedLayout> $layouts
-     */
-    public function export(array $layouts): string
-    {
-        return $this->exportGames($layouts);
-    }
-
-    /**
-     * @param array<int,ParsedLayout> $layouts
-     */
-    private function exportGames(array $layouts): string
-    {
-        return $this->globalTemplates->render('games', [
+        return $twig->render('games', [
             'games' => array_map(
                 fn (Game $game) => $this->createGameVariable(
                     $game,

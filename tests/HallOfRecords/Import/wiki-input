@@ -6,6 +6,7 @@ Some introduction text Some introduction text Some introduction text Some introd
 Values defined in this section will apply to all the games in the database. Its main purpose is to reduce redundant translations for reocurring values (e.g. company names, common column names, ...).
 
 <div style="display:none"><nowiki>
+name: global
 
 translations:
   - property: company

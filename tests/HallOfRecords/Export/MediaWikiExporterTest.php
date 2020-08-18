@@ -70,15 +70,14 @@ class MediaWikiExporterTest extends \Tests\TestCase
                 }
             ));
 
-        $exporter = new MediaWikiExporter(
-            $gameRepository,
-            $scoreRepository,
-            $parsedData->globalProperties()->templates()
-        );
+        $exporter = new MediaWikiExporter($gameRepository, $scoreRepository);
 
         self::assertSame(
             $this->loadFile(__DIR__ . '/media-wiki-output-en'),
-            $exporter->export($parsedData->layouts())
+            $exporter->export(
+                $parsedData->layouts(),
+                $parsedData->globalProperties()->templates()
+            )
         );
     }
 

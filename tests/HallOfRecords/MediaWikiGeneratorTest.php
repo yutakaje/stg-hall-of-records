@@ -13,18 +13,18 @@ declare(strict_types=1);
 
 namespace Tests\HallOfRecords;
 
-use Stg\HallOfRecords\Data\GameRepository;
-use Stg\HallOfRecords\Data\ScoreRepository;
+use DI\ContainerBuilder;
 use Stg\HallOfRecords\MediaWikiGenerator;
 
 class MediaWikiGeneratorTest extends \Tests\TestCase
 {
     public function testWithLocales(): void
     {
-        $generator = new MediaWikiGenerator(
-            new GameRepository(),
-            new ScoreRepository()
-        );
+        $builder = new ContainerBuilder();
+        $builder->addDefinitions(dirname(dirname(__DIR__)) . '/app/media-wiki.php');
+        $container = $builder->build();
+
+        $generator = $container->get(MediaWikiGenerator::class);
 
         $input = $this->loadFile(__DIR__ . '/media-wiki-input');
 
