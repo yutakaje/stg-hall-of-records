@@ -37,7 +37,8 @@ class ArraySorterTest extends \Tests\TestCase
                 $sorter->sort($items, [
                     'id' => 'asc',
                 ])
-            )
+            ),
+            'Sort by id asc'
         );
         self::assertSame(
             ['Ship', 'Score', 'Player', 'Loop', 'Comment'],
@@ -46,7 +47,8 @@ class ArraySorterTest extends \Tests\TestCase
                 $sorter->sort($items, [
                     'name' => 'desc',
                 ])
-            )
+            ),
+            'Sort by name desc'
         );
         self::assertSame(
             [100, 10, 14, 120, 9],
@@ -56,7 +58,8 @@ class ArraySorterTest extends \Tests\TestCase
                     'difficulty' => 'asc',
                     'id' => 'desc',
                 ])
-            )
+            ),
+            'Sort by difficulty asc, id desc'
         );
 
         self::assertSame(
@@ -71,7 +74,69 @@ class ArraySorterTest extends \Tests\TestCase
                     ],
                     'id' => 'asc',
                 ])
-            )
+            ),
+            'Sort by custom order, id asc'
+        );
+    }
+
+    public function testWithJpLocale(): void
+    {
+        $items = [
+            $this->createItem(10, 'ゆたか', 'イージー'),
+            $this->createItem(100, 'かすかべ', 'イージー'),
+            $this->createItem(120, 'たては', 'ノーマル'),
+            $this->createItem(9, 'しんどう', 'ノーマル'),
+            $this->createItem(14, 'うおたろう', 'ハード'),
+        ];
+
+        $sorter = new ArraySorter();
+
+        self::assertSame(
+            [9, 10, 14, 100, 120],
+            array_map(
+                fn ($item) => $item->id(),
+                $sorter->sort($items, [
+                    'id' => 'asc',
+                ])
+            ),
+            'Sort by id asc'
+        );
+        self::assertSame(
+            ['ゆたか', 'たては', 'しんどう', 'かすかべ', 'うおたろう'],
+            array_map(
+                fn ($item) => $item->name(),
+                $sorter->sort($items, [
+                    'name' => 'desc',
+                ])
+            ),
+            'Sort by name desc'
+        );
+        self::assertSame(
+            [100, 10, 120, 9, 14],
+            array_map(
+                fn ($item) => $item->id(),
+                $sorter->sort($items, [
+                    'difficulty' => 'asc',
+                    'id' => 'desc',
+                ])
+            ),
+            'Sort by difficulty asc, id desc'
+        );
+
+        self::assertSame(
+            [14, 10,100, 9, 120],
+            array_map(
+                fn ($item) => $item->id(),
+                $sorter->sort($items, [
+                    'difficulty' => [
+                        'ハード',
+                        'イージー',
+                        'ノーマル',
+                    ],
+                    'id' => 'asc',
+                ])
+            ),
+            'Sort by custom order, id asc'
         );
     }
 

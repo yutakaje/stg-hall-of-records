@@ -38,3 +38,5 @@ TODO
 * Implement backup tool for screenshots stored in property `image-url`
 * Implement logger, especially for parsing
 * Improve exception handling
+* Allow custom properties while parsing
+* Store layout and friends as custom properties for each game/score
