@@ -86,16 +86,14 @@ final class ParsedDataFactory
     }
 
     /**
-     * @param ParsedColumn[] $columns;
-     * @param array<string,mixed> $sort
+     * @param array<string,mixed> $options
      */
-    public function createLayout(
-        array $columns = [],
-        array $sort = []
-    ): ParsedLayout {
+    public function createLayout(array $options = []): ParsedLayout
+    {
         return new ParsedLayout(
-            $columns,
-            $sort
+            $options['columns'] ?? [],
+            $options['sort'] ?? [],
+            $options['templates'] ?? []
         );
     }
 

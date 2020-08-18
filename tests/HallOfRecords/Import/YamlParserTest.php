@@ -176,8 +176,8 @@ TPL,
                             ],
                         ]),
                     ],
-                    $factory->createLayout(
-                        [
+                    $factory->createLayout([
+                        'columns' => [
                             $factory->createColumn('Ship', '{{ ship }}', [
                                 'groupSameValues' => true,
                             ]),
@@ -192,12 +192,22 @@ TPL,
                             ),
                             $factory->createColumn('Comment', '{{ comments }}'),
                         ],
-                        [
+                        'sort' => [
                             'ship' => 'asc',
                             'mode' => 'asc',
                             'score' => 'desc',
-                        ]
-                    )
+                        ],
+                    ])
+                ),
+                $factory->createGame(
+                    'Great Mahou Daisakusen',
+                    'Raizing / 8ing',
+                    [],
+                    $factory->createLayout([
+                        'templates' => [
+                            'game' => $this->getFixedGameTemplate(),
+                        ],
+                    ])
                 ),
             ],
             $parsedData->games()
@@ -271,8 +281,8 @@ TPL,
                             ],
                         ]),
                     ],
-                    $factory->createLayout(
-                        [
+                    $factory->createLayout([
+                        'columns' => [
                             $factory->createColumn('Ship', '{{ ship }}', [
                                 'groupSameValues' => true,
                             ]),
@@ -287,12 +297,22 @@ TPL,
                             ),
                             $factory->createColumn('Comment', '{{ comments }}'),
                         ],
-                        [
+                        'sort' => [
                             'ship' => 'asc',
                             'mode' => 'asc',
                             'score' => 'desc',
-                        ]
-                    )
+                        ],
+                    ])
+                ),
+                $factory->createGame(
+                    'Great Mahou Daisakusen',
+                    'Raizing / 8ing',
+                    [],
+                    $factory->createLayout([
+                        'templates' => [
+                            'game' => $this->getFixedGameTemplate(),
+                        ],
+                    ])
                 ),
             ],
             $parsedData->games()
@@ -366,8 +386,8 @@ TPL,
                             ],
                         ]),
                     ],
-                    $factory->createLayout(
-                        [
+                    $factory->createLayout([
+                        'columns' => [
                             $factory->createColumn('自機', '{{ ship }}', [
                                 'groupSameValues' => true,
                             ]),
@@ -382,12 +402,22 @@ TPL,
                             ),
                             $factory->createColumn('備考', '{{ comments }}'),
                         ],
-                        [
+                        'sort' => [
                             'ship' => 'asc',
                             'mode' => 'asc',
                             'score' => 'desc',
-                        ]
-                    )
+                        ],
+                    ])
+                ),
+                $factory->createGame(
+                    'Great Mahou Daisakusen',
+                    'Raizing / 8ing',
+                    [],
+                    $factory->createLayout([
+                        'templates' => [
+                            'game' => $this->getFixedGameTemplate(),
+                        ],
+                    ])
                 ),
             ],
             $parsedData->games()
@@ -541,6 +571,51 @@ TPL,
                     ],
                 ],
             ],
+            [
+                'name' => 'Great Mahou Daisakusen',
+                'company' => 'Raizing / 8ing',
+                'scores' => [],
+                'layout' => [
+                    'templates' => [
+                        'game' => $this->getFixedGameTemplate(),
+                    ],
+                ],
+            ]
         ];
+    }
+
+    private function getFixedGameTemplate(): string
+    {
+        return <<<'TPL'
+{| class="wikitable" style="text-align: center"
+|-
+! colspan="6" | [[Great Mahou Daisakusen]]
+|-
+! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
+|-
+| rowspan="2" | Birthday
+| 83,743,680 || rowspan="2" | Miku || August 2nd, 2020 / [https://example.org Twitter] || 107 items ||
+|-
+| 66,693,110 || JHA November 2019 || 107 items ||
+|-
+| rowspan="2" | Chitta
+| 93,664,750 || rowspan="2" | SOF-WTN
+| August 8th, 2020 / [https://twitter.com/sof_wtn/status/1292047346562289664 Twitter] || 108 items ||
+|-
+| 83,195,810 || JHA June 2020 || ||
+|-
+| rowspan="2" | Gain
+| 80,528,610 || Boredom || July 1st, 2020 / [https:// Twitter] || 108 items || [https:// Youtube]
+|-
+| 31,653,130 || HTL-蕨ガイン見参 || JHA June 2020 || ||
+|-
+|}
+
+Note: Scoreboard closed after the achievement of the counterstop at 99,999,999.
+
+* [https://example.org/some_link_id JHA Leaderboard]
+* [https://example.org/some_other_link Shmups Forum Hi-Score Topic]
+
+TPL;
     }
 }

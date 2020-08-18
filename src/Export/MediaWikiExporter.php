@@ -63,34 +63,32 @@ final class MediaWikiExporter
                 fn (Game $game) => $this->createGameVariable(
                     $game,
                     $this->scores->filterByGame($game),
-                    $layouts[$game->id()]->columns()
+                    $layouts[$game->id()]
                 ),
                 $this->games->all()->asArray()
             ),
         ]);
     }
 
-    /**
-     * @param ParsedColumn[] $columns
-     */
     private function createGameVariable(
         Game $game,
         Scores $scores,
-        array $columns
+        ParsedLayout $layout
     ): \stdClass {
         $variable = new \stdClass();
         $variable->properties = $game;
         $variable->headers = array_map(
             fn (ParsedColumn $column) => $column->label(),
-            $columns
+            $layout->columns()
         );
         $variable->scores = array_map(
             fn (Score $score) => $this->createScoreVariable(
                 $score,
-                $columns
+                $layout->columns()
             ),
             $scores->asArray()
         );
+        $variable->template = $layout->templates()['game'] ?? '';
         return $variable;
     }
 

@@ -182,16 +182,17 @@ final class YamlParser
         array $properties,
         Translator $translator
     ): ParsedLayout {
-        return $this->parsedDataFactory->createLayout(
-            array_map(
+        return $this->parsedDataFactory->createLayout([
+            'columns' => array_map(
                 fn (array $column) => $this->parseColumn($column, $translator),
                 array_filter(
                     $properties['columns'] ?? [],
                     fn ($column) => is_array($column)
                 )
             ),
-            $properties['sort'] ?? []
-        );
+            'sort' => $properties['sort'] ?? [],
+            'templates' => $properties['templates'] ?? [],
+        ]);
     }
 
     /**
