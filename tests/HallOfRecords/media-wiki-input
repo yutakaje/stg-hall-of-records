@@ -1,0 +1,398 @@
+== Global ==
+Values defined in this section will apply to all the games in the database. Its main purpose is to reduce redundant translations for reocurring values (e.g. company names, common column names, ...).
+
+<div style="display:none"><nowiki>
+name: global
+
+templates:
+    games: |
+        {% for game in games %}
+        {% if game.template %}
+        {{ game.template|raw }}
+        {% else %}
+        {{ include('game') }}
+        {% endif %}
+        {% endfor %}
+    game: |
+        {| class="wikitable" style="text-align: center
+        |-
+        ! colspan="{{ game.headers|length }}" | {{ game.properties.name }}
+        |-
+        ! {{ game.headers|join(' !! ') }}
+        {% for columns in game.scores %}
+        |-
+        | {{ columns|join(' || ') }}
+        {% endfor %}
+        |}
+      
+translations:
+  - property: company
+    value: Cave
+    value-jp: ケイブ
+
+</nowiki></div>
+
+== Mushihimesama Futari v1.5 ==
+<div style="display:none"><nowiki>
+name: Mushihimesama Futari 1.5
+name-jp: 虫姫さまふたりVer 1.5
+company: Cave
+
+scores:
+  - player: ABI
+    score: 530,358,660
+    ship: Palm
+    mode: Original
+    weapon: Normal
+    scored-date: "2008-01"
+    source: Arcadia January 2008
+
+  - player: ISO / Niboshi
+    player-jp: にぼし
+    score: 518,902,716
+    ship: Palm
+    mode: Original
+    weapon: Abnormal
+    scored-date: "2007"
+    source: Superplay DVD
+
+  - player: ABI
+    score: 550,705,999
+    ship: Reco
+    mode: Original
+    weapon: Normal
+    scored-date: "2010-02"
+    source: Blog
+    comments:
+      - 5L 0B remaining
+      - "After stage 4: 273.7m"
+
+  - player: ISO / Niboshi
+    score: 538,378,364
+    ship: Reco
+    mode: Original
+    weapon: Normal
+    scored-date: "2007-10"
+    source: Arcadia October 2007
+
+  - player: yasu0219
+    score: 454,386,226
+    ship: Reco
+    mode: Original
+    weapon: Abnormal
+    scored-date: "2009-12-12"
+    source: Xbox rankings
+    comments:
+      - Highest score Xbox360
+
+  - player: KTL-NAL
+    score: 981,872,827
+    ship: Palm
+    mode: Maniac
+    weapon: Abnormal
+    scored-date: "2007-09"
+    source: Superplay DVD
+    comments:
+      - 5L 2B remaining
+      - "After stage 4: 693.8m"
+
+  - player: KTL-NAL
+    score: 973,020,065
+    ship: Palm
+    mode: Maniac
+    weapon: Abnormal
+    scored-date: "2007-11"
+    source: Arcadia November 2007
+
+  - player: Clover-TAC
+    score: 1,047,258,714
+    ship: Reco
+    mode: Maniac
+    weapon: Normal
+    scored-date: "2015-03"
+    source: Arcadia March 2015
+    comments:
+      - 5L 2B remaining
+      - "After stage 4: 745.1m"
+
+  - player: rescue_STG
+    score: 2,956,728,306
+    ship: Palm
+    mode: Ultra
+    weapon: Normal
+    scored-date: "2017-04-08"
+    source: Xbox rankings
+    comments:
+      - Highest score Xbox360
+    links:
+      - url: https://youtu.be/jXus8svt7ds
+        name: Youtube
+
+  - player: Dame K.K
+    score: 3,999,999,999
+    ship: Palm
+    mode: Ultra
+    weapon: Abnormal
+    scored-date: "2008-03"
+    source: Arcadia March 2008
+    comments:
+      - 1L 0B remaining
+      - Highest score Arcade
+
+  - player: KGM
+    score: 3,999,999,999 [4,263,416,356]
+    ship: Palm
+    mode: Ultra
+    weapon: Abnormal
+    scored-date: "2013-07-24"
+    source: Xbox rankings
+    comments:
+        - Highest score Xbox360
+    links:
+      - url: https://youtu.be/EeLzh7VNujQ
+        name: Youtube
+
+  - player: fufufu
+    score: 3,999,999,999
+    ship: Reco
+    mode: Ultra
+    weapon: Normal
+    scored-date: "2009-05-27"
+    source: Arcadia August 2009
+    comments:
+      - 0L 0B remaining
+      - "After stage 4: 2.205b"
+    links:
+      - url: https://youtu.be/XwSFHPhp9gc
+        name: Youtube
+
+  - player: lstze
+    score: 3,266,405,598
+    ship: Reco
+    mode: Ultra
+    weapon: Abnormal
+    scored-date: "2014?"
+    links:
+      - url: https://www.youtube.com/playlist?list=PL6mhbpnepUippXLrlpnyx5bfZsm0rihHc
+        name: Youtube
+
+links:
+  - url: https://wiki.denfaminicogamer.jp/highscore/2006_002_%E8%99%AB%E5%A7%AB%E3%81%95%E3%81%BE%E3%81%B5%E3%81%9F%E3%82%8A_Ver1.5
+    title: JHA Leaderboard
+    title-jp: 日本ハイスコア協会
+  - url: https://shmups.system11.org/viewtopic.php?t=60592
+    title: Shmups Forum Hi-Score Topic
+
+layout:
+    columns:
+      - label: Mode
+        template: "{{ mode }}"
+        groupSameValues: true
+
+      - label: Character
+        template: "{{ ship }}"
+        groupSameValues: true
+
+      - label: Style
+        template: "{{ weapon }}"
+
+      - label: Score
+        template: "{{ score }}"
+
+      - label: Player
+        template: "{{ player }}"
+        groupSameValues: true
+
+      - label: Date / Source
+        template: "{{ scored-date }} / {{ source }}"
+
+      - label: Comment
+        template: "{{ comments|join('; ') }}"
+
+    sort:
+        mode: Original,Maniac,Ultra
+        ship: Reco,Palm
+        weapon: Normal,Abnormal
+        score: desc
+
+# Translations for the whole game (so you do not have to specify the same Japanese term within all the entries)
+translations:
+  - property: mode
+    value: Original
+    value-jp: オリジナルモード
+  - property: mode
+    value: Maniac
+    value-jp: マニアックモード
+  - property: mode
+    value: Ultra
+    value-jp: ウルトラモード
+  - property: ship
+    value: Reco
+    value-jp: レコ
+  - property: ship
+    value: Palm
+    value-jp: パルム
+  - property: weapon
+    value: Normal
+    value-jp: ノーマル
+  - property: weapon
+    value: Abnormal
+    value-jp: アブノーマル
+</nowiki></div>
+
+== Ketsui ==
+<div style="display:none"><nowiki>
+name: "Ketsui: Kizuna Jigoku Tachi"
+name-jp: ケツイ ～絆地獄たち～
+company: Cave
+
+scores:
+  - player: SPS
+    score: 507,780,433
+    ship: Type A
+    mode: Omote
+    scored-date: "2014-08"
+    source: Arcadia August 2014
+    comments:
+      
+  - player: SPS
+    score: 583,614,753
+    ship: Type A
+    mode: Ura
+    scored-date: "2014-05-27"
+    source: Arcadia September 2014 / [https://twitter.com/SPSPUYO/status/471312775843561472 Twitter]
+    comments:
+      - 6L 0B remaining
+      - 1st loop 285m
+
+  - player: SPS
+    score: 481,402,383
+    ship: Type B
+    mode: Omote
+    scored-date: "2014-11"
+    source: Arcadia November 2014
+    comments:
+      - 6L 0B remaining
+      - 1st loop 276m
+
+  - player: GAN
+    score: 569,741,232
+    ship: Type B
+    mode: Ura
+    scored-date: "2016-03"
+    source: JHA March 2016
+    comments:
+      - 6L remaining
+
+links:
+  - url: https://wiki.denfaminicogamer.jp/highscore/2003_034_%E3%82%B1%E3%83%84%E3%82%A4
+    title: JHA Leaderboard
+    title-jp: 日本ハイスコア協会
+  - url: https://shmups.system11.org/viewtopic.php?t=65086
+    title: Shmups Forum Hi-Score Topic
+
+translations:
+  - property: ship
+    value: Type A
+    value-en: Tiger Schwert
+    value-jp: TYPE-A ティーゲルシュベルト
+  - property: ship
+    value: Type B
+    value-en: Panzer Jäger
+    value-jp: TYPE-B パンツァーイェーガー
+  - property: mode
+    value: Omote
+    value-jp: 表2週
+  - property: mode
+    value: Ura
+    value-jp: 裏2週
+
+layout:
+    columns:
+      - label: Ship
+        label-jp: 自機
+        template: "{{ ship }}"
+        groupSameValues: true
+
+      - label: Loop
+        label-jp: 2週種
+        template: "{{ mode }}"
+
+      - label: Score
+        label-jp: スコア
+        template: "{{ score }}"
+
+      - label: Player
+        label-jp: プレイヤー
+        template: "{{ player }}"
+        groupSameValues: true
+
+      - label: Date / Source
+        label-jp: 年月日 / 情報元
+        template: "{{ scored-date }} / {{ source }}"
+
+      - label: Comment
+        label-jp: 備考
+        template: "{{ comments|join('; ') }}"
+
+    sort:
+      - ship: asc
+      - mode: asc
+      - score: desc
+    
+</nowiki></div>
+
+
+== Great Mahou Daisakusen ==
+<nowiki>
+name: Great Mahou Daisakusen
+company: Raizing / 8ing
+
+layout:
+    templates:
+        game : |
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="6" | [[Great Mahou Daisakusen]]
+            |-
+            ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | rowspan="2" | Birthday
+            | 83,743,680 || rowspan="2" | Miku || August 2nd, 2020 / [https://twitter.com/4Yt7z/status/1289925223203000320 Twitter] || 107 items ||
+            |-
+            | 66,693,110 || JHA November 2019 || 107 items ||
+            |-
+            | rowspan="2" | Chitta
+            | 93,664,750 || rowspan="2" | SOF-WTN
+            | August 8th, 2020 / [https://twitter.com/sof_wtn/status/1292047346562289664 Twitter] || 108 items ||
+            |-
+            | 83,195,810 || JHA June 2020 || || 
+            |-
+            | rowspan="2" | Gain
+            | 80,528,610 || Boredom || July 1st, 2020 / [https://twitter.com/boredom_79/status/1278389636155367424 Twitter] || 108 items || [https://youtu.be/DCEM2fnGBPU Youtube]
+            |-
+            | 31,653,130 || HTL-蕨ガイン見参 || JHA June 2020 || ||
+            |-
+            | rowspan="2" | Golden
+            | style="background: #DFDFDF;" | 99,999,999 [101,033,460] || style="background: #DFDFDF;" | Boredom || style="background: #DFDFDF;" | February 13th, 2020 / [https://twitter.com/boredom_79/status/1228024526904029184 Twitter] || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | 
+            |-
+            | 14,925,200 || 磨弓 || JHA July 2020 || ||
+            |-
+            | Grimlen || style="background: #DFDFDF;" | 99,999,999 || style="background: #DFDFDF;" | KDK-Takeyuki || style="background: #DFDFDF;" | Arcadia July 2002 || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | 
+            |-
+            | Karte || style="background: #DFDFDF;" | 99,999,999 [100,571,630] || style="background: #DFDFDF;" | ACR Archer || style="background: #DFDFDF;" | November 17th, 2014 (Arcadia February 2015) / [https://twitter.com/Archer_3601/status/534232656523710465 Twitter] || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | [https://youtu.be/4DpSQf6MEfY Youtube]
+            |-
+            | rowspan="2" | Miyamoto
+            | style="background: #DFDFDF;" | 99,999,999 || style="background: #DFDFDF;" | Clover-TAC || style="background: #DFDFDF;" | JHA March 2016 || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | 
+            |-
+            | style="background: #DFDFDF;" | 99,999,999 [102,596,210] || style="background: #DFDFDF;" | SOF-WTN || style="background: #DFDFDF;" | February 3rd 2016 (JHA March 2016) / [https://twitter.com/sof_wtn/status/694883966092849152 Twitter] || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | 
+            |-
+            | Solo Bang || style="background: #DFDFDF;" | 99,999,999 || style="background: #DFDFDF;" | Clover-TAC || style="background: #DFDFDF;" | JHA July 2020 || style="background: #DFDFDF;" | 108 items, 2p side || style="background: #DFDFDF;" |
+            |}
+
+            Note: Scoreboard closed after the achievement of the counterstop at 99,999,999.
+
+            * [https://wiki.denfaminicogamer.jp/highscore/2000_053_%E3%82%B0%E3%83%AC%E3%83%BC%E3%83%88%E9%AD%94%E6%B3%95%E5%A4%A7%E4%BD%9C%E6%88%A6 JHA Leaderboard]
+            * [https://shmups.system11.org/viewtopic.php?t=38055 Shmups Forum Hi-Score Topic]
+
+</nowiki>

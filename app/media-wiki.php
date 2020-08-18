@@ -17,9 +17,9 @@ use Stg\HallOfRecords\Database\RepositoryFactory;
 use Stg\HallOfRecords\MediaWikiGenerator;
 
 return [
-    ConnectionFactory::class => DI\autowire(),
+    ConnectionFactory::class => DI\create(),
     InMemoryDatabaseCreator::class => DI\autowire(),
-    RepositoryFactory::class => DI\autowire(),
+    RepositoryFactory::class => DI\create(),
 
     MediaWikiGenerator::class => DI\autowire(),
 ];
