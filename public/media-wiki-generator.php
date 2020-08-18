@@ -24,7 +24,7 @@ try {
     $builder->addDefinitions("{$rootDir}/app/media-wiki.php");
     $container = $builder->build();
 
-    $locales = 'de,jp';
+    $locales = 'en,jp';
     $input = '';
     $output = [];
     $errorMessage = '';

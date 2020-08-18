@@ -4,9 +4,6 @@ parameters:
         - src
         - tests
 
-    ignoreErrors:
-        - '#Cannot call method \w+\(\) on Doctrine\\DBAL\\Driver\\ResultStatement\|int.#'
-
 includes:
     - vendor/phpstan/phpstan-strict-rules/rules.neon
     - vendor/phpstan/phpstan-deprecation-rules/rules.neon

@@ -13,9 +13,8 @@ declare(strict_types=1);
 
 namespace Tests\HallOfRecords;
 
-use Stg\HallOfRecords\Database\ConnectionFactory;
-use Stg\HallOfRecords\Database\InMemoryDatabaseCreator;
-use Stg\HallOfRecords\Database\RepositoryFactory;
+use Stg\HallOfRecords\Data\GameRepository;
+use Stg\HallOfRecords\Data\ScoreRepository;
 use Stg\HallOfRecords\MediaWikiGenerator;
 
 class MediaWikiGeneratorTest extends \Tests\TestCase
@@ -23,10 +22,8 @@ class MediaWikiGeneratorTest extends \Tests\TestCase
     public function testWithLocales(): void
     {
         $generator = new MediaWikiGenerator(
-            new InMemoryDatabaseCreator(
-                new ConnectionFactory()
-            ),
-            new RepositoryFactory()
+            new GameRepository(),
+            new ScoreRepository()
         );
 
         $input = $this->loadFile(__DIR__ . '/media-wiki-input');

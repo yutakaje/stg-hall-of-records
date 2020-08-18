@@ -13,34 +13,37 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords;
 
+use Stg\HallOfRecords\Data\Game;
 use Stg\HallOfRecords\Data\GameRepositoryInterface;
+use Stg\HallOfRecords\Data\Score;
 use Stg\HallOfRecords\Data\ScoreRepositoryInterface;
-use Stg\HallOfRecords\Database\InMemoryDatabaseCreator;
-use Stg\HallOfRecords\Database\ParsedDataWriter;
-use Stg\HallOfRecords\Database\RepositoryFactory;
 use Stg\HallOfRecords\Export\MediaWikiExporter;
 use Stg\HallOfRecords\Import\ParsedData;
+use Stg\HallOfRecords\Import\ParsedGame;
+use Stg\HallOfRecords\Import\ParsedScore;
 use Stg\HallOfRecords\Import\YamlExtractor;
 use Stg\HallOfRecords\Import\YamlParser;
 
 final class MediaWikiGenerator
 {
-    private InMemoryDatabaseCreator $databaseCreator;
-    private RepositoryFactory $repositoryFactory;
+    private GameRepositoryInterface $games;
+    private ScoreRepositoryInterface $scores;
 
     public function __construct(
-        InMemoryDatabaseCreator $databaseCreator,
-        RepositoryFactory $repositoryFactory
+        GameRepositoryInterface $games,
+        ScoreRepositoryInterface $scores
     ) {
-        $this->databaseCreator = $databaseCreator;
-        $this->repositoryFactory = $repositoryFactory;
+        $this->games = $games;
+        $this->scores = $scores;
     }
 
     public function generate(string $input, string $locale): string
     {
-        return $this->export(
-            $this->parse($input, $locale)
-        );
+        $parsedData = $this->parse($input, $locale);
+
+        $this->populateRepositories($parsedData);
+
+        return $this->export($parsedData);
     }
 
     private function parse(string $input, string $locale): ParsedData
@@ -49,17 +52,6 @@ final class MediaWikiGenerator
             $this->extractYaml($input),
             $locale
         );
-    }
-
-    private function export(ParsedData $parsedData): string
-    {
-        $connection = $this->databaseCreator->create();
-        $games = $this->repositoryFactory->createGameRepository($connection);
-        $scores = $this->repositoryFactory->createScoreRepository($connection);
-
-        $this->writeToDatabase($games, $scores, $parsedData);
-
-        return $this->exportToWiki($games, $scores, $parsedData);
     }
 
     /**
@@ -71,6 +63,42 @@ final class MediaWikiGenerator
         return $extractor->extract($input);
     }
 
+    private function populateRepositories(ParsedData $parsedData): void
+    {
+        foreach ($parsedData->games() as $game) {
+            $this->addGameToRepository($game);
+        }
+    }
+
+    private function addGameToRepository(ParsedGame $game): void
+    {
+        $this->games->add(new Game(
+            $game->id(),
+            $game->name(),
+            $game->company()
+        ));
+
+        foreach ($game->scores() as $score) {
+            $this->addScoreToRepository($game->id(), $score);
+        }
+    }
+
+    private function addScoreToRepository(int $gameId, ParsedScore $score): void
+    {
+        $this->scores->add(new Score(
+            $score->id(),
+            $gameId,
+            $score->player(),
+            $score->score(),
+            $score->ship(),
+            $score->mode(),
+            $score->weapon(),
+            $score->scoredDate(),
+            $score->source(),
+            $score->comments()
+        ));
+    }
+
     /**
      * @param array<string,mixed>[] $sections
      */
@@ -80,23 +108,11 @@ final class MediaWikiGenerator
         return $parser->parse($sections, $locale);
     }
 
-    private function writeToDatabase(
-        GameRepositoryInterface $games,
-        ScoreRepositoryInterface $scores,
-        ParsedData $parsedData
-    ): void {
-        $writer = new ParsedDataWriter($games, $scores);
-        $writer->write($parsedData);
-    }
-
-    private function exportToWiki(
-        GameRepositoryInterface $games,
-        ScoreRepositoryInterface $scores,
-        ParsedData $parsedData
-    ): string {
+    private function export(ParsedData $parsedData): string
+    {
         $exporter = new MediaWikiExporter(
-            $games,
-            $scores,
+            $this->games,
+            $this->scores,
             $parsedData->globalProperties()->templates()
         );
         return $exporter->export($parsedData->layouts());

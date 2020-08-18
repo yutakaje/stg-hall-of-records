@@ -11,15 +11,15 @@
 
 declare(strict_types=1);
 
-use Stg\HallOfRecords\Database\ConnectionFactory;
-use Stg\HallOfRecords\Database\InMemoryDatabaseCreator;
-use Stg\HallOfRecords\Database\RepositoryFactory;
+use Stg\HallOfRecords\Data\GameRepository;
+use Stg\HallOfRecords\Data\GameRepositoryInterface;
+use Stg\HallOfRecords\Data\ScoreRepository;
+use Stg\HallOfRecords\Data\ScoreRepositoryInterface;
 use Stg\HallOfRecords\MediaWikiGenerator;
 
 return [
-    ConnectionFactory::class => DI\create(),
-    InMemoryDatabaseCreator::class => DI\autowire(),
-    RepositoryFactory::class => DI\create(),
+    GameRepositoryInterface::class => DI\create(GameRepository::class),
+    ScoreRepositoryInterface::class => DI\create(ScoreRepository::class),
 
     MediaWikiGenerator::class => DI\autowire(),
 ];
