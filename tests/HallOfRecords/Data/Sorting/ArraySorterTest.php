@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\HallOfRecords\Data;
+namespace Tests\HallOfRecords\Data\Sorting;
 
 use Stg\HallOfRecords\Data\Sorting\ArraySorter;
 use Stg\HallOfRecords\Data\Sorting\SortableInterface;
