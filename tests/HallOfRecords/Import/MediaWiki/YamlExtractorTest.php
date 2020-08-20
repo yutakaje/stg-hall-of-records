@@ -11,9 +11,9 @@
 
 declare(strict_types=1);
 
-namespace Tests\HallOfRecords\Import;
+namespace Tests\HallOfRecords\Import\MediaWiki;
 
-use Stg\HallOfRecords\Import\YamlExtractor;
+use Stg\HallOfRecords\Import\MediaWiki\YamlExtractor;
 use Symfony\Component\Yaml\Yaml;
 
 class YamlExtractorTest extends \Tests\TestCase

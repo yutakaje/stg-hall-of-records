@@ -17,6 +17,7 @@ use Stg\HallOfRecords\Data\Game;
 use Stg\HallOfRecords\Data\GameRepositoryInterface;
 use Stg\HallOfRecords\Data\Score;
 use Stg\HallOfRecords\Data\ScoreRepositoryInterface;
+use Stg\HallOfRecords\Import\MediaWiki\YamlExtractor;
 
 final class MediaWikiImporter
 {

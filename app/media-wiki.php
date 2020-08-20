@@ -17,7 +17,7 @@ use Stg\HallOfRecords\Data\ScoreRepository;
 use Stg\HallOfRecords\Data\ScoreRepositoryInterface;
 use Stg\HallOfRecords\Export\MediaWikiExporter;
 use Stg\HallOfRecords\Import\MediaWikiImporter;
-use Stg\HallOfRecords\Import\YamlExtractor;
+use Stg\HallOfRecords\Import\MediaWiki\YamlExtractor;
 use Stg\HallOfRecords\Import\YamlParser;
 use Stg\HallOfRecords\MediaWikiGenerator;
 

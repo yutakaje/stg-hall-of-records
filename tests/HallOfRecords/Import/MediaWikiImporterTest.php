@@ -20,7 +20,7 @@ use Stg\HallOfRecords\Data\Score;
 use Stg\HallOfRecords\Data\ScoreRepositoryInterface;
 use Stg\HallOfRecords\Import\ParsedGame;
 use Stg\HallOfRecords\Import\ParsedScore;
-use Stg\HallOfRecords\Import\YamlExtractor;
+use Stg\HallOfRecords\Import\MediaWiki\YamlExtractor;
 use Stg\HallOfRecords\Import\YamlParser;
 
 class MediaWikiImporterTest extends \Tests\TestCase
@@ -31,7 +31,7 @@ class MediaWikiImporterTest extends \Tests\TestCase
 
         $expectedData = (new YamlParser())->parse(
             (new YamlExtractor())->extract(
-                $this->loadFile(__DIR__ . '/wiki-input')
+                $this->loadFile(__DIR__ . '/MediaWiki/wiki-input')
             ),
             $locale
         );
@@ -64,7 +64,7 @@ class MediaWikiImporterTest extends \Tests\TestCase
         );
 
         self::assertEquals($expectedData, $importer->import(
-            $this->loadFile(__DIR__ . '/wiki-input'),
+            $this->loadFile(__DIR__ . '/MediaWiki/wiki-input'),
             $locale
         ));
 

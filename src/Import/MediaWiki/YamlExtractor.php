@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Stg\HallOfRecords\Import;
+namespace Stg\HallOfRecords\Import\MediaWiki;
 
 use Symfony\Component\Yaml\Yaml;
 
