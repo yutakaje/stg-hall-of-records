@@ -13,24 +13,9 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Data;
 
-final class Games
+/**
+ * @extends Collection<Game>
+ */
+final class Games extends Collection
 {
-    /** @var Game[] */
-    private array $games;
-
-    /**
-     * @param Game[] $games
-     */
-    public function __construct(array $games)
-    {
-        $this->games = $games;
-    }
-
-    /**
-     * @return Game[]
-     */
-    public function asArray(): array
-    {
-        return $this->games;
-    }
 }

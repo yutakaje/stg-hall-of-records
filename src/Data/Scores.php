@@ -13,24 +13,9 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Data;
 
-final class Scores
+/**
+ * @extends Collection<Score>
+ */
+final class Scores extends Collection
 {
-    /** @var Score[] */
-    private array $scores;
-
-    /**
-     * @param Score[] $scores
-     */
-    public function __construct(array $scores)
-    {
-        $this->scores = $scores;
-    }
-
-    /**
-     * @return Score[]
-     */
-    public function asArray(): array
-    {
-        return $this->scores;
-    }
 }

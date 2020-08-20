@@ -17,7 +17,6 @@ use Stg\HallOfRecords\Data\Game;
 use Stg\HallOfRecords\Data\GameRepositoryInterface;
 use Stg\HallOfRecords\Data\Score;
 use Stg\HallOfRecords\Data\ScoreRepositoryInterface;
-use Stg\HallOfRecords\Data\Scores;
 use Stg\HallOfRecords\Import\ParsedColumn;
 use Stg\HallOfRecords\Import\ParsedLayout;
 use Twig\Environment;
@@ -56,34 +55,32 @@ final class MediaWikiExporter
         );
 
         return $twig->render('games', [
-            'games' => array_map(
+            'games' => $this->games->all()->map(
                 fn (Game $game) => $this->createGameVariable(
                     $game,
-                    $this->scores->filterByGame($game),
                     $layouts[$game->id()]
-                ),
-                $this->games->all()->asArray()
+                )
             ),
         ]);
     }
 
     private function createGameVariable(
         Game $game,
-        Scores $scores,
         ParsedLayout $layout
     ): \stdClass {
+        $scores = $this->scores->filterByGame($game);
+
         $variable = new \stdClass();
         $variable->properties = $game;
         $variable->headers = array_map(
             fn (ParsedColumn $column) => $column->label(),
             $layout->columns()
         );
-        $variable->scores = array_map(
+        $variable->scores = $scores->map(
             fn (Score $score) => $this->createScoreVariable(
                 $score,
                 $layout->columns()
-            ),
-            $scores->asArray()
+            )
         );
         $variable->template = $layout->templates()['game'] ?? '';
         return $variable;

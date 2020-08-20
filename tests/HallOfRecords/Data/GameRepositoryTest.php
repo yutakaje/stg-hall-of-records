@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Tests\HallOfRecords\Data;
 
+use Stg\HallOfRecords\Data\Game;
 use Stg\HallOfRecords\Data\GameRepository;
 use Stg\HallOfRecords\Data\Games;
 
@@ -30,9 +31,9 @@ class GameRepositoryTest extends \Tests\TestCase
         $games = $this->createGames();
 
         $repository = new GameRepository();
-        foreach ($games->asArray() as $game) {
+        $games->apply(function (Game $game) use ($repository): void {
             $repository->add($game);
-        }
+        });
 
         self::assertEquals(
             $this->sortGames($games, [0, 1, 2, 3]),
@@ -45,9 +46,9 @@ class GameRepositoryTest extends \Tests\TestCase
         $games = $this->createGames();
 
         $repository = new GameRepository();
-        foreach ($games->asArray() as $game) {
+        $games->apply(function (Game $game) use ($repository): void {
             $repository->add($game);
-        }
+        });
 
         self::assertEquals(
             $this->sortGames($games, [1, 3, 2, 0]),
@@ -62,9 +63,9 @@ class GameRepositoryTest extends \Tests\TestCase
         $games = $this->createGames();
 
         $repository = new GameRepository();
-        foreach ($games->asArray() as $game) {
+        $games->apply(function (Game $game) use ($repository): void {
             $repository->add($game);
-        }
+        });
 
         self::assertEquals(
             $this->sortGames($games, [1, 3, 2, 0]),
@@ -80,9 +81,9 @@ class GameRepositoryTest extends \Tests\TestCase
         $games = $this->createGames();
 
         $repository = new GameRepository();
-        foreach ($games->asArray() as $game) {
+        $games->apply(function (Game $game) use ($repository): void {
             $repository->add($game);
-        }
+        });
 
         self::assertEquals(
             $this->sortGames($games, [1, 0, 2, 3]),
@@ -102,9 +103,9 @@ class GameRepositoryTest extends \Tests\TestCase
         $games = $this->createGames();
 
         $repository = new GameRepository();
-        foreach ($games->asArray() as $game) {
+        $games->apply(function (Game $game) use ($repository): void {
             $repository->add($game);
-        }
+        });
 
         // Invalid columns should be ignored.
         self::assertEquals(
