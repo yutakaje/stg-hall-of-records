@@ -13,34 +13,6 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Import;
 
-final class ParsedColumn
+final class ParsedColumn extends AbstractParsedObject
 {
-    private string $label;
-    private string $value;
-    private bool $groupSameValues;
-
-    public function __construct(
-        string $label,
-        string $value,
-        bool $groupSameValues
-    ) {
-        $this->label = $label;
-        $this->value = $value;
-        $this->groupSameValues = $groupSameValues;
-    }
-
-    public function label(): string
-    {
-        return $this->label;
-    }
-
-    public function value(): string
-    {
-        return $this->value;
-    }
-
-    public function groupSameValues(): bool
-    {
-        return $this->groupSameValues;
-    }
 }

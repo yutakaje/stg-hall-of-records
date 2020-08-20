@@ -57,12 +57,15 @@ final class YamlParser
     ): ParsedGlobalProperties {
         $translator = $this->parseLocalTranslations($properties, $translator);
 
-        $translateString = $this->createStringTranslator($translator, $properties);
+        $properties = $this->translateProperties($translator, $properties);
 
-        return $this->parsedDataFactory->createGlobalProperties([
-            'description' => $translateString('description'),
-            'templates' => $properties['templates'] ?? [],
-        ]);
+        /* @TODO Temporary code */
+        unset(
+            $properties['name'],
+            $properties['translations'],
+        );
+
+        return $this->parsedDataFactory->createGlobalProperties($properties);
     }
 
     /**
@@ -90,16 +93,24 @@ final class YamlParser
             $this->parseTranslations($properties, $translator),
         );
 
-        $translateString = $this->createStringTranslator($translator, $properties);
+        $properties = $this->translateProperties($translator, $properties);
+        $scores = array_map(
+            fn (array $score) => $this->parseScore($score, $translator),
+            $properties['scores'] ?? []
+        );
+        $layout = $this->parseLayout($properties['layout'] ?? [], $translator);
+
+        /* @TODO Temporary code */
+        unset(
+            $properties['scores'],
+            $properties['layout'],
+            $properties['translations'],
+        );
 
         return $this->parsedDataFactory->createGame(
-            $translateString('name'),
-            $translateString('company'),
-            array_map(
-                fn (array $score) => $this->parseScore($score, $translator),
-                $properties['scores'] ?? []
-            ),
-            $this->parseLayout($properties['layout'] ?? [], $translator)
+            $properties,
+            $scores,
+            $layout
         );
     }
 
@@ -110,22 +121,13 @@ final class YamlParser
         array $properties,
         Translator $fallbackTranslator
     ): ParsedScore {
-        $translator = $this->parseLocalTranslations($properties, $fallbackTranslator);
-
-        $translateString = $this->createStringTranslator($translator, $properties);
-        $translateArray = $this->createArrayTranslator($translator, $properties);
+        $translator = $this->parseLocalTranslations(
+            $properties,
+            $fallbackTranslator
+        );
 
         return $this->parsedDataFactory->createScore(
-            $translateString('player'),
-            $translateString('score'),
-            [
-                'ship' => $translateString('ship'),
-                'mode' => $translateString('mode'),
-                'weapon' => $translateString('weapon'),
-                'scoredDate' => $translateString('scored-date'),
-                'source' => $translateString('source'),
-                'comments' => $translateArray('comments'),
-            ]
+            $this->translateProperties($translator, $properties)
         );
     }
 
@@ -182,17 +184,15 @@ final class YamlParser
         array $properties,
         Translator $translator
     ): ParsedLayout {
-        return $this->parsedDataFactory->createLayout([
-            'columns' => array_map(
-                fn (array $column) => $this->parseColumn($column, $translator),
-                array_filter(
-                    $properties['columns'] ?? [],
-                    fn ($column) => is_array($column)
-                )
-            ),
-            'sort' => $properties['sort'] ?? [],
-            'templates' => $properties['templates'] ?? [],
-        ]);
+        $properties['columns'] = $columns = array_map(
+            fn (array $column) => $this->parseColumn($column, $translator),
+            array_filter(
+                $properties['columns'] ?? [],
+                fn ($column) => is_array($column)
+            )
+        );
+
+        return $this->parsedDataFactory->createLayout($properties);
     }
 
     /**
@@ -204,14 +204,8 @@ final class YamlParser
     ): ParsedColumn {
         $translator = $this->parseLocalTranslations($properties, $fallbackTranslator);
 
-        $translateString = $this->createStringTranslator($translator, $properties);
-
         return $this->parsedDataFactory->createColumn(
-            $translateString('label'),
-            $translateString('template'),
-            [
-                'groupSameValues' => $properties['groupSameValues'] ?? false,
-            ]
+            $this->translateProperties($translator, $properties)
         );
     }
 
@@ -248,30 +242,33 @@ final class YamlParser
         return array_slice($sections, 1);
     }
 
-
     /**
      * @param array<string,mixed> $properties
+     * @return array<string,mixed>
      */
-    private function createStringTranslator(
+    private function translateProperties(
         Translator $translator,
         array $properties
-    ): \Closure {
-        return fn (string $name) => $translator->translate(
-            $name,
-            $properties[$name] ?? ''
-        );
-    }
+    ): array {
+        $translated = [];
 
-    /**
-     * @param array<string,mixed> $properties
-     */
-    private function createArrayTranslator(
-        Translator $translator,
-        array $properties
-    ): \Closure {
-        return fn (string $name) => $translator->translateArray(
-            $name,
-            $properties[$name] ?? []
-        );
+        $skip = [];
+        foreach ($properties as $name => $value) {
+            if (isset($skip[$name])) {
+                continue;
+            }
+
+            if ($value !== null) {
+                $translated[$name] = $translator->translate($name, $value);
+            } else {
+                $translated[$name] = null;
+            }
+
+            /* @TODO Temporary code */
+            $skip["{$name}-en"] = true;
+            $skip["{$name}-jp"] = true;
+        }
+
+        return $translated;
     }
 }

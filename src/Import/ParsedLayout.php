@@ -13,28 +13,21 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Import;
 
-final class ParsedLayout
+final class ParsedLayout extends AbstractParsedObject
 {
     /** @var ParsedColumn[] */
     private array $columns;
-    /** @var array<string,mixed> */
-    private array $sort;
-    /** @var array<string,string> */
-    private array $templates;
 
     /**
-     * @param ParsedColumn[] $columns;
-     * @param array<string,mixed> $sort
-     * @param array<string,string> $templates
+     * @param array<string,mixed> $properties
+     * @param ParsedColumn[] $columns
      */
     public function __construct(
-        array $columns,
-        array $sort,
-        array $templates
+        array $properties,
+        array $columns
     ) {
+        parent::__construct($properties);
         $this->columns = $columns;
-        $this->sort = $sort;
-        $this->templates = $templates;
     }
 
     /**
@@ -43,21 +36,5 @@ final class ParsedLayout
     public function columns(): array
     {
         return $this->columns;
-    }
-
-    /**
-     * @return array<string,mixed>
-     */
-    public function sort(): array
-    {
-        return $this->sort;
-    }
-
-    /**
-     * @return array<string,string>
-     */
-    public function templates(): array
-    {
-        return $this->templates;
     }
 }

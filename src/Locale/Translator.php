@@ -46,22 +46,19 @@ final class Translator
 
         throw new \InvalidArgumentException(
             'Value and its translation must both have the same data type,'
-            .  ' which is either a string or an array of strings.'
+            . ' which is either a string or an array of strings.'
         );
     }
 
-    public function translate(string $property, string $value): string
+    /**
+     * @param string|string[] $value
+     * @return string|string[]
+     */
+    public function translate(string $property, $value)
     {
         $index = $this->indexFor($value);
 
         if (isset($this->translations[$property][$index])) {
-            if (!is_string($this->translations[$property][$index])) {
-                throw new \InvalidArgumentException(
-                    "Invalid data type, property `{$property}` should"
-                    . ' be translated into a string.'
-                );
-            }
-
             return $this->translations[$property][$index];
         } elseif ($this->fallbackTranslator !== null) {
             return $this->fallbackTranslator->translate($property, $value);
@@ -71,38 +68,17 @@ final class Translator
     }
 
     /**
-     * @param string[] $values
-     * @return string[]
-     */
-    public function translateArray(string $property, array $values): array
-    {
-        $index = $this->indexFor($values);
-
-        if (isset($this->translations[$property][$index])) {
-            if (!is_array($this->translations[$property][$index])) {
-                throw new \InvalidArgumentException(
-                    "Invalid data type, property `{$property}` should"
-                    . ' be translated into an array of strings.'
-                );
-            }
-
-            return $this->translations[$property][$index];
-        } elseif ($this->fallbackTranslator !== null) {
-            return $this->fallbackTranslator->translateArray($property, $values);
-        } else {
-            return $values;
-        }
-    }
-
-    /**
      * @param string|string[] $value
      */
     private function indexFor($value): string
     {
-        if (is_array($value)) {
-            $value = implode(';', $value);
+        $json = json_encode($value);
+        if ($json === false) {
+            throw new \InvalidArgumentException(
+                'Value could not be converted into JSON'
+            );
         }
 
-        return md5($value);
+        return md5($json);
     }
 }

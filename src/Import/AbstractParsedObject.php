@@ -13,24 +13,17 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Import;
 
-final class ParsedScore extends AbstractParsedObject
+abstract class AbstractParsedObject
 {
-    private int $id;
+    /** @var array<string,mixed> */
+    private array $properties;
 
     /**
      * @param array<string,mixed> $properties
      */
-    public function __construct(
-        int $id,
-        array $properties
-    ) {
-        parent::__construct($properties);
-        $this->id = $id;
-    }
-
-    public function id(): int
+    public function __construct(array $properties = [])
     {
-        return $this->id;
+        $this->properties = $properties;
     }
 
     /**
@@ -38,11 +31,6 @@ final class ParsedScore extends AbstractParsedObject
      */
     public function getProperty(string $name)
     {
-        switch ($name) {
-            case 'id':
-                return $this->id;
-            default:
-                return parent::getProperty($name);
-        }
+        return $this->properties[$name] ?? null;
     }
 }

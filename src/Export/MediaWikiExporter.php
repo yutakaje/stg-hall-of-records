@@ -73,7 +73,7 @@ final class MediaWikiExporter
         $variable = new \stdClass();
         $variable->properties = $game;
         $variable->headers = array_map(
-            fn (ParsedColumn $column) => $column->label(),
+            fn (ParsedColumn $column) => $column->getProperty('label') ?? '',
             $layout->columns()
         );
         $variable->scores = $scores->map(
@@ -82,7 +82,7 @@ final class MediaWikiExporter
                 $layout->columns()
             )
         );
-        $variable->template = $layout->templates()['game'] ?? '';
+        $variable->template = ($layout->getProperty('templates') ?? [])['game'] ?? '';
         return $variable;
     }
 
@@ -94,7 +94,7 @@ final class MediaWikiExporter
     {
         return array_map(
             fn (ParsedColumn $column) => $this->renderTemplate(
-                $column->value(),
+                $column->getProperty('template') ?? '',
                 $score
             ),
             $columns

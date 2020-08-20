@@ -35,80 +35,59 @@ final class ParsedDataFactory
     }
 
     /**
-     * @param array<string,mixed> $options
+     * @param array<string,mixed> $properties
      */
     public function createGlobalProperties(
-        array $options = []
+        array $properties = []
     ): ParsedGlobalProperties {
-        return new ParsedGlobalProperties(
-            $options['description'] ?? '',
-            $options['templates'] ?? []
-        );
+        return new ParsedGlobalProperties($properties);
     }
 
     /**
+     * @param array<string,mixed> $properties
      * @param ParsedScore[] $scores
      */
     public function createGame(
-        string $name,
-        string $company,
+        array $properties,
         array $scores,
         ParsedLayout $layout
     ): ParsedGame {
         return new ParsedGame(
             $this->nextGameId++,
-            $name,
-            $company,
+            $properties,
             $scores,
             $layout
         );
     }
 
     /**
-     * @param array<string,mixed> $options
+     * @param array<string,mixed> $properties
      */
-    public function createScore(
-        string $player,
-        string $score,
-        array $options = []
-    ): ParsedScore {
+    public function createScore(array $properties = []): ParsedScore
+    {
         return new ParsedScore(
             $this->nextScoreId++,
-            $player,
-            $score,
-            $options['ship'] ?? '',
-            $options['mode'] ?? '',
-            $options['weapon'] ?? '',
-            $options['scoredDate'] ?? '',
-            $options['source'] ?? '',
-            $options['comments'] ?? []
+            $properties
         );
     }
 
     /**
-     * @param array<string,mixed> $options
+     * @param array<string,mixed> $properties
      */
-    public function createLayout(array $options = []): ParsedLayout
+    public function createLayout(array $properties = []): ParsedLayout
     {
-        return new ParsedLayout(
-            $options['columns'] ?? [],
-            $options['sort'] ?? [],
-            $options['templates'] ?? []
-        );
+        /* @TODO Temporary code */
+        $columns = $properties['columns'] ?? [];
+        unset($properties['columns']);
+
+        return new ParsedLayout($properties, $columns);
     }
 
     /**
-     * @param array<string,mixed> $options
+     * @param array<string,mixed> $properties
      */
-    public function createColumn(
-        string $label,
-        string $value,
-        array $options = []
-    ): ParsedColumn {
-        return new ParsedColumn(
-            $label,
-            $value,
-            ($options['groupSameValues'] ?? false) === true
-        );
+    public function createColumn(array $properties = []): ParsedColumn
+    {
+        return new ParsedColumn($properties);
     }
 }

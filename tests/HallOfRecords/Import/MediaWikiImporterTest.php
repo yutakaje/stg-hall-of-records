@@ -73,8 +73,8 @@ class MediaWikiImporterTest extends \Tests\TestCase
             array_map(
                 fn (ParsedGame $parsedGame) => $this->createGame([
                     'id' => $parsedGame->id(),
-                    'name' => $parsedGame->name(),
-                    'company' => $parsedGame->company(),
+                    'name' => $parsedGame->getProperty('name'),
+                    'company' => $parsedGame->getProperty('company'),
                 ]),
                 $expectedData->games()
             ),
@@ -90,14 +90,14 @@ class MediaWikiImporterTest extends \Tests\TestCase
                         fn (ParsedScore $parsedScore) => $this->createScore([
                             'id' => $parsedScore->id(),
                             'gameId' => $parsedGame->id(),
-                            'player' => $parsedScore->player(),
-                            'score' => $parsedScore->score(),
-                            'ship' => $parsedScore->ship(),
-                            'mode' => $parsedScore->mode(),
-                            'weapon' => $parsedScore->weapon(),
-                            'scoredDate' => $parsedScore->scoredDate(),
-                            'source' => $parsedScore->source(),
-                            'comments' => $parsedScore->comments(),
+                            'player' => $parsedScore->getProperty('player'),
+                            'score' => $parsedScore->getProperty('score'),
+                            'ship' => $parsedScore->getProperty('ship'),
+                            'mode' => $parsedScore->getProperty('mode'),
+                            'weapon' => $parsedScore->getProperty('weapon'),
+                            'scoredDate' => $parsedScore->getProperty('scored-date'),
+                            'source' => $parsedScore->getProperty('source'),
+                            'comments' => $parsedScore->getProperty('comments'),
                         ]),
                         $parsedGame->scores()
                     )

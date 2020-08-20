@@ -13,33 +13,6 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Import;
 
-final class ParsedGlobalProperties
+final class ParsedGlobalProperties extends AbstractParsedObject
 {
-    private string $description;
-    /** @var array<string,string> */
-    private array $templates;
-
-    /**
-     * @param array<string,string> $templates
-     */
-    public function __construct(
-        string $description,
-        array $templates
-    ) {
-        $this->description = $description;
-        $this->templates = $templates;
-    }
-
-    public function description(): string
-    {
-        return $this->description;
-    }
-
-    /**
-     * @return array<string,string>
-     */
-    public function templates(): array
-    {
-        return $this->templates;
-    }
 }

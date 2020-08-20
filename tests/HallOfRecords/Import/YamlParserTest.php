@@ -135,40 +135,53 @@ TPL,
         self::assertEquals(
             [
                 $factory->createGame(
-                    'Mushihimesama Futari 1.5',
-                    'Cave',
                     [
-                        $factory->createScore('ABI', '530,358,660', [
+                        'name' => 'Mushihimesama Futari 1.5',
+                        'company' => 'Cave',
+                    ],
+                    [
+                        $factory->createScore([
+                            'player' => 'ABI',
+                            'score' => '530,358,660',
                             'ship' => 'Palm',
                             'mode' => 'Original',
                             'weapon' => 'Normal',
-                            'scoredDate' => '2008-01',
+                            'scored-date' => '2008-01',
                             'source' => 'Arcadia January 2008',
                         ]),
-                        $factory->createScore('ISO / Niboshi', '518,902,716', [
+                        $factory->createScore([
+                            'player' => 'ISO / Niboshi',
+                            'score' => '518,902,716',
                             'ship' => 'Palm',
                             'mode' => 'Original',
                             'weapon' => 'Abnormal',
-                            'scoredDate' => '2007',
+                            'scored-date' => '2007',
                             'source' => 'Superplay DVD',
                         ]),
                     ],
                     $factory->createLayout()
                 ),
                 $factory->createGame(
-                    'Ketsui: Kizuna Jigoku Tachi',
-                    'Cave',
                     [
-                        $factory->createScore('SPS', '507,780,433', [
+                        'name' => 'Ketsui: Kizuna Jigoku Tachi',
+                        'company' => 'Cave',
+                    ],
+                    [
+                        $factory->createScore([
+                            'player' => 'SPS',
+                            'score' => '507,780,433',
                             'ship' => 'Type A',
                             'mode' => 'Omote',
-                            'scoredDate' => '2014-08',
+                            'scored-date' => '2014-08',
                             'source' => 'Arcadia August 2014',
+                            'comments' => [],
                         ]),
-                        $factory->createScore('GAN', '569,741,232', [
+                        $factory->createScore([
+                            'player' => 'GAN',
+                            'score' => '569,741,232',
                             'ship' => 'Type B',
                             'mode' => 'Ura',
-                            'scoredDate' => '2016-03',
+                            'scored-date' => '2016-03',
                             'source' => 'JHA March 2016',
                             'comments' => [
                                 '6L remaining',
@@ -178,19 +191,32 @@ TPL,
                     ],
                     $factory->createLayout([
                         'columns' => [
-                            $factory->createColumn('Ship', '{{ ship }}', [
+                            $factory->createColumn([
+                                'label' => 'Ship',
+                                'template' => '{{ ship }}',
                                 'groupSameValues' => true,
                             ]),
-                            $factory->createColumn('Loop', '{{ mode }}'),
-                            $factory->createColumn('Score', '{{ score }}'),
-                            $factory->createColumn('Player', '{{ player }}', [
+                            $factory->createColumn([
+                                'label' => 'Loop',
+                                'template' => '{{ mode }}',
+                            ]),
+                            $factory->createColumn([
+                                'label' => 'Score',
+                                'template' => '{{ score }}',
+                            ]),
+                            $factory->createColumn([
+                                'label' => 'Player',
+                                'template' => '{{ player }}',
                                 'groupSameValues' => true,
                             ]),
-                            $factory->createColumn(
-                                'Date / Source',
-                                '{{ scored-date }} / {{ source }}'
-                            ),
-                            $factory->createColumn('Comment', '{{ comments }}'),
+                            $factory->createColumn([
+                                'label' => 'Date / Source',
+                                'template' => '{{ scored-date }} / {{ source }}',
+                            ]),
+                            $factory->createColumn([
+                                'label' => 'Comment',
+                                'template' => '{{ comments }}',
+                            ]),
                         ],
                         'sort' => [
                             'ship' => 'asc',
@@ -200,8 +226,10 @@ TPL,
                     ])
                 ),
                 $factory->createGame(
-                    'Great Mahou Daisakusen',
-                    'Raizing / 8ing',
+                    [
+                        'name' => 'Great Mahou Daisakusen',
+                        'company' => 'Raizing / 8ing',
+                    ],
                     [],
                     $factory->createLayout([
                         'templates' => [
@@ -240,40 +268,53 @@ TPL,
         self::assertEquals(
             [
                 $factory->createGame(
-                    'Mushihimesama Futari 1.5',
-                    'Cave',
                     [
-                        $factory->createScore('ABI', '530,358,660', [
+                        'name' => 'Mushihimesama Futari 1.5',
+                        'company' => 'Cave',
+                    ],
+                    [
+                        $factory->createScore([
+                            'player' => 'ABI',
+                            'score' => '530,358,660',
                             'ship' => 'Palm',
                             'mode' => 'Original',
                             'weapon' => 'Normal',
-                            'scoredDate' => '2008-01',
+                            'scored-date' => '2008-01',
                             'source' => 'Arcadia January 2008',
                         ]),
-                        $factory->createScore('ISO / Niboshi', '518,902,716', [
+                        $factory->createScore([
+                            'player' => 'ISO / Niboshi',
+                            'score' => '518,902,716',
                             'ship' => 'Palm',
                             'mode' => 'Original',
                             'weapon' => 'Abnormal',
-                            'scoredDate' => '2007',
+                            'scored-date' => '2007',
                             'source' => 'Superplay DVD',
                         ]),
                     ],
                     $factory->createLayout()
                 ),
                 $factory->createGame(
-                    'Ketsui: Kizuna Jigoku Tachi',
-                    'Cave',
                     [
-                        $factory->createScore('SPS', '507,780,433', [
+                        'name' => 'Ketsui: Kizuna Jigoku Tachi',
+                        'company' => 'Cave',
+                    ],
+                    [
+                        $factory->createScore([
+                            'player' => 'SPS',
+                            'score' => '507,780,433',
                             'ship' => 'Tiger Schwert',
                             'mode' => 'Omote',
-                            'scoredDate' => '2014-08',
+                            'scored-date' => '2014-08',
                             'source' => 'Arcadia August 2014',
+                            'comments' => [],
                         ]),
-                        $factory->createScore('GAN', '569,741,232', [
+                        $factory->createScore([
+                            'player' => 'GAN',
+                            'score' => '569,741,232',
                             'ship' => 'Panzer Jäger',
                             'mode' => 'Ura',
-                            'scoredDate' => '2016-03',
+                            'scored-date' => '2016-03',
                             'source' => 'JHA March 2016',
                             'comments' => [
                                 '6L remaining',
@@ -283,19 +324,32 @@ TPL,
                     ],
                     $factory->createLayout([
                         'columns' => [
-                            $factory->createColumn('Ship', '{{ ship }}', [
+                            $factory->createColumn([
+                                'label' => 'Ship',
+                                'template' => '{{ ship }}',
                                 'groupSameValues' => true,
                             ]),
-                            $factory->createColumn('Loop', '{{ mode }}'),
-                            $factory->createColumn('Score', '{{ score }}'),
-                            $factory->createColumn('Player', '{{ player }}', [
+                            $factory->createColumn([
+                                'label' => 'Loop',
+                                'template' => '{{ mode }}',
+                            ]),
+                            $factory->createColumn([
+                                'label' => 'Score',
+                                'template' => '{{ score }}',
+                            ]),
+                            $factory->createColumn([
+                                'label' => 'Player',
+                                'template' => '{{ player }}',
                                 'groupSameValues' => true,
                             ]),
-                            $factory->createColumn(
-                                'Date / Source',
-                                '{{ scored-date }} / {{ source }}'
-                            ),
-                            $factory->createColumn('Comment', '{{ comments }}'),
+                            $factory->createColumn([
+                                'label' => 'Date / Source',
+                                'template' => '{{ scored-date }} / {{ source }}',
+                            ]),
+                            $factory->createColumn([
+                                'label' => 'Comment',
+                                'template' => '{{ comments }}',
+                            ]),
                         ],
                         'sort' => [
                             'ship' => 'asc',
@@ -305,8 +359,10 @@ TPL,
                     ])
                 ),
                 $factory->createGame(
-                    'Great Mahou Daisakusen',
-                    'Raizing / 8ing',
+                    [
+                        'name' => 'Great Mahou Daisakusen',
+                        'company' => 'Raizing / 8ing',
+                    ],
                     [],
                     $factory->createLayout([
                         'templates' => [
@@ -345,40 +401,53 @@ TPL,
         self::assertEquals(
             [
                 $factory->createGame(
-                    '虫姫さまふたりVer 1.5',
-                    'ケイブ',
                     [
-                        $factory->createScore('ABI', '530,358,660', [
+                        'name' => '虫姫さまふたりVer 1.5',
+                        'company' => 'ケイブ',
+                    ],
+                    [
+                        $factory->createScore([
+                            'player' => 'ABI',
+                            'score' => '530,358,660',
                             'ship' => 'Palm',
                             'mode' => 'Original',
                             'weapon' => 'Normal',
-                            'scoredDate' => '2008-01',
+                            'scored-date' => '2008-01',
                             'source' => 'Arcadia January 2008',
                         ]),
-                        $factory->createScore('ISO / Niboshi', '518,902,716', [
+                        $factory->createScore([
+                            'player' => 'ISO / Niboshi',
+                            'score' => '518,902,716',
                             'ship' => 'Palm',
                             'mode' => 'Original',
                             'weapon' => 'Abnormal',
-                            'scoredDate' => '2007',
+                            'scored-date' => '2007',
                             'source' => 'Superplay DVD',
                         ]),
                     ],
                     $factory->createLayout()
                 ),
                 $factory->createGame(
-                    'ケツイ ～絆地獄たち～',
-                    'ケイブ',
                     [
-                        $factory->createScore('SPS', '507,780,433', [
+                        'name' => 'ケツイ ～絆地獄たち～',
+                        'company' => 'ケイブ',
+                    ],
+                    [
+                        $factory->createScore([
+                            'player' => 'SPS',
+                            'score' => '507,780,433',
                             'ship' => 'TYPE-A ティーゲルシュベルト',
                             'mode' => '表2週',
-                            'scoredDate' => '2014-08',
+                            'scored-date' => '2014-08',
                             'source' => 'Arcadia August 2014',
+                            'comments' => [],
                         ]),
-                        $factory->createScore('GAN', '569,741,232', [
+                        $factory->createScore([
+                            'player' => 'GAN',
+                            'score' => '569,741,232',
                             'ship' => 'TYPE-B パンツァーイェーガー',
                             'mode' => '裏2週',
-                            'scoredDate' => '2016-03',
+                            'scored-date' => '2016-03',
                             'source' => 'JHA March 2016',
                             'comments' => [
                                 '残6機',
@@ -388,19 +457,32 @@ TPL,
                     ],
                     $factory->createLayout([
                         'columns' => [
-                            $factory->createColumn('自機', '{{ ship }}', [
+                            $factory->createColumn([
+                                'label' => '自機',
+                                'template' => '{{ ship }}',
                                 'groupSameValues' => true,
                             ]),
-                            $factory->createColumn('2週種', '{{ mode }}'),
-                            $factory->createColumn('スコア', '{{ score }}'),
-                            $factory->createColumn('プレイヤー', '{{ player }}', [
+                            $factory->createColumn([
+                                'label' => '2週種',
+                                'template' => '{{ mode }}',
+                            ]),
+                            $factory->createColumn([
+                                'label' => 'スコア',
+                                'template' => '{{ score }}',
+                            ]),
+                            $factory->createColumn([
+                                'label' => 'プレイヤー',
+                                'template' => '{{ player }}',
                                 'groupSameValues' => true,
                             ]),
-                            $factory->createColumn(
-                                '年月日 / 情報元',
-                                '{{ scored-date }} / {{ source }}'
-                            ),
-                            $factory->createColumn('備考', '{{ comments }}'),
+                            $factory->createColumn([
+                                'label' => '年月日 / 情報元',
+                                'template' => '{{ scored-date }} / {{ source }}',
+                            ]),
+                            $factory->createColumn([
+                                'label' => '備考',
+                                'template' => '{{ comments }}',
+                            ]),
                         ],
                         'sort' => [
                             'ship' => 'asc',
@@ -410,8 +492,10 @@ TPL,
                     ])
                 ),
                 $factory->createGame(
-                    'Great Mahou Daisakusen',
-                    'Raizing / 8ing',
+                    [
+                        'name' => 'Great Mahou Daisakusen',
+                        'company' => 'Raizing / 8ing',
+                    ],
                     [],
                     $factory->createLayout([
                         'templates' => [

@@ -13,28 +13,25 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Import;
 
-final class ParsedGame
+final class ParsedGame extends AbstractParsedObject
 {
     private int $id;
-    private string $name;
-    private string $company;
     /** @var ParsedScore[] */
     private array $scores;
     private ParsedLayout $layout;
 
     /**
+     * @param array<string,mixed> $properties
      * @param ParsedScore[] $scores
      */
     public function __construct(
         int $id,
-        string $name,
-        string $company,
+        array $properties,
         array $scores,
         ParsedLayout $layout
     ) {
+        parent::__construct($properties);
         $this->id = $id;
-        $this->name = $name;
-        $this->company = $company;
         $this->scores = $scores;
         $this->layout = $layout;
     }
@@ -42,16 +39,6 @@ final class ParsedGame
     public function id(): int
     {
         return $this->id;
-    }
-
-    public function name(): string
-    {
-        return $this->name;
-    }
-
-    public function company(): string
-    {
-        return $this->company;
     }
 
     /**

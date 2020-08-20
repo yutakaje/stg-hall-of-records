@@ -83,8 +83,8 @@ final class MediaWikiImporter
     {
         $this->games->add(new Game(
             $game->id(),
-            $game->name(),
-            $game->company()
+            $game->getProperty('name') ?? '',
+            $game->getProperty('company') ?? ''
         ));
 
         foreach ($game->scores() as $score) {
@@ -97,14 +97,14 @@ final class MediaWikiImporter
         $this->scores->add(new Score(
             $score->id(),
             $gameId,
-            $score->player(),
-            $score->score(),
-            $score->ship(),
-            $score->mode(),
-            $score->weapon(),
-            $score->scoredDate(),
-            $score->source(),
-            $score->comments()
+            $score->getProperty('player') ?? '',
+            $score->getProperty('score') ?? '',
+            $score->getProperty('ship') ?? '',
+            $score->getProperty('mode') ?? '',
+            $score->getProperty('weapon') ?? '',
+            $score->getProperty('scored-date') ?? '',
+            $score->getProperty('source') ?? '',
+            $score->getProperty('comments') ?? []
         ));
     }
 }

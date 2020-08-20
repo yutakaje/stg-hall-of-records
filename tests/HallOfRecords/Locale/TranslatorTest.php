@@ -30,7 +30,7 @@ class TranslatorTest extends \Tests\TestCase
         self::assertSame('ケイブ', $translator->translate('company', 'Cave'));
         self::assertSame('Raizing', $translator->translate('company', 'Raizing'));
         self::assertSame('Cave', $translator->translate('player', 'Cave'));
-        self::assertSame(['1周目', '2周目'], $translator->translateArray(
+        self::assertSame(['1周目', '2周目'], $translator->translate(
             'comment',
             ['first loop', 'second loop']
         ));
@@ -54,7 +54,7 @@ class TranslatorTest extends \Tests\TestCase
         self::assertSame('Konami', $translator->translate('company', 'Konami'));
         self::assertSame('Cave', $translator->translate('player', 'Cave'));
         self::assertSame('Raizing', $translator->translate('player', 'Raizing'));
-        self::assertSame(['1周目', '2周目'], $translator->translateArray(
+        self::assertSame(['1周目', '2周目'], $translator->translate(
             'comment',
             ['first loop', 'second loop']
         ));

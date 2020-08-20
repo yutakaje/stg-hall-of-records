@@ -46,7 +46,7 @@ final class MediaWikiGenerator
     {
         return $this->exporter->export(
             $parsedData->layouts(),
-            $parsedData->globalProperties()->templates()
+            $parsedData->globalProperties()->getProperty('templates') ?? []
         );
     }
 }
