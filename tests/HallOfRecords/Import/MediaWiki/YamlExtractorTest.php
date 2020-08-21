@@ -20,8 +20,8 @@ class YamlExtractorTest extends \Tests\TestCase
 {
     public function testWithValidInput(): void
     {
-        $input = $this->loadFile(__DIR__ . '/wiki-input');
-        $expected = $this->loadFile(__DIR__ . '/yaml-output');
+        $input = $this->loadFile(__DIR__ . '/extractor.input');
+        $expected = $this->loadFile(__DIR__ . '/extractor.output');
 
         $extractor = new YamlExtractor();
 

@@ -21,7 +21,6 @@ final class Translator
      * @var array<string,array<string,string|string[]>>
      */
     private array $translations;
-
     private ?Translator $fallbackTranslator;
 
     public function __construct(?Translator $fallbackTranslator = null)

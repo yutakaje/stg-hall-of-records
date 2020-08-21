@@ -11,8 +11,15 @@
 
 declare(strict_types=1);
 
-namespace Stg\HallOfRecords\Import;
+namespace Stg\HallOfRecords\Data;
 
-final class ParsedColumn extends AbstractParsedObject
+interface SettingRepositoryInterface
 {
+    public function filterGlobal(): Settings;
+
+    public function filterByGame(Game $game): Settings;
+
+    public function add(Setting $setting): void;
+
+    public function clear(): void;
 }

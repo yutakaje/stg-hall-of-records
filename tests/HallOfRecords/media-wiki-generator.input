@@ -4,6 +4,15 @@ Values defined in this section will apply to all the games in the database. Its 
 <div style="display:none"><nowiki>
 name: global
 
+config:
+    scores:
+        group-by:
+            - ship
+    group:
+      - ship
+      - mode
+    num-previous-scores: 0
+
 templates:
     games: |
         {% for game in games %}
@@ -125,7 +134,7 @@ scores:
     comments:
       - Highest score Xbox360
     links:
-      - url: https://youtu.be/jXus8svt7ds
+      - url: https://
         name: Youtube
 
   - player: Dame K.K
@@ -149,7 +158,7 @@ scores:
     comments:
         - Highest score Xbox360
     links:
-      - url: https://youtu.be/EeLzh7VNujQ
+      - url: https://
         name: Youtube
 
   - player: fufufu
@@ -163,7 +172,7 @@ scores:
       - 0L 0B remaining
       - "After stage 4: 2.205b"
     links:
-      - url: https://youtu.be/XwSFHPhp9gc
+      - url: https://
         name: Youtube
 
   - player: lstze
@@ -173,14 +182,14 @@ scores:
     weapon: Abnormal
     scored-date: "2014?"
     links:
-      - url: https://www.youtube.com/playlist?list=PL6mhbpnepUippXLrlpnyx5bfZsm0rihHc
+      - url: https://
         name: Youtube
 
 links:
-  - url: https://wiki.denfaminicogamer.jp/highscore/2006_002_%E8%99%AB%E5%A7%AB%E3%81%95%E3%81%BE%E3%81%B5%E3%81%9F%E3%82%8A_Ver1.5
+  - url: https://example.org/some_link_id
     title: JHA Leaderboard
     title-jp: 日本ハイスコア協会
-  - url: https://shmups.system11.org/viewtopic.php?t=60592
+  - url: https://example.org/some_other_link
     title: Shmups Forum Hi-Score Topic
 
 layout:
@@ -210,9 +219,9 @@ layout:
         template: "{{ comments|join('; ') }}"
 
     sort:
-        mode: Original,Maniac,Ultra
-        ship: Reco,Palm
-        weapon: Normal,Abnormal
+        mode: [ Original, Maniac, Ultra ]
+        ship: [ Palm, Reco ]
+        weapon: [ Normal, Abnormal ]
         score: desc
 
 # Translations for the whole game (so you do not have to specify the same Japanese term within all the entries)
@@ -260,7 +269,7 @@ scores:
     ship: Type A
     mode: Ura
     scored-date: "2014-05-27"
-    source: Arcadia September 2014 / [https://twitter.com/SPSPUYO/status/471312775843561472 Twitter]
+    source: Arcadia September 2014 / [https:// Twitter]
     comments:
       - 6L 0B remaining
       - 1st loop 285m
@@ -285,10 +294,10 @@ scores:
       - 6L remaining
 
 links:
-  - url: https://wiki.denfaminicogamer.jp/highscore/2003_034_%E3%82%B1%E3%83%84%E3%82%A4
+  - url: https://example.org/some_link_id
     title: JHA Leaderboard
     title-jp: 日本ハイスコア協会
-  - url: https://shmups.system11.org/viewtopic.php?t=65086
+  - url: https://example.org/some_other_link
     title: Shmups Forum Hi-Score Topic
 
 translations:
@@ -336,9 +345,18 @@ layout:
         template: "{{ comments|join('; ') }}"
 
     sort:
-      - ship: asc
-      - mode: asc
-      - score: desc
+        ship: [ Type A, Type B ]
+        mode: asc
+        score: desc
+
+#templates:
+#    score-header: |
+#        | Ship || Loop || Score || Player || Date / Source || Comment
+#    score-header-jp: |  
+#        | 自機 || 2週種 || スコア || プレイヤー || 年月日 / 情報元 || 備考
+#    score-columns:
+#        | {{ ship }} || {{ mode }} || {{ score }} || {{ player }} || {{ scored-date }} / {{ source }} || {{ comments|join('; ') }}
+
     
 </nowiki></div>
 
@@ -358,41 +376,41 @@ layout:
             ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
             | rowspan="2" | Birthday
-            | 83,743,680 || rowspan="2" | Miku || August 2nd, 2020 / [https://twitter.com/4Yt7z/status/1289925223203000320 Twitter] || 107 items ||
+            | 83,743,680 || rowspan="2" | Miku || August 2nd, 2020 / [https:// Twitter] || 107 items ||
             |-
             | 66,693,110 || JHA November 2019 || 107 items ||
             |-
             | rowspan="2" | Chitta
             | 93,664,750 || rowspan="2" | SOF-WTN
-            | August 8th, 2020 / [https://twitter.com/sof_wtn/status/1292047346562289664 Twitter] || 108 items ||
+            | August 8th, 2020 / [https:// Twitter] || 108 items ||
             |-
             | 83,195,810 || JHA June 2020 || || 
             |-
             | rowspan="2" | Gain
-            | 80,528,610 || Boredom || July 1st, 2020 / [https://twitter.com/boredom_79/status/1278389636155367424 Twitter] || 108 items || [https://youtu.be/DCEM2fnGBPU Youtube]
+            | 80,528,610 || Boredom || July 1st, 2020 / [https:// Twitter] || 108 items || [https:// Youtube]
             |-
             | 31,653,130 || HTL-蕨ガイン見参 || JHA June 2020 || ||
             |-
             | rowspan="2" | Golden
-            | style="background: #DFDFDF;" | 99,999,999 [101,033,460] || style="background: #DFDFDF;" | Boredom || style="background: #DFDFDF;" | February 13th, 2020 / [https://twitter.com/boredom_79/status/1228024526904029184 Twitter] || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | 
+            | style="background: #DFDFDF;" | 99,999,999 [101,033,460] || style="background: #DFDFDF;" | Boredom || style="background: #DFDFDF;" | February 13th, 2020 / [https:// Twitter] || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | 
             |-
             | 14,925,200 || 磨弓 || JHA July 2020 || ||
             |-
             | Grimlen || style="background: #DFDFDF;" | 99,999,999 || style="background: #DFDFDF;" | KDK-Takeyuki || style="background: #DFDFDF;" | Arcadia July 2002 || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | 
             |-
-            | Karte || style="background: #DFDFDF;" | 99,999,999 [100,571,630] || style="background: #DFDFDF;" | ACR Archer || style="background: #DFDFDF;" | November 17th, 2014 (Arcadia February 2015) / [https://twitter.com/Archer_3601/status/534232656523710465 Twitter] || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | [https://youtu.be/4DpSQf6MEfY Youtube]
+            | Karte || style="background: #DFDFDF;" | 99,999,999 [100,571,630] || style="background: #DFDFDF;" | ACR Archer || style="background: #DFDFDF;" | November 17th, 2014 (Arcadia February 2015) / [https:// Twitter] || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | [https:// Youtube]
             |-
             | rowspan="2" | Miyamoto
             | style="background: #DFDFDF;" | 99,999,999 || style="background: #DFDFDF;" | Clover-TAC || style="background: #DFDFDF;" | JHA March 2016 || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | 
             |-
-            | style="background: #DFDFDF;" | 99,999,999 [102,596,210] || style="background: #DFDFDF;" | SOF-WTN || style="background: #DFDFDF;" | February 3rd 2016 (JHA March 2016) / [https://twitter.com/sof_wtn/status/694883966092849152 Twitter] || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | 
+            | style="background: #DFDFDF;" | 99,999,999 [102,596,210] || style="background: #DFDFDF;" | SOF-WTN || style="background: #DFDFDF;" | February 3rd 2016 (JHA March 2016) / [https:// Twitter] || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | 
             |-
             | Solo Bang || style="background: #DFDFDF;" | 99,999,999 || style="background: #DFDFDF;" | Clover-TAC || style="background: #DFDFDF;" | JHA July 2020 || style="background: #DFDFDF;" | 108 items, 2p side || style="background: #DFDFDF;" |
             |}
 
             Note: Scoreboard closed after the achievement of the counterstop at 99,999,999.
 
-            * [https://wiki.denfaminicogamer.jp/highscore/2000_053_%E3%82%B0%E3%83%AC%E3%83%BC%E3%83%88%E9%AD%94%E6%B3%95%E5%A4%A7%E4%BD%9C%E6%88%A6 JHA Leaderboard]
-            * [https://shmups.system11.org/viewtopic.php?t=38055 Shmups Forum Hi-Score Topic]
+            * [https://example.org/some_link_id JHA Leaderboard]
+            * [https://example.org/some_other_link Shmups Forum Hi-Score Topic]
 
 </nowiki>

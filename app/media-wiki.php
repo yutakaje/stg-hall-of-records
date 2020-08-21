@@ -13,15 +13,18 @@ declare(strict_types=1);
 
 use Stg\HallOfRecords\Data\GameRepository;
 use Stg\HallOfRecords\Data\GameRepositoryInterface;
+use Stg\HallOfRecords\Data\SettingRepository;
+use Stg\HallOfRecords\Data\SettingRepositoryInterface;
 use Stg\HallOfRecords\Data\ScoreRepository;
 use Stg\HallOfRecords\Data\ScoreRepositoryInterface;
 use Stg\HallOfRecords\Export\MediaWikiExporter;
 use Stg\HallOfRecords\Import\MediaWikiImporter;
 use Stg\HallOfRecords\Import\MediaWiki\YamlExtractor;
-use Stg\HallOfRecords\Import\YamlParser;
+use Stg\HallOfRecords\Import\MediaWiki\YamlParser;
 use Stg\HallOfRecords\MediaWikiGenerator;
 
 return [
+    SettingRepositoryInterface::class => DI\create(SettingRepository::class),
     GameRepositoryInterface::class => DI\create(GameRepository::class),
     ScoreRepositoryInterface::class => DI\create(ScoreRepository::class),
 

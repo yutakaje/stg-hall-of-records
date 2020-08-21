@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Stg\HallOfRecords;
 
 use Stg\HallOfRecords\Export\MediaWikiExporter;
-use Stg\HallOfRecords\Import\ParsedData;
 use Stg\HallOfRecords\Import\MediaWikiImporter;
 
 final class MediaWikiGenerator
@@ -32,21 +31,17 @@ final class MediaWikiGenerator
 
     public function generate(string $input, string $locale): string
     {
-        return $this->export(
-            $this->import($input, $locale)
-        );
+        $this->import($input, $locale);
+        return $this->export();
     }
 
-    private function import(string $input, string $locale): ParsedData
+    private function import(string $input, string $locale): void
     {
-        return $this->importer->import($input, $locale);
+        $this->importer->import($input, $locale);
     }
 
-    private function export(ParsedData $parsedData): string
+    private function export(): string
     {
-        return $this->exporter->export(
-            $parsedData->layouts(),
-            $parsedData->globalProperties()->getProperty('templates') ?? []
-        );
+        return $this->exporter->export();
     }
 }

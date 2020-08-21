@@ -15,43 +15,58 @@ namespace Stg\HallOfRecords\Import;
 
 use Stg\HallOfRecords\Data\Game;
 use Stg\HallOfRecords\Data\GameRepositoryInterface;
+use Stg\HallOfRecords\Data\GameSetting;
+use Stg\HallOfRecords\Data\GlobalSetting;
+use Stg\HallOfRecords\Data\SettingRepositoryInterface;
 use Stg\HallOfRecords\Data\Score;
 use Stg\HallOfRecords\Data\ScoreRepositoryInterface;
+use Stg\HallOfRecords\Import\MediaWiki\ParsedProperties;
 use Stg\HallOfRecords\Import\MediaWiki\YamlExtractor;
+use Stg\HallOfRecords\Import\MediaWiki\YamlParser;
+use Stg\HallOfRecords\Locale\Translator;
 
 final class MediaWikiImporter
 {
     private YamlExtractor $extractor;
     private YamlParser $parser;
+    private SettingRepositoryInterface $settings;
     private GameRepositoryInterface $games;
     private ScoreRepositoryInterface $scores;
+    private int $nextGameId;
+    private int $nextScoreId;
 
     public function __construct(
         YamlExtractor $extractor,
         YamlParser $parser,
+        SettingRepositoryInterface $settings,
         GameRepositoryInterface $games,
         ScoreRepositoryInterface $scores
     ) {
         $this->extractor = $extractor;
         $this->parser = $parser;
+        $this->settings = $settings;
         $this->games = $games;
         $this->scores = $scores;
+        $this->nextGameId = 1;
+        $this->nextScoreId = 1;
     }
 
-    public function import(string $input, string $locale): ParsedData
+    public function import(string $input, string $locale): ParsedProperties
     {
-        $parsedData = $this->parse($input, $locale);
+        $parsedData = $this->parse($input);
 
-        $this->populateRepositories($parsedData);
+        // Data gets imported into the repositories according to the
+        // locale specified, thus they must be reset first.
+        $this->clearRepositories();
+        $this->populateRepositories($parsedData, $locale);
 
         return $parsedData;
     }
 
-    private function parse(string $input, string $locale): ParsedData
+    private function parse(string $input): ParsedProperties
     {
         return $this->parseYaml(
-            $this->extractYaml($input),
-            $locale
+            $this->extractYaml($input)
         );
     }
 
@@ -67,45 +82,249 @@ final class MediaWikiImporter
     /**
      * @param array<string,mixed>[] $sections
      */
-    private function parseYaml(array $sections, string $locale): ParsedData
+    private function parseYaml(array $sections): ParsedProperties
     {
         $parser = new YamlParser();
-        return $parser->parse($sections, $locale);
+        return $parser->parse($sections);
     }
 
-    private function populateRepositories(ParsedData $parsedData): void
-    {
-        foreach ($parsedData->games() as $game) {
-            $this->addGameToRepository($game);
+    private function populateRepositories(
+        ParsedProperties $parsedData,
+        string $locale
+    ): void {
+        $translator = $this->addSettingsToRepository(
+            $parsedData->getProperty('global-properties'),
+            $locale
+        );
+
+        foreach ($parsedData->getProperty('games', []) as $game) {
+            $this->addGameToRepository($game, $locale, $translator);
         }
     }
 
-    private function addGameToRepository(ParsedGame $game): void
-    {
+    private function addSettingsToRepository(
+        ParsedProperties $settings,
+        string $locale
+    ): Translator {
+        $translator = $this->createTranslator($settings, $locale);
+
+        foreach ($settings->all() as $name => $value) {
+            $this->settings->add(new GlobalSetting(
+                $name,
+                $value
+            ));
+        }
+
+        return $translator;
+    }
+
+    private function addGameToRepository(
+        ParsedProperties $game,
+        string $locale,
+        Translator $translator
+    ): void {
+        $gameId = $this->nextGameId++;
+        $translator = $this->createTranslator($game, $locale, $translator);
+
         $this->games->add(new Game(
-            $game->id(),
-            $game->getProperty('name') ?? '',
-            $game->getProperty('company') ?? ''
+            $gameId,
+            $this->translateString($translator, $game, 'name'),
+            $this->translateString($translator, $game, 'company')
         ));
 
-        foreach ($game->scores() as $score) {
-            $this->addScoreToRepository($game->id(), $score);
+        foreach ($game->getProperty('scores', []) as $score) {
+            $this->addScoreToRepository(
+                $gameId,
+                $score,
+                $locale,
+                $translator
+            );
+        }
+
+        $layout = $game->getProperty('layout');
+        if ($layout !== null) {
+            $this->settings->add(new GameSetting(
+                $gameId,
+                'layout',
+                $this->translateLayout($layout, $locale, $translator)
+            ));
         }
     }
 
-    private function addScoreToRepository(int $gameId, ParsedScore $score): void
-    {
+    private function addScoreToRepository(
+        int $gameId,
+        ParsedProperties $score,
+        string $locale,
+        Translator $translator
+    ): void {
+        $scoreId = $this->nextScoreId++;
+        $translator = $this->createTranslator($score, $locale, $translator);
+
         $this->scores->add(new Score(
-            $score->id(),
+            $scoreId,
             $gameId,
-            $score->getProperty('player') ?? '',
-            $score->getProperty('score') ?? '',
-            $score->getProperty('ship') ?? '',
-            $score->getProperty('mode') ?? '',
-            $score->getProperty('weapon') ?? '',
-            $score->getProperty('scored-date') ?? '',
-            $score->getProperty('source') ?? '',
-            $score->getProperty('comments') ?? []
+            $this->translateString($translator, $score, 'player'),
+            $this->translateString($translator, $score, 'score'),
+            $this->translateString($translator, $score, 'ship'),
+            $this->translateString($translator, $score, 'mode'),
+            $this->translateString($translator, $score, 'weapon'),
+            $this->translateString($translator, $score, 'scored-date'),
+            $this->translateString($translator, $score, 'source'),
+            $this->translateArray($translator, $score, 'comments')
         ));
+    }
+
+    private function clearRepositories(): void
+    {
+        $this->settings->clear();
+        $this->games->clear();
+        $this->scores->clear();
+    }
+
+    /**
+     * @return array<string,mixed>
+     */
+    private function translateLayout(
+        ParsedProperties $layout,
+        string $locale,
+        Translator $translator
+    ): array {
+        return array_merge($layout->all(), [
+            'columns' => array_map(
+                fn (ParsedProperties $column) => $this->translateLayoutColumn(
+                    $column,
+                    $locale,
+                    $translator
+                ),
+                $layout->getProperty('columns', []),
+            ),
+            'sort' => $this->translateLayoutSort(
+                $layout->getProperty('sort', []),
+                $locale,
+                $translator
+            ),
+        ]);
+    }
+
+    /**
+     * @return array<string,mixed>
+     */
+    private function translateLayoutColumn(
+        ParsedProperties $column,
+        string $locale,
+        Translator $translator
+    ): array {
+        $translator = $this->createTranslator($column, $locale, $translator);
+
+        return array_merge($column->all(), [
+            'label' => $this->translateString($translator, $column, 'label'),
+            'template' => $this->translateString($translator, $column, 'template'),
+        ]);
+    }
+
+    /**
+     * @param array<string,mixed> $sort
+     * @return array<string,mixed>
+     */
+    private function translateLayoutSort(
+        array $sort,
+        string $locale,
+        Translator $translator
+    ): array {
+        foreach ($sort as $propertyName => $order) {
+            if (is_array($order)) {
+                $sort[$propertyName] = array_map(
+                    fn (string $value) => $translator->translate($propertyName, $value),
+                    array_filter($order, fn ($value) => is_string($value))
+                );
+            }
+        }
+
+        return $sort;
+    }
+
+    private function createTranslator(
+        ParsedProperties $properties,
+        string $locale,
+        ?Translator $fallbackTranslator = null
+    ): Translator {
+        return $this->parseTranslatedProperties(
+            $properties,
+            $locale,
+            $this->parseTranslations(
+                $properties,
+                $locale,
+                $fallbackTranslator
+            )
+        );
+    }
+
+    private function parseTranslations(
+        ParsedProperties $properties,
+        string $locale,
+        ?Translator $fallbackTranslator
+    ): Translator {
+        return array_reduce(
+            array_filter(
+                $properties->getProperty('translations', []),
+                fn ($entry) => is_array($entry)
+                    && isset($entry['property'])
+                    && isset($entry['value'])
+                    && isset($entry["value-{$locale}"])
+            ),
+            fn (Translator $translator, array $entry) => $translator->add(
+                $entry['property'],
+                $entry['value'],
+                $entry["value-{$locale}"]
+            ),
+            new Translator($fallbackTranslator)
+        );
+    }
+
+    private function parseTranslatedProperties(
+        ParsedProperties $properties,
+        string $locale,
+        Translator $fallbackTranslator
+    ): Translator {
+        return array_reduce(
+            array_filter(
+                array_keys($properties->all()),
+                fn ($name) => is_string($name)
+                    && $properties->getProperty("{$name}-{$locale}") !== null
+            ),
+            fn (Translator $translator, string $name) => $translator->add(
+                $name,
+                $properties->getProperty($name),
+                $properties->getProperty("{$name}-{$locale}")
+            ),
+            new Translator($fallbackTranslator)
+        );
+    }
+
+    private function translateString(
+        Translator $translator,
+        ParsedProperties $properties,
+        string $propertyName
+    ): string {
+        /** @var string */
+        return $translator->translate(
+            $propertyName,
+            $properties->getProperty($propertyName, '')
+        );
+    }
+
+    /**
+     * @return string[]
+     */
+    private function translateArray(
+        Translator $translator,
+        ParsedProperties $properties,
+        string $propertyName
+    ): array {
+        /** @var string[] */
+        return $translator->translate(
+            $propertyName,
+            $properties->getProperty($propertyName, [])
+        );
     }
 }

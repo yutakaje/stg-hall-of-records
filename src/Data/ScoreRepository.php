@@ -19,9 +19,9 @@ namespace Stg\HallOfRecords\Data;
 final class ScoreRepository extends AbstractRepository implements ScoreRepositoryInterface
 {
     /**
-     * Scores are grouped by game for faster access.
+     * Scores are grouped by game for easier access.
      *
-     * @var array<int,Score[]>
+     * @var array<int,array<int,Score>>
      */
     private array $scores;
 
@@ -35,13 +35,19 @@ final class ScoreRepository extends AbstractRepository implements ScoreRepositor
      */
     public function filterByGame(Game $game, array $sort = []): Scores
     {
-        return new Scores(
-            $this->sortItems($this->scores[$game->id()] ?? [], $sort)
-        );
+        return new Scores($this->sortItems(
+            array_values($this->scores[$game->id()] ?? []),
+            $sort
+        ));
     }
 
     public function add(Score $score): void
     {
         $this->scores[$score->gameId()][$score->id()] = $score;
+    }
+
+    public function clear(): void
+    {
+        $this->scores = [];
     }
 }

@@ -119,29 +119,25 @@ final class Score implements SortableInterface
      */
     public function getProperty(string $name)
     {
-        switch ($name) {
-            case 'id':
-                return $this->id;
-            case 'gameId':
-                return $this->gameId;
-            case 'player':
-                return $this->player;
-            case 'score':
-                return $this->score;
-            case 'ship':
-                return $this->ship;
-            case 'mode':
-                return $this->mode;
-            case 'weapon':
-                return $this->weapon;
-            case 'scoredDate':
-                return $this->scoredDate;
-            case 'source':
-                return $this->source;
-            case 'comments':
-                return $this->comments;
-            default:
-                return null;
-        }
+        return $this->properties()[$name] ?? null;
+    }
+
+    /**
+     * @return array<string,mixed>
+     */
+    public function properties(): array
+    {
+        return [
+            'id' => $this->id,
+            'game-id' => $this->gameId,
+            'player' => $this->player,
+            'score' => $this->score,
+            'ship' => $this->ship,
+            'mode' => $this->mode,
+            'weapon' => $this->weapon,
+            'scored-date' => $this->scoredDate,
+            'source' => $this->source,
+            'comments' => $this->comments,
+        ];
     }
 }

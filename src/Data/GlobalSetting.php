@@ -13,17 +13,6 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Data;
 
-final class GlobalProperties
+final class GlobalSetting extends Setting
 {
-    private string $description;
-
-    public function __construct(string $description = '')
-    {
-        $this->description = $description;
-    }
-
-    public function description(): string
-    {
-        return $this->description;
-    }
 }

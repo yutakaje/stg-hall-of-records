@@ -21,4 +21,6 @@ interface GameRepositoryInterface
     public function all(array $sort = []): Games;
 
     public function add(Game $game): void;
+
+    public function clear(): void;
 }

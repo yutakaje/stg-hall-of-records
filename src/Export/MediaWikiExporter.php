@@ -15,86 +15,80 @@ namespace Stg\HallOfRecords\Export;
 
 use Stg\HallOfRecords\Data\Game;
 use Stg\HallOfRecords\Data\GameRepositoryInterface;
+use Stg\HallOfRecords\Data\SettingRepositoryInterface;
 use Stg\HallOfRecords\Data\Score;
 use Stg\HallOfRecords\Data\ScoreRepositoryInterface;
-use Stg\HallOfRecords\Import\ParsedColumn;
-use Stg\HallOfRecords\Import\ParsedLayout;
 use Twig\Environment;
 use Twig\Loader\ArrayLoader;
 
 final class MediaWikiExporter
 {
+    private SettingRepositoryInterface $settings;
     private GameRepositoryInterface $games;
     private ScoreRepositoryInterface $scores;
 
     public function __construct(
+        SettingRepositoryInterface $settings,
         GameRepositoryInterface $games,
         ScoreRepositoryInterface $scores
     ) {
+        $this->settings = $settings;
         $this->games = $games;
         $this->scores = $scores;
     }
 
-    /**
-     * @param array<int,ParsedLayout> $layouts
-     * @param array<string,string> $globalTemplates
-     */
-    public function export(array $layouts, array $globalTemplates): string
+    public function export(): string
     {
-        return $this->exportGames($layouts, $globalTemplates);
+        return $this->exportGames();
     }
 
-    /**
-     * @param array<int,ParsedLayout> $layouts
-     * @param array<string,string> $globalTemplates
-     */
-    private function exportGames(array $layouts, array $globalTemplates): string
+    private function exportGames(): string
     {
-        $twig = new Environment(
-            new ArrayLoader($globalTemplates)
-        );
+        $globalSettings = $this->settings->filterGlobal();
+
+        $twig = new Environment(new ArrayLoader(
+            $globalSettings->get('templates', [])
+        ));
 
         return $twig->render('games', [
             'games' => $this->games->all()->map(
-                fn (Game $game) => $this->createGameVariable(
-                    $game,
-                    $layouts[$game->id()]
-                )
+                fn (Game $game) => $this->createGameVariable($game)
             ),
         ]);
     }
 
-    private function createGameVariable(
-        Game $game,
-        ParsedLayout $layout
-    ): \stdClass {
+    private function createGameVariable(Game $game): \stdClass
+    {
+        $settings = $this->settings->filterByGame($game);
+        $layout = $settings->get('layout');
+
         $scores = $this->scores->filterByGame($game);
 
         $variable = new \stdClass();
         $variable->properties = $game;
         $variable->headers = array_map(
-            fn (ParsedColumn $column) => $column->getProperty('label') ?? '',
-            $layout->columns()
+            fn (array $column) => $column['label'] ?? '',
+            $layout['columns'] ?? []
         );
         $variable->scores = $scores->map(
             fn (Score $score) => $this->createScoreVariable(
                 $score,
-                $layout->columns()
+                $layout['columns'] ?? []
             )
         );
-        $variable->template = ($layout->getProperty('templates') ?? [])['game'] ?? '';
+        $variable->template = $layout['templates']['game'] ?? '';
         return $variable;
     }
 
     /**
-     * @param ParsedColumn[] $columns
+     * @param array[] $columns
      * @return string[]
      */
     private function createScoreVariable(Score $score, array $columns): array
     {
         return array_map(
-            fn (ParsedColumn $column) => $this->renderTemplate(
-                $column->getProperty('template') ?? '',
+            fn (array $column) => $this->renderTemplate(
+                $column['template'] ?? '',
                 $score
             ),
             $columns
@@ -104,29 +98,22 @@ final class MediaWikiExporter
     private function renderTemplate(string $template, Score $score): string
     {
         $renderer = new Environment(new ArrayLoader([
-            'template' => $this->preparePlaceholders($template),
+            'template' => $this->prepareSimplifiedVariables($template, 'score'),
         ]));
 
         return $renderer->render('template', [
-            'score' => $score,
+            'score' => $score->properties(),
         ]);
     }
 
-    private function preparePlaceholders(string $template): string
-    {
-        return str_replace('{{ ', '{{ score.', $this->replacePattern(
-            $template,
-            '/{{ ([\w-]+) }}/u',
-            fn (array $match) => "{{ {$this->toCamelCase($match[1])} }}"
-        ));
-    }
-
-    private function toCamelCase(string $propertyName): string
-    {
+    private function prepareSimplifiedVariables(
+        string $template,
+        string $variableName
+    ): string {
         return $this->replacePattern(
-            $propertyName,
-            '/-(\w)/',
-            fn (array $match) => strtoupper($match[1])
+            $template,
+            '/((?:{{)|(?:{%)).? ([\w-]+)/u',
+            fn (array $match) => "{$match[1]} attribute({$variableName}, '{$match[2]}')"
         );
     }
 

@@ -77,7 +77,7 @@ final class YamlParser
      */
     private function parseLayout(array $properties): ParsedProperties
     {
-        $properties['columns'] = $columns = array_map(
+        $properties['columns'] = array_map(
             fn (array $column) => $this->parseColumn($column),
             array_filter(
                 $properties['columns'] ?? [],

@@ -24,7 +24,7 @@ class YamlParserTest extends \Tests\TestCase
         $parsedData = $parser->parse([]);
 
         self::assertEquals(
-            new ParsedProperties([]),
+            new ParsedProperties(),
             $parsedData->getProperty('global-properties')
         );
         self::assertEquals([], $parsedData->getProperty('games'));

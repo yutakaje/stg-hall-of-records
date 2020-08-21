@@ -27,10 +27,19 @@ final class ParsedProperties
     }
 
     /**
+     * @param mixed $default
      * @return mixed
      */
-    public function getProperty(string $name)
+    public function getProperty(string $name, $default = null)
     {
-        return $this->properties[$name] ?? null;
+        return $this->properties[$name] ?? $default;
+    }
+
+    /**
+     * @return array<string,mixed>
+     */
+    public function all(): array
+    {
+        return $this->properties;
     }
 }

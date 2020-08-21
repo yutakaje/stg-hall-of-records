@@ -13,81 +13,462 @@ declare(strict_types=1);
 
 namespace Tests\HallOfRecords\Export;
 
-use Stg\HallOfRecords\Export\MediaWikiExporter;
 use Stg\HallOfRecords\Data\Game;
 use Stg\HallOfRecords\Data\GameRepositoryInterface;
 use Stg\HallOfRecords\Data\Games;
+use Stg\HallOfRecords\Data\GameSetting;
+use Stg\HallOfRecords\Data\GlobalSetting;
 use Stg\HallOfRecords\Data\ScoreRepositoryInterface;
 use Stg\HallOfRecords\Data\Scores;
-use Stg\HallOfRecords\Import\ParsedDataFactory;
-use Stg\HallOfRecords\Import\ParsedData;
-use Stg\HallOfRecords\Import\ParsedGame;
-use Stg\HallOfRecords\Import\ParsedScore;
+use Stg\HallOfRecords\Data\SettingRepositoryInterface;
+use Stg\HallOfRecords\Data\Settings;
+use Stg\HallOfRecords\Export\MediaWikiExporter;
 
 class MediaWikiExporterTest extends \Tests\TestCase
 {
     public function testExport(): void
     {
-        $parsedData = $this->createParsedData();
-
-        $gameRepository = $this->createMock(GameRepositoryInterface::class);
-        $gameRepository->method('all')
-            ->willReturn(new Games(array_map(
-                fn (ParsedGame $game) => $this->createGame([
-                    'id' => $game->id(),
-                    'name' => $game->getProperty('name'),
-                    'company' => $game->getProperty('company'),
-                ]),
-                $parsedData->games()
-            )));
-
-        $scoreRepository = $this->createMock(ScoreRepositoryInterface::class);
-        $scoreRepository->method('filterByGame')
-            ->will(self::returnCallback(
-                function (Game $game) use ($parsedData): Scores {
-                    $scores = [];
-                    foreach ($parsedData->games() as $parsedGame) {
-                        if ($parsedGame->id() === $game->id()) {
-                            $scores = array_map(
-                                fn (ParsedScore $score) => $this->createScore([
-                                    'id' => $score->id(),
-                                    'gameId' => $game->id(),
-                                    'player' => $score->getProperty('player'),
-                                    'score' => $score->getProperty('score'),
-                                    'ship' => $score->getProperty('ship'),
-                                    'mode' => $score->getProperty('mode'),
-                                    'weapon' => $score->getProperty('weapon'),
-                                    'scoredDate' => $score->getProperty('scored-date'),
-                                    'source' => $score->getProperty('source'),
-                                    'comments' => $score->getProperty('comments'),
-                                ]),
-                                $parsedGame->scores()
-                            );
-                            break;
-                        }
-                    }
-                    return new Scores($scores);
-                }
-            ));
-
-        $exporter = new MediaWikiExporter($gameRepository, $scoreRepository);
+        $exporter = new MediaWikiExporter(
+            $this->createSettingRepository(),
+            $this->createGameRepository(),
+            $this->createScoreRepository()
+        );
 
         self::assertSame(
-            $this->loadFile(__DIR__ . '/media-wiki-output-en'),
-            $exporter->export(
-                $parsedData->layouts(),
-                $parsedData->globalProperties()->getProperty('templates')
-            )
+            $this->loadFile(__DIR__ . '/exporter.output'),
+            $exporter->export()
         );
     }
 
-    private function createParsedData(): ParsedData
+    private function createSettingRepository(): SettingRepositoryInterface
     {
-        $factory = new ParsedDataFactory();
-        return $factory->create(
-            $factory->createGlobalProperties([
-                'templates' => [
-                    'games' => <<<'TPL'
+        $gameIds = $this->gameIds();
+
+        $settings = $this->createMock(SettingRepositoryInterface::class);
+        $settings->method('filterGlobal')
+            ->willReturn(new Settings([
+                new GlobalSetting('templates', $this->templates()),
+            ]));
+        $settings->method('filterByGame')
+            ->will(self::returnCallback(
+                function (Game $game) use ($gameIds): Settings {
+                    switch ($game->id()) {
+                        case $gameIds[0]:
+                            return new Settings([
+                                new GameSetting($gameIds[0], 'layout', [
+                                    'columns' => [
+                                        [
+                                            'label' => 'Mode',
+                                            'template' => '{{ mode }}',
+                                            'groupSameValues' => true,
+                                        ],
+                                        [
+                                            'label' => 'Character',
+                                            'template' => '{{ ship }}',
+                                            'groupSameValues' => true,
+                                        ],
+                                        [
+                                            'label' => 'Style',
+                                            'template' => '{{ weapon }}',
+                                        ],
+                                        [
+                                            'label' => 'Score',
+                                            'template' => '{{ score }}',
+                                        ],
+                                        [
+                                            'label' => 'Player',
+                                            'template' => '{{ player }}',
+                                            'groupSameValues' => true,
+                                        ],
+                                        [
+                                            'label' => 'Date / Source',
+                                            'template' => '{{ scored-date }} / {{ source }}',
+                                        ],
+                                        [
+                                            'label' => 'Comments',
+                                            'template' => "{{ comments|join('; ') }}",
+                                        ],
+                                    ],
+                                    'sort' => [
+                                        'mode' => [
+                                            'Original',
+                                            'Maniac',
+                                            'Ultra',
+                                        ],
+                                        'ship' => [
+                                            'Reco',
+                                            'Palm',
+                                        ],
+                                        'weapon' => [
+                                            'Normal',
+                                            'Abnormal',
+                                        ],
+                                        'score' => 'desc',
+                                    ],
+                                ]),
+                            ]);
+                        case $gameIds[1]:
+                            return new Settings([
+                                new GameSetting($gameIds[1], 'layout', [
+                                    'columns' => [
+                                        [
+                                            'label' => 'Ship',
+                                            'template' => '{{ ship }}',
+                                            'groupSameValues' => true,
+                                        ],
+                                        [
+                                            'label' => 'Loop',
+                                            'template' => '{{ mode }}',
+                                        ],
+                                        [
+                                            'label' => 'Score',
+                                            'template' => '{{ score }}',
+                                        ],
+                                        [
+                                            'label' => 'Player',
+                                            'template' => '{{ player }}',
+                                            'groupSameValues' => true,
+                                        ],
+                                        [
+                                            'label' => 'Date / Source',
+                                            'template' => '{{ scored-date }} / {{ source }}',
+                                        ],
+                                        [
+                                            'label' => 'Comments',
+                                            'template' => "{{ comments|join('; ') }}",
+                                        ],
+                                    ],
+                                    'sort' => [
+                                        'ship' => 'asc',
+                                        'mode' => 'asc',
+                                        'score' => 'desc',
+                                    ],
+                                ]),
+                            ]);
+                        case $gameIds[2]:
+                            return new Settings([
+                                new GameSetting($gameIds[2], 'layout', [
+                                    'templates' => [
+                                        'game' => $this->fixedGameTemplate(),
+                                    ],
+                                ]),
+                            ]);
+                        default:
+                            return new Settings([]);
+                    }
+                }
+            ));
+
+        return $settings;
+    }
+
+    private function createGameRepository(): GameRepositoryInterface
+    {
+        $gameIds = $this->gameIds();
+
+        $games = $this->createMock(GameRepositoryInterface::class);
+        $games->method('all')
+            ->willReturn(new Games([
+                $this->createGame([
+                    'id' => $gameIds[0],
+                    'name' => 'Mushihimesama Futari 1.5',
+                    'company' => 'Cave',
+                ]),
+                $this->createGame([
+                    'id' => $gameIds[1],
+                    'name' => 'Ketsui: Kizuna Jigoku Tachi',
+                    'company' => 'Cave',
+                ]),
+                $this->createGame([
+                    'id' => $gameIds[2],
+                    'name' => 'Great Mahou Daisakusen',
+                    'company' => 'Raizing / 8ing',
+                ]),
+            ]));
+
+        return $games;
+    }
+
+    private function createScoreRepository(): ScoreRepositoryInterface
+    {
+        $gameIds = $this->gameIds();
+        $scoreIds = $this->scoreIds();
+
+        $scores = $this->createMock(ScoreRepositoryInterface::class);
+        $scores->method('filterByGame')
+            ->will(self::returnCallback(
+                function (Game $game) use ($gameIds, $scoreIds): Scores {
+                    switch ($game->id()) {
+                        case $gameIds[0]:
+                            return new Scores([
+                                $this->createScore([
+                                    'id' => $scoreIds[0],
+                                    'gameId' => $gameIds[0],
+                                    'player' => 'ABI',
+                                    'score' => '530,358,660',
+                                    'ship' => 'Palm',
+                                    'mode' => 'Original',
+                                    'weapon' => 'Normal',
+                                    'scored-date' => '2008-01',
+                                    'source' => 'Arcadia January 2008',
+                                ]),
+                                $this->createScore([
+                                    'id' => $scoreIds[1],
+                                    'gameId' => $gameIds[0],
+                                    'player' => 'ISO / Niboshi',
+                                    'score' => '518,902,716',
+                                    'ship' => 'Palm',
+                                    'mode' => 'Original',
+                                    'weapon' => 'Abnormal',
+                                    'scored-date' => '2007',
+                                    'source' => 'Superplay DVD',
+                                ]),
+                                $this->createScore([
+                                    'id' => $scoreIds[2],
+                                    'gameId' => $gameIds[0],
+                                    'player' => 'ABI',
+                                    'score' => '550,705,999',
+                                    'ship' => 'Reco',
+                                    'mode' => 'Original',
+                                    'weapon' => 'Normal',
+                                    'scored-date' => '2010-02',
+                                    'source' => 'Blog',
+                                    'comments' => [
+                                        '5L 0B remaining',
+                                        'After stage 4: 273.7m',
+                                    ],
+                                ]),
+                                $this->createScore([
+                                    'id' => $scoreIds[3],
+                                    'gameId' => $gameIds[0],
+                                    'player' => 'ISO / Niboshi',
+                                    'score' => '538,378,364',
+                                    'ship' => 'Reco',
+                                    'mode' => 'Original',
+                                    'weapon' => 'Normal',
+                                    'scored-date' => '2007-10',
+                                    'source' => 'Arcadia October 2007',
+                                ]),
+                                $this->createScore([
+                                    'id' => $scoreIds[4],
+                                    'gameId' => $gameIds[0],
+                                    'player' => 'yasu0219',
+                                    'score' => '454,386,226',
+                                    'ship' => 'Reco',
+                                    'mode' => 'Original',
+                                    'weapon' => 'Abnormal',
+                                    'scored-date' => '2009-12-12',
+                                    'source' => 'Xbox rankings',
+                                    'comments' => [
+                                        'Highest score Xbox360',
+                                    ],
+                                ]),
+                                $this->createScore([
+                                    'id' => $scoreIds[5],
+                                    'gameId' => $gameIds[0],
+                                    'player' => 'KTL-NAL',
+                                    'score' => '981,872,827',
+                                    'ship' => 'Palm',
+                                    'mode' => 'Maniac',
+                                    'weapon' => 'Abnormal',
+                                    'scored-date' => '2007-09',
+                                    'source' => 'Superplay DVD',
+                                    'comments' => [
+                                        '5L 2B remaining',
+                                        'After stage 4: 693.8m',
+                                    ],
+                                ]),
+                                $this->createScore([
+                                    'id' => $scoreIds[6],
+                                    'gameId' => $gameIds[0],
+                                    'player' => 'KTL-NAL',
+                                    'score' => '973,020,065',
+                                    'ship' => 'Palm',
+                                    'mode' => 'Maniac',
+                                    'weapon' => 'Abnormal',
+                                    'scored-date' => '2007-11',
+                                    'source' => 'Arcadia November 2007',
+                                ]),
+                                $this->createScore([
+                                    'id' => $scoreIds[7],
+                                    'gameId' => $gameIds[0],
+                                    'player' => 'Clover-TAC',
+                                    'score' => '1,047,258,714',
+                                    'ship' => 'Reco',
+                                    'mode' => 'Maniac',
+                                    'weapon' => 'Normal',
+                                    'scored-date' => '2015-03',
+                                    'source' => 'Arcadia March 2015',
+                                    'comments' => [
+                                        '5L 2B remaining',
+                                        'After stage 4: 745.1m',
+                                    ],
+                                ]),
+                                $this->createScore([
+                                    'id' => $scoreIds[8],
+                                    'gameId' => $gameIds[0],
+                                    'player' => 'rescue_STG',
+                                    'score' => '2,956,728,306',
+                                    'ship' => 'Palm',
+                                    'mode' => 'Ultra',
+                                    'weapon' => 'Normal',
+                                    'scored-date' => '2017-04-08',
+                                    'source' => 'Xbox rankings',
+                                    'comments' => [
+                                        'Highest score Xbox360',
+                                    ],
+                                ]),
+                                $this->createScore([
+                                    'id' => $scoreIds[9],
+                                    'gameId' => $gameIds[0],
+                                    'player' => 'Dame K.K',
+                                    'score' => '3,999,999,999',
+                                    'ship' => 'Palm',
+                                    'mode' => 'Ultra',
+                                    'weapon' => 'Abnormal',
+                                    'scored-date' => '2008-03',
+                                    'source' => 'Arcadia March 2008',
+                                    'comments' => [
+                                        '1L 0B remaining',
+                                        'Highest score Arcade',
+                                    ],
+                                ]),
+                                $this->createScore([
+                                    'id' => $scoreIds[10],
+                                    'gameId' => $gameIds[0],
+                                    'player' => 'KGM',
+                                    'score' => '3,999,999,999 [4,263,416,356]',
+                                    'ship' => 'Palm',
+                                    'mode' => 'Ultra',
+                                    'weapon' => 'Abnormal',
+                                    'scored-date' => '2013-07-24',
+                                    'source' => 'Xbox rankings',
+                                    'comments' => [
+                                        'Highest score Xbox360',
+                                    ],
+                                ]),
+                                $this->createScore([
+                                    'id' => $scoreIds[11],
+                                    'gameId' => $gameIds[0],
+                                    'player' => 'fufufu',
+                                    'score' => '3,999,999,999',
+                                    'ship' => 'Reco',
+                                    'mode' => 'Ultra',
+                                    'weapon' => 'Normal',
+                                    'scored-date' => '2009-05-27',
+                                    'source' => 'Arcadia August 2009',
+                                    'comments' => [
+                                        '0L 0B remaining',
+                                        'After stage 4: 2.205b',
+                                    ],
+                                ]),
+                                $this->createScore([
+                                    'id' => $scoreIds[12],
+                                    'gameId' => $gameIds[0],
+                                    'player' => 'lstze',
+                                    'score' => '3,266,405,598',
+                                    'ship' => 'Reco',
+                                    'mode' => 'Ultra',
+                                    'weapon' => 'Abnormal',
+                                    'scored-date' => '2014?',
+                                ]),
+                            ]);
+                        case $gameIds[1]:
+                            return new Scores([
+                                $this->createScore([
+                                    'id' => $scoreIds[13],
+                                    'gameId' => $gameIds[1],
+                                    'player' => 'SPS',
+                                    'score' => '507,780,433',
+                                    'ship' => 'Type A',
+                                    'mode' => 'Omote',
+                                    'scored-date' => '2014-08',
+                                    'source' => 'Arcadia August 2014',
+                                ]),
+                                $this->createScore([
+                                    'id' => $scoreIds[14],
+                                    'gameId' => $gameIds[1],
+                                    'player' => 'SPS',
+                                    'score' => '583,614,753',
+                                    'ship' => 'Type A',
+                                    'mode' => 'Ura',
+                                    'scored-date' => '2014-05-27',
+                                    'source' => 'Arcadia September 2014 / [https:// Twitter]',
+                                    'comments' => [
+                                        '6L 0B remaining',
+                                        '1st loop 285m',
+                                    ],
+                                ]),
+                                $this->createScore([
+                                    'id' => $scoreIds[15],
+                                    'gameId' => $gameIds[1],
+                                    'player' => 'SPS',
+                                    'score' => '481,402,383',
+                                    'ship' => 'Type B',
+                                    'mode' => 'Omote',
+                                    'scored-date' => '2014-11',
+                                    'source' => 'Arcadia November 2014',
+                                    'comments' => [
+                                        '6L 0B remaining',
+                                        '1st loop 276m',
+                                    ],
+                                ]),
+                                $this->createScore([
+                                    'id' => $scoreIds[16],
+                                    'gameId' => $gameIds[1],
+                                    'player' => 'GAN',
+                                    'score' => '569,741,232',
+                                    'ship' => 'Type B',
+                                    'mode' => 'Ura',
+                                    'scored-date' => '2016-03',
+                                    'source' => 'JHA March 2016',
+                                    'comments' => [
+                                        '6L remaining',
+                                        '1st loop 285m',
+                                    ],
+                                ]),
+                            ]);
+                        default:
+                            return new Scores([]);
+                    }
+                }
+            ));
+
+        return $scores;
+    }
+
+    /**
+     * @return int[]
+     */
+    private function gameIds(): array
+    {
+        $idGenerator = $this->createIdGenerator();
+        return array_map(
+            fn () => $this->nextId($idGenerator),
+            range(0, 2)
+        );
+    }
+
+    /**
+     * @return int[]
+     */
+    private function scoreIds(): array
+    {
+        $idGenerator = $this->createIdGenerator();
+
+        return array_map(
+            fn () => $this->nextId($idGenerator),
+            range(1, 17)
+        );
+    }
+
+    /**
+     * @return array<string,string>
+     */
+    private function templates(): array
+    {
+        return [
+            'games' => <<<'TPL'
 {% for game in games %}
 {% if game.template %}
 {{ game.template|raw }}
@@ -97,7 +478,7 @@ class MediaWikiExporterTest extends \Tests\TestCase
 {% endfor %}
 
 TPL,
-                    'game' => <<<'TPL'
+            'game' => <<<'TPL'
 {| class="wikitable" style="text-align: center"
 |-
 ! colspan="{{ game.headers|length }}" | {{ game.properties.name }}
@@ -110,308 +491,10 @@ TPL,
 |}
 
 TPL,
-                ],
-            ]),
-            [
-                $factory->createGame(
-                    [
-                        'name' => 'Mushihimesama Futari 1.5',
-                        'company' => 'Cave',
-                    ],
-                    [
-                        $factory->createScore([
-                            'player' => 'ABI',
-                            'score' => '530,358,660',
-                            'ship' => 'Palm',
-                            'mode' => 'Original',
-                            'weapon' => 'Normal',
-                            'scored-date' => '2008-01',
-                            'source' => 'Arcadia January 2008',
-                        ]),
-                        $factory->createScore([
-                            'player' => 'ISO / Niboshi',
-                            'score' => '518,902,716',
-                            'ship' => 'Palm',
-                            'mode' => 'Original',
-                            'weapon' => 'Abnormal',
-                            'scored-date' => '2007',
-                            'source' => 'Superplay DVD',
-                        ]),
-                        $factory->createScore([
-                            'player' => 'ABI',
-                            'score' => '550,705,999',
-                            'ship' => 'Reco',
-                            'mode' => 'Original',
-                            'weapon' => 'Normal',
-                            'scored-date' => '2010-02',
-                            'source' => 'Blog',
-                            'comments' => [
-                                '5L 0B remaining',
-                                'After stage 4: 273.7m',
-                            ],
-                        ]),
-                        $factory->createScore([
-                            'player' => 'ISO / Niboshi',
-                            'score' => '538,378,364',
-                            'ship' => 'Reco',
-                            'mode' => 'Original',
-                            'weapon' => 'Normal',
-                            'scored-date' => '2007-10',
-                            'source' => 'Arcadia October 2007',
-                        ]),
-                        $factory->createScore([
-                            'player' => 'yasu0219',
-                            'score' => '454,386,226',
-                            'ship' => 'Reco',
-                            'mode' => 'Original',
-                            'weapon' => 'Abnormal',
-                            'scored-date' => '2009-12-12',
-                            'source' => 'Xbox rankings',
-                            'comments' => [
-                                'Highest score Xbox360',
-                            ],
-                        ]),
-                        $factory->createScore([
-                            'player' => 'KTL-NAL',
-                            'score' => '981,872,827',
-                            'ship' => 'Palm',
-                            'mode' => 'Maniac',
-                            'weapon' => 'Abnormal',
-                            'scored-date' => '2007-09',
-                            'source' => 'Superplay DVD',
-                            'comments' => [
-                                '5L 2B remaining',
-                                'After stage 4: 693.8m',
-                            ],
-                        ]),
-                        $factory->createScore([
-                            'player' => 'KTL-NAL',
-                            'score' => '973,020,065',
-                            'ship' => 'Palm',
-                            'mode' => 'Maniac',
-                            'weapon' => 'Abnormal',
-                            'scored-date' => '2007-11',
-                            'source' => 'Arcadia November 2007',
-                        ]),
-                        $factory->createScore([
-                            'player' => 'Clover-TAC',
-                            'score' => '1,047,258,714',
-                            'ship' => 'Reco',
-                            'mode' => 'Maniac',
-                            'weapon' => 'Normal',
-                            'scored-date' => '2015-03',
-                            'source' => 'Arcadia March 2015',
-                            'comments' => [
-                                '5L 2B remaining',
-                                'After stage 4: 745.1m',
-                            ],
-                        ]),
-                        $factory->createScore([
-                            'player' => 'rescue_STG',
-                            'score' => '2,956,728,306',
-                            'ship' => 'Palm',
-                            'mode' => 'Ultra',
-                            'weapon' => 'Normal',
-                            'scored-date' => '2017-04-08',
-                            'source' => 'Xbox rankings',
-                            'comments' => [
-                                'Highest score Xbox360',
-                            ],
-                        ]),
-                        $factory->createScore([
-                            'player' => 'Dame K.K',
-                            'score' => '3,999,999,999',
-                            'ship' => 'Palm',
-                            'mode' => 'Ultra',
-                            'weapon' => 'Abnormal',
-                            'scored-date' => '2008-03',
-                            'source' => 'Arcadia March 2008',
-                            'comments' => [
-                                '1L 0B remaining',
-                                'Highest score Arcade',
-                            ],
-                        ]),
-                        $factory->createScore([
-                            'player' => 'KGM',
-                            'score' => '3,999,999,999 [4,263,416,356]',
-                            'ship' => 'Palm',
-                            'mode' => 'Ultra',
-                            'weapon' => 'Abnormal',
-                            'scored-date' => '2013-07-24',
-                            'source' => 'Xbox rankings',
-                            'comments' => [
-                                'Highest score Xbox360',
-                            ],
-                        ]),
-                        $factory->createScore([
-                            'player' => 'fufufu',
-                            'score' => '3,999,999,999',
-                            'ship' => 'Reco',
-                            'mode' => 'Ultra',
-                            'weapon' => 'Normal',
-                            'scored-date' => '2009-05-27',
-                            'source' => 'Arcadia August 2009',
-                            'comments' => [
-                                '0L 0B remaining',
-                                'After stage 4: 2.205b',
-                            ],
-                        ]),
-                        $factory->createScore([
-                            'player' => 'lstze',
-                            'score' => '3,266,405,598',
-                            'ship' => 'Reco',
-                            'mode' => 'Ultra',
-                            'weapon' => 'Abnormal',
-                            'scored-date' => '2014?',
-                        ]),
-                    ],
-                    $factory->createLayout([
-                        'columns' => [
-                            $factory->createColumn([
-                                'label' => 'Mode',
-                                'template' => '{{ mode }}',
-                                'groupSameValues' => true,
-                            ]),
-                            $factory->createColumn([
-                                'label' => 'Character',
-                                'template' => '{{ ship }}',
-                                'groupSameValues' => true,
-                            ]),
-                            $factory->createColumn([
-                                'label' => 'Style',
-                                'template' => '{{ weapon }}',
-                            ]),
-                            $factory->createColumn([
-                                'label' => 'Score',
-                                'template' => '{{ score }}',
-                            ]),
-                            $factory->createColumn([
-                                'label' => 'Player',
-                                'template' => '{{ player }}',
-                                'groupSameValues' => true,
-                            ]),
-                            $factory->createColumn([
-                                'label' => 'Date / Source',
-                                'template' => '{{ scored-date }} / {{ source }}',
-                            ]),
-                            $factory->createColumn([
-                                'label' => 'Comments',
-                                'template' => "{{ comments|join('; ') }}",
-                            ]),
-                        ],
-                        'sort' => [
-                            'mode' => ['Original', 'Maniac', 'Ultra'],
-                            'ship' => ['Reco', 'Palm'],
-                            'weapon' => ['Normal', 'Abnormal'],
-                            'score' => 'desc',
-                        ],
-                    ])
-                ),
-                $factory->createGame(
-                    [
-                        'name' => 'Ketsui: Kizuna Jigoku Tachi',
-                        'company' => 'Cave',
-                    ],
-                    [
-                        $factory->createScore([
-                            'player' => 'SPS',
-                            'score' => '507,780,433',
-                            'ship' => 'Type A',
-                            'mode' => 'Omote',
-                            'scored-date' => '2014-08',
-                            'source' => 'Arcadia August 2014',
-                        ]),
-                        $factory->createScore([
-                            'player' => 'SPS',
-                            'score' => '583,614,753',
-                            'ship' => 'Type A',
-                            'mode' => 'Ura',
-                            'scored-date' => '2014-05-27',
-                            'source' => 'Arcadia September 2014 / '
-                                 . '[https://twitter.com/SPSPUYO/status/471312775843561472 Twitter]',
-                            'comments' => [
-                                '6L 0B remaining',
-                                '1st loop 285m',
-                            ],
-                        ]),
-                        $factory->createScore([
-                            'player' => 'SPS',
-                            'score' => '481,402,383',
-                            'ship' => 'Type B',
-                            'mode' => 'Omote',
-                            'scored-date' => '2014-11',
-                            'source' => 'Arcadia November 2014',
-                            'comments' => [
-                                '6L 0B remaining',
-                                '1st loop 276m',
-                            ],
-                        ]),
-                        $factory->createScore([
-                            'player' => 'GAN',
-                            'score' => '569,741,232',
-                            'ship' => 'Type B',
-                            'mode' => 'Ura',
-                            'scored-date' => '2016-03',
-                            'source' => 'JHA March 2016',
-                            'comments' => [
-                                '6L remaining',
-                                '1st loop 285m',
-                            ],
-                        ]),
-                    ],
-                    $factory->createLayout([
-                        'columns' => [
-                            $factory->createColumn([
-                                'label' => 'Ship',
-                                'template' => '{{ ship }}',
-                                'groupSameValues' => true,
-                            ]),
-                            $factory->createColumn([
-                                'label' => 'Loop',
-                                'template' => '{{ mode }}',
-                            ]),
-                            $factory->createColumn([
-                                'label' => 'Score',
-                                'template' => '{{ score }}',
-                            ]),
-                            $factory->createColumn([
-                                'label' => 'Player',
-                                'template' => '{{ player }}',
-                                'groupSameValues' => true,
-                            ]),
-                            $factory->createColumn([
-                                'label' => 'Date / Source',
-                                'template' => '{{ scored-date }} / {{ source }}',
-                            ]),
-                            $factory->createColumn([
-                                'label' => 'Comments',
-                                'template' => "{{ comments|join('; ') }}",
-                            ]),
-                        ],
-                        'sort' => [
-                            'ship' => 'asc',
-                            'mode' => 'asc',
-                            'score' => 'desc',
-                        ],
-                    ])
-                ),
-                $factory->createGame(
-                    [
-                        'name' => 'Great Mahou Daisakusen',
-                        'company' => 'Raizing / 8ing',
-                    ],
-                    [],
-                    $factory->createLayout([
-                        'templates' => [
-                            'game' => $this->getFixedGameTemplate(),
-                        ],
-                    ])
-                ),
-            ]
-        );
+        ];
     }
 
-    private function getFixedGameTemplate(): string
+    private function fixedGameTemplate(): string
     {
         return <<<'TPL'
 {| class="wikitable" style="text-align: center"
@@ -421,13 +504,13 @@ TPL,
 ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
 |-
 | rowspan="2" | Birthday
-| 83,743,680 || rowspan="2" | Miku || August 2nd, 2020 / [https://example.org Twitter] || 107 items ||
+| 83,743,680 || rowspan="2" | Miku || August 2nd, 2020 / [https:// Twitter] || 107 items ||
 |-
 | 66,693,110 || JHA November 2019 || 107 items ||
 |-
 | rowspan="2" | Chitta
 | 93,664,750 || rowspan="2" | SOF-WTN
-| August 8th, 2020 / [https://twitter.com/sof_wtn/status/1292047346562289664 Twitter] || 108 items ||
+| August 8th, 2020 / [https:// Twitter] || 108 items ||
 |-
 | 83,195,810 || JHA June 2020 || ||
 |-

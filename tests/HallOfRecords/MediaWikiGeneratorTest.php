@@ -18,7 +18,17 @@ use Stg\HallOfRecords\MediaWikiGenerator;
 
 class MediaWikiGeneratorTest extends \Tests\TestCase
 {
-    public function testWithLocales(): void
+    public function testWithEnLocale(): void
+    {
+        $this->execTestWithLocale('en');
+    }
+
+    public function testWithJpLocale(): void
+    {
+        $this->execTestWithLocale('jp');
+    }
+
+    private function execTestWithLocale(string $locale): void
     {
         $builder = new ContainerBuilder();
         $builder->addDefinitions(dirname(dirname(__DIR__)) . '/app/media-wiki.php');
@@ -26,15 +36,11 @@ class MediaWikiGeneratorTest extends \Tests\TestCase
 
         $generator = $container->get(MediaWikiGenerator::class);
 
-        $input = $this->loadFile(__DIR__ . '/media-wiki-input');
+        $input = $this->loadFile(__DIR__ . '/media-wiki-generator.input');
 
         self::assertSame(
-            $this->loadFile(__DIR__ . '/media-wiki-output-en'),
-            $generator->generate($input, 'en')
-        );
-        self::assertSame(
-            $this->loadFile(__DIR__ . '/media-wiki-output-jp'),
-            $generator->generate($input, 'jp')
+            $this->loadFile(__DIR__ . "/media-wiki-generator.output.{$locale}"),
+            $generator->generate($input, $locale)
         );
     }
 }

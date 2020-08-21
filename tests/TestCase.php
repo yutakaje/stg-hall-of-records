@@ -20,16 +20,39 @@ use Stg\HallOfRecords\Data\Scores;
 
 abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
-    private int $nextGameId;
-    private int $nextScoreId;
+    /** @var \Generator<int> */
+    private \Generator $gameIdGenerator;
+    /** @var \Generator<int> */
+    private \Generator $scoreIdGenerator;
 
     /**
      * This method is called before each test.
      */
     protected function setUp(): void
     {
-        $this->nextGameId = 1;
-        $this->nextScoreId = 1;
+        $this->gameIdGenerator = $this->createIdGenerator();
+        $this->scoreIdGenerator = $this->createIdGenerator();
+    }
+
+    /**
+     * @param \Generator<int> $generator
+     */
+    protected function nextId(\Generator $generator): int
+    {
+        $value = $generator->current();
+        $generator->next();
+        return $value;
+    }
+
+    /**
+     * @return \Generator<int> $generator
+     */
+    protected function createIdGenerator(): \Generator
+    {
+        $id = 1;
+        while (true) {
+            yield $id++;
+        }
     }
 
     /**
@@ -38,7 +61,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     protected function createGame(array $properties): Game
     {
         return new Game(
-            $properties['id'] ?? $this->nextGameId++,
+            $properties['id'] ?? $this->nextId($this->gameIdGenerator),
             $properties['name'] ?? '',
             $properties['company'] ?? ''
         );
@@ -50,14 +73,14 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     protected function createScore(array $properties): Score
     {
         return new Score(
-            $properties['id'] ?? $this->nextScoreId++,
-            $properties['gameId'] ?? $this->nextGameId++,
+            $properties['id'] ?? $this->nextId($this->scoreIdGenerator),
+            $properties['gameId'] ?? $this->nextId($this->gameIdGenerator),
             $properties['player'] ?? '',
             $properties['score'] ?? '',
             $properties['ship'] ?? '',
             $properties['mode'] ?? '',
             $properties['weapon'] ?? '',
-            $properties['scoredDate'] ?? '',
+            $properties['scored-date'] ?? '',
             $properties['source'] ?? '',
             $properties['comments'] ?? []
         );

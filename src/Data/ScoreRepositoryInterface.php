@@ -21,4 +21,6 @@ interface ScoreRepositoryInterface
     public function filterByGame(Game $game, array $sort = []): Scores;
 
     public function add(Score $score): void;
+
+    public function clear(): void;
 }

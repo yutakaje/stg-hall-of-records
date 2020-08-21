@@ -18,7 +18,11 @@ namespace Stg\HallOfRecords\Data;
  */
 final class GameRepository extends AbstractRepository implements GameRepositoryInterface
 {
-    /** @var Game[] */
+    /**
+     * Games are indexed by id for easier access.
+     *
+     * @var array<int,Game>
+     */
     private array $games;
 
     public function __construct()
@@ -31,13 +35,19 @@ final class GameRepository extends AbstractRepository implements GameRepositoryI
      */
     public function all(array $sort = []): Games
     {
-        return new Games(
-            $this->sortItems($this->games, $sort)
-        );
+        return new Games($this->sortItems(
+            array_values($this->games),
+            $sort
+        ));
     }
 
     public function add(Game $game): void
     {
         $this->games[$game->id()] = $game;
+    }
+
+    public function clear(): void
+    {
+        $this->games = [];
     }
 }
