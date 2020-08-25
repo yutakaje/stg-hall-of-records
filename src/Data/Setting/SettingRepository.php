@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Data\Setting;
 
-use Stg\HallOfRecords\Data\Game\Game;
-
 final class SettingRepository implements SettingRepositoryInterface
 {
     /** @var Setting[] */
@@ -32,11 +30,11 @@ final class SettingRepository implements SettingRepositoryInterface
         ));
     }
 
-    public function filterByGame(Game $game): Settings
+    public function filterByGame(int $gameId): Settings
     {
         return new Settings($this->filterSettings(
             fn (Setting $setting) => $setting instanceof GameSetting
-                && $setting->gameId() === $game->id()
+                && $setting->gameId() === $gameId
         ));
     }
 

@@ -59,10 +59,10 @@ final class MediaWikiExporter
 
     private function createGameVariable(Game $game): \stdClass
     {
-        $settings = $this->settings->filterByGame($game);
+        $settings = $this->settings->filterByGame($game->id());
         $layout = $settings->get('layout');
 
-        $scores = $this->scores->filterByGame($game);
+        $scores = $this->scores->filterByGame($game->id());
 
         $variable = new \stdClass();
         $variable->properties = $game;

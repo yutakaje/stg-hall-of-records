@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Stg\HallOfRecords\Data\Score;
 
 use Stg\HallOfRecords\Data\AbstractRepository;
-use Stg\HallOfRecords\Data\Game\Game;
 
 /**
  * @extends AbstractRepository<Score>
@@ -36,10 +35,10 @@ final class ScoreRepository extends AbstractRepository implements ScoreRepositor
     /**
      * @param array<string,mixed> $sort
      */
-    public function filterByGame(Game $game, array $sort = []): Scores
+    public function filterByGame(int $gameId, array $sort = []): Scores
     {
         return new Scores($this->sortItems(
-            array_values($this->scores[$game->id()] ?? []),
+            array_values($this->scores[$gameId] ?? []),
             $sort
         ));
     }

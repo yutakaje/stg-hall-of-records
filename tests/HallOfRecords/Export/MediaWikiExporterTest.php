@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Tests\HallOfRecords\Export;
 
-use Stg\HallOfRecords\Data\Game\Game;
 use Stg\HallOfRecords\Data\Game\GameRepositoryInterface;
 use Stg\HallOfRecords\Data\Game\Games;
 use Stg\HallOfRecords\Data\Score\ScoreRepositoryInterface;
@@ -45,109 +44,124 @@ class MediaWikiExporterTest extends \Tests\TestCase
         $settings = $this->createMock(SettingRepositoryInterface::class);
         $settings->method('filterGlobal')
             ->willReturn(new Settings([
-                $this->createGlobalSetting('templates', $this->templates()),
+                $this->createGlobalSetting([
+                    'name' => 'templates',
+                    'value' => $this->templates(),
+                ]),
             ]));
         $settings->method('filterByGame')
             ->will(self::returnCallback(
-                function (Game $game) use ($gameIds): Settings {
-                    switch ($game->id()) {
+                function (int $gameId) use ($gameIds): Settings {
+                    switch ($gameId) {
                         case $gameIds[0]:
                             return new Settings([
-                                $this->createGameSetting($gameIds[0], 'layout', [
-                                    'columns' => [
-                                        [
-                                            'label' => 'Mode',
-                                            'template' => '{{ mode }}',
-                                            'groupSameValues' => true,
+                                $this->createGameSetting([
+                                    'gameId' => $gameIds[0],
+                                    'name' => 'layout',
+                                    'value' => [
+                                        'columns' => [
+                                            [
+                                                'label' => 'Mode',
+                                                'template' => '{{ mode }}',
+                                                'groupSameValues' => true,
+                                            ],
+                                            [
+                                                'label' => 'Character',
+                                                'template' => '{{ ship }}',
+                                                'groupSameValues' => true,
+                                            ],
+                                            [
+                                                'label' => 'Style',
+                                                'template' => '{{ weapon }}',
+                                            ],
+                                            [
+                                                'label' => 'Score',
+                                                'template' => '{{ score }}',
+                                            ],
+                                            [
+                                                'label' => 'Player',
+                                                'template' => '{{ player }}',
+                                                'groupSameValues' => true,
+                                            ],
+                                            [
+                                                'label' => 'Date / Source',
+                                                'template' => '{{ scored-date }} / {{ source }}',
+                                            ],
+                                            [
+                                                'label' => 'Comments',
+                                                'template' => "{{ comments|join('; ') }}",
+                                            ],
                                         ],
-                                        [
-                                            'label' => 'Character',
-                                            'template' => '{{ ship }}',
-                                            'groupSameValues' => true,
+                                        'sort' => [
+                                            'mode' => [
+                                                'Original',
+                                                'Maniac',
+                                                'Ultra',
+                                            ],
+                                            'ship' => [
+                                                'Reco',
+                                                'Palm',
+                                            ],
+                                            'weapon' => [
+                                                'Normal',
+                                                'Abnormal',
+                                            ],
+                                            'score' => 'desc',
                                         ],
-                                        [
-                                            'label' => 'Style',
-                                            'template' => '{{ weapon }}',
-                                        ],
-                                        [
-                                            'label' => 'Score',
-                                            'template' => '{{ score }}',
-                                        ],
-                                        [
-                                            'label' => 'Player',
-                                            'template' => '{{ player }}',
-                                            'groupSameValues' => true,
-                                        ],
-                                        [
-                                            'label' => 'Date / Source',
-                                            'template' => '{{ scored-date }} / {{ source }}',
-                                        ],
-                                        [
-                                            'label' => 'Comments',
-                                            'template' => "{{ comments|join('; ') }}",
-                                        ],
-                                    ],
-                                    'sort' => [
-                                        'mode' => [
-                                            'Original',
-                                            'Maniac',
-                                            'Ultra',
-                                        ],
-                                        'ship' => [
-                                            'Reco',
-                                            'Palm',
-                                        ],
-                                        'weapon' => [
-                                            'Normal',
-                                            'Abnormal',
-                                        ],
-                                        'score' => 'desc',
                                     ],
                                 ]),
                             ]);
                         case $gameIds[1]:
                             return new Settings([
-                                $this->createGameSetting($gameIds[1], 'layout', [
-                                    'columns' => [
-                                        [
-                                            'label' => 'Ship',
-                                            'template' => '{{ ship }}',
-                                            'groupSameValues' => true,
+                                $this->createGameSetting([
+                                    'gameId' => $gameIds[1],
+                                    'name' => 'layout',
+                                    'value' => [
+                                        'columns' => [
+                                            [
+                                                'label' => 'Ship',
+                                                'template' => '{{ ship }}',
+                                                'groupSameValues' => true,
+                                            ],
+                                            [
+                                                'label' => 'Loop',
+                                                'template' => '{{ mode }}',
+                                            ],
+                                            [
+                                                'label' => 'Score',
+                                                'template' => '{{ score }}',
+                                            ],
+                                            [
+                                                'label' => 'Player',
+                                                'template' => '{{ player }}',
+                                                'groupSameValues' => true,
+                                            ],
+                                            [
+                                                'label' => 'Date / Source',
+                                                'template' => '{{ scored-date }} / {{ source }}',
+                                            ],
+                                            [
+                                                'label' => 'Comments',
+                                                'template' => "{{ comments|join('; ') }}",
+                                            ],
                                         ],
-                                        [
-                                            'label' => 'Loop',
-                                            'template' => '{{ mode }}',
+                                        'sort' => [
+                                            'ship' => 'asc',
+                                            'mode' => 'asc',
+                                            'score' => 'desc',
                                         ],
-                                        [
-                                            'label' => 'Score',
-                                            'template' => '{{ score }}',
-                                        ],
-                                        [
-                                            'label' => 'Player',
-                                            'template' => '{{ player }}',
-                                            'groupSameValues' => true,
-                                        ],
-                                        [
-                                            'label' => 'Date / Source',
-                                            'template' => '{{ scored-date }} / {{ source }}',
-                                        ],
-                                        [
-                                            'label' => 'Comments',
-                                            'template' => "{{ comments|join('; ') }}",
-                                        ],
-                                    ],
-                                    'sort' => [
-                                        'ship' => 'asc',
-                                        'mode' => 'asc',
-                                        'score' => 'desc',
                                     ],
                                 ]),
                             ]);
                         case $gameIds[2]:
                             return new Settings([
-                                $this->createGameSetting($gameIds[2], 'layout', [
-                                    'templates' => [
-                                        'game' => $this->fixedGameTemplate(),
+                                $this->createGameSetting([
+                                    'gameId' => $gameIds[2],
+                                    'name' => 'layout',
+                                    'value' => [
+                                        'templates' => [
+                                            'game' => $this->fixedGameTemplate(),
+                                        ],
                                     ],
                                 ]),
                             ]);
@@ -195,8 +209,8 @@ class MediaWikiExporterTest extends \Tests\TestCase
         $scores = $this->createMock(ScoreRepositoryInterface::class);
         $scores->method('filterByGame')
             ->will(self::returnCallback(
-                function (Game $game) use ($gameIds, $scoreIds): Scores {
-                    switch ($game->id()) {
+                function (int $gameId) use ($gameIds, $scoreIds): Scores {
+                    switch ($gameId) {
                         case $gameIds[0]:
                             return new Scores([
                                 $this->createScore([

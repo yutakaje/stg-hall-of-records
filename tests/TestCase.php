@@ -58,22 +58,26 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @param mixed $value
+     * @param array<string,mixed> $properties
      */
-    protected function createGlobalSetting(string $name, $value): GlobalSetting
+    protected function createGlobalSetting(array $properties): GlobalSetting
     {
-        return new GlobalSetting($name, $value);
+        return new GlobalSetting(
+            $properties['name'] ?? '',
+            $properties['value'] ?? null
+        );
     }
 
     /**
-     * @param mixed $value
+     * @param array<string,mixed> $properties
      */
-    protected function createGameSetting(
-        int $gameId,
-        string $name,
-        $value
-    ): GameSetting {
-        return new GameSetting($gameId, $name, $value);
+    protected function createGameSetting(array $properties): GameSetting
+    {
+        return new GameSetting(
+            $properties['gameId'] ?? 0,
+            $properties['name'] ?? '',
+            $properties['value'] ?? null
+        );
     }
 
     /**

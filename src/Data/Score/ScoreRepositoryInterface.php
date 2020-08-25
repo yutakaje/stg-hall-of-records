@@ -13,14 +13,12 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Data\Score;
 
-use Stg\HallOfRecords\Data\Game\Game;
-
 interface ScoreRepositoryInterface
 {
     /**
      * @param array<string,mixed> $sort
      */
-    public function filterByGame(Game $game, array $sort = []): Scores;
+    public function filterByGame(int $gameId, array $sort = []): Scores;
 
     public function add(Score $score): void;
 

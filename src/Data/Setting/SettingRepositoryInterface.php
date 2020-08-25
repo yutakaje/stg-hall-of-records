@@ -13,13 +13,11 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Data\Setting;
 
-use Stg\HallOfRecords\Data\Game\Game;
-
 interface SettingRepositoryInterface
 {
     public function filterGlobal(): Settings;
 
-    public function filterByGame(Game $game): Settings;
+    public function filterByGame(int $gameId): Settings;
 
     public function add(Setting $setting): void;
 
