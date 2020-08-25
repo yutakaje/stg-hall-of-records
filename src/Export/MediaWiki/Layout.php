@@ -19,17 +19,22 @@ final class Layout
     private array $templates;
     /** @var array<string,mixed[]> */
     private array $sort;
+    /** @var array<string,mixed>[] */
+    private array $columns;
 
     /**
      * @param array<string,string> $templates
      * @param array<string,mixed[]> $sort
+     * @param array<string,mixed>[] $columns
      */
     public function __construct(
         array $templates,
-        array $sort
+        array $sort,
+        array $columns
     ) {
         $this->templates = $templates;
         $this->sort = $sort;
+        $this->columns = $columns;
     }
 
     /**
@@ -39,7 +44,8 @@ final class Layout
     {
         return new self(
             $properties['templates'] ?? [],
-            $properties['sort'] ?? []
+            $properties['sort'] ?? [],
+            $properties['columns'] ?? []
         );
     }
 
@@ -51,9 +57,9 @@ final class Layout
         return $this->templates;
     }
 
-    public function template(string $name): ?string
+    public function template(string $name): string
     {
-        return $this->templates[$name] ?? null;
+        return $this->templates[$name] ?? '';
     }
 
     /**
@@ -62,5 +68,13 @@ final class Layout
     public function sort(string $name): array
     {
         return $this->sort[$name] ?? [];
+    }
+
+    /**
+     * @return array<string,mixed>[]
+     */
+    public function columns(): array
+    {
+        return $this->columns;
     }
 }

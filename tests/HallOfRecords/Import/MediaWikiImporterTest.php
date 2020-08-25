@@ -285,20 +285,22 @@ class MediaWikiImporterTest extends \Tests\TestCase
                         ],
                     ],
                     'sort' => [
-                        'mode' => [
-                            'Original',
-                            'Maniac',
-                            'Ultra',
+                        'scores' => [
+                            'mode' => [
+                                'Original',
+                                'Maniac',
+                                'Ultra',
+                            ],
+                            'ship' => [
+                                'Palm',
+                                'Reco',
+                            ],
+                            'weapon' => [
+                                'Normal',
+                                'Abnormal',
+                            ],
+                            'score' => 'desc',
                         ],
-                        'ship' => [
-                            'Palm',
-                            'Reco',
-                        ],
-                        'weapon' => [
-                            'Normal',
-                            'Abnormal',
-                        ],
-                        'score' => 'desc',
                     ],
                 ],
                 'properties' => [
@@ -337,12 +339,14 @@ class MediaWikiImporterTest extends \Tests\TestCase
                         ],
                     ],
                     'sort' => [
-                        'ship' => [
-                            'Type A',
-                            'Type B',
+                        'scores' => [
+                            'ship' => [
+                                'Type A',
+                                'Type B',
+                            ],
+                            'mode' => 'asc',
+                            'score' => 'desc',
                         ],
-                        'mode' => 'asc',
-                        'score' => 'desc',
                     ],
                 ],
                 'properties' => [
@@ -365,21 +369,21 @@ class MediaWikiImporterTest extends \Tests\TestCase
         ];
 
         if ($locale === 'en') {
-            $settings[4]['value']['sort']['ship'] = [
+            $settings[4]['value']['sort']['scores']['ship'] = [
                 'Tiger Schwert',
                 'Panzer Jäger',
             ];
         } elseif ($locale === 'jp') {
-            $settings[3]['value']['sort']['mode'] = [
+            $settings[3]['value']['sort']['scores']['mode'] = [
                 'オリジナルモード',
                 'マニアックモード',
                 'ウルトラモード',
             ];
-            $settings[3]['value']['sort']['ship'] = [
+            $settings[3]['value']['sort']['scores']['ship'] = [
                 'パルム',
                 'レコ',
             ];
-            $settings[3]['value']['sort']['weapon'] = [
+            $settings[3]['value']['sort']['scores']['weapon'] = [
                 'ノーマル',
                 'アブノーマル',
             ];
@@ -390,7 +394,7 @@ class MediaWikiImporterTest extends \Tests\TestCase
             $settings[4]['value']['columns'][3]['label'] = 'プレイヤー';
             $settings[4]['value']['columns'][4]['label'] = '年月日 / 情報元';
             $settings[4]['value']['columns'][5]['label'] = '備考';
-            $settings[4]['value']['sort']['ship'] = [
+            $settings[4]['value']['sort']['scores']['ship'] = [
                 'TYPE-A ティーゲルシュベルト',
                 'TYPE-B パンツァーイェーガー',
             ];

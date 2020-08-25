@@ -17,6 +17,8 @@ layout:
         games:
             company: asc
             name: asc
+        scores:
+            score: desc
 
     templates:
         games: |
@@ -73,6 +75,14 @@ scores:
     scored-date: "2007"
     source: Superplay DVD
 
+  - player: KTL-NAL
+    score: 973,020,065
+    ship: Palm
+    mode: Maniac
+    weapon: Abnormal
+    scored-date: "2007-11"
+    source: Arcadia November 2007
+
   - player: ABI
     score: 550,705,999
     ship: Reco
@@ -113,13 +123,19 @@ scores:
       - 5L 2B remaining
       - "After stage 4: 693.8m"
 
-  - player: KTL-NAL
-    score: 973,020,065
-    ship: Palm
-    mode: Maniac
-    weapon: Abnormal
-    scored-date: "2007-11"
-    source: Arcadia November 2007
+  - player: fufufu
+    score: 3,999,999,999
+    ship: Reco
+    mode: Ultra
+    weapon: Normal
+    scored-date: "2009-05-27"
+    source: Arcadia August 2009
+    comments:
+      - 0L 0B remaining
+      - "After stage 4: 2.205b"
+    links:
+      - url: https://
+        name: Youtube
 
   - player: Clover-TAC
     score: 1,047,258,714
@@ -169,20 +185,6 @@ scores:
       - url: https://
         name: Youtube
 
-  - player: fufufu
-    score: 3,999,999,999
-    ship: Reco
-    mode: Ultra
-    weapon: Normal
-    scored-date: "2009-05-27"
-    source: Arcadia August 2009
-    comments:
-      - 0L 0B remaining
-      - "After stage 4: 2.205b"
-    links:
-      - url: https://
-        name: Youtube
-
   - player: lstze
     score: 3,266,405,598
     ship: Reco
@@ -227,10 +229,10 @@ layout:
         template: "{{ comments|join('; ') }}"
 
     sort:
-        mode: [ Original, Maniac, Ultra ]
-        ship: [ Palm, Reco ]
-        weapon: [ Normal, Abnormal ]
-        score: desc
+        scores:
+            mode: [ Original, Maniac, Ultra ]
+            ship: [ Palm, Reco ]
+            weapon: [ Normal, Abnormal ]
 
 # Translations for the whole game (so you do not have to specify the same Japanese term within all the entries)
 translations:
@@ -273,16 +275,6 @@ scores:
     comments:
       
   - player: SPS
-    score: 583,614,753
-    ship: Type A
-    mode: Ura
-    scored-date: "2014-05-27"
-    source: Arcadia September 2014 / [https:// Twitter]
-    comments:
-      - 6L 0B remaining
-      - 1st loop 285m
-
-  - player: SPS
     score: 481,402,383
     ship: Type B
     mode: Omote
@@ -300,6 +292,16 @@ scores:
     source: JHA March 2016
     comments:
       - 6L remaining
+
+  - player: SPS
+    score: 583,614,753
+    ship: Type A
+    mode: Ura
+    scored-date: "2014-05-27"
+    source: Arcadia September 2014 / [https:// Twitter]
+    comments:
+      - 6L 0B remaining
+      - 1st loop 285m
 
 links:
   - url: https://example.org/some_link_id
@@ -353,19 +355,10 @@ layout:
         template: "{{ comments|join('; ') }}"
 
     sort:
-        ship: [ Type A, Type B ]
-        mode: asc
-        score: desc
+        scores:
+            ship: [ Type A, Type B ]
+            mode: asc
 
-#templates:
-#    score-header: |
-#        | Ship || Loop || Score || Player || Date / Source || Comment
-#    score-header-jp: |  
-#        | 自機 || 2週種 || スコア || プレイヤー || 年月日 / 情報元 || 備考
-#    score-columns:
-#        | {{ ship }} || {{ mode }} || {{ score }} || {{ player }} || {{ scored-date }} / {{ source }} || {{ comments|join('; ') }}
-
-    
 </nowiki></div>
 
 

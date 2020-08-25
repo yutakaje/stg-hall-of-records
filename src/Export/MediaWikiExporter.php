@@ -60,31 +60,41 @@ final class MediaWikiExporter
 
         return $twig->render('games', [
             'games' => $games->map(
-                fn (Game $game) => $this->createGameVariable($game)
+                fn (Game $game) => $this->createGameVariable(
+                    $game,
+                    $globalLayout
+                )
             ),
         ]);
     }
 
-    private function createGameVariable(Game $game): \stdClass
-    {
+    private function createGameVariable(
+        Game $game,
+        Layout $globalLayout
+    ): \stdClass {
         $settings = $this->settings->filterByGame($game->id());
-        $layout = $settings->get('layout');
+        $layout = Layout::createFromArray(
+            $settings->get('layout', [])
+        );
 
-        $scores = $this->scores->filterByGame($game->id());
+        $scores = $this->scores->filterByGame($game->id(), array_merge(
+            $layout->sort('scores'),
+            $globalLayout->sort('scores')
+        ));
 
         $variable = new \stdClass();
         $variable->properties = $game;
         $variable->headers = array_map(
             fn (array $column) => $column['label'] ?? '',
-            $layout['columns'] ?? []
+            $layout->columns()
         );
         $variable->scores = $scores->map(
             fn (Score $score) => $this->createScoreVariable(
                 $score,
-                $layout['columns'] ?? []
+                $layout->columns()
             )
         );
-        $variable->template = $layout['templates']['game'] ?? '';
+        $variable->template = $layout->template('game');
         return $variable;
     }
 

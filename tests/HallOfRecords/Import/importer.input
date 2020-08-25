@@ -211,10 +211,11 @@ layout:
         template: "{{ comments|join('; ') }}"
 
     sort:
-        mode: [ Original, Maniac, Ultra ]
-        ship: [ Palm, Reco ]
-        weapon: [ Normal, Abnormal ]
-        score: desc
+        scores:
+            mode: [ Original, Maniac, Ultra ]
+            ship: [ Palm, Reco ]
+            weapon: [ Normal, Abnormal ]
+            score: desc
 
 # Translations for the whole game (so you do not have to specify the same Japanese term within all the entries)
 translations:
@@ -337,9 +338,10 @@ layout:
         template: "{{ comments|join('; ') }}"
 
     sort:
-        ship: [ Type A, Type B ]
-        mode: asc
-        score: desc
+        scores:
+            ship: [ Type A, Type B ]
+            mode: asc
+            score: desc
 
 </nowiki></div>
 

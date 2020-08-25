@@ -198,10 +198,13 @@ final class MediaWikiImporter
                 ),
                 $layout->getProperty('columns', []),
             ),
-            'sort' => $this->translateLayoutSort(
-                $layout->getProperty('sort', []),
-                $locale,
-                $translator
+            'sort' => array_map(
+                fn (array $sort) => $this->translateLayoutSort(
+                    $sort,
+                    $locale,
+                    $translator
+                ),
+                $layout->getProperty('sort', [])
             ),
         ]);
     }
