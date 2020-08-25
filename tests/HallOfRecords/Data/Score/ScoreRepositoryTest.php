@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Tests\HallOfRecords\Data\Score;
 
-use Stg\HallOfRecords\Data\Game\Game;
 use Stg\HallOfRecords\Data\Score\Score;
 use Stg\HallOfRecords\Data\Score\ScoreRepository;
 use Stg\HallOfRecords\Data\Score\Scores;
@@ -35,9 +34,7 @@ class ScoreRepositoryTest extends \Tests\TestCase
         $scores = $this->createScores($gameId + 1);
 
         $repository = new ScoreRepository();
-        $scores->apply(function (Score $score) use ($repository): void {
-            $repository->add($score);
-        });
+        $scores->apply($this->addToRepository($repository));
 
         self::assertEquals(new Scores([]), $repository->filterByGame($gameId));
     }
@@ -48,9 +45,7 @@ class ScoreRepositoryTest extends \Tests\TestCase
         $scores = $this->createScores($gameId);
 
         $repository = new ScoreRepository();
-        $scores->apply(function (Score $score) use ($repository): void {
-            $repository->add($score);
-        });
+        $scores->apply($this->addToRepository($repository));
 
         self::assertEquals(
             $this->sortScores($scores, [2, 3, 4, 5]),
@@ -64,9 +59,7 @@ class ScoreRepositoryTest extends \Tests\TestCase
         $scores = $this->createScores($gameId);
 
         $repository = new ScoreRepository();
-        $scores->apply(function (Score $score) use ($repository): void {
-            $repository->add($score);
-        });
+        $scores->apply($this->addToRepository($repository));
 
         self::assertEquals(
             $this->sortScores($scores, [5, 3, 4, 2]),
@@ -82,9 +75,7 @@ class ScoreRepositoryTest extends \Tests\TestCase
         $scores = $this->createScores($gameId);
 
         $repository = new ScoreRepository();
-        $scores->apply(function (Score $score) use ($repository): void {
-            $repository->add($score);
-        });
+        $scores->apply($this->addToRepository($repository));
 
         self::assertEquals(
             $this->sortScores($scores, [3, 2, 5, 4]),
@@ -101,9 +92,7 @@ class ScoreRepositoryTest extends \Tests\TestCase
         $scores = $this->createScores($gameId);
 
         $repository = new ScoreRepository();
-        $scores->apply(function (Score $score) use ($repository): void {
-            $repository->add($score);
-        });
+        $scores->apply($this->addToRepository($repository));
 
         self::assertEquals(
             $this->sortScores($scores, [4, 2, 5, 3]),
@@ -124,9 +113,7 @@ class ScoreRepositoryTest extends \Tests\TestCase
         $scores = $this->createScores($gameId);
 
         $repository = new ScoreRepository();
-        $scores->apply(function (Score $score) use ($repository): void {
-            $repository->add($score);
-        });
+        $scores->apply($this->addToRepository($repository));
 
         // Invalid columns should be ignored.
         self::assertEquals(
@@ -215,6 +202,13 @@ class ScoreRepositoryTest extends \Tests\TestCase
             fn (int $index) => $unsorted[$index],
             $order
         ));
+    }
+
+    private function addToRepository(ScoreRepository $repository): \Closure
+    {
+        return function (Score $score) use ($repository): void {
+            $repository->add($score);
+        };
     }
 
     private function randomGameId(): int

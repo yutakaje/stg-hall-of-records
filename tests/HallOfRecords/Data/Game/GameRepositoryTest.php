@@ -31,9 +31,7 @@ class GameRepositoryTest extends \Tests\TestCase
         $games = $this->createGames();
 
         $repository = new GameRepository();
-        $games->apply(function (Game $game) use ($repository): void {
-            $repository->add($game);
-        });
+        $games->apply($this->addToRepository($repository));
 
         self::assertEquals(
             $this->sortGames($games, [0, 1, 2, 3]),
@@ -46,9 +44,7 @@ class GameRepositoryTest extends \Tests\TestCase
         $games = $this->createGames();
 
         $repository = new GameRepository();
-        $games->apply(function (Game $game) use ($repository): void {
-            $repository->add($game);
-        });
+        $games->apply($this->addToRepository($repository));
 
         self::assertEquals(
             $this->sortGames($games, [1, 3, 2, 0]),
@@ -63,9 +59,7 @@ class GameRepositoryTest extends \Tests\TestCase
         $games = $this->createGames();
 
         $repository = new GameRepository();
-        $games->apply(function (Game $game) use ($repository): void {
-            $repository->add($game);
-        });
+        $games->apply($this->addToRepository($repository));
 
         self::assertEquals(
             $this->sortGames($games, [1, 3, 2, 0]),
@@ -81,9 +75,7 @@ class GameRepositoryTest extends \Tests\TestCase
         $games = $this->createGames();
 
         $repository = new GameRepository();
-        $games->apply(function (Game $game) use ($repository): void {
-            $repository->add($game);
-        });
+        $games->apply($this->addToRepository($repository));
 
         self::assertEquals(
             $this->sortGames($games, [1, 0, 2, 3]),
@@ -103,9 +95,7 @@ class GameRepositoryTest extends \Tests\TestCase
         $games = $this->createGames();
 
         $repository = new GameRepository();
-        $games->apply(function (Game $game) use ($repository): void {
-            $repository->add($game);
-        });
+        $games->apply($this->addToRepository($repository));
 
         // Invalid columns should be ignored.
         self::assertEquals(
@@ -149,5 +139,12 @@ class GameRepositoryTest extends \Tests\TestCase
             fn (int $index) => $unsorted[$index],
             $order
         ));
+    }
+
+    private function addToRepository(GameRepository $repository): \Closure
+    {
+        return function (Game $game) use ($repository): void {
+            $repository->add($game);
+        };
     }
 }
