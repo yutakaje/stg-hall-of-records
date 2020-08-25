@@ -7,13 +7,17 @@ name: global
 config:
     scores:
         group-by:
-            - ship
-    group:
-      - ship
-      - mode
-    num-previous-scores: 0
+          - ship
+          - mode
+
+        num-previous: 0
 
 layout:
+    sort:
+        games:
+            company: asc
+            name: asc
+
     templates:
         games: |
             {% for game in games %}
@@ -39,6 +43,9 @@ translations:
   - property: company
     value: Cave
     value-jp: ケイブ
+  - property: company
+    value: Raizing / 8ing
+    value-jp: ライジング / エイティング
 
 </nowiki></div>
 

@@ -18,6 +18,7 @@ use Stg\HallOfRecords\Data\Game\GameRepositoryInterface;
 use Stg\HallOfRecords\Data\Score\Score;
 use Stg\HallOfRecords\Data\Score\ScoreRepositoryInterface;
 use Stg\HallOfRecords\Data\Setting\SettingRepositoryInterface;
+use Stg\HallOfRecords\Export\MediaWiki\Layout;
 use Twig\Environment;
 use Twig\Loader\ArrayLoader;
 
@@ -45,13 +46,20 @@ final class MediaWikiExporter
     private function exportGames(): string
     {
         $globalSettings = $this->settings->filterGlobal();
+        $globalLayout = Layout::createFromArray(
+            $globalSettings->get('layout', [])
+        );
 
-        $twig = new Environment(new ArrayLoader(
-            $globalSettings->get('layout', [])['templates'] ?? []
-        ));
+        $twig = new Environment(
+            new ArrayLoader($globalLayout->templates())
+        );
+
+        $games = $this->games->all(
+            $globalLayout->sort('games')
+        );
 
         return $twig->render('games', [
-            'games' => $this->games->all()->map(
+            'games' => $games->map(
                 fn (Game $game) => $this->createGameVariable($game)
             ),
         ]);
