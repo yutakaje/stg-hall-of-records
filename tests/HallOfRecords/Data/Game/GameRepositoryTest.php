@@ -26,84 +26,14 @@ class GameRepositoryTest extends \Tests\TestCase
         self::assertEquals(new Games([]), $repository->all());
     }
 
-    public function testAllWithDefaultSort(): void
+    public function testAll(): void
     {
         $games = $this->createGames();
 
         $repository = new GameRepository();
         $games->apply($this->addToRepository($repository));
 
-        self::assertEquals(
-            $this->sortGames($games, [0, 1, 2, 3]),
-            $repository->all()
-        );
-    }
-
-    public function testAllSortByNameAsc(): void
-    {
-        $games = $this->createGames();
-
-        $repository = new GameRepository();
-        $games->apply($this->addToRepository($repository));
-
-        self::assertEquals(
-            $this->sortGames($games, [1, 3, 2, 0]),
-            $repository->all([
-                'name' => 'asc',
-            ])
-        );
-    }
-
-    public function testAllSortByCompanyDescNameAsc(): void
-    {
-        $games = $this->createGames();
-
-        $repository = new GameRepository();
-        $games->apply($this->addToRepository($repository));
-
-        self::assertEquals(
-            $this->sortGames($games, [1, 3, 2, 0]),
-            $repository->all([
-                'company' => 'desc',
-                'name' => 'asc',
-            ])
-        );
-    }
-
-    public function testAllSortByCustomOrder(): void
-    {
-        $games = $this->createGames();
-
-        $repository = new GameRepository();
-        $games->apply($this->addToRepository($repository));
-
-        self::assertEquals(
-            $this->sortGames($games, [1, 0, 2, 3]),
-            $repository->all([
-                'company' => [
-                    'Raizing',
-                    'Cave',
-                    'Konami',
-                ],
-                'name' => 'desc',
-            ])
-        );
-    }
-
-    public function testAllWithInvalidSort(): void
-    {
-        $games = $this->createGames();
-
-        $repository = new GameRepository();
-        $games->apply($this->addToRepository($repository));
-
-        // Invalid columns should be ignored.
-        self::assertEquals(
-            $this->sortGames($games, [0, 1, 2, 3]),
-            $repository->all([
-                'bad_column' => 'asc',
-            ])
-        );
+        self::assertEquals($games, $repository->all());
     }
 
     private function createGames(): Games
@@ -126,19 +56,6 @@ class GameRepositoryTest extends \Tests\TestCase
                 'company' => 'Konami',
             ]),
         ]);
-    }
-
-    /**
-     * @param int[] $order
-     */
-    private function sortGames(Games $games, array $order): Games
-    {
-        $unsorted = $games->asArray();
-
-        return new Games(array_map(
-            fn (int $index) => $unsorted[$index],
-            $order
-        ));
     }
 
     private function addToRepository(GameRepository $repository): \Closure

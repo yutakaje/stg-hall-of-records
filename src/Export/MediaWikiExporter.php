@@ -54,7 +54,7 @@ final class MediaWikiExporter
             new ArrayLoader($globalLayout->templates())
         );
 
-        $games = $this->games->all(
+        $games = $this->games->all()->sort(
             $globalLayout->sort('games')
         );
 
@@ -77,10 +77,11 @@ final class MediaWikiExporter
             $settings->get('layout', [])
         );
 
-        $scores = $this->scores->filterByGame($game->id(), array_merge(
-            $layout->sort('scores'),
-            $globalLayout->sort('scores')
-        ));
+        $scores = $this->scores->filterByGame($game->id())
+            ->sort(array_merge(
+                $layout->sort('scores'),
+                $globalLayout->sort('scores')
+            ));
 
         $variable = new \stdClass();
         $variable->properties = $game;

@@ -13,47 +13,76 @@ declare(strict_types=1);
 
 namespace Tests\HallOfRecords\Data\Score;
 
-use Stg\HallOfRecords\Data\Score\Score;
-use Stg\HallOfRecords\Data\Score\ScoreRepository;
 use Stg\HallOfRecords\Data\Score\Scores;
 
-class ScoreRepositoryTest extends \Tests\TestCase
+class ScoresTest extends \Tests\TestCase
 {
-    public function testFilterByGameWithNoScoresAtAll(): void
+    public function testSortWithEmptyArray(): void
     {
-        $gameId = $this->randomGameId();
-
-        $repository = new ScoreRepository();
-
-        self::assertEquals(new Scores([]), $repository->filterByGame($gameId));
-    }
-
-    public function testFilterByGameWithNoScores(): void
-    {
-        $gameId = $this->randomGameId();
-        $scores = $this->createScores($gameId + 1);
-
-        $repository = new ScoreRepository();
-        $scores->apply($this->addToRepository($repository));
-
-        self::assertEquals(new Scores([]), $repository->filterByGame($gameId));
-    }
-
-    public function testFilterByGame(): void
-    {
-        $gameId = $this->randomGameId();
-        $scores = $this->createScores($gameId);
-
-        $repository = new ScoreRepository();
-        $scores->apply($this->addToRepository($repository));
+        $scores = $this->createScores();
 
         self::assertEquals(
-            new Scores(array_slice($scores->asArray(), 2)),
-            $repository->filterByGame($gameId)
+            $this->sortScores($scores, [0, 1, 2, 3, 4, 5]),
+            $scores->sort([])
         );
     }
 
-    private function createScores(int $gameId): Scores
+    public function testSortByScoreDesc(): void
+    {
+        $scores = $this->createScores();
+
+        self::assertEquals(
+            $this->sortScores($scores, [5, 3, 4, 0, 1, 2]),
+            $scores->sort([
+                'score' => 'desc',
+            ])
+        );
+    }
+
+    public function testSortByShipAscScoreDesc(): void
+    {
+        $scores = $this->createScores();
+
+        self::assertEquals(
+            $this->sortScores($scores, [0, 1, 3, 2, 5, 4]),
+            $scores->sort([
+                'ship' => 'asc',
+                'score' => 'desc',
+            ])
+        );
+    }
+
+    public function testSortByCustomOrder(): void
+    {
+        $scores = $this->createScores();
+
+        self::assertEquals(
+            $this->sortScores($scores, [4, 2, 5, 3, 0, 1]),
+            $scores->sort([
+                'player' => [
+                    'GAN',
+                    'SPS',
+                    'Akuma',
+                ],
+                'score' => 'desc',
+            ])
+        );
+    }
+
+    public function testSortWithInvalidProperty(): void
+    {
+        $scores = $this->createScores();
+
+        // Invalid properties should be ignored.
+        self::assertEquals(
+            $this->sortScores($scores, [0, 1, 2, 3, 4, 5]),
+            $scores->sort([
+                'bad-property' => 'asc',
+            ])
+        );
+    }
+
+    private function createScores(): Scores
     {
         return new Scores([
             $this->createScore([
@@ -75,7 +104,6 @@ class ScoreRepositoryTest extends \Tests\TestCase
                 'source' => 'Superplay DVD',
             ]),
             $this->createScore([
-                'gameId' => $gameId,
                 'player' => 'SPS',
                 'score' => '507,780,433',
                 'ship' => 'Type A',
@@ -85,7 +113,6 @@ class ScoreRepositoryTest extends \Tests\TestCase
                 'comments' => [],
             ]),
             $this->createScore([
-                'gameId' => $gameId,
                 'player' => 'Akuma',
                 'score' => '614,129,975',
                 'ship' => 'Type A',
@@ -95,7 +122,6 @@ class ScoreRepositoryTest extends \Tests\TestCase
                 'comments' => [],
             ]),
             $this->createScore([
-                'gameId' => $gameId,
                 'player' => 'GAN',
                 'score' => '569,741,232',
                 'ship' => 'Type B',
@@ -108,7 +134,6 @@ class ScoreRepositoryTest extends \Tests\TestCase
                 ],
             ]),
             $this->createScore([
-                'gameId' => $gameId,
                 'player' => 'Akuma',
                 'score' => '619,873,102',
                 'ship' => 'Type B',
@@ -120,15 +145,16 @@ class ScoreRepositoryTest extends \Tests\TestCase
         ]);
     }
 
-    private function addToRepository(ScoreRepository $repository): \Closure
+    /**
+     * @param int[] $order
+     */
+    private function sortScores(Scores $scores, array $order): Scores
     {
-        return function (Score $score) use ($repository): void {
-            $repository->add($score);
-        };
-    }
+        $unsorted = $scores->asArray();
 
-    private function randomGameId(): int
-    {
-        return random_int(1000, 9999);
+        return new Scores(array_map(
+            fn (int $index) => $unsorted[$index],
+            $order
+        ));
     }
 }

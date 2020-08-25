@@ -14,10 +14,22 @@ declare(strict_types=1);
 namespace Stg\HallOfRecords\Data\Score;
 
 use Stg\HallOfRecords\Data\Collection;
+use Stg\HallOfRecords\Data\Sorting\ArraySorter;
 
 /**
  * @extends Collection<Score>
  */
 final class Scores extends Collection
 {
+    /**
+     * @param array<string,mixed> $sort
+     */
+    public function sort(array $sort): self
+    {
+        /** @var ArraySorter<Score> */
+        $sorter = new ArraySorter();
+        return new self(
+            $sorter->sort($this->asArray(), $sort)
+        );
+    }
 }

@@ -32,15 +32,11 @@ final class GameRepository extends AbstractRepository implements GameRepositoryI
         $this->games = [];
     }
 
-    /**
-     * @param array<string,mixed> $sort
-     */
-    public function all(array $sort = []): Games
+    public function all(): Games
     {
-        return new Games($this->sortItems(
-            array_values($this->games),
-            $sort
-        ));
+        return new Games(
+            array_values($this->games)
+        );
     }
 
     public function add(Game $game): void

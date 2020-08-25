@@ -15,10 +15,7 @@ namespace Stg\HallOfRecords\Data\Game;
 
 interface GameRepositoryInterface
 {
-    /**
-     * @param array<string,mixed> $sort
-     */
-    public function all(array $sort = []): Games;
+    public function all(): Games;
 
     public function add(Game $game): void;
 

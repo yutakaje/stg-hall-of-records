@@ -32,14 +32,10 @@ final class ScoreRepository extends AbstractRepository implements ScoreRepositor
         $this->scores = [];
     }
 
-    /**
-     * @param array<string,mixed> $sort
-     */
-    public function filterByGame(int $gameId, array $sort = []): Scores
+    public function filterByGame(int $gameId): Scores
     {
-        return new Scores($this->sortItems(
-            array_values($this->scores[$gameId] ?? []),
-            $sort
+        return new Scores(array_values(
+            $this->scores[$gameId] ?? []
         ));
     }
 

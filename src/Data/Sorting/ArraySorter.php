@@ -82,13 +82,14 @@ final class ArraySorter
             return 0;
         }
 
+        // Values which are not listed explicitly are put at the end of the list.
         $valuePriorities = array_flip(array_values($order));
 
         $lhsValue = $lhs->getProperty($propertyName);
-        $lhsPriority = $valuePriorities[$lhsValue] ?? -1;
+        $lhsPriority = $valuePriorities[$lhsValue] ?? PHP_INT_MAX;
 
         $rhsValue = $rhs->getProperty($propertyName);
-        $rhsPriority = $valuePriorities[$rhsValue] ?? -1;
+        $rhsPriority = $valuePriorities[$rhsValue] ?? PHP_INT_MAX;
 
         return $lhsPriority <=> $rhsPriority;
     }

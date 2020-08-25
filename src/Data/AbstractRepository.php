@@ -13,23 +13,9 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Data;
 
-use Stg\HallOfRecords\Data\Sorting\ArraySorter;
-use Stg\HallOfRecords\Data\Sorting\SortableInterface;
-
 /**
- * @template Item of SortableInterface
+ * @template Item
  */
 abstract class AbstractRepository
 {
-    /**
-     * @param Item[] $items
-     * @param array<string,mixed> $sort
-     * @return Item[]
-     */
-    protected function sortItems(array $items, array $sort): array
-    {
-        /** @var ArraySorter<Item> */
-        $sorter = new ArraySorter();
-        return $sorter->sort($items, $sort);
-    }
 }

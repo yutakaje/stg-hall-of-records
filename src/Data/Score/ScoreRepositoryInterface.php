@@ -15,10 +15,7 @@ namespace Stg\HallOfRecords\Data\Score;
 
 interface ScoreRepositoryInterface
 {
-    /**
-     * @param array<string,mixed> $sort
-     */
-    public function filterByGame(int $gameId, array $sort = []): Scores;
+    public function filterByGame(int $gameId): Scores;
 
     public function add(Score $score): void;
 
