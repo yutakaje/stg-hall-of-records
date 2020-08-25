@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Stg\HallOfRecords\Data;
+namespace Stg\HallOfRecords\Data\Setting;
 
 final class GameSetting extends Setting
 {

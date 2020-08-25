@@ -11,7 +11,10 @@
 
 declare(strict_types=1);
 
-namespace Stg\HallOfRecords\Data;
+namespace Stg\HallOfRecords\Data\Score;
+
+use Stg\HallOfRecords\Data\AbstractRepository;
+use Stg\HallOfRecords\Data\Game\Game;
 
 /**
  * @extends AbstractRepository<Score>

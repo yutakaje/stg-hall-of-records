@@ -11,12 +11,12 @@
 
 declare(strict_types=1);
 
-use Stg\HallOfRecords\Data\GameRepository;
-use Stg\HallOfRecords\Data\GameRepositoryInterface;
-use Stg\HallOfRecords\Data\SettingRepository;
-use Stg\HallOfRecords\Data\SettingRepositoryInterface;
-use Stg\HallOfRecords\Data\ScoreRepository;
-use Stg\HallOfRecords\Data\ScoreRepositoryInterface;
+use Stg\HallOfRecords\Data\Game\GameRepository;
+use Stg\HallOfRecords\Data\Game\GameRepositoryInterface;
+use Stg\HallOfRecords\Data\Score\ScoreRepository;
+use Stg\HallOfRecords\Data\Score\ScoreRepositoryInterface;
+use Stg\HallOfRecords\Data\Setting\SettingRepository;
+use Stg\HallOfRecords\Data\Setting\SettingRepositoryInterface;
 use Stg\HallOfRecords\Export\MediaWikiExporter;
 use Stg\HallOfRecords\Import\MediaWikiImporter;
 use Stg\HallOfRecords\Import\MediaWiki\YamlExtractor;

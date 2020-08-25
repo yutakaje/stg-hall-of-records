@@ -11,11 +11,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\HallOfRecords\Data;
+namespace Tests\HallOfRecords\Data\Game;
 
-use Stg\HallOfRecords\Data\Game;
-use Stg\HallOfRecords\Data\GameRepository;
-use Stg\HallOfRecords\Data\Games;
+use Stg\HallOfRecords\Data\Game\Game;
+use Stg\HallOfRecords\Data\Game\GameRepository;
+use Stg\HallOfRecords\Data\Game\Games;
 
 class GameRepositoryTest extends \Tests\TestCase
 {

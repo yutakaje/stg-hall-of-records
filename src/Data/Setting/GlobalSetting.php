@@ -11,11 +11,8 @@
 
 declare(strict_types=1);
 
-namespace Stg\HallOfRecords\Data;
+namespace Stg\HallOfRecords\Data\Setting;
 
-/**
- * @extends Collection<Score>
- */
-final class Scores extends Collection
+final class GlobalSetting extends Setting
 {
 }

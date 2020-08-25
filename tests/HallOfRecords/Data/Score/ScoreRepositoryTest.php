@@ -11,12 +11,12 @@
 
 declare(strict_types=1);
 
-namespace Tests\HallOfRecords\Data;
+namespace Tests\HallOfRecords\Data\Score;
 
-use Stg\HallOfRecords\Data\Game;
-use Stg\HallOfRecords\Data\Score;
-use Stg\HallOfRecords\Data\ScoreRepository;
-use Stg\HallOfRecords\Data\Scores;
+use Stg\HallOfRecords\Data\Game\Game;
+use Stg\HallOfRecords\Data\Score\Score;
+use Stg\HallOfRecords\Data\Score\ScoreRepository;
+use Stg\HallOfRecords\Data\Score\Scores;
 
 class ScoreRepositoryTest extends \Tests\TestCase
 {

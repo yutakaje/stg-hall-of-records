@@ -13,13 +13,13 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Import;
 
-use Stg\HallOfRecords\Data\Game;
-use Stg\HallOfRecords\Data\GameRepositoryInterface;
-use Stg\HallOfRecords\Data\GameSetting;
-use Stg\HallOfRecords\Data\GlobalSetting;
-use Stg\HallOfRecords\Data\SettingRepositoryInterface;
-use Stg\HallOfRecords\Data\Score;
-use Stg\HallOfRecords\Data\ScoreRepositoryInterface;
+use Stg\HallOfRecords\Data\Game\Game;
+use Stg\HallOfRecords\Data\Game\GameRepositoryInterface;
+use Stg\HallOfRecords\Data\Score\Score;
+use Stg\HallOfRecords\Data\Score\ScoreRepositoryInterface;
+use Stg\HallOfRecords\Data\Setting\GameSetting;
+use Stg\HallOfRecords\Data\Setting\GlobalSetting;
+use Stg\HallOfRecords\Data\Setting\SettingRepositoryInterface;
 use Stg\HallOfRecords\Import\MediaWiki\ParsedProperties;
 use Stg\HallOfRecords\Import\MediaWiki\YamlExtractor;
 use Stg\HallOfRecords\Import\MediaWiki\YamlParser;

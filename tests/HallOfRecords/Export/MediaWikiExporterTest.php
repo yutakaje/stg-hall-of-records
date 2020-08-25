@@ -13,15 +13,13 @@ declare(strict_types=1);
 
 namespace Tests\HallOfRecords\Export;
 
-use Stg\HallOfRecords\Data\Game;
-use Stg\HallOfRecords\Data\GameRepositoryInterface;
-use Stg\HallOfRecords\Data\Games;
-use Stg\HallOfRecords\Data\GameSetting;
-use Stg\HallOfRecords\Data\GlobalSetting;
-use Stg\HallOfRecords\Data\ScoreRepositoryInterface;
-use Stg\HallOfRecords\Data\Scores;
-use Stg\HallOfRecords\Data\SettingRepositoryInterface;
-use Stg\HallOfRecords\Data\Settings;
+use Stg\HallOfRecords\Data\Game\Game;
+use Stg\HallOfRecords\Data\Game\GameRepositoryInterface;
+use Stg\HallOfRecords\Data\Game\Games;
+use Stg\HallOfRecords\Data\Score\ScoreRepositoryInterface;
+use Stg\HallOfRecords\Data\Score\Scores;
+use Stg\HallOfRecords\Data\Setting\SettingRepositoryInterface;
+use Stg\HallOfRecords\Data\Setting\Settings;
 use Stg\HallOfRecords\Export\MediaWikiExporter;
 
 class MediaWikiExporterTest extends \Tests\TestCase
@@ -47,7 +45,7 @@ class MediaWikiExporterTest extends \Tests\TestCase
         $settings = $this->createMock(SettingRepositoryInterface::class);
         $settings->method('filterGlobal')
             ->willReturn(new Settings([
-                new GlobalSetting('templates', $this->templates()),
+                $this->createGlobalSetting('templates', $this->templates()),
             ]));
         $settings->method('filterByGame')
             ->will(self::returnCallback(
@@ -55,7 +53,7 @@ class MediaWikiExporterTest extends \Tests\TestCase
                     switch ($game->id()) {
                         case $gameIds[0]:
                             return new Settings([
-                                new GameSetting($gameIds[0], 'layout', [
+                                $this->createGameSetting($gameIds[0], 'layout', [
                                     'columns' => [
                                         [
                                             'label' => 'Mode',
@@ -109,7 +107,7 @@ class MediaWikiExporterTest extends \Tests\TestCase
                             ]);
                         case $gameIds[1]:
                             return new Settings([
-                                new GameSetting($gameIds[1], 'layout', [
+                                $this->createGameSetting($gameIds[1], 'layout', [
                                     'columns' => [
                                         [
                                             'label' => 'Ship',
@@ -147,7 +145,7 @@ class MediaWikiExporterTest extends \Tests\TestCase
                             ]);
                         case $gameIds[2]:
                             return new Settings([
-                                new GameSetting($gameIds[2], 'layout', [
+                                $this->createGameSetting($gameIds[2], 'layout', [
                                     'templates' => [
                                         'game' => $this->fixedGameTemplate(),
                                     ],

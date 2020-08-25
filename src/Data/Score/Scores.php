@@ -11,11 +11,13 @@
 
 declare(strict_types=1);
 
-namespace Stg\HallOfRecords\Data;
+namespace Stg\HallOfRecords\Data\Score;
+
+use Stg\HallOfRecords\Data\Collection;
 
 /**
- * @extends Collection<Game>
+ * @extends Collection<Score>
  */
-final class Games extends Collection
+final class Scores extends Collection
 {
 }

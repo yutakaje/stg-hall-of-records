@@ -13,10 +13,12 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use Stg\HallOfRecords\Data\Game;
-use Stg\HallOfRecords\Data\Games;
-use Stg\HallOfRecords\Data\Score;
-use Stg\HallOfRecords\Data\Scores;
+use Stg\HallOfRecords\Data\Game\Game;
+use Stg\HallOfRecords\Data\Game\Games;
+use Stg\HallOfRecords\Data\Score\Score;
+use Stg\HallOfRecords\Data\Score\Scores;
+use Stg\HallOfRecords\Data\Setting\GameSetting;
+use Stg\HallOfRecords\Data\Setting\GlobalSetting;
 
 abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
@@ -53,6 +55,25 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         while (true) {
             yield $id++;
         }
+    }
+
+    /**
+     * @param mixed $value
+     */
+    protected function createGlobalSetting(string $name, $value): GlobalSetting
+    {
+        return new GlobalSetting($name, $value);
+    }
+
+    /**
+     * @param mixed $value
+     */
+    protected function createGameSetting(
+        int $gameId,
+        string $name,
+        $value
+    ): GameSetting {
+        return new GameSetting($gameId, $name, $value);
     }
 
     /**

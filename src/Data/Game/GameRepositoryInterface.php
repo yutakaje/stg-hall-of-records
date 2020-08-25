@@ -11,8 +11,16 @@
 
 declare(strict_types=1);
 
-namespace Stg\HallOfRecords\Data;
+namespace Stg\HallOfRecords\Data\Game;
 
-final class GlobalSetting extends Setting
+interface GameRepositoryInterface
 {
+    /**
+     * @param array<string,mixed> $sort
+     */
+    public function all(array $sort = []): Games;
+
+    public function add(Game $game): void;
+
+    public function clear(): void;
 }

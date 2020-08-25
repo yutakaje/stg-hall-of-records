@@ -11,15 +11,13 @@
 
 declare(strict_types=1);
 
-namespace Stg\HallOfRecords\Data;
+namespace Stg\HallOfRecords\Data\Game;
 
-interface SettingRepositoryInterface
+use Stg\HallOfRecords\Data\Collection;
+
+/**
+ * @extends Collection<Game>
+ */
+final class Games extends Collection
 {
-    public function filterGlobal(): Settings;
-
-    public function filterByGame(Game $game): Settings;
-
-    public function add(Setting $setting): void;
-
-    public function clear(): void;
 }

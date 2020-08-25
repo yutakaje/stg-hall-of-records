@@ -11,7 +11,9 @@
 
 declare(strict_types=1);
 
-namespace Stg\HallOfRecords\Data;
+namespace Stg\HallOfRecords\Data\Setting;
+
+use Stg\HallOfRecords\Data\Game\Game;
 
 final class SettingRepository implements SettingRepositoryInterface
 {
