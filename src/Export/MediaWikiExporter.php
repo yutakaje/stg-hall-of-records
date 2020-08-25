@@ -47,7 +47,7 @@ final class MediaWikiExporter
         $globalSettings = $this->settings->filterGlobal();
 
         $twig = new Environment(new ArrayLoader(
-            $globalSettings->get('templates', [])
+            $globalSettings->get('layout', [])['templates'] ?? []
         ));
 
         return $twig->render('games', [

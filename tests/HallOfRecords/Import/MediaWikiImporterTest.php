@@ -231,8 +231,10 @@ class MediaWikiImporterTest extends \Tests\TestCase
                 'properties' => [],
             ],
             1 => [
-                'name' => 'templates',
-                'value' => $this->templates(),
+                'name' => 'layout',
+                'value' => [
+                    'templates' => $this->templates(),
+                ],
                 'properties' => [],
             ],
             2 => [

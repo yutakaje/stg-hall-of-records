@@ -4,26 +4,27 @@ Values defined in this section will apply to all the games in the database. Its 
 <div style="display:none"><nowiki>
 name: global
 
-templates:
-    games: |
-        {% for game in games %}
-        {% if game.template %}
-        {{ game.template|raw }}
-        {% else %}
-        {{ include('game') }}
-        {% endif %}
-        {% endfor %}
-    game: |
-        {| class="wikitable" style="text-align: center
-        |-
-        ! colspan="{{ game.headers|length }}" | {{ game.properties.name }}
-        |-
-        ! {{ game.headers|join(' !! ') }}
-        {% for columns in game.scores %}
-        |-
-        | {{ columns|join(' || ') }}
-        {% endfor %}
-        |}
+layout:
+    templates:
+        games: |
+            {% for game in games %}
+            {% if game.template %}
+            {{ game.template|raw }}
+            {% else %}
+            {{ include('game') }}
+            {% endif %}
+            {% endfor %}
+        game: |
+            {| class="wikitable" style="text-align: center
+            |-
+            ! colspan="{{ game.headers|length }}" | {{ game.properties.name }}
+            |-
+            ! {{ game.headers|join(' !! ') }}
+            {% for columns in game.scores %}
+            |-
+            | {{ columns|join(' || ') }}
+            {% endfor %}
+            |}
 
 translations:
   - property: company

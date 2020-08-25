@@ -13,26 +13,27 @@ config:
       - mode
     num-previous-scores: 0
 
-templates:
-    games: |
-        {% for game in games %}
-        {% if game.template %}
-        {{ game.template|raw }}
-        {% else %}
-        {{ include('game') }}
-        {% endif %}
-        {% endfor %}
-    game: |
-        {| class="wikitable" style="text-align: center
-        |-
-        ! colspan="{{ game.headers|length }}" | {{ game.properties.name }}
-        |-
-        ! {{ game.headers|join(' !! ') }}
-        {% for columns in game.scores %}
-        |-
-        | {{ columns|join(' || ') }}
-        {% endfor %}
-        |}
+layout:
+    templates:
+        games: |
+            {% for game in games %}
+            {% if game.template %}
+            {{ game.template|raw }}
+            {% else %}
+            {{ include('game') }}
+            {% endif %}
+            {% endfor %}
+        game: |
+            {| class="wikitable" style="text-align: center
+            |-
+            ! colspan="{{ game.headers|length }}" | {{ game.properties.name }}
+            |-
+            ! {{ game.headers|join(' !! ') }}
+            {% for columns in game.scores %}
+            |-
+            | {{ columns|join(' || ') }}
+            {% endfor %}
+            |}
       
 translations:
   - property: company

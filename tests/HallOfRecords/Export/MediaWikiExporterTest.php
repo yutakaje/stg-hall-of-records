@@ -45,8 +45,10 @@ class MediaWikiExporterTest extends \Tests\TestCase
         $settings->method('filterGlobal')
             ->willReturn(new Settings([
                 $this->createGlobalSetting([
-                    'name' => 'templates',
-                    'value' => $this->templates(),
+                    'name' => 'layout',
+                    'value' => [
+                        'templates' => $this->templates(),
+                    ],
                 ]),
             ]));
         $settings->method('filterByGame')
