@@ -11,10 +11,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\HallOfRecords\Data\Sorting;
+namespace Tests\HallOfRecords\Data;
 
-use Stg\HallOfRecords\Data\Sorting\ArraySorter;
-use Stg\HallOfRecords\Data\Sorting\SortableInterface;
+use Stg\HallOfRecords\Data\ArraySorter;
+use Stg\HallOfRecords\Data\ItemInterface;
 
 class ArraySorterTest extends \Tests\TestCase
 {
@@ -144,8 +144,8 @@ class ArraySorterTest extends \Tests\TestCase
         int $id,
         string $name,
         string $difficulty
-    ): SortableInterface {
-        return new class ($id, $name, $difficulty) implements SortableInterface {
+    ): ItemInterface {
+        return new class ($id, $name, $difficulty) implements ItemInterface {
             private int $id;
             private string $name;
             private string $difficulty;

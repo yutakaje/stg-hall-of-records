@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Data\Game;
 
+use Stg\HallOfRecords\Data\ArraySorter;
 use Stg\HallOfRecords\Data\Collection;
-use Stg\HallOfRecords\Data\Sorting\ArraySorter;
 
 /**
  * @extends Collection<Game>

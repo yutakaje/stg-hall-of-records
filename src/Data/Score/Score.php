@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Data\Score;
 
-use Stg\HallOfRecords\Data\Sorting\SortableInterface;
+use Stg\HallOfRecords\Data\ItemInterface;
 
-final class Score implements SortableInterface
+final class Score implements ItemInterface
 {
     private int $id;
     private int $gameId;

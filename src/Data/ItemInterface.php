@@ -11,9 +11,9 @@
 
 declare(strict_types=1);
 
-namespace Stg\HallOfRecords\Data\Sorting;
+namespace Stg\HallOfRecords\Data;
 
-interface SortableInterface
+interface ItemInterface
 {
     /**
      * @return mixed

@@ -11,10 +11,10 @@
 
 declare(strict_types=1);
 
-namespace Stg\HallOfRecords\Data\Sorting;
+namespace Stg\HallOfRecords\Data;
 
 /**
- * @template Item of SortableInterface
+ * @template Item of ItemInterface
  */
 final class ArraySorter
 {
@@ -26,8 +26,8 @@ final class ArraySorter
     public function sort(array $items, array $sort): array
     {
         usort($items, function (
-            SortableInterface $lhs,
-            SortableInterface $rhs
+            ItemInterface $lhs,
+            ItemInterface $rhs
         ) use ($sort): int {
             foreach ($sort as $name => $order) {
                 if ($order === 'asc') {
@@ -54,16 +54,16 @@ final class ArraySorter
     }
 
     private function sortAscending(
-        SortableInterface $lhs,
-        SortableInterface $rhs,
+        ItemInterface $lhs,
+        ItemInterface $rhs,
         string $propertyName
     ): int {
         return $lhs->getProperty($propertyName) <=> $rhs->getProperty($propertyName);
     }
 
     private function sortDescending(
-        SortableInterface $lhs,
-        SortableInterface $rhs,
+        ItemInterface $lhs,
+        ItemInterface $rhs,
         string $propertyName
     ): int {
         return $rhs->getProperty($propertyName) <=> $lhs->getProperty($propertyName);
@@ -73,8 +73,8 @@ final class ArraySorter
      * @param string[] $order
      */
     private function sortCustom(
-        SortableInterface $lhs,
-        SortableInterface $rhs,
+        ItemInterface $lhs,
+        ItemInterface $rhs,
         string $propertyName,
         array $order
     ): int {
