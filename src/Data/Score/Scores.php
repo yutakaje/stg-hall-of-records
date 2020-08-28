@@ -22,6 +22,13 @@ use Stg\HallOfRecords\Data\Collection;
  */
 final class Scores extends Collection
 {
+    public function filter(callable $callback): self
+    {
+        return new Scores(array_values(
+            array_filter($this->asArray(), $callback, ARRAY_FILTER_USE_BOTH)
+        ));
+    }
+
     /**
      * @param array<string,mixed> $sort
      */
@@ -46,5 +53,33 @@ final class Scores extends Collection
             fn (array $scores) => new self($scores),
             $grouper->group($this->asArray(), $group)
         );
+    }
+
+    /**
+     * @param string[] $group
+     */
+    public function top(array $group, int $numScores = 1): self
+    {
+        return array_reduce(
+            $this->sort(['score' => 'desc'])
+                ->group($group),
+            fn (Scores $merged, Scores $grouped) => $merged->merge(
+                $grouped->filter(
+                    function (Score $score, int $index) use ($numScores): bool {
+                        return $index < $numScores
+                            || $score->attribute('is-current-record') === true;
+                    }
+                )
+            ),
+            new Scores()
+        );
+    }
+
+    private function merge(Scores $scores): self
+    {
+        return new self(array_merge(
+            $this->asArray(),
+            $scores->asArray()
+        ));
     }
 }

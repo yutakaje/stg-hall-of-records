@@ -1,3 +1,40 @@
+Each game is defined by the following properties:
+
+* name: Name of the game
+* company: Developer / Publisher
+* scores: Score entries
+* links: Links
+* layout: Layout information
+* translations: Game specific translations information
+
+The following properties are available by default for each score. Their values are game-dependent.
+
+* player: Name of the player
+* score: Score
+* ship: Selected ship / character
+* mode: Game mode / Difficulty (e.g. Original, Maniac, Normal, Expert, ...)
+* weapon: Weapon / Style
+* version: Version (1P, 2P, Japan, World, Old, New, ...)
+* autofire: Flag whether autofire was used or not
+* scored-date: Date the score was achieved (YYYY-MM-DD|YYYY-MM|YYYY)
+* published-date: Date the score was published (YYYY-MM-DD|YYYY-MM|YYYY)
+* source: Information source
+* added-date: Date the score was added to the HoR
+* comments: Additional comments
+* links: Links to replay, Blog, ...
+* image-url: URL pointing to a screenshot of the score
+
+Additional properties may be specified. In this case the generator will treat their values verbatim.
+
+For every property a property with the same name and a locale suffix can be specified. Its value will be used on the page in the corresponding language instead of the value of the original property. Currently only '-jp' for Japanese is used but this can be extended to support more languages.
+
+Generator input: https://shmups.wiki/library/STG_Hall_of_Records/Database
+
+Generated English output: https://shmups.wiki/library/STG_Hall_of_Records/Database/en
+
+Generated Japanese output: https://shmups.wiki/library/STG_Hall_of_Records/Database/jp
+
+
 == Global ==
 Values defined in this section will apply to all the games in the database. Its main purpose is to reduce redundant translations for reocurring values (e.g. company names, common column names, ...).
 
@@ -6,10 +43,6 @@ name: global
 
 config:
     scores:
-        group-by:
-          - ship
-          - mode
-
         num-previous: 0
 
 layout:
@@ -19,6 +52,13 @@ layout:
             name: asc
         scores:
             score: desc
+
+    group:
+        scores:
+          - ship
+          - mode
+          - weapon
+          - version
 
     templates:
         games: |
@@ -82,6 +122,8 @@ scores:
     weapon: Abnormal
     scored-date: "2007-11"
     source: Arcadia November 2007
+    attributes:
+        is-current-record: true
 
   - player: ABI
     score: 550,705,999
@@ -101,6 +143,8 @@ scores:
     weapon: Normal
     scored-date: "2007-10"
     source: Arcadia October 2007
+    attributes:
+        is-current-record: true
 
   - player: yasu0219
     score: 454,386,226
@@ -171,6 +215,8 @@ scores:
     comments:
       - 1L 0B remaining
       - Highest score Arcade
+    attributes:
+        is-current-record: true
 
   - player: KGM
     score: 3,999,999,999 [4,263,416,356]
@@ -283,6 +329,14 @@ scores:
     comments:
       - 6L 0B remaining
       - 1st loop 276m
+
+  - player: SPS
+    score: 489,893,348
+    ship: Type A
+    mode: Omote
+    scored-date: "2010-04"
+    source: Old score
+    comments:
 
   - player: GAN
     score: 569,741,232

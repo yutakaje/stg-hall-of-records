@@ -47,6 +47,14 @@ class MediaWikiExporterTest extends \Tests\TestCase
                 $this->createGlobalSetting([
                     'name' => 'layout',
                     'value' => [
+                        'group' => [
+                            'scores' => [
+                                'ship',
+                                'mode',
+                                'weapon',
+                                'version',
+                            ],
+                        ],
                         'templates' => $this->templates(),
                     ],
                 ]),
@@ -95,20 +103,22 @@ class MediaWikiExporterTest extends \Tests\TestCase
                                             ],
                                         ],
                                         'sort' => [
-                                            'mode' => [
-                                                'Original',
-                                                'Maniac',
-                                                'Ultra',
+                                            'scores' => [
+                                                'mode' => [
+                                                    'Original',
+                                                    'Maniac',
+                                                    'Ultra',
+                                                ],
+                                                'ship' => [
+                                                    'Reco',
+                                                    'Palm',
+                                                ],
+                                                'weapon' => [
+                                                    'Normal',
+                                                    'Abnormal',
+                                                ],
+                                                'score' => 'desc',
                                             ],
-                                            'ship' => [
-                                                'Reco',
-                                                'Palm',
-                                            ],
-                                            'weapon' => [
-                                                'Normal',
-                                                'Abnormal',
-                                            ],
-                                            'score' => 'desc',
                                         ],
                                     ],
                                 ]),
@@ -148,9 +158,11 @@ class MediaWikiExporterTest extends \Tests\TestCase
                                             ],
                                         ],
                                         'sort' => [
-                                            'ship' => 'asc',
-                                            'mode' => 'asc',
-                                            'score' => 'desc',
+                                            'scores' => [
+                                                'ship' => 'asc',
+                                                'mode' => 'asc',
+                                                'score' => 'desc',
+                                            ],
                                         ],
                                     ],
                                 ]),
@@ -346,6 +358,9 @@ class MediaWikiExporterTest extends \Tests\TestCase
                                         '1L 0B remaining',
                                         'Highest score Arcade',
                                     ],
+                                    'attributes' => [
+                                        'is-current-record' => true,
+                                    ],
                                 ]),
                                 $this->createScore([
                                     'id' => $scoreIds[10],
@@ -443,7 +458,7 @@ class MediaWikiExporterTest extends \Tests\TestCase
                                 ]),
                             ]);
                         default:
-                            return new Scores([]);
+                            return new Scores();
                     }
                 }
             ));

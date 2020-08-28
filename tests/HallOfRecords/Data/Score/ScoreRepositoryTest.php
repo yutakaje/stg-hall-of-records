@@ -25,7 +25,7 @@ class ScoreRepositoryTest extends \Tests\TestCase
 
         $repository = new ScoreRepository();
 
-        self::assertEquals(new Scores([]), $repository->filterByGame($gameId));
+        self::assertEquals(new Scores(), $repository->filterByGame($gameId));
     }
 
     public function testFilterByGameWithNoScores(): void
@@ -36,7 +36,7 @@ class ScoreRepositoryTest extends \Tests\TestCase
         $repository = new ScoreRepository();
         $scores->apply($this->addToRepository($repository));
 
-        self::assertEquals(new Scores([]), $repository->filterByGame($gameId));
+        self::assertEquals(new Scores(), $repository->filterByGame($gameId));
     }
 
     public function testFilterByGame(): void

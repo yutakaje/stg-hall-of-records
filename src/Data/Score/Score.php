@@ -63,4 +63,12 @@ final class Score implements ItemInterface
             'game-id' => $this->gameId,
         ]);
     }
+
+    /**
+     * @return mixed
+     */
+    public function attribute(string $name)
+    {
+        return $this->getProperty('attributes')[$name] ?? null;
+    }
 }

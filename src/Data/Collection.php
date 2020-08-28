@@ -24,7 +24,7 @@ abstract class Collection
     /**
      * @param Item[] $items
      */
-    public function __construct(array $items)
+    public function __construct(array $items = [])
     {
         $this->items = $items;
     }

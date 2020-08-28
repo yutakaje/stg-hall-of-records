@@ -17,6 +17,7 @@ use Stg\HallOfRecords\Data\Game\Game;
 use Stg\HallOfRecords\Data\Game\GameRepositoryInterface;
 use Stg\HallOfRecords\Data\Score\Score;
 use Stg\HallOfRecords\Data\Score\ScoreRepositoryInterface;
+use Stg\HallOfRecords\Data\Score\Scores;
 use Stg\HallOfRecords\Data\Setting\SettingRepositoryInterface;
 use Stg\HallOfRecords\Export\MediaWiki\Layout;
 use Twig\Environment;
@@ -77,7 +78,13 @@ final class MediaWikiExporter
             $settings->get('layout', [])
         );
 
+        // Group scores by distinct features and take the top X
+        // entries out of each group.
         $scores = $this->scores->filterByGame($game->id())
+            ->top(array_merge(
+                $layout->group('scores'),
+                $globalLayout->group('scores')
+            ))
             ->sort(array_merge(
                 $layout->sort('scores'),
                 $globalLayout->sort('scores')

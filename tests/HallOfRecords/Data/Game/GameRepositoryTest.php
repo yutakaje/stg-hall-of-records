@@ -23,7 +23,7 @@ class GameRepositoryTest extends \Tests\TestCase
     {
         $repository = new GameRepository();
 
-        self::assertEquals(new Games([]), $repository->all());
+        self::assertEquals(new Games(), $repository->all());
     }
 
     public function testAll(): void
