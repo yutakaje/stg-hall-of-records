@@ -13,14 +13,12 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Data\Score;
 
-use Stg\HallOfRecords\Data\ItemInterface;
+use Stg\HallOfRecords\Data\AbstractItem;
 
-final class Score implements ItemInterface
+final class Score extends AbstractItem
 {
     private int $id;
     private int $gameId;
-    /** @var array<string,mixed> */
-    private array $properties;
 
     /**
      * @param array<string,mixed> $properties
@@ -30,9 +28,9 @@ final class Score implements ItemInterface
         int $gameId,
         array $properties = []
     ) {
+        parent::__construct($properties);
         $this->id = $id;
         $this->gameId = $gameId;
-        $this->properties = $properties;
     }
 
     public function id(): int
@@ -46,29 +44,13 @@ final class Score implements ItemInterface
     }
 
     /**
-     * @return mixed
-     */
-    public function getProperty(string $name)
-    {
-        return $this->properties()[$name] ?? null;
-    }
-
-    /**
      * @return array<string,mixed>
      */
     public function properties(): array
     {
-        return array_merge($this->properties, [
+        return array_merge(parent::properties(), [
             'id' => $this->id,
             'game-id' => $this->gameId,
         ]);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function attribute(string $name)
-    {
-        return $this->getProperty('attributes')[$name] ?? null;
     }
 }
