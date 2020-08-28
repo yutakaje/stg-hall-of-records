@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Tests\HallOfRecords\Data\Score;
 
+use Stg\HallOfRecords\Data\Score\Score;
 use Stg\HallOfRecords\Data\Score\Scores;
 
 class ScoresTest extends \Tests\TestCase
@@ -82,10 +83,73 @@ class ScoresTest extends \Tests\TestCase
         );
     }
 
+    public function testGroupWithEmptyArray(): void
+    {
+        $scores = $this->createScores();
+
+        self::assertEquals(
+            [$scores],
+            $scores->group([])
+        );
+    }
+
+    public function testGroupByShip(): void
+    {
+        $scores = $this->createScores();
+
+        self::assertEquals(
+            [
+                new Scores([
+                    $this->scoreAt($scores, 0),
+                    $this->scoreAt($scores, 1),
+                ]),
+                new Scores([
+                    $this->scoreAt($scores, 2),
+                    $this->scoreAt($scores, 3),
+                ]),
+                new Scores([
+                    $this->scoreAt($scores, 4),
+                    $this->scoreAt($scores, 5),
+                ]),
+            ],
+            $scores->group([
+                'ship',
+            ])
+        );
+    }
+
+    public function testGroupByShipAndMode(): void
+    {
+        $scores = $this->createScores();
+
+        self::assertEquals(
+            [
+                new Scores([
+                    $this->scoreAt($scores, 0),
+                    $this->scoreAt($scores, 1),
+                ]),
+                new Scores([
+                    $this->scoreAt($scores, 2),
+                ]),
+                new Scores([
+                    $this->scoreAt($scores, 3),
+                ]),
+                new Scores([
+                    $this->scoreAt($scores, 4),
+                    $this->scoreAt($scores, 5),
+                ]),
+            ],
+            $scores->group([
+                'ship',
+                'mode',
+            ])
+        );
+    }
+
     private function createScores(): Scores
     {
         return new Scores([
-            $this->createScore([
+            0 => $this->createScore([
                 'player' => 'ABI',
                 'score' => '530,358,660',
                 'ship' => 'Palm',
@@ -94,7 +158,7 @@ class ScoresTest extends \Tests\TestCase
                 'scoredDate' => '2008-01',
                 'source' => 'Arcadia January 2008',
             ]),
-            $this->createScore([
+            1 => $this->createScore([
                 'player' => 'ISO / Niboshi',
                 'score' => '518,902,716',
                 'ship' => 'Palm',
@@ -103,7 +167,7 @@ class ScoresTest extends \Tests\TestCase
                 'scoredDate' => '2007',
                 'source' => 'Superplay DVD',
             ]),
-            $this->createScore([
+            2 => $this->createScore([
                 'player' => 'SPS',
                 'score' => '507,780,433',
                 'ship' => 'Type A',
@@ -112,7 +176,7 @@ class ScoresTest extends \Tests\TestCase
                 'source' => 'Arcadia August 2014',
                 'comments' => [],
             ]),
-            $this->createScore([
+            3 => $this->createScore([
                 'player' => 'Akuma',
                 'score' => '614,129,975',
                 'ship' => 'Type A',
@@ -121,7 +185,7 @@ class ScoresTest extends \Tests\TestCase
                 'source' => 'Arcadia January 2021',
                 'comments' => [],
             ]),
-            $this->createScore([
+            4 => $this->createScore([
                 'player' => 'GAN',
                 'score' => '569,741,232',
                 'ship' => 'Type B',
@@ -133,7 +197,7 @@ class ScoresTest extends \Tests\TestCase
                     '1周 2.85億',
                 ],
             ]),
-            $this->createScore([
+            5 => $this->createScore([
                 'player' => 'Akuma',
                 'score' => '619,873,102',
                 'ship' => 'Type B',
@@ -156,5 +220,10 @@ class ScoresTest extends \Tests\TestCase
             fn (int $index) => $unsorted[$index],
             $order
         ));
+    }
+
+    private function scoreAt(Scores $scores, int $index): Score
+    {
+        return $scores->asArray()[$index];
     }
 }

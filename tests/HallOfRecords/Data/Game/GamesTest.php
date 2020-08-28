@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Tests\HallOfRecords\Data\Game;
 
+use Stg\HallOfRecords\Data\Game\Game;
 use Stg\HallOfRecords\Data\Game\Games;
 
 class GamesTest extends \Tests\TestCase
@@ -82,6 +83,39 @@ class GamesTest extends \Tests\TestCase
         );
     }
 
+    public function testGroupWithEmptyArray(): void
+    {
+        $games = $this->createGames();
+
+        self::assertEquals(
+            [$games],
+            $games->group([])
+        );
+    }
+
+    public function testGroupByCompany(): void
+    {
+        $games = $this->createGames();
+
+        self::assertEquals(
+            [
+                new Games([
+                    $this->gameAt($games, 0),
+                    $this->gameAt($games, 2),
+                ]),
+                new Games([
+                    $this->gameAt($games, 1),
+                ]),
+                new Games([
+                    $this->gameAt($games, 3),
+                ]),
+            ],
+            $games->group([
+                'company',
+            ])
+        );
+    }
+
     private function createGames(): Games
     {
         return new Games([
@@ -115,5 +149,10 @@ class GamesTest extends \Tests\TestCase
             fn (int $index) => $unsorted[$index],
             $order
         ));
+    }
+
+    private function gameAt(Games $games, int $index): Game
+    {
+        return $games->asArray()[$index];
     }
 }

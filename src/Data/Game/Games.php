@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Data\Game;
 
+use Stg\HallOfRecords\Data\ArrayGrouper;
 use Stg\HallOfRecords\Data\ArraySorter;
 use Stg\HallOfRecords\Data\Collection;
 
@@ -30,6 +31,20 @@ final class Games extends Collection
         $sorter = new ArraySorter();
         return new self(
             $sorter->sort($this->asArray(), $sort)
+        );
+    }
+
+    /**
+     * @param string[] $group
+     * @return Games[]
+     */
+    public function group(array $group): array
+    {
+        /** @var ArrayGrouper<Game> */
+        $grouper = new ArrayGrouper();
+        return array_map(
+            fn (array $games) => new self($games),
+            $grouper->group($this->asArray(), $group)
         );
     }
 }
