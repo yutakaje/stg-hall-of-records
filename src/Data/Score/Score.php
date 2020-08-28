@@ -19,46 +19,20 @@ final class Score implements ItemInterface
 {
     private int $id;
     private int $gameId;
-    private string $player;
-    private string $score;
-    /** Ship / Character  */
-    private string $ship;
-    /** Game mode / Difficulty (e.g. Original, Maniac, Normal, Expert, ...) */
-    private string $mode;
-    /** Weapon / Style */
-    private string $weapon;
-    /** Format: YYYY-MM-DD|YYYY-MM|YYYY */
-    private string $scoredDate;
-    /** Information source */
-    private string $source;
-    /** @var string[] */
-    private array $comments;
+    /** @var array<string,mixed> */
+    private array $properties;
 
     /**
-     * @param string[] $comments
+     * @param array<string,mixed> $properties
      */
     public function __construct(
         int $id,
         int $gameId,
-        string $player,
-        string $score,
-        string $ship,
-        string $mode,
-        string $weapon,
-        string $scoredDate,
-        string $source,
-        array $comments
+        array $properties = []
     ) {
         $this->id = $id;
         $this->gameId = $gameId;
-        $this->player = $player;
-        $this->score = $score;
-        $this->ship = $ship;
-        $this->mode = $mode;
-        $this->weapon = $weapon;
-        $this->scoredDate = $scoredDate;
-        $this->source = $source;
-        $this->comments = $comments;
+        $this->properties = $properties;
     }
 
     public function id(): int
@@ -69,49 +43,6 @@ final class Score implements ItemInterface
     public function gameId(): int
     {
         return $this->gameId;
-    }
-
-    public function player(): string
-    {
-        return $this->player;
-    }
-
-    public function score(): string
-    {
-        return $this->score;
-    }
-
-    public function ship(): string
-    {
-        return $this->ship;
-    }
-
-    public function mode(): string
-    {
-        return $this->mode;
-    }
-
-    public function weapon(): string
-    {
-        return $this->weapon;
-    }
-
-    public function scoredDate(): string
-    {
-        return $this->scoredDate;
-    }
-
-    public function source(): string
-    {
-        return $this->source;
-    }
-
-    /**
-     * @return string[]
-     */
-    public function comments(): array
-    {
-        return $this->comments;
     }
 
     /**
@@ -127,17 +58,9 @@ final class Score implements ItemInterface
      */
     public function properties(): array
     {
-        return [
+        return array_merge($this->properties, [
             'id' => $this->id,
             'game-id' => $this->gameId,
-            'player' => $this->player,
-            'score' => $this->score,
-            'ship' => $this->ship,
-            'mode' => $this->mode,
-            'weapon' => $this->weapon,
-            'scored-date' => $this->scoredDate,
-            'source' => $this->source,
-            'comments' => $this->comments,
-        ];
+        ]);
     }
 }

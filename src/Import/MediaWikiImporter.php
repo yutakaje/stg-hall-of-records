@@ -128,8 +128,7 @@ final class MediaWikiImporter
 
         $this->games->add(new Game(
             $gameId,
-            $this->translateString($translator, $game, 'name'),
-            $this->translateString($translator, $game, 'company')
+            $this->translateProperties($translator, $game)
         ));
 
         foreach ($game->getProperty('scores', []) as $score) {
@@ -163,14 +162,7 @@ final class MediaWikiImporter
         $this->scores->add(new Score(
             $scoreId,
             $gameId,
-            $this->translateString($translator, $score, 'player'),
-            $this->translateString($translator, $score, 'score'),
-            $this->translateString($translator, $score, 'ship'),
-            $this->translateString($translator, $score, 'mode'),
-            $this->translateString($translator, $score, 'weapon'),
-            $this->translateString($translator, $score, 'scored-date'),
-            $this->translateString($translator, $score, 'source'),
-            $this->translateArray($translator, $score, 'comments')
+            $this->translateProperties($translator, $score)
         ));
     }
 
@@ -219,10 +211,7 @@ final class MediaWikiImporter
     ): array {
         $translator = $this->createTranslator($column, $locale, $translator);
 
-        return array_merge($column->all(), [
-            'label' => $this->translateString($translator, $column, 'label'),
-            'template' => $this->translateString($translator, $column, 'template'),
-        ]);
+        return $this->translateProperties($translator, $column);
     }
 
     /**
@@ -304,30 +293,25 @@ final class MediaWikiImporter
         );
     }
 
-    private function translateString(
-        Translator $translator,
-        ParsedProperties $properties,
-        string $propertyName
-    ): string {
-        /** @var string */
-        return $translator->translate(
-            $propertyName,
-            $properties->getProperty($propertyName, '')
-        );
-    }
-
     /**
-     * @return string[]
+     * @return array<string,mixed>
      */
-    private function translateArray(
+    private function translateProperties(
         Translator $translator,
-        ParsedProperties $properties,
-        string $propertyName
+        ParsedProperties $properties
     ): array {
-        /** @var string[] */
-        return $translator->translate(
-            $propertyName,
-            $properties->getProperty($propertyName, [])
+        return array_reduce(
+            array_keys($properties->all()),
+            fn (array $translated, string $name) => array_merge(
+                $translated,
+                [
+                    $name => $translator->translate(
+                        $name,
+                        $properties->getProperty($name)
+                    ),
+                ]
+            ),
+            []
         );
     }
 }

@@ -18,17 +18,18 @@ use Stg\HallOfRecords\Data\ItemInterface;
 final class Game implements ItemInterface
 {
     private int $id;
-    private string $name;
-    private string $company;
+    /** @var array<string,mixed> */
+    private array $properties;
 
+    /**
+     * @param array<string,mixed> $properties
+     */
     public function __construct(
         int $id,
-        string $name,
-        string $company
+        array $properties = []
     ) {
         $this->id = $id;
-        $this->name = $name;
-        $this->company = $company;
+        $this->properties = $properties;
     }
 
     public function id(): int
@@ -36,30 +37,21 @@ final class Game implements ItemInterface
         return $this->id;
     }
 
-    public function name(): string
-    {
-        return $this->name;
-    }
-
-    public function company(): string
-    {
-        return $this->company;
-    }
-
     /**
      * @return mixed
      */
     public function getProperty(string $name)
     {
-        switch ($name) {
-            case 'id':
-                return $this->id;
-            case 'name':
-                return $this->name;
-            case 'company':
-                return $this->company;
-            default:
-                return null;
-        }
+        return $this->properties()[$name] ?? null;
+    }
+
+    /**
+     * @return array<string,mixed>
+     */
+    public function properties(): array
+    {
+        return array_merge($this->properties, [
+            'id' => $this->id,
+        ]);
     }
 }

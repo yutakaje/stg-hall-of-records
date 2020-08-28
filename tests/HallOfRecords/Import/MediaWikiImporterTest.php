@@ -152,8 +152,8 @@ class MediaWikiImporterTest extends \Tests\TestCase
     {
         return [
             'id' => $game->id(),
-            'name' => $game->name(),
-            'company' => $game->company(),
+            'name' => $game->getProperty('name'),
+            'company' => $game->getProperty('company'),
         ];
     }
 
@@ -165,14 +165,14 @@ class MediaWikiImporterTest extends \Tests\TestCase
         return [
             'id' => $score->id(),
             'gameId' => $score->gameId(),
-            'player' => $score->player(),
-            'score' => $score->score(),
-            'ship' => $score->ship(),
-            'mode' => $score->mode(),
-            'weapon' => $score->weapon(),
-            'scored-date' => $score->scoredDate(),
-            'source' => $score->source(),
-            'comments' => $score->comments(),
+            'player' => $score->getProperty('player'),
+            'score' => $score->getProperty('score'),
+            'ship' => $score->getProperty('ship'),
+            'mode' => $score->getProperty('mode'),
+            'weapon' => $score->getProperty('weapon'),
+            'scored-date' => $score->getProperty('scored-date'),
+            'source' => $score->getProperty('source'),
+            'comments' => $score->getProperty('comments'),
         ];
     }
 
@@ -469,7 +469,7 @@ class MediaWikiImporterTest extends \Tests\TestCase
                 'weapon' => 'Normal',
                 'scored-date' => '2008-01',
                 'source' => 'Arcadia January 2008',
-                'comments' => [],
+                'comments' => null,
             ],
             1 => [
                 'id' => $this->nextId($idGenerator),
@@ -481,7 +481,7 @@ class MediaWikiImporterTest extends \Tests\TestCase
                 'weapon' => 'Abnormal',
                 'scored-date' => '2007',
                 'source' => 'Superplay DVD',
-                'comments' => [],
+                'comments' => null,
             ],
             2 => [
                 'id' => $this->nextId($idGenerator),
@@ -508,7 +508,7 @@ class MediaWikiImporterTest extends \Tests\TestCase
                 'weapon' => 'Normal',
                 'scored-date' => '2007-10',
                 'source' => 'Arcadia October 2007',
-                'comments' => [],
+                'comments' => null,
             ],
             4 => [
                 'id' => $this->nextId($idGenerator),
@@ -549,7 +549,7 @@ class MediaWikiImporterTest extends \Tests\TestCase
                 'weapon' => 'Abnormal',
                 'scored-date' => '2007-11',
                 'source' => 'Arcadia November 2007',
-                'comments' => [],
+                'comments' => null,
             ],
             7 => [
                 'id' => $this->nextId($idGenerator),
@@ -634,7 +634,7 @@ class MediaWikiImporterTest extends \Tests\TestCase
                 'weapon' => 'Abnormal',
                 'scored-date' => '2014?',
                 'source' => '',
-                'comments' => [],
+                'comments' => null,
             ],
             13 => [
                 'id' => $this->nextId($idGenerator),
@@ -646,7 +646,7 @@ class MediaWikiImporterTest extends \Tests\TestCase
                 'weapon' => '',
                 'scored-date' => '2014-08',
                 'source' => 'Arcadia August 2014',
-                'comments' => [],
+                'comments' => null,
             ],
             14 => [
                 'id' => $this->nextId($idGenerator),

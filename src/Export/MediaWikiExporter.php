@@ -84,7 +84,7 @@ final class MediaWikiExporter
             ));
 
         $variable = new \stdClass();
-        $variable->properties = $game;
+        $variable->properties = $game->properties();
         $variable->headers = array_map(
             fn (array $column) => $column['label'] ?? '',
             $layout->columns()

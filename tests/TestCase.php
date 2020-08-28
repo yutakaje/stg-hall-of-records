@@ -87,8 +87,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     {
         return new Game(
             $properties['id'] ?? $this->nextId($this->gameIdGenerator),
-            $properties['name'] ?? '',
-            $properties['company'] ?? ''
+            $properties
         );
     }
 
@@ -100,14 +99,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         return new Score(
             $properties['id'] ?? $this->nextId($this->scoreIdGenerator),
             $properties['gameId'] ?? $this->nextId($this->gameIdGenerator),
-            $properties['player'] ?? '',
-            $properties['score'] ?? '',
-            $properties['ship'] ?? '',
-            $properties['mode'] ?? '',
-            $properties['weapon'] ?? '',
-            $properties['scored-date'] ?? '',
-            $properties['source'] ?? '',
-            $properties['comments'] ?? []
+            $properties
         );
     }
 
