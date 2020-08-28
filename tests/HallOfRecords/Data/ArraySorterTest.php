@@ -18,6 +18,24 @@ use Stg\HallOfRecords\Data\ItemInterface;
 
 class ArraySorterTest extends \Tests\TestCase
 {
+    public function testWithEmptyArray(): void
+    {
+        $items = [
+            $this->createItem(10, 'Ship', 'easy'),
+            $this->createItem(100, 'Loop', 'easy'),
+            $this->createItem(120, 'Score', 'normal'),
+            $this->createItem(9, 'Player', 'normal'),
+            $this->createItem(14, 'Comment', 'hard'),
+        ];
+
+        $sorter = new ArraySorter();
+
+        self::assertSame(
+            $items,
+            $sorter->sort($items, [])
+        );
+    }
+
     public function testWithEnLocale(): void
     {
         $items = [
