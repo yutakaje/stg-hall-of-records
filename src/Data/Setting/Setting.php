@@ -13,7 +13,9 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Data\Setting;
 
-abstract class Setting
+use Stg\HallOfRecords\Data\ItemInterface;
+
+abstract class Setting implements ItemInterface
 {
     private string $name;
     /** @var mixed */
@@ -47,5 +49,22 @@ abstract class Setting
     public function additionalProperties(): array
     {
         return [];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function property(string $name)
+    {
+        switch ($name) {
+            case 'name':
+                return $this->name();
+            case 'value':
+                return $this->value();
+            case 'additional-properties':
+                return $this->additionalProperties();
+            default:
+                return null;
+        }
     }
 }
