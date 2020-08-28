@@ -152,8 +152,8 @@ class MediaWikiImporterTest extends \Tests\TestCase
     {
         return [
             'id' => $game->id(),
-            'name' => $game->getProperty('name'),
-            'company' => $game->getProperty('company'),
+            'name' => $game->property('name'),
+            'company' => $game->property('company'),
         ];
     }
 
@@ -165,14 +165,14 @@ class MediaWikiImporterTest extends \Tests\TestCase
         return [
             'id' => $score->id(),
             'gameId' => $score->gameId(),
-            'player' => $score->getProperty('player'),
-            'score' => $score->getProperty('score'),
-            'ship' => $score->getProperty('ship'),
-            'mode' => $score->getProperty('mode'),
-            'weapon' => $score->getProperty('weapon'),
-            'scored-date' => $score->getProperty('scored-date'),
-            'source' => $score->getProperty('source'),
-            'comments' => $score->getProperty('comments'),
+            'player' => $score->property('player'),
+            'score' => $score->property('score'),
+            'ship' => $score->property('ship'),
+            'mode' => $score->property('mode'),
+            'weapon' => $score->property('weapon'),
+            'scored-date' => $score->property('scored-date'),
+            'source' => $score->property('source'),
+            'comments' => $score->property('comments'),
         ];
     }
 

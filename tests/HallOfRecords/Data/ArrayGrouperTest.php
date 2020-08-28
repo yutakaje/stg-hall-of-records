@@ -148,7 +148,7 @@ class ArrayGrouperTest extends \Tests\TestCase
             /**
              * @return mixed
              */
-            public function getProperty(string $ship)
+            public function property(string $ship)
             {
                 switch ($ship) {
                     case 'id':

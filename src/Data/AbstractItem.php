@@ -29,7 +29,7 @@ abstract class AbstractItem implements ItemInterface
     /**
      * @return mixed
      */
-    public function getProperty(string $name)
+    public function property(string $name)
     {
         return $this->properties()[$name] ?? null;
     }
@@ -47,6 +47,6 @@ abstract class AbstractItem implements ItemInterface
      */
     public function attribute(string $name)
     {
-        return $this->getProperty('attributes')[$name] ?? null;
+        return $this->property('attributes')[$name] ?? null;
     }
 }

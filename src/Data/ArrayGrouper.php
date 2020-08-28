@@ -36,7 +36,7 @@ final class ArrayGrouper
         $grouped = [];
 
         foreach ($items as $item) {
-            $grouped[$item->getProperty($propertyName)][] = $item;
+            $grouped[$item->property($propertyName)][] = $item;
         }
 
 

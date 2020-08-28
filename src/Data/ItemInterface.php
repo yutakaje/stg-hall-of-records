@@ -18,5 +18,5 @@ interface ItemInterface
     /**
      * @return mixed
      */
-    public function getProperty(string $name);
+    public function property(string $name);
 }

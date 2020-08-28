@@ -58,7 +58,7 @@ final class ArraySorter
         ItemInterface $rhs,
         string $propertyName
     ): int {
-        return $lhs->getProperty($propertyName) <=> $rhs->getProperty($propertyName);
+        return $lhs->property($propertyName) <=> $rhs->property($propertyName);
     }
 
     private function sortDescending(
@@ -66,7 +66,7 @@ final class ArraySorter
         ItemInterface $rhs,
         string $propertyName
     ): int {
-        return $rhs->getProperty($propertyName) <=> $lhs->getProperty($propertyName);
+        return $rhs->property($propertyName) <=> $lhs->property($propertyName);
     }
 
     /**
@@ -85,10 +85,10 @@ final class ArraySorter
         // Values which are not listed explicitly are put at the end of the list.
         $valuePriorities = array_flip(array_values($order));
 
-        $lhsValue = $lhs->getProperty($propertyName);
+        $lhsValue = $lhs->property($propertyName);
         $lhsPriority = $valuePriorities[$lhsValue] ?? PHP_INT_MAX;
 
-        $rhsValue = $rhs->getProperty($propertyName);
+        $rhsValue = $rhs->property($propertyName);
         $rhsPriority = $valuePriorities[$rhsValue] ?? PHP_INT_MAX;
 
         return $lhsPriority <=> $rhsPriority;

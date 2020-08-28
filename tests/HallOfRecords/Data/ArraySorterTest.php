@@ -196,7 +196,7 @@ class ArraySorterTest extends \Tests\TestCase
             /**
              * @return mixed
              */
-            public function getProperty(string $name)
+            public function property(string $name)
             {
                 switch ($name) {
                     case 'id':

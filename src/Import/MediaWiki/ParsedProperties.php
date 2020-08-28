@@ -30,7 +30,7 @@ final class ParsedProperties
      * @param mixed $default
      * @return mixed
      */
-    public function getProperty(string $name, $default = null)
+    public function get(string $name, $default = null)
     {
         return $this->properties[$name] ?? $default;
     }

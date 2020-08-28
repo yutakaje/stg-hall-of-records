@@ -93,11 +93,11 @@ final class MediaWikiImporter
         string $locale
     ): void {
         $translator = $this->addSettingsToRepository(
-            $parsedData->getProperty('global-properties'),
+            $parsedData->get('global-properties'),
             $locale
         );
 
-        foreach ($parsedData->getProperty('games', []) as $game) {
+        foreach ($parsedData->get('games', []) as $game) {
             $this->addGameToRepository($game, $locale, $translator);
         }
     }
@@ -131,7 +131,7 @@ final class MediaWikiImporter
             $this->translateProperties($translator, $game)
         ));
 
-        foreach ($game->getProperty('scores', []) as $score) {
+        foreach ($game->get('scores', []) as $score) {
             $this->addScoreToRepository(
                 $gameId,
                 $score,
@@ -140,7 +140,7 @@ final class MediaWikiImporter
             );
         }
 
-        $layout = $game->getProperty('layout');
+        $layout = $game->get('layout');
         if ($layout !== null) {
             $this->settings->add(new GameSetting(
                 $gameId,
@@ -188,7 +188,7 @@ final class MediaWikiImporter
                     $locale,
                     $translator
                 ),
-                $layout->getProperty('columns', []),
+                $layout->get('columns', []),
             ),
             'sort' => array_map(
                 fn (array $sort) => $this->translateLayoutSort(
@@ -196,7 +196,7 @@ final class MediaWikiImporter
                     $locale,
                     $translator
                 ),
-                $layout->getProperty('sort', [])
+                $layout->get('sort', [])
             ),
         ]);
     }
@@ -258,7 +258,7 @@ final class MediaWikiImporter
     ): Translator {
         return array_reduce(
             array_filter(
-                $properties->getProperty('translations', []),
+                $properties->get('translations', []),
                 fn ($entry) => is_array($entry)
                     && isset($entry['property'])
                     && isset($entry['value'])
@@ -282,12 +282,12 @@ final class MediaWikiImporter
             array_filter(
                 array_keys($properties->all()),
                 fn ($name) => is_string($name)
-                    && $properties->getProperty("{$name}-{$locale}") !== null
+                    && $properties->get("{$name}-{$locale}") !== null
             ),
             fn (Translator $translator, string $name) => $translator->add(
                 $name,
-                $properties->getProperty($name),
-                $properties->getProperty("{$name}-{$locale}")
+                $properties->get($name),
+                $properties->get("{$name}-{$locale}")
             ),
             new Translator($fallbackTranslator)
         );
@@ -307,7 +307,7 @@ final class MediaWikiImporter
                 [
                     $name => $translator->translate(
                         $name,
-                        $properties->getProperty($name)
+                        $properties->get($name)
                     ),
                 ]
             ),

@@ -25,9 +25,9 @@ class YamlParserTest extends \Tests\TestCase
 
         self::assertEquals(
             new ParsedProperties(),
-            $parsedData->getProperty('global-properties')
+            $parsedData->get('global-properties')
         );
-        self::assertEquals([], $parsedData->getProperty('games'));
+        self::assertEquals([], $parsedData->get('games'));
     }
 
     public function testWithNoGames(): void
@@ -41,9 +41,9 @@ class YamlParserTest extends \Tests\TestCase
 
         self::assertEquals(
             new ParsedProperties($global),
-            $parsedData->getProperty('global-properties')
+            $parsedData->get('global-properties')
         );
-        self::assertEquals([], $parsedData->getProperty('games'));
+        self::assertEquals([], $parsedData->get('games'));
     }
 
     public function testWithFullData(): void
@@ -59,7 +59,7 @@ class YamlParserTest extends \Tests\TestCase
 
         self::assertEquals(
             new ParsedProperties($global),
-            $parsedData->getProperty('global-properties')
+            $parsedData->get('global-properties')
         );
         self::assertEquals(
             [
@@ -200,7 +200,7 @@ class YamlParserTest extends \Tests\TestCase
                     ]),
                 ]),
             ],
-            $parsedData->getProperty('games')
+            $parsedData->get('games')
         );
     }
 
