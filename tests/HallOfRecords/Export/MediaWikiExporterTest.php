@@ -45,6 +45,15 @@ class MediaWikiExporterTest extends \Tests\TestCase
         $settings->method('filterGlobal')
             ->willReturn(new Settings([
                 $this->createGlobalSetting([
+                    'name' => 'description',
+                    'value' => <<<'TEXT'
+some description
+spanning
+
+multiple lines
+TEXT,
+                ]),
+                $this->createGlobalSetting([
                     'name' => 'layout',
                     'value' => [
                         'group' => [
@@ -497,6 +506,11 @@ class MediaWikiExporterTest extends \Tests\TestCase
     private function templates(): array
     {
         return [
+            'main' => <<<'TPL'
+{{ description }}
+
+{{ include('games') }}
+TPL,
             'games' => <<<'TPL'
 {% for game in games %}
 {% if game.template %}

@@ -59,7 +59,8 @@ final class MediaWikiExporter
             $globalLayout->sort('games')
         );
 
-        return $twig->render('games', [
+        return $twig->render('main', [
+            'description' => $globalSettings->get('description', ''),
             'games' => $games->map(
                 fn (Game $game) => $this->createGameVariable(
                     $game,

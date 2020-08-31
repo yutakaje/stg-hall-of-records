@@ -41,6 +41,17 @@ Values defined in this section will apply to all the games in the database. Its 
 <div style="display:none"><nowiki>
 name: global
 
+description: |
+    Welcome to the STG Hall of Records!
+
+    In the following page you will find a list of all world record scores for arcade shmups. The list is a major revision of the [https://shmups.system11.org/viewtopic.php?f=2&t=38524 long-standing topic on the Shmups Forum] under the same name, which was maintained by the user NTSC-J from September 2011 to July 2020. This list takes the Japanese score keeping traditions as a basis, primarily the uninterrupted combined tradition of Gamest magazine (1986 to 1999), Arcadia magazine (1999 to 2015) and the [http://www.jha-arcade.com website] of the Japan Highscore Association a.k.a. JHA (2016 to the present). For the current revision of the STG Hall of Records, several more scores have been retrieved from other sources such as Micom Basic magazine (1984 to 1999) but also private Twitter accounts, forums, and other websites. To read more about the tracking of arcade highscores in Japan, please check [http://electricunderground.io/guest-article-introduction-to-scorekeeping-for-japanese-arcade-games/ this short article].
+    [[File:MICB.jpg|400px|right]]
+    The STG Hall of Records in its current form would have been an unthinkable project without the meticulous work carried out by Marco “Gemant” Frattino who has been spreading information about Japanese arcade highscores with tireless enthusiasm within the english-speaking community for over a decade. Gemant’s work culminates in the latest publication of his monumental project ARCA (started in 2007), a document providing information on a selection of 600 arcade games (not only shmups), which can be [https://www.mameretroavengers.com/documenti/arca-general-dei-record-arcade/ accessed here]. However, the STG Hall of Records is not merely a copy of Gemant’s document. Whenever possible, the records have been double checked and verified. Furthermore, you will notice two fundamental departures from the ARCA project. First, while non-shmups have been excluded, the STG Hall of Records aims to cover every arcade shmup and is constantly growing, not limited to a specific number of games. Second, games from the so-called “Golden Era” (pre 1985 and therefore prior to the first issue of Gamest) are also considered.
+
+    As an additional innovation, the STG Hall of Records also lists scores for various categories that otherwise do not exist within the Japanese tradition, e.g. a more in-depth and specific recordkeeping of subtypes of ships (e.g. including shot and laser types in [[DoDonPachi]]). Scores from particularly accurate ports (e.g. [[Battle Garegga]] on PS4 or [[Crimzon Clover]] on Steam) or scores achieved on emulators (e.g. Mame or GOTVG) can also be found on the list. These scores are not meant to replace the current arcade scores and are but seen as a supplement. Geographically speaking, scores from all over the world are considered.
+
+    Mostly limited to a number of older games, Japanese scorekeeping sometimes sets a goal score of 10,000,000 points and closes the game for competition once this threshold is achieved regardless of whether the score counter would continue normally or roll over back to 0. These scores are marked by the notation of "+α", e.g. "10,000,000+α" and are then marked in green color to indicate that the ranking is officially closed under JHA rules. The STG Hall of Records likewise lists these +α-scores and indicates the first player(s) to reach this score (players achieving the same goal score later on are not considered). Moreover, the highest score beyond this arbitrary threshold is also listed. Only when a true counterstop is achieved, the game or category will be closed for competition as long as no special rules apply as is the case with Ultra Mode in [[Mushihimesama Futari]] 1.5. In the case of a counterstop, the ranking will be marked in grey color to indicate that it is closed.
+
 config:
     scores:
         num-previous: 0
@@ -61,6 +72,10 @@ layout:
           - version
 
     templates:
+        main: |
+            {{ description|raw }}
+
+            {{ include('games') }}
         games: |
             {% for game in games %}
             {% if game.template %}
