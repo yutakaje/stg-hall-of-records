@@ -12,6 +12,7 @@
 declare(strict_types=1);
 
 use DI\ContainerBuilder;
+use Stg\HallOfRecords\MediaWikiDatabaseFetcher;
 use Stg\HallOfRecords\MediaWikiGenerator;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
@@ -29,15 +30,18 @@ try {
     $output = [];
     $errorMessage = '';
 
-    if (
-        isset($_POST['input']) && is_string($_POST['input'])
-        && isset($_POST['locales']) && is_string($_POST['locales'])
-    ) {
-        try {
+    try {
+        if (
+            isset($_POST['generate'])
+            && isset($_POST['input']) && is_string($_POST['input'])
+            && isset($_POST['locales']) && is_string($_POST['locales'])
+        ) {
             $input = $_POST['input'];
+            $locales = $_POST['locales'];
+
             $localeList = array_map(
                 fn (string $locale) => trim($locale),
-                explode(',', $_POST['locales'])
+                explode(',', $locales)
             );
 
             $generator = $container->get(MediaWikiGenerator::class);
@@ -48,10 +52,15 @@ try {
                     'output' => $generator->generate($input, $locale),
                 ];
             }
-        } catch (\InvalidArgumentException $exception) {
-            // @TODO: Should be a GeneratorException or something.
-            $errorMessage = $exception->getMessage();
+        } elseif (isset($_POST['load-from-database'])) {
+            $input = $container->get(MediaWikiDatabaseFetcher::class)->fetch();
         }
+    } catch (\InvalidArgumentException $exception) {
+        // @TODO: Should be a GeneratorException or something.
+        $errorMessage = $exception->getMessage();
+    } catch (\UnexpectedValueException $exception) {
+        // @TODO: Should be a FetchException or something.
+        $errorMessage = $exception->getMessage();
     }
 
     $twig = new Environment(

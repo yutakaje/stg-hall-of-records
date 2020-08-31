@@ -21,6 +21,7 @@ use Stg\HallOfRecords\Export\MediaWikiExporter;
 use Stg\HallOfRecords\Import\MediaWikiImporter;
 use Stg\HallOfRecords\Import\MediaWiki\YamlExtractor;
 use Stg\HallOfRecords\Import\MediaWiki\YamlParser;
+use Stg\HallOfRecords\MediaWikiDatabaseFetcher;
 use Stg\HallOfRecords\MediaWikiGenerator;
 
 return [
@@ -34,5 +35,8 @@ return [
 
     MediaWikiExporter::class => DI\autowire(),
 
+    MediaWikiDatabaseFetcher::class => DI\create()->constructor(
+        'https://shmups.wiki/index.php?title=STG_Hall_of_Records/Database&action=edit'
+    ),
     MediaWikiGenerator::class => DI\autowire(),
 ];

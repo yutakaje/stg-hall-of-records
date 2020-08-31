@@ -28,7 +28,8 @@
           >{{ input }}</textarea>
       </div>
       <div>
-        <input type="submit" value="Generate" />
+        <input type="submit" name="generate" value="Generate" />
+        <input type="submit" name="load-from-database" value="Load input from database" />
       </div>
     </form>
 
