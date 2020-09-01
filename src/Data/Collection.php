@@ -30,7 +30,7 @@ abstract class Collection
     }
 
     /**
-     * @return Item[]
+     * @return mixed[]
      */
     public function map(callable $callback): array
     {

@@ -19,7 +19,10 @@ use Stg\HallOfRecords\Data\Score\Score;
 use Stg\HallOfRecords\Data\Score\ScoreRepositoryInterface;
 use Stg\HallOfRecords\Data\Score\Scores;
 use Stg\HallOfRecords\Data\Setting\SettingRepositoryInterface;
+use Stg\HallOfRecords\Export\MediaWiki\GameVariable;
 use Stg\HallOfRecords\Export\MediaWiki\Layout;
+use Stg\HallOfRecords\Export\MediaWiki\MainTemplate;
+use Stg\HallOfRecords\Export\MediaWiki\ScoreVariable;
 
 final class MediaWikiExporter
 {
@@ -41,119 +44,85 @@ final class MediaWikiExporter
 
     public function export(): string
     {
-        return $this->exportGames();
-    }
-
-    private function exportGames(): string
-    {
         $globalSettings = $this->settings->filterGlobal();
         $globalLayout = Layout::createFromArray(
             $globalSettings->get('layout', [])
         );
 
-        $games = $this->games->all()->sort(
-            $globalLayout->sort('games')
-        );
+        return $this->createMainTemplate($globalLayout)->render([
+            'description' => $globalSettings->get('description', ''),
+            'games' => $this->createGameVariables($globalLayout),
+        ]);
+    }
 
-        return $this->twigFactory->create($globalLayout->templates())
-            ->render('main', [
-                'description' => $globalSettings->get('description', ''),
-                'games' => $games->map(
-                    fn (Game $game) => $this->createGameVariable(
-                        $game,
-                        $globalLayout
-                    )
-                ),
-            ]);
+    private function createMainTemplate(Layout $globalLayout): MainTemplate
+    {
+        return new MainTemplate(
+            $this->twigFactory->create($globalLayout->templates())
+        );
+    }
+
+    /**
+     * @return \stdClass[]
+     */
+    private function createGameVariables(Layout $globalLayout): array
+    {
+        return $this->games->all()
+            ->sort($globalLayout->sort('games'))
+            ->map(
+                fn (Game $game) => $this->createGameVariable($game, $globalLayout)
+            );
     }
 
     private function createGameVariable(
         Game $game,
         Layout $globalLayout
-    ): \stdClass {
+    ): GameVariable {
         $settings = $this->settings->filterByGame($game->id());
         $layout = Layout::createFromArray(
             $settings->get('layout', [])
         );
 
-        // Group scores by distinct features and take the top X
-        // entries out of each group.
-        $scores = $this->scores->filterByGame($game->id())
-            ->top(array_merge(
-                $layout->group('scores'),
-                $globalLayout->group('scores')
-            ))
-            ->sort(array_merge(
-                $layout->sort('scores'),
-                $globalLayout->sort('scores')
-            ));
-
-        $variable = new \stdClass();
-        $variable->properties = $game->properties();
-        $variable->headers = array_map(
-            fn (array $column) => $column['label'] ?? '',
-            $layout->columns()
+        return new GameVariable(
+            $game,
+            $layout,
+            $this->createScoreVariables($game, $layout, $globalLayout)
         );
-        $variable->scores = $scores->map(
-            fn (Score $score) => $this->createScoreVariable(
-                $score,
-                $layout->columns()
-            )
-        );
-        $variable->template = $layout->template('game');
-        return $variable;
     }
 
     /**
-     * @param array[] $columns
-     * @return string[]
+     * @return ScoreVariable[]
      */
-    private function createScoreVariable(Score $score, array $columns): array
-    {
-        return array_map(
-            fn (array $column) => $this->renderTemplate(
-                $column['template'] ?? '',
-                $score
-            ),
-            $columns
-        );
-    }
-
-    private function renderTemplate(string $template, Score $score): string
-    {
-        $renderer = $this->twigFactory->create([
-            'template' => $this->prepareSimplifiedVariables($template, 'score'),
-        ]);
-
-        return $renderer->render('template', [
-            'score' => $score->properties(),
-        ]);
-    }
-
-    private function prepareSimplifiedVariables(
-        string $template,
-        string $variableName
-    ): string {
-        return $this->replacePattern(
-            $template,
-            '/((?:{{)|(?:{%)).? ([\w-]+)/u',
-            fn (array $match) => "{$match[1]} attribute({$variableName}, '{$match[2]}')"
-        );
-    }
-
-    private function replacePattern(
-        string $haystack,
-        string $pattern,
-        \Closure $callback
-    ): string {
-        $replaced = preg_replace_callback($pattern, $callback, $haystack);
-
-        if ($replaced === null) {
-            throw new \UnexpectedValueException(
-                "Error replacing pattern `{$pattern}`"
+    private function createScoreVariables(
+        Game $game,
+        Layout $layout,
+        Layout $globalLayout
+    ): array {
+        // Group scores by distinct features and take the top X
+        // entries out of each group.
+        return $this->scores->filterByGame($game->id())
+            ->top(array_merge(
+                $layout->group('scores'),
+                $globalLayout->group('scores')
+            ))->sort(array_merge(
+                $layout->sort('scores'),
+                $globalLayout->sort('scores')
+            ))->map(
+                fn (Score $score) => $this->createScoreVariable($score, $layout)
             );
-        }
+    }
 
-        return $replaced;
+    /**
+     * @return ScoreVariable
+     */
+    private function createScoreVariable(
+        Score $score,
+        Layout $layout
+    ): ScoreVariable {
+        return new ScoreVariable(
+            $score,
+            $layout,
+            $this->twigFactory
+        );
     }
 }

@@ -30,10 +30,8 @@ final class Scores extends Collection
                 ->group($group),
             fn (Scores $merged, Scores $grouped) => $merged->merge(
                 $grouped->filter(
-                    function (Score $score, int $index) use ($numScores): bool {
-                        return $index < $numScores
-                            || $score->attribute('is-current-record') === true;
-                    }
+                    fn (Score $score, int $index) => $index < $numScores
+                        || $score->attribute('is-current-record') === true
                 )
             ),
             new Scores()

@@ -527,9 +527,9 @@ TPL,
 ! colspan="{{ game.headers|length }}" | {{ game.properties.name }}
 |-
 ! {{ game.headers|join(' !! ') }}
-{% for columns in game.scores %}
+{% for score in game.scores %}
 |-
-| {{ columns|join(' || ') }}
+| {{ score.columns|join(' || ') }}
 {% endfor %}
 |}
 
