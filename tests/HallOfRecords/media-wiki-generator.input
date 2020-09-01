@@ -85,7 +85,7 @@ layout:
             {% endif %}
             {% endfor %}
         game: |
-            {| class="wikitable" style="text-align: center
+            {| class="wikitable" style="text-align: center"
             |-
             ! colspan="{{ game.headers|length }}" | {{ game.properties.name }}
             |-

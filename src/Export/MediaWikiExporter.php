@@ -20,14 +20,13 @@ use Stg\HallOfRecords\Data\Score\ScoreRepositoryInterface;
 use Stg\HallOfRecords\Data\Score\Scores;
 use Stg\HallOfRecords\Data\Setting\SettingRepositoryInterface;
 use Stg\HallOfRecords\Export\MediaWiki\Layout;
-use Twig\Environment;
-use Twig\Loader\ArrayLoader;
 
 final class MediaWikiExporter
 {
     private SettingRepositoryInterface $settings;
     private GameRepositoryInterface $games;
     private ScoreRepositoryInterface $scores;
+    private TwigFactory $twigFactory;
 
     public function __construct(
         SettingRepositoryInterface $settings,
@@ -37,6 +36,7 @@ final class MediaWikiExporter
         $this->settings = $settings;
         $this->games = $games;
         $this->scores = $scores;
+        $this->twigFactory = new TwigFactory();
     }
 
     public function export(): string
@@ -51,23 +51,20 @@ final class MediaWikiExporter
             $globalSettings->get('layout', [])
         );
 
-        $twig = new Environment(
-            new ArrayLoader($globalLayout->templates())
-        );
-
         $games = $this->games->all()->sort(
             $globalLayout->sort('games')
         );
 
-        return $twig->render('main', [
-            'description' => $globalSettings->get('description', ''),
-            'games' => $games->map(
-                fn (Game $game) => $this->createGameVariable(
-                    $game,
-                    $globalLayout
-                )
-            ),
-        ]);
+        return $this->twigFactory->create($globalLayout->templates())
+            ->render('main', [
+                'description' => $globalSettings->get('description', ''),
+                'games' => $games->map(
+                    fn (Game $game) => $this->createGameVariable(
+                        $game,
+                        $globalLayout
+                    )
+                ),
+            ]);
     }
 
     private function createGameVariable(
@@ -124,9 +121,9 @@ final class MediaWikiExporter
 
     private function renderTemplate(string $template, Score $score): string
     {
-        $renderer = new Environment(new ArrayLoader([
+        $renderer = $this->twigFactory->create([
             'template' => $this->prepareSimplifiedVariables($template, 'score'),
-        ]));
+        ]);
 
         return $renderer->render('template', [
             'score' => $score->properties(),
