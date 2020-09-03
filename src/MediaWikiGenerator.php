@@ -32,7 +32,7 @@ final class MediaWikiGenerator
     public function generate(string $input, string $locale): string
     {
         $this->import($input, $locale);
-        return $this->export();
+        return $this->export($locale);
     }
 
     private function import(string $input, string $locale): void
@@ -40,8 +40,8 @@ final class MediaWikiGenerator
         $this->importer->import($input, $locale);
     }
 
-    private function export(): string
+    private function export(string $locale): string
     {
-        return $this->exporter->export();
+        return $this->exporter->export($locale);
     }
 }

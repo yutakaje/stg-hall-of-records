@@ -19,28 +19,27 @@ use Twig\Environment;
 
 final class ScoreVariable extends \stdClass
 {
+    private TwigFactory $twigFactory;
+
     public function __construct(
         Score $score,
         Layout $layout,
         TwigFactory $twigFactory
     ) {
+        $this->twigFactory = $twigFactory;
+
         $this->columns = array_map(
             fn (array $column) => $this->renderTemplate(
-                $this->createRenderer(
-                    $twigFactory,
-                    $column['template'] ?? ''
-                ),
+                $this->createRenderer($column['template'] ?? ''),
                 $score
             ),
             $layout->columns()
         );
     }
 
-    private function createRenderer(
-        TwigFactory $twigFactory,
-        string $template
-    ): Environment {
-        return $twigFactory->create([
+    private function createRenderer(string $template): Environment
+    {
+        return $this->twigFactory->create([
             'template' => $this->preparePlaceholders($template),
         ]);
     }
@@ -57,8 +56,19 @@ final class ScoreVariable extends \stdClass
         return $this->replacePattern(
             $template,
             '/((?:{{)|(?:{%)).? ([\w-]+)/u',
-            fn (array $match) => "{$match[1]} attribute(score, '{$match[2]}')"
+            fn (array $match) => "{$match[1]} {$this->preparePlaceholder($match[2])}"
         );
+    }
+
+    private function preparePlaceholder(string $name): string
+    {
+        $placeholder = "attribute(score, '{$name}')";
+
+        if (substr($name, -5) === '-date') {
+            $placeholder .= '|formatDate';
+        }
+
+        return $placeholder;
     }
 
     private function replacePattern(

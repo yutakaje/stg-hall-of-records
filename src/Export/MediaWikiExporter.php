@@ -42,8 +42,10 @@ final class MediaWikiExporter
         $this->twigFactory = new TwigFactory();
     }
 
-    public function export(): string
+    public function export(string $locale = ''): string
     {
+        $this->twigFactory->registerFormatter(new Formatter($locale));
+
         $globalSettings = $this->settings->filterGlobal();
         $globalLayout = Layout::createFromArray(
             $globalSettings->get('layout', [])
@@ -69,9 +71,10 @@ final class MediaWikiExporter
     {
         return $this->games->all()
             ->sort($globalLayout->sort('games'))
-            ->map(
-                fn (Game $game) => $this->createGameVariable($game, $globalLayout)
-            );
+            ->map(fn (Game $game) => $this->createGameVariable(
+                $game,
+                $globalLayout,
+            ));
     }
 
     private function createGameVariable(
@@ -107,9 +110,10 @@ final class MediaWikiExporter
             ))->sort(array_merge(
                 $layout->sort('scores'),
                 $globalLayout->sort('scores')
-            ))->map(
-                fn (Score $score) => $this->createScoreVariable($score, $layout)
-            );
+            ))->map(fn (Score $score) => $this->createScoreVariable(
+                $score,
+                $layout
+            ));
     }
 
     /**
