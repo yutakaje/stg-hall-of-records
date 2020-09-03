@@ -148,6 +148,17 @@ final class MediaWikiImporter
                 $this->translateLayout($layout, $locale, $translator)
             ));
         }
+
+        $links = $game->get('links');
+        if ($links !== null) {
+            $this->settings->add(new GameSetting($gameId, 'links', array_map(
+                fn (ParsedProperties $link) => $this->translateProperties(
+                    $this->createTranslator($link, $locale, $translator),
+                    $link
+                ),
+                $links
+            )));
+        }
     }
 
     private function addScoreToRepository(

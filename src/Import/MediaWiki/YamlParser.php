@@ -56,19 +56,15 @@ final class YamlParser
     private function parseGame(array $properties): ParsedProperties
     {
         $properties['scores'] = array_map(
-            fn (array $score) => $this->parseScore($score),
+            fn (array $score) => new ParsedProperties($score),
             $properties['scores'] ?? []
         );
         $properties['layout'] = $this->parseLayout($properties['layout'] ?? []);
+        $properties['links'] = array_map(
+            fn (array $link) => new ParsedProperties($link),
+            $properties['links'] ?? []
+        );
 
-        return new ParsedProperties($properties);
-    }
-
-    /**
-     * @param array<string,mixed> $properties
-     */
-    private function parseScore(array $properties): ParsedProperties
-    {
         return new ParsedProperties($properties);
     }
 
@@ -78,21 +74,13 @@ final class YamlParser
     private function parseLayout(array $properties): ParsedProperties
     {
         $properties['columns'] = array_map(
-            fn (array $column) => $this->parseColumn($column),
+            fn (array $column) => new ParsedProperties($column),
             array_filter(
                 $properties['columns'] ?? [],
                 fn ($column) => is_array($column)
             )
         );
 
-        return new ParsedProperties($properties);
-    }
-
-    /**
-     * @param array<string,mixed> $properties
-     */
-    private function parseColumn(array $properties): ParsedProperties
-    {
         return new ParsedProperties($properties);
     }
 

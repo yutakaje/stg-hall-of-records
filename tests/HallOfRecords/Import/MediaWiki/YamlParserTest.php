@@ -87,6 +87,7 @@ class YamlParserTest extends \Tests\TestCase
                             'source' => 'Superplay DVD',
                         ]),
                     ],
+                    'links' => [],
                     'layout' => new ParsedProperties([
                         'columns' => [],
                     ]),
@@ -120,6 +121,17 @@ class YamlParserTest extends \Tests\TestCase
                                 '残6機',
                                 '1周 2.85億',
                             ],
+                        ]),
+                    ],
+                    'links' => [
+                        new ParsedProperties([
+                            'url' => 'https://example.org/jha/ketsui',
+                            'title' => 'JHA Leaderboard',
+                            'title-jp' => '日本ハイスコア協会',
+                        ]),
+                        new ParsedProperties([
+                            'url' => 'https://example.org/farm/ketsui',
+                            'title' => 'Shmups Forum Hi-Score Topic',
                         ]),
                     ],
                     'translations' => [
@@ -192,6 +204,7 @@ class YamlParserTest extends \Tests\TestCase
                     'name' => 'Great Mahou Daisakusen',
                     'company' => 'Raizing / 8ing',
                     'scores' => [],
+                    'links' => [],
                     'layout' => new ParsedProperties([
                         'columns' => [],
                         'templates' => [
@@ -304,6 +317,17 @@ TPL,
                             '残6機',
                             '1周 2.85億',
                         ],
+                    ],
+                ],
+                'links' => [
+                    [
+                        'url' => 'https://example.org/jha/ketsui',
+                        'title' => 'JHA Leaderboard',
+                        'title-jp' => '日本ハイスコア協会',
+                    ],
+                    [
+                        'url' => 'https://example.org/farm/ketsui',
+                        'title' => 'Shmups Forum Hi-Score Topic',
                     ],
                 ],
                 'translations' => [

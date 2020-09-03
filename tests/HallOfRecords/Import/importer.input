@@ -178,11 +178,12 @@ scores:
         name: Youtube
 
 links:
-  - url: https://wiki.denfaminicogamer.jp/highscore/2006_002_%E8%99%AB%E5%A7%AB%E3%81%95%E3%81%BE%E3%81%B5%E3%81%9F%E3%82%8A_Ver1.5
+  - url: https://example.org/jha/futari
     title: JHA Leaderboard
     title-jp: 日本ハイスコア協会
-  - url: https://shmups.system11.org/viewtopic.php?t=60592
+  - url: https://example.org/farm/futari
     title: Shmups Forum Hi-Score Topic
+    title-jp: ザ・ファーム
 
 layout:
     columns:
@@ -287,10 +288,10 @@ scores:
       - 6L remaining
 
 links:
-  - url: https://wiki.denfaminicogamer.jp/highscore/2003_034_%E3%82%B1%E3%83%84%E3%82%A4
+  - url: https://example.org/jha/ketsui
     title: JHA Leaderboard
     title-jp: 日本ハイスコア協会
-  - url: https://shmups.system11.org/viewtopic.php?t=65086
+  - url: https://example.org/farm/ketsui
     title: Shmups Forum Hi-Score Topic
 
 translations:

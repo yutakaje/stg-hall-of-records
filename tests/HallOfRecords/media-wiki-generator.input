@@ -83,6 +83,11 @@ layout:
             {% else %}
             {{ include('game') }}
             {% endif %}
+            {% for link in game.links %}
+            * [{{ link.url}} {{link.title}}]
+            {% endfor %}
+
+
             {% endfor %}
         game: |
             {| class="wikitable" style="text-align: center"
@@ -257,11 +262,12 @@ scores:
         name: Youtube
 
 links:
-  - url: https://example.org/some_link_id
+  - url: https://example.org/jha/futari
     title: JHA Leaderboard
     title-jp: 日本ハイスコア協会
-  - url: https://example.org/some_other_link
+  - url: https://example.org/farm/futari
     title: Shmups Forum Hi-Score Topic
+    title-jp: ザ・ファーム
 
 layout:
     columns:
@@ -373,10 +379,10 @@ scores:
       - 1st loop 285m
 
 links:
-  - url: https://example.org/some_link_id
+  - url: https://example.org/jha/ketsui
     title: JHA Leaderboard
     title-jp: 日本ハイスコア協会
-  - url: https://example.org/some_other_link
+  - url: https://example.org/farm/ketsui
     title: Shmups Forum Hi-Score Topic
 
 translations:
@@ -482,5 +488,4 @@ layout:
 
             * [https://example.org/some_link_id JHA Leaderboard]
             * [https://example.org/some_other_link Shmups Forum Hi-Score Topic]
-
 </nowiki>

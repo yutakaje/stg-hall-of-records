@@ -88,7 +88,7 @@ final class MediaWikiExporter
 
         return new GameVariable(
             $game,
-            $layout,
+            $settings,
             $this->createScoreVariables($game, $layout, $globalLayout)
         );
     }

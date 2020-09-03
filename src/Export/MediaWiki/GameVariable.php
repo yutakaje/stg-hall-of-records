@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Stg\HallOfRecords\Export\MediaWiki;
 
 use Stg\HallOfRecords\Data\Game\Game;
+use Stg\HallOfRecords\Data\Setting\Settings;
 
 final class GameVariable extends \stdClass
 {
@@ -22,15 +23,20 @@ final class GameVariable extends \stdClass
      */
     public function __construct(
         Game $game,
-        Layout $layout,
+        Settings $settings,
         array $scores
     ) {
+        $layout = $layout = Layout::createFromArray(
+            $settings->get('layout', [])
+        );
+
         $this->properties = $game->properties();
         $this->headers = array_map(
             fn (array $column) => $column['label'] ?? '',
             $layout->columns()
         );
         $this->scores = $scores;
+        $this->links = $settings->get('links', []);
         $this->template = $layout->template('game');
     }
 }

@@ -113,29 +113,20 @@ class MediaWikiImporterTest extends \Tests\TestCase
         $value = $setting->value();
 
         // Ignore properties for other locales when comparing values.
-        if (
-            $setting->name() === 'layout'
-            && isset($setting->additionalProperties()['gameId'])
-        ) {
-            $value['columns'] = array_map(
-                function (array $column): array {
-                    $keys = array_filter(
-                        array_keys($column),
-                        fn (string $name) => !in_array(
-                            substr($name, -3),
-                            ['-en', '-jp'],
-                            true
-                        )
-                    );
+        if (isset($setting->additionalProperties()['gameId'])) {
+            if ($setting->name() === 'layout') {
+                $value['columns'] = array_map(
+                    fn (array $column) => $this->removeLocalizedProperties($column),
+                    $value['columns']
+                );
+            }
 
-                    /** @var array<string,mixed> */
-                    return array_combine($keys, array_map(
-                        fn (string $key) => $column[$key],
-                        $keys
-                    ));
-                },
-                $value['columns']
-            );
+            if ($setting->name() === 'links') {
+                $value = array_map(
+                    fn (array $link) => $this->removeLocalizedProperties($link),
+                    $value
+                );
+            }
         }
 
         return [
@@ -143,6 +134,28 @@ class MediaWikiImporterTest extends \Tests\TestCase
             'value' => $value,
             'properties' => $setting->additionalProperties(),
         ];
+    }
+
+    /**
+     * @param array<string,mixed> $properties
+     * @return array<string,mixed>
+     */
+    private function removeLocalizedProperties(array $properties): array
+    {
+        $keys = array_filter(
+            array_keys($properties),
+            fn (string $name) => !in_array(
+                substr($name, -3),
+                ['-en', '-jp'],
+                true
+            )
+        );
+
+        /** @var array<string,mixed> */
+        return array_combine($keys, array_map(
+            fn (string $key) => $properties[$key],
+            $keys
+        ));
     }
 
     /**
@@ -225,151 +238,142 @@ class MediaWikiImporterTest extends \Tests\TestCase
         ];
 
         $settings = [
-            0 => [
-                'name' => 'name',
-                'value' => 'global',
-                'properties' => [],
-            ],
-            1 => [
-                'name' => 'layout',
-                'value' => [
-                    'templates' => $this->templates(),
+            0 => $this->globalSetting('name', 'global'),
+            1 => $this->globalSetting('layout', [
+                'templates' => $this->templates(),
+            ]),
+            2 => $this->globalSetting('translations', [
+                [
+                    'property' => 'company',
+                    'value' => 'Cave',
+                    'value-jp' => 'ケイブ',
                 ],
-                'properties' => [],
-            ],
-            2 => [
-                'name' => 'translations',
-                'value' => [
+            ]),
+            3 => $this->gameSetting($gameIds[0], 'layout', [
+                'columns' => [
                     [
-                        'property' => 'company',
-                        'value' => 'Cave',
-                        'value-jp' => 'ケイブ',
+                        'label' => 'Mode',
+                        'template' => '{{ mode }}',
+                        'groupSameValues' => true,
+                    ],
+                    [
+                        'label' => 'Character',
+                        'template' => '{{ ship }}',
+                        'groupSameValues' => true,
+                    ],
+                    [
+                        'label' => 'Style',
+                        'template' => '{{ weapon }}',
+                    ],
+                    [
+                        'label' => 'Score',
+                        'template' => '{{ score }}',
+                    ],
+                    [
+                        'label' => 'Player',
+                        'template' => '{{ player }}',
+                        'groupSameValues' => true,
+                    ],
+                    [
+                        'label' => 'Date / Source',
+                        'template' => '{{ scored-date }} / {{ source }}',
+                    ],
+                    [
+                        'label' => 'Comment',
+                        'template' => "{{ comments|join('; ') }}",
                     ],
                 ],
-                'properties' => [],
-            ],
-            3 => [
-                'name' => 'layout',
-                'value' => [
-                    'columns' => [
-                        [
-                            'label' => 'Mode',
-                            'template' => '{{ mode }}',
-                            'groupSameValues' => true,
+                'sort' => [
+                    'scores' => [
+                        'mode' => [
+                            'Original',
+                            'Maniac',
+                            'Ultra',
                         ],
-                        [
-                            'label' => 'Character',
-                            'template' => '{{ ship }}',
-                            'groupSameValues' => true,
+                        'ship' => [
+                            'Palm',
+                            'Reco',
                         ],
-                        [
-                            'label' => 'Style',
-                            'template' => '{{ weapon }}',
+                        'weapon' => [
+                            'Normal',
+                            'Abnormal',
                         ],
-                        [
-                            'label' => 'Score',
-                            'template' => '{{ score }}',
-                        ],
-                        [
-                            'label' => 'Player',
-                            'template' => '{{ player }}',
-                            'groupSameValues' => true,
-                        ],
-                        [
-                            'label' => 'Date / Source',
-                            'template' => '{{ scored-date }} / {{ source }}',
-                        ],
-                        [
-                            'label' => 'Comment',
-                            'template' => "{{ comments|join('; ') }}",
-                        ],
-                    ],
-                    'sort' => [
-                        'scores' => [
-                            'mode' => [
-                                'Original',
-                                'Maniac',
-                                'Ultra',
-                            ],
-                            'ship' => [
-                                'Palm',
-                                'Reco',
-                            ],
-                            'weapon' => [
-                                'Normal',
-                                'Abnormal',
-                            ],
-                            'score' => 'desc',
-                        ],
+                        'score' => 'desc',
                     ],
                 ],
-                'properties' => [
-                    'gameId' => $gameIds[0],
+            ]),
+            4 => $this->gameSetting($gameIds[0], 'links', [
+                [
+                    'url' => 'https://example.org/jha/futari',
+                    'title' => 'JHA Leaderboard',
                 ],
-            ],
-            4 => [
-                'name' => 'layout',
-                'value' => [
-                    'columns' => [
-                        [
-                            'label' => 'Ship',
-                            'template' => '{{ ship }}',
-                            'groupSameValues' => true,
-                        ],
-                        [
-                            'label' => 'Loop',
-                            'template' => '{{ mode }}',
-                        ],
-                        [
-                            'label' => 'Score',
-                            'template' => '{{ score }}',
-                        ],
-                        [
-                            'label' => 'Player',
-                            'template' => '{{ player }}',
-                            'groupSameValues' => true,
-                        ],
-                        [
-                            'label' => 'Date / Source',
-                            'template' => '{{ scored-date }} / {{ source }}',
-                        ],
-                        [
-                            'label' => 'Comment',
-                            'template' => "{{ comments|join('; ') }}",
-                        ],
+                [
+                    'url' => 'https://example.org/farm/futari',
+                    'title' => 'Shmups Forum Hi-Score Topic',
+                ],
+            ]),
+            5 => $this->gameSetting($gameIds[1], 'layout', [
+                'columns' => [
+                    [
+                        'label' => 'Ship',
+                        'template' => '{{ ship }}',
+                        'groupSameValues' => true,
                     ],
-                    'sort' => [
-                        'scores' => [
-                            'ship' => [
-                                'Type A',
-                                'Type B',
-                            ],
-                            'mode' => 'asc',
-                            'score' => 'desc',
-                        ],
+                    [
+                        'label' => 'Loop',
+                        'template' => '{{ mode }}',
+                    ],
+                    [
+                        'label' => 'Score',
+                        'template' => '{{ score }}',
+                    ],
+                    [
+                        'label' => 'Player',
+                        'template' => '{{ player }}',
+                        'groupSameValues' => true,
+                    ],
+                    [
+                        'label' => 'Date / Source',
+                        'template' => '{{ scored-date }} / {{ source }}',
+                    ],
+                    [
+                        'label' => 'Comment',
+                        'template' => "{{ comments|join('; ') }}",
                     ],
                 ],
-                'properties' => [
-                    'gameId' => $gameIds[1],
-                ],
-            ],
-            5 => [
-                'name' => 'layout',
-                'value' => [
-                    'templates' => [
-                        'game' => $this->fixedGameTemplate(),
+                'sort' => [
+                    'scores' => [
+                        'ship' => [
+                            'Type A',
+                            'Type B',
+                        ],
+                        'mode' => 'asc',
+                        'score' => 'desc',
                     ],
-                    'columns' => [],
-                    'sort' => [],
                 ],
-                'properties' => [
-                    'gameId' => $gameIds[2],
+            ]),
+            6 => $this->gameSetting($gameIds[1], 'links', [
+                [
+                    'url' => 'https://example.org/jha/ketsui',
+                    'title' => 'JHA Leaderboard',
                 ],
-            ],
+                [
+                    'url' => 'https://example.org/farm/ketsui',
+                    'title' => 'Shmups Forum Hi-Score Topic',
+                ],
+            ]),
+            7 => $this->gameSetting($gameIds[2], 'layout', [
+                'templates' => [
+                    'game' => $this->fixedGameTemplate(),
+                ],
+                'columns' => [],
+                'sort' => [],
+            ]),
+            8 => $this->gameSetting($gameIds[2], 'links', []),
         ];
 
         if ($locale === 'en') {
-            $settings[4]['value']['sort']['scores']['ship'] = [
+            $settings[5]['value']['sort']['scores']['ship'] = [
                 'Tiger Schwert',
                 'Panzer Jäger',
             ];
@@ -388,19 +392,52 @@ class MediaWikiImporterTest extends \Tests\TestCase
                 'アブノーマル',
             ];
 
-            $settings[4]['value']['columns'][0]['label'] = '自機';
-            $settings[4]['value']['columns'][1]['label'] = '2週種';
-            $settings[4]['value']['columns'][2]['label'] = 'スコア';
-            $settings[4]['value']['columns'][3]['label'] = 'プレイヤー';
-            $settings[4]['value']['columns'][4]['label'] = '年月日 / 情報元';
-            $settings[4]['value']['columns'][5]['label'] = '備考';
-            $settings[4]['value']['sort']['scores']['ship'] = [
+            $settings[4]['value'][0]['title'] = '日本ハイスコア協会';
+            $settings[4]['value'][1]['title'] = 'ザ・ファーム';
+
+            $settings[5]['value']['columns'][0]['label'] = '自機';
+            $settings[5]['value']['columns'][1]['label'] = '2週種';
+            $settings[5]['value']['columns'][2]['label'] = 'スコア';
+            $settings[5]['value']['columns'][3]['label'] = 'プレイヤー';
+            $settings[5]['value']['columns'][4]['label'] = '年月日 / 情報元';
+            $settings[5]['value']['columns'][5]['label'] = '備考';
+            $settings[5]['value']['sort']['scores']['ship'] = [
                 'TYPE-A ティーゲルシュベルト',
                 'TYPE-B パンツァーイェーガー',
             ];
+
+            $settings[6]['value'][0]['title'] = '日本ハイスコア協会';
         }
 
         return $settings;
+    }
+
+    /**
+     * @param mixed $value
+     * @return array<string,mixed>
+     */
+    private function globalSetting(string $name, $value): array
+    {
+        return [
+            'name' => $name,
+            'value' => $value,
+            'properties' => [],
+        ];
+    }
+
+    /**
+     * @param mixed $value
+     * @return array<string,mixed>
+     */
+    private function gameSetting(int $gameId, string $name, $value): array
+    {
+        return [
+            'name' => $name,
+            'value' => $value,
+            'properties' => [
+                'gameId' => $gameId,
+            ],
+        ];
     }
 
     /**
