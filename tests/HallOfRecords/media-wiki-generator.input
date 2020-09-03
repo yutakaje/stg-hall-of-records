@@ -83,10 +83,6 @@ layout:
             {% else %}
             {{ include('game') }}
             {% endif %}
-            {% for link in game.links %}
-            * [{{ link.url}} {{link.title}}]
-            {% endfor %}
-
 
             {% endfor %}
         game: |
@@ -100,6 +96,16 @@ layout:
             | {{ score.columns|join(' || ') }}
             {% endfor %}
             |}
+
+            {% if game.properties.description %}
+            {{ game.properties.description }}
+
+            {% endif %}
+            {% if game.links %}
+            {% for link in game.links %}
+            * [{{ link.url}} {{link.title}}]
+            {% endfor %}
+            {% endif %}
       
 translations:
   - property: company
@@ -268,6 +274,9 @@ links:
   - url: https://example.org/farm/futari
     title: Shmups Forum Hi-Score Topic
     title-jp: ザ・ファーム
+
+description: "Note: Scoreboard for Ultra closed after the achievement of the counterstop at 3,999,999,999. After this, only scores done on the Xbox 360 port are accepted because they can be tracked beyond the counterstop. For details see [https://youtu.be/XqhtJQm9brI this video]."
+description-jp: 申請受付終了
 
 layout:
     columns:
