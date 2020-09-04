@@ -528,11 +528,14 @@ TPL,
 |-
 ! {{ game.headers|join(' !! ') }}
 {% for score in game.scores %}
-|-
-| {{ score.columns|join(' || ') }}
+{{ include('score') }}
 {% endfor %}
 |}
 
+TPL,
+            'score' => <<<'TPL'
+|-
+| {% for column in score.columns %}{{ column.value }}{% if not loop.last %} || {% endif %}{% endfor %}
 TPL,
         ];
     }

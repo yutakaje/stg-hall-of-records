@@ -29,12 +29,36 @@ final class ScoreVariable extends \stdClass
         $this->twigFactory = $twigFactory;
 
         $this->columns = array_map(
-            fn (array $column) => $this->renderTemplate(
-                $this->createRenderer($column['template'] ?? ''),
-                $score
-            ),
+            fn (array $column) => $this->createColumn($column, $score),
             $layout->columns()
         );
+    }
+
+    /**
+     * @param array<string,mixed> $column
+     */
+    private function createColumn(array $column, Score $score): \stdClass
+    {
+        $variable = new \stdClass();
+        $variable->value = $this->renderTemplate(
+            $this->createRenderer($column['template'] ?? ''),
+            $score
+        );
+        $variable->attrs = $this->getColumnAttrs($column, $score);
+        return $variable;
+    }
+
+    /**
+     * @param array<string,mixed> $column
+     */
+    private function getColumnAttrs(array $column, Score $score): string
+    {
+        $columnId = $column['id'] ?? null;
+        if ($columnId === null) {
+            return '';
+        }
+
+        return $score->attribute('layout')['columns'][$columnId] ?? '';
     }
 
     private function createRenderer(string $template): Environment

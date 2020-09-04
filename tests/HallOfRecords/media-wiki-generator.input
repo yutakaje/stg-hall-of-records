@@ -92,8 +92,7 @@ layout:
             |-
             ! {{ game.headers|join(' !! ') }}
             {% for score in game.scores %}
-            |-
-            | {{ score.columns|join(' || ') }}
+            {{ include('score') }}
             {% endfor %}
             |}
 
@@ -106,6 +105,9 @@ layout:
             * [{{ link.url}} {{link.title}}]
             {% endfor %}
             {% endif %}
+        score: |
+            |-
+            | {% for column in score.columns %}{% if column.attrs %}{{ column.attrs|raw }} | {% endif %}{{ column.value }}{% if not loop.last %} || {% endif %}{% endfor %}
       
 translations:
   - property: company
@@ -243,6 +245,10 @@ scores:
       - Highest score Arcade
     attributes:
         is-current-record: true
+        layout:
+            columns:
+                player: 'style="background: #DFDFDF;"'
+                score: 'style="background: #DFDFDF;"'
 
   - player: KGM
     score: 3,999,999,999 [4,263,416,356]
@@ -256,6 +262,11 @@ scores:
     links:
       - url: https://
         name: Youtube
+    attributes:
+        layout:
+            columns:
+                player: 'style="background: #DFDFDF;"'
+                score: 'style="background: #DFDFDF;"'
 
   - player: lstze
     score: 3,266,405,598
@@ -292,10 +303,12 @@ layout:
         template: "{{ weapon }}"
 
       - label: Score
+        id: score
         template: "{{ score }}"
 
       - label: Player
         template: "{{ player }}"
+        id: player
         groupSameValues: true
 
       - label: Date / Source
