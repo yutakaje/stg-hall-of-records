@@ -18,58 +18,806 @@ description: |
     
     Mostly limited to a number of older games, Japanese scorekeeping sometimes sets a goal score of 10,000,000 points and closes the game for competition once this threshold is achieved regardless of whether the score counter would continue normally or roll over back to 0. These scores are marked by the notation of "+α", e.g. "10,000,000+α" and are then marked in green color to indicate that the ranking is officially closed under JHA rules. The STG Hall of Records likewise lists these +α-scores and indicates the first player(s) to reach this score (players achieving the same goal score later on are not considered). Moreover, the highest score beyond this arbitrary threshold is also listed. Only when a true counterstop is achieved, the game or category will be closed for competition as long as no special rules apply as is the case with Ultra Mode in [[Mushihimesama Futari]] 1.5. In the case of a counterstop, the ranking will be marked in grey color to indicate that it is closed.
     
-    {| class="wikitable"
-    |-
-    | 0-9 || [[#1941 Counter Attack|1941 Counter Attack]] | [[#1942|1942]] | [[#1943|1943]] | [[#1943 kai|1943 kai]] | [[#1944: The Loop Master|1944: The Loop Master]] | [[#19XX: The War Against Destiny|19XX: The War Against Destiny]]
-    |-
-    | A || [[#ASO II / Alpha Mission II|ASO II / Alpha Mission II]] | [[#ASO: Armored Scrum Object / Alpha Mission|ASO: Armored Scrum Object / Alpha Mission]] | [[#Acrobat Mission|Acrobat Mission]] | [[#Air Buster|Air Buster]] | [[#Air Duel|Air Duel]] | [[#Air Gallet / Akuu Gallet|Air Gallet / Akuu Gallet]] | [[#Aka to Blue Type-R|Aka to Blue Type-R]] | [[#Akai Katana|Akai Katana]] | [[#Akai Katana Shin|Akai Katana Shin]] | [[#Akkanvader / Space Invaders '95|Akkanvader / Space Invaders '95]] | [[#Arbalester|Arbalester]] | [[#Argus|Argus]] | [[#Argus no Senshi / Rygar|Argus no Senshi / Rygar]] | [[#Armed Police Batrider|Armed Police Batrider]] | [[#Assault|Assault]] | [[#Assault Plus|Assault Plus]] | [[#Asuka & Asuka|Asuka & Asuka]] | [[#Atomic Robo-Kid|Atomic Robo-Kid]]
-    |-
-    | B || [[#Bakuretsu Breaker / Explosive Breaker|Bakuretsu Breaker / Explosive Breaker]] | [[#Batsugun|Batsugun]] | [[#Battlantis|Battlantis]] | [[#Battle Bakraid (Unlimited Ver.)|Battle Bakraid (Unlimited Ver.)]] | [[#Battle Garegga|Battle Garegga]] | [[#BlaZeon|BlaZeon]] | [[#Black Heart|Black Heart]] | [[#Blazing Star|Blazing Star]] | [[#Border Down|Border Down]] | [[#Bosconian|Bosconian]] | [[#Brave Blade|Brave Blade]]
-    |-
-    | C || [[#Caladrius Blaze AC|Caladrius Blaze AC]] | [[#Change Air Blade|Change Air Blade]] | [[#Chaos Field|Chaos Field]] | [[#Chariot (Wonder 3)|Chariot (Wonder 3)]] | [[#Choujikuu Yousai Macross|Choujikuu Yousai Macross]] | [[#Choujikuu Yousai Macross II|Choujikuu Yousai Macross II]] | [[#Chuka Taisen|Chuka Taisen]] | [[#Cosmo Gang: The Video|Cosmo Gang: The Video]] | [[#Cotton|Cotton]] | [[#Cotton 2|Cotton 2]] | [[#Cotton Boomerang|Cotton Boomerang]] | [[#Crimzon Clover|Crimzon Clover]] | [[#Cybattler|Cybattler]] | [[#Cyvern Plus|Cyvern Plus]] | [[#Cyvern: The Dragon Weapons|Cyvern: The Dragon Weapons]]
-    |-
-    | D || [[#Dangerous Seed|Dangerous Seed]] | [[#Dangun Feveron|Dangun Feveron]] | [[#Darius|Darius]] | [[#Darius Extra|Darius Extra]] | [[#Darius Gaiden|Darius Gaiden]] | [[#Darius Gaiden Extra|Darius Gaiden Extra]] | [[#Darius II|Darius II]] | [[#Deathsmiles|Deathsmiles]] | [[#Deathsmiles II|Deathsmiles II]] | [[#Deathsmiles Mega Black Label|Deathsmiles Mega Black Label]] | [[#Detana! TwinBee|Detana! TwinBee]] | [[#Dodonpachi|Dodonpachi]] | [[#Dodonpachi Campaign Version|Dodonpachi Campaign Version]] | [[#Dodonpachi Daifukkatsu 1.5|Dodonpachi Daifukkatsu 1.5]] | [[#Dodonpachi Daifukkatsu Black Label|Dodonpachi Daifukkatsu Black Label]] | [[#Dodonpachi Daioujou|Dodonpachi Daioujou]] | [[#Dodonpachi Daioujou Black Label|Dodonpachi Daioujou Black Label]] | [[#Dodonpachi II: Bee Storm|Dodonpachi II: Bee Storm]] | [[#Dodonpachi Saidaioujou|Dodonpachi Saidaioujou]] | [[#Dogyuun!|Dogyuun!]] | [[#Donpachi|Donpachi]] | [[#Double Wings|Double Wings]] | [[#Dragon Blaze|Dragon Blaze]] | [[#Dragon Saber|Dragon Saber]] | [[#Dragon Spirit|Dragon Spirit]]
-    |-
-    | E || [[#E.D.F. Earth Defense Force|E.D.F. Earth Defense Force]] | [[#ESP Galuda|ESP Galuda]] | [[#ESP Galuda II|ESP Galuda II]] | [[#ESP Ra. De.|ESP Ra. De.]] | [[#Earth Joker: UN Defense Force|Earth Joker: UN Defense Force]] | [[#Eight Forces|Eight Forces]]
-    |-
-    | F || [[#F/A / Fighter & Attacker|F/A / Fighter & Attacker]] | [[#Fighting Hawk|Fighting Hawk]] | [[#Fire Barrel / Air Assault|Fire Barrel / Air Assault]] | [[#Flak Attack|Flak Attack]]
-    |-
-    | G || [[#G Stream 2020|G Stream 2020]] | [[#G-Darius|G-Darius]] | [[#Galaga|Galaga]] | [[#Game Tengoku / The Game Paradise|Game Tengoku / The Game Paradise]] | [[#Game Title|Game Title]] | [[#Gekirindan|Gekirindan]] | [[#Gemini Wing|Gemini Wing]] | [[#Ghost Pilots|Ghost Pilots]] | [[#Giga Wing|Giga Wing]] | [[#Giga Wing 2|Giga Wing 2]] | [[#Gokujyou Parodius|Gokujyou Parodius]] | [[#Gradius II|Gradius II]] | [[#Gradius III|Gradius III]] | [[#Gradius IV|Gradius IV]] | [[#Great Mahou Daisakusen|Great Mahou Daisakusen]] | [[#Grid Seeker|Grid Seeker]] | [[#Guardian Force|Guardian Force]] | [[#Gun Frontier|Gun Frontier]] | [[#Gunbird|Gunbird]] | [[#Gunbird 2|Gunbird 2]] | [[#Gunnail|Gunnail]] | [[#Gyrodine|Gyrodine]]
-    |-
-    | H || [[#Hacha Mecha Fighter|Hacha Mecha Fighter]] | [[#Homura|Homura]] | [[#Hyper Duel|Hyper Duel]]
-    |-
-    | I || [[#Ibara|Ibara]] | [[#Ibara Black Label|Ibara Black Label]] | [[#Ikaruga|Ikaruga]] | [[#Illvelo|Illvelo]] | [[#Image Fight|Image Fight]]
-    |-
-    | K || [[#KOF Sky Stage|KOF Sky Stage]] | [[#Kaitei Daisensou / In the Hunt|Kaitei Daisensou / In the Hunt]] | [[#Karous|Karous]] | [[#Ketsui|Ketsui]] | [[#Kuuga - Operation Code Vapor Trail|Kuuga - Operation Code Vapor Trail]] | [[#Kyuukyoku Tiger / Twin Cobra|Kyuukyoku Tiger / Twin Cobra]] | [[#Kyuukyoku Tiger II|Kyuukyoku Tiger II]]
-    |-
-    | L || [[#Last Duel|Last Duel]] | [[#Last Resort|Last Resort]] | [[#Lost Worlds / Forgotten Worlds|Lost Worlds / Forgotten Worlds]]
-    |-
-    | M || [[#Mahou Daisakusen|Mahou Daisakusen]] | [[#Mahou Keibitai Gun Hohki / Mystic Riders|Mahou Keibitai Gun Hohki / Mystic Riders]] | [[#Mamoru-kun wa Norowarete Shimatta / Mamorukun Curse!|Mamoru-kun wa Norowarete Shimatta / Mamorukun Curse!]] | [[#Master of Weapon|Master of Weapon]] | [[#Mega Blast|Mega Blast]] | [[#Meta Fox|Meta Fox]] | [[#Metal Black|Metal Black]] | [[#Metal Hawk|Metal Hawk]] | [[#Mr. Heli no Daibouken / Battle Chopper|Mr. Heli no Daibouken / Battle Chopper]] | [[#Muchi Muchi Pork|Muchi Muchi Pork]] | [[#Mushihimesama|Mushihimesama]] | [[#Mushihimesama Futari Black Label|Mushihimesama Futari Black Label]]
-    |-
-    | N || [[#Namco Classic Collection Vol. 1|Namco Classic Collection Vol. 1]] | [[#Nebulas Ray|Nebulas Ray]] | [[#Night Raid|Night Raid]] | [[#Ninja Commando|Ninja Commando]]
-    |-
-    | O || [[#Omega Fighter|Omega Fighter]] | [[#Operation Ragnarok / Zed Blade|Operation Ragnarok / Zed Blade]] | [[#Ordyne|Ordyne]]
-    |-
-    | P || [[#P-47 Aces|P-47 Aces]] | [[#Parodius Da!|Parodius Da!]] | [[#Phelios|Phelios]] | [[#Pilot Kids|Pilot Kids]] | [[#Pink Sweets: Ibara Sorekara|Pink Sweets: Ibara Sorekara]] | [[#Pistol Daimyou no Bouken|Pistol Daimyou no Bouken]] | [[#Prehistoric Isle 2|Prehistoric Isle 2]] | [[#Prehistoric Isle in 1930|Prehistoric Isle in 1930]] | [[#Progear no Arashi|Progear no Arashi]] | [[#Psyvariar|Psyvariar]] | [[#Psyvariar 2|Psyvariar 2]] | [[#Psyvariar Revision|Psyvariar Revision]] | [[#Pulstar|Pulstar]] | [[#Purikura Daisakusen|Purikura Daisakusen]]
-    |-
-    | R || [[#R-Type|R-Type]] | [[#R-Type II|R-Type II]] | [[#R-Type Leo|R-Type Leo]] | [[#Rabio Lepus|Rabio Lepus]] | [[#Radiant Silvergun|Radiant Silvergun]] | [[#Radirgy|Radirgy]] | [[#Radirgy Noa|Radirgy Noa]] | [[#Rafflesia|Rafflesia]] | [[#Raiden DX|Raiden DX]] | [[#Raiden Fighters|Raiden Fighters]] | [[#Raiden Fighters 2|Raiden Fighters 2]] | [[#Raiden Fighters Jet|Raiden Fighters Jet]] | [[#Raiden II|Raiden II]] | [[#Raiden III|Raiden III]] | [[#Raiden IV|Raiden IV]] | [[#Raiga: Strato Fighter|Raiga: Strato Fighter]] | [[#Rapid Hero|Rapid Hero]] | [[#Raycrisis|Raycrisis]] | [[#Rayforce / Layer Section|Rayforce / Layer Section]] | [[#Raystorm|Raystorm]] | [[#Rezon|Rezon]] | [[#Ryu Jin|Ryu Jin]]
-    |-
-    | S || [[#Salamander 2|Salamander 2]] | [[#Same! Same! Same! / Fire Shark|Same! Same! Same! / Fire Shark]] | [[#Sand Scorpion|Sand Scorpion]] | [[#Scramble Formation / Tokio|Scramble Formation / Tokio]] | [[#Sengeki Striker|Sengeki Striker]] | [[#Sengoku Ace|Sengoku Ace]] | [[#Sengoku Blade|Sengoku Blade]] | [[#Sexy Parodius|Sexy Parodius]] | [[#Shienryu|Shienryu]] | [[#Shikigami no Shiro|Shikigami no Shiro]] | [[#Shikigami no Shiro II|Shikigami no Shiro II]] | [[#Shikigami no Shiro III|Shikigami no Shiro III]] | [[#Shippu Mahou Daisakusen|Shippu Mahou Daisakusen]] | [[#Shooting Love 2007|Shooting Love 2007]] | [[#Skull Fang|Skull Fang]] | [[#Sky Adventure|Sky Adventure]] | [[#Sky Kid|Sky Kid]] | [[#Sky Kid Deluxe|Sky Kid Deluxe]] | [[#Sky Soldiers|Sky Soldiers]] | [[#Sol Divide|Sol Divide]] | [[#Sonic Wings|Sonic Wings]] | [[#Sonic Wings 2|Sonic Wings 2]] | [[#Sonic Wings 3|Sonic Wings 3]] | [[#Sonic Wings Limited|Sonic Wings Limited]] | [[#Soukyugurentai|Soukyugurentai]] | [[#Space Bomber|Space Bomber]] | [[#Space Invaders Anniversary|Space Invaders Anniversary]] | [[#Stagger 1|Stagger 1]] | [[#Star Force|Star Force]] | [[#Storm Blade|Storm Blade]] | [[#Strania: The Stella Machina|Strania: The Stella Machina]] | [[#Strikers 1945|Strikers 1945]] | [[#Strikers 1945 II|Strikers 1945 II]] | [[#Strikers 1945 Plus|Strikers 1945 Plus]] | [[#Strikers 1999|Strikers 1999]] | [[#Syvalion|Syvalion]]
-    |-
-    | T || [[#Tatsujin / Truxton|Tatsujin / Truxton]] | [[#Tenkomori Shooting|Tenkomori Shooting]] | [[#Tenseiryu / Saint Dragon|Tenseiryu / Saint Dragon]] | [[#Terra Force|Terra Force]] | [[#The Great Ragtime Show / Boogie Wings|The Great Ragtime Show / Boogie Wings]] | [[#Thunder Cross|Thunder Cross]] | [[#Thunder Cross II|Thunder Cross II]] | [[#Thunder Dragon 2|Thunder Dragon 2]] | [[#Thunder Force AC|Thunder Force AC]] | [[#Tokushu Butai U.A.G.|Tokushu Butai U.A.G.]] | [[#Triggerheart Exelica|Triggerheart Exelica]] | [[#Trigon|Trigon]] | [[#Trizeal|Trizeal]] | [[#Trouble ☆ Witches AC|Trouble ☆ Witches AC]] | [[#Turbo Force|Turbo Force]] | [[#Twin Eagle|Twin Eagle]] | [[#Twin Eagle II|Twin Eagle II]] | [[#TwinBee Yahhoo!|TwinBee Yahhoo!]] | [[#Twinkle Star Sprites|Twinkle Star Sprites]]
-    |-
-    | U || [[#U.S. Navy|U.S. Navy]] | [[#Uchuu Senkan Gomora / Bio-Ship Paladin|Uchuu Senkan Gomora / Bio-Ship Paladin]] | [[#Ultimate Ecology|Ultimate Ecology]] | [[#Under Defeat|Under Defeat]]
-    |-
-    | V || [[#V-V / Grind Stormer|V-V / Grind Stormer]] | [[#Valtric|Valtric]] | [[#Varth|Varth]] | [[#Vasara|Vasara]] | [[#Vasara 2|Vasara 2]] | [[#Viewpoint|Viewpoint]] | [[#Viper Phase 1|Viper Phase 1]]
-    |-
-    | W || [[#Wangan Sensou / Desert War|Wangan Sensou / Desert War]] | [[#War of Aero|War of Aero]] | [[#Wonder Planet|Wonder Planet]]
-    |-
-    | X || [[#X-Multiply|X-Multiply]] | [[#XII Stag|XII Stag]] | [[#Xevious 3D/G|Xevious 3D/G]] | [[#Xexex|Xexex]]
-    |-
-    | Y || [[#Yokushin: Giga Wing Generations|Yokushin: Giga Wing Generations]]
-    |-
-    | Z || [[#Zero Gunner|Zero Gunner]] | [[#Zero Gunner 2|Zero Gunner 2]] | [[#Zing Zing Zip|Zing Zing Zip]]
-    |}
+    <table class="wikitable">
+      <tr>
+        <th class="mw-customtoggle-16 mw-customtoggle-17 mw-customtoggle-18 mw-customtoggle-19 mw-customtoggle-151 mw-customtoggle-20" style="padding-left:10px;padding-right:10px;">0-9</th>
+        <th class="mw-customtoggle-177 mw-customtoggle-176 mw-customtoggle-237 mw-customtoggle-79 mw-customtoggle-65 mw-customtoggle-59 mw-customtoggle-217 mw-customtoggle-27 mw-customtoggle-28 mw-customtoggle-190 mw-customtoggle-78 mw-customtoggle-124 mw-customtoggle-218 mw-customtoggle-152 mw-customtoggle-104 mw-customtoggle-105 mw-customtoggle-247 mw-customtoggle-238" style="padding-left:10px;padding-right:10px;">A</th>
+        <th class="mw-customtoggle-80 mw-customtoggle-225 mw-customtoggle-83 mw-customtoggle-153 mw-customtoggle-154 mw-customtoggle-5 mw-customtoggle-125 mw-customtoggle-6 mw-customtoggle-60 mw-customtoggle-106 mw-customtoggle-155" style="padding-left:10px;padding-right:10px;">B</th>
+        <th class="mw-customtoggle-161 mw-customtoggle-160 mw-customtoggle-98 mw-customtoggle-21 mw-customtoggle-126 mw-customtoggle-127 mw-customtoggle-191 mw-customtoggle-107 mw-customtoggle-184 mw-customtoggle-185 mw-customtoggle-186 mw-customtoggle-256 mw-customtoggle-75 mw-customtoggle-82 mw-customtoggle-81" style="padding-left:10px;padding-right:10px;">C</th>
+        <th class="mw-customtoggle-108 mw-customtoggle-29 mw-customtoggle-192 mw-customtoggle-193 mw-customtoggle-195 mw-customtoggle-196 mw-customtoggle-194 mw-customtoggle-30 mw-customtoggle-32 mw-customtoggle-31 mw-customtoggle-84 mw-customtoggle-33 mw-customtoggle-34 mw-customtoggle-37 mw-customtoggle-38 mw-customtoggle-35 mw-customtoggle-36 mw-customtoggle-64 mw-customtoggle-39 mw-customtoggle-226 mw-customtoggle-40 mw-customtoggle-103 mw-customtoggle-137 mw-customtoggle-109 mw-customtoggle-110" style="padding-left:10px;padding-right:10px;">D</th>
+        <th class="mw-customtoggle-76 mw-customtoggle-41 mw-customtoggle-42 mw-customtoggle-43 mw-customtoggle-248 mw-customtoggle-219" style="padding-left:10px;padding-right:10px;">E</th>
+        <th class="mw-customtoggle-111 mw-customtoggle-197 mw-customtoggle-66 mw-customtoggle-85" style="padding-left:10px;padding-right:10px;">F</th>
+        <th class="mw-customtoggle-233 mw-customtoggle-198 mw-customtoggle-112 mw-customtoggle-77 mw-customtoggle-257 mw-customtoggle-199 mw-customtoggle-220 mw-customtoggle-178 mw-customtoggle-212 mw-customtoggle-213 mw-customtoggle-86 mw-customtoggle-87 mw-customtoggle-88 mw-customtoggle-89 mw-customtoggle-156 mw-customtoggle-200 mw-customtoggle-187 mw-customtoggle-201 mw-customtoggle-138 mw-customtoggle-139 mw-customtoggle-128 mw-customtoggle-53" style="padding-left:10px;padding-right:10px;">G</th>
+        <th class="mw-customtoggle-129 mw-customtoggle-174 mw-customtoggle-222" style="padding-left:10px;padding-right:10px;">H</th>
+        <th class="mw-customtoggle-44 mw-customtoggle-45 mw-customtoggle-231 mw-customtoggle-100 mw-customtoggle-67" style="padding-left:10px;padding-right:10px;">I</th>
+        <th class="mw-customtoggle-179 mw-customtoggle-68 mw-customtoggle-99 mw-customtoggle-46 mw-customtoggle-55 mw-customtoggle-227 mw-customtoggle-214" style="padding-left:10px;padding-right:10px;">K</th>
+        <th class="mw-customtoggle-22 mw-customtoggle-180 mw-customtoggle-23" style="padding-left:10px;padding-right:10px;">L</th>
+        <th class="mw-customtoggle-157 mw-customtoggle-69 mw-customtoggle-61 mw-customtoggle-202 mw-customtoggle-203 mw-customtoggle-170 mw-customtoggle-204 mw-customtoggle-113 mw-customtoggle-70 mw-customtoggle-47 mw-customtoggle-48 mw-customtoggle-49" style="padding-left:10px;padding-right:10px;">M</th>
+        <th class="mw-customtoggle-114 mw-customtoggle-115 mw-customtoggle-215 mw-customtoggle-1" style="padding-left:10px;padding-right:10px;">N</th>
+        <th class="mw-customtoggle-239 mw-customtoggle-130 mw-customtoggle-116" style="padding-left:10px;padding-right:10px;">O</th>
+        <th class="mw-customtoggle-131 mw-customtoggle-90 mw-customtoggle-117 mw-customtoggle-140 mw-customtoggle-50 mw-customtoggle-118 mw-customtoggle-7 mw-customtoggle-181 mw-customtoggle-51 mw-customtoggle-188 mw-customtoggle-175 mw-customtoggle-189 mw-customtoggle-8 mw-customtoggle-15" style="padding-left:10px;padding-right:10px;">P</th>
+        <th class="mw-customtoggle-71 mw-customtoggle-72 mw-customtoggle-73 mw-customtoggle-241 mw-customtoggle-232 mw-customtoggle-101 mw-customtoggle-102 mw-customtoggle-52 mw-customtoggle-165 mw-customtoggle-166 mw-customtoggle-167 mw-customtoggle-168 mw-customtoggle-162 mw-customtoggle-163 mw-customtoggle-164 mw-customtoggle-221 mw-customtoggle-132 mw-customtoggle-205 mw-customtoggle-206 mw-customtoggle-207 mw-customtoggle-13 mw-customtoggle-208" style="padding-left:10px;padding-right:10px;">R</th>
+        <th class="mw-customtoggle-92 mw-customtoggle-228 mw-customtoggle-58 mw-customtoggle-209 mw-customtoggle-252 mw-customtoggle-141 mw-customtoggle-142 mw-customtoggle-91 mw-customtoggle-253 mw-customtoggle-10 mw-customtoggle-11 mw-customtoggle-12 mw-customtoggle-158 mw-customtoggle-234 mw-customtoggle-56 mw-customtoggle-182 mw-customtoggle-119 mw-customtoggle-120 mw-customtoggle-2 mw-customtoggle-143 mw-customtoggle-242 mw-customtoggle-243 mw-customtoggle-244 mw-customtoggle-245 mw-customtoggle-159 mw-customtoggle-144 mw-customtoggle-210 mw-customtoggle-4 mw-customtoggle-224 mw-customtoggle-249 mw-customtoggle-62 mw-customtoggle-145 mw-customtoggle-146 mw-customtoggle-148 mw-customtoggle-147 mw-customtoggle-211" style="padding-left:10px;padding-right:10px;">S</th>
+        <th class="mw-customtoggle-229 mw-customtoggle-121 mw-customtoggle-133 mw-customtoggle-123 mw-customtoggle-54 mw-customtoggle-93 mw-customtoggle-94 mw-customtoggle-134 mw-customtoggle-223 mw-customtoggle-171 mw-customtoggle-254 mw-customtoggle-95 mw-customtoggle-235 mw-customtoggle-183 mw-customtoggle-246 mw-customtoggle-172 mw-customtoggle-173 mw-customtoggle-96 mw-customtoggle-3" style="padding-left:10px;padding-right:10px;">T</th>
+        <th class="mw-customtoggle-25 mw-customtoggle-240 mw-customtoggle-24 mw-customtoggle-63" style="padding-left:10px;padding-right:10px;">U</th>
+        <th class="mw-customtoggle-230 mw-customtoggle-135 mw-customtoggle-26 mw-customtoggle-250 mw-customtoggle-251 mw-customtoggle-9 mw-customtoggle-169" style="padding-left:10px;padding-right:10px;">V</th>
+        <th class="mw-customtoggle-136 mw-customtoggle-255 mw-customtoggle-57" style="padding-left:10px;padding-right:10px;">W</th>
+        <th class="mw-customtoggle-74 mw-customtoggle-236 mw-customtoggle-122 mw-customtoggle-97" style="padding-left:10px;padding-right:10px;">X</th>
+        <th class="mw-customtoggle-216" style="padding-left:10px;padding-right:10px;">Y</th>
+        <th class="mw-customtoggle-149 mw-customtoggle-150 mw-customtoggle-14" style="padding-left:10px;padding-right:10px;">Z</th>
+      <tr>
+      <tr id="mw-customcollapsible-1" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Ninja Commando|Ninja Commando]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-2" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Sky Soldiers|Sky Soldiers]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-3" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Twinkle Star Sprites|Twinkle Star Sprites]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-4" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Stagger 1|Stagger 1]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-5" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#BlaZeon|BlaZeon]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-6" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Blazing Star|Blazing Star]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-7" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Prehistoric Isle 2|Prehistoric Isle 2]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-8" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Pulstar|Pulstar]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-9" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Viewpoint|Viewpoint]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-10" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Shikigami no Shiro|Shikigami no Shiro]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-11" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Shikigami no Shiro II|Shikigami no Shiro II]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-12" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Shikigami no Shiro III|Shikigami no Shiro III]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-13" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Rezon|Rezon]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-14" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Zing Zing Zip|Zing Zing Zip]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-15" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Purikura Daisakusen|Purikura Daisakusen]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-16" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#1941 Counter Attack|1941 Counter Attack]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-17" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#1942|1942]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-18" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#1943|1943]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-19" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#1943 kai|1943 kai]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-20" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#19XX: The War Against Destiny|19XX: The War Against Destiny]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-21" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Chariot (Wonder 3)|Chariot (Wonder 3)]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-22" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Last Duel|Last Duel]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-23" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Lost Worlds / Forgotten Worlds|Lost Worlds / Forgotten Worlds]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-24" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Ultimate Ecology|Ultimate Ecology]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-25" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#U.S. Navy|U.S. Navy]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-26" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Varth|Varth]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-27" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Akai Katana|Akai Katana]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-28" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Akai Katana Shin|Akai Katana Shin]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-29" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Dangun Feveron|Dangun Feveron]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-30" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Deathsmiles|Deathsmiles]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-31" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Deathsmiles Mega Black Label|Deathsmiles Mega Black Label]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-32" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Deathsmiles II|Deathsmiles II]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-33" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Dodonpachi|Dodonpachi]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-34" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Dodonpachi Campaign Version|Dodonpachi Campaign Version]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-35" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Dodonpachi Daioujou|Dodonpachi Daioujou]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-36" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Dodonpachi Daioujou Black Label|Dodonpachi Daioujou Black Label]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-37" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Dodonpachi Daifukkatsu 1.5|Dodonpachi Daifukkatsu 1.5]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-38" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Dodonpachi Daifukkatsu Black Label|Dodonpachi Daifukkatsu Black Label]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-39" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Dodonpachi Saidaioujou|Dodonpachi Saidaioujou]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-40" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Donpachi|Donpachi]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-41" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#ESP Galuda|ESP Galuda]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-42" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#ESP Galuda II|ESP Galuda II]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-43" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#ESP Ra. De.|ESP Ra. De.]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-44" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Ibara|Ibara]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-45" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Ibara Black Label|Ibara Black Label]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-46" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Ketsui|Ketsui]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-47" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Muchi Muchi Pork|Muchi Muchi Pork]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-48" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Mushihimesama|Mushihimesama]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-49" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Mushihimesama Futari Black Label|Mushihimesama Futari Black Label]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-50" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Pink Sweets: Ibara Sorekara|Pink Sweets: Ibara Sorekara]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-51" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Progear no Arashi|Progear no Arashi]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-52" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Rafflesia|Rafflesia]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-53" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Gyrodine|Gyrodine]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-54" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#The Great Ragtime Show / Boogie Wings|The Great Ragtime Show / Boogie Wings]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-55" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Kuuga - Operation Code Vapor Trail|Kuuga - Operation Code Vapor Trail]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-56" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Skull Fang|Skull Fang]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-57" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Wonder Planet|Wonder Planet]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-58" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Sand Scorpion|Sand Scorpion]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-59" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Air Gallet / Akuu Gallet|Air Gallet / Akuu Gallet]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-60" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Border Down|Border Down]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-61" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Mamoru-kun wa Norowarete Shimatta / Mamorukun Curse!|Mamoru-kun wa Norowarete Shimatta / Mamorukun Curse!]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-62" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Strania: The Stella Machina|Strania: The Stella Machina]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-63" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Under Defeat|Under Defeat]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-64" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Dodonpachi II: Bee Storm|Dodonpachi II: Bee Storm]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-65" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Air Duel|Air Duel]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-66" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Fire Barrel / Air Assault|Fire Barrel / Air Assault]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-67" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Image Fight|Image Fight]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-68" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Kaitei Daisensou / In the Hunt|Kaitei Daisensou / In the Hunt]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-69" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Mahou Keibitai Gun Hohki / Mystic Riders|Mahou Keibitai Gun Hohki / Mystic Riders]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-70" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Mr. Heli no Daibouken / Battle Chopper|Mr. Heli no Daibouken / Battle Chopper]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-71" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#R-Type|R-Type]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-72" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#R-Type II|R-Type II]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-73" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#R-Type Leo|R-Type Leo]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-74" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#X-Multiply|X-Multiply]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-75" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Cybattler|Cybattler]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-76" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#E.D.F. Earth Defense Force|E.D.F. Earth Defense Force]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-77" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Game Tengoku / The Game Paradise|Game Tengoku / The Game Paradise]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-78" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Arbalester|Arbalester]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-79" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Air Buster|Air Buster]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-80" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Bakuretsu Breaker / Explosive Breaker|Bakuretsu Breaker / Explosive Breaker]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-81" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Cyvern: The Dragon Weapons|Cyvern: The Dragon Weapons]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-82" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Cyvern Plus|Cyvern Plus]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-83" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Battlantis|Battlantis]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-84" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Detana! TwinBee|Detana! TwinBee]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-85" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Flak Attack|Flak Attack]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-86" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Gokujyou Parodius|Gokujyou Parodius]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-87" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Gradius II|Gradius II]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-88" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Gradius III|Gradius III]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-89" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Gradius IV|Gradius IV]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-90" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Parodius Da!|Parodius Da!]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-91" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Sexy Parodius|Sexy Parodius]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-92" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Salamander 2|Salamander 2]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-93" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Thunder Cross|Thunder Cross]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-94" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Thunder Cross II|Thunder Cross II]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-95" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Trigon|Trigon]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-96" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#TwinBee Yahhoo!|TwinBee Yahhoo!]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-97" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Xexex|Xexex]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-98" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Chaos Field|Chaos Field]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-99" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Karous|Karous]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-100" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Illvelo|Illvelo]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-101" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Radirgy|Radirgy]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-102" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Radirgy Noa|Radirgy Noa]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-103" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Double Wings|Double Wings]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-104" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Assault|Assault]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-105" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Assault Plus|Assault Plus]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-106" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Bosconian|Bosconian]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-107" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Cosmo Gang: The Video|Cosmo Gang: The Video]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-108" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Dangerous Seed|Dangerous Seed]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-109" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Dragon Saber|Dragon Saber]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-110" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Dragon Spirit|Dragon Spirit]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-111" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#F/A / Fighter & Attacker|F/A / Fighter & Attacker]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-112" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Galaga|Galaga]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-113" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Metal Hawk|Metal Hawk]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-114" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Namco Classic Collection Vol. 1|Namco Classic Collection Vol. 1]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-115" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Nebulas Ray|Nebulas Ray]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-116" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Ordyne|Ordyne]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-117" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Phelios|Phelios]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-118" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Pistol Daimyou no Bouken|Pistol Daimyou no Bouken]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-119" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Sky Kid|Sky Kid]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-120" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Sky Kid Deluxe|Sky Kid Deluxe]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-121" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Tenkomori Shooting|Tenkomori Shooting]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-122" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Xevious 3D/G|Xevious 3D/G]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-123" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Terra Force|Terra Force]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-124" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Argus|Argus]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-125" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Black Heart|Black Heart]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-126" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Choujikuu Yousai Macross|Choujikuu Yousai Macross]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-127" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Choujikuu Yousai Macross II|Choujikuu Yousai Macross II]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-128" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Gunnail|Gunnail]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-129" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Hacha Mecha Fighter|Hacha Mecha Fighter]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-130" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Operation Ragnarok / Zed Blade|Operation Ragnarok / Zed Blade]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-131" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#P-47 Aces|P-47 Aces]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-132" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Rapid Hero|Rapid Hero]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-133" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Tenseiryu / Saint Dragon|Tenseiryu / Saint Dragon]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-134" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Thunder Dragon 2|Thunder Dragon 2]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-135" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Valtric|Valtric]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-136" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Wangan Sensou / Desert War|Wangan Sensou / Desert War]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-137" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Dragon Blaze|Dragon Blaze]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-138" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Gunbird|Gunbird]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-139" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Gunbird 2|Gunbird 2]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-140" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Pilot Kids|Pilot Kids]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-141" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Sengoku Ace|Sengoku Ace]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-142" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Sengoku Blade|Sengoku Blade]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-143" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Sol Divide|Sol Divide]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-144" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Space Bomber|Space Bomber]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-145" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Strikers 1945|Strikers 1945]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-146" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Strikers 1945 II|Strikers 1945 II]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-147" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Strikers 1999|Strikers 1999]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-148" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Strikers 1945 Plus|Strikers 1945 Plus]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-149" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Zero Gunner|Zero Gunner]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-150" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Zero Gunner 2|Zero Gunner 2]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-151" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#1944: The Loop Master|1944: The Loop Master]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-152" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Armed Police Batrider|Armed Police Batrider]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-153" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Battle Bakraid (Unlimited Ver.)|Battle Bakraid (Unlimited Ver.)]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-154" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Battle Garegga|Battle Garegga]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-155" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Brave Blade|Brave Blade]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-156" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Great Mahou Daisakusen|Great Mahou Daisakusen]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-157" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Mahou Daisakusen|Mahou Daisakusen]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-158" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Shippu Mahou Daisakusen|Shippu Mahou Daisakusen]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-159" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Soukyugurentai|Soukyugurentai]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-160" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Change Air Blade|Change Air Blade]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-161" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Caladrius Blaze AC|Caladrius Blaze AC]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-162" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Raiden II|Raiden II]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-163" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Raiden III|Raiden III]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-164" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Raiden IV|Raiden IV]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-165" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Raiden DX|Raiden DX]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-166" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Raiden Fighters|Raiden Fighters]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-167" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Raiden Fighters 2|Raiden Fighters 2]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-168" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Raiden Fighters Jet|Raiden Fighters Jet]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-169" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Viper Phase 1|Viper Phase 1]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-170" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Meta Fox|Meta Fox]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-171" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Tokushu Butai U.A.G.|Tokushu Butai U.A.G.]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-172" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Twin Eagle|Twin Eagle]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-173" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Twin Eagle II|Twin Eagle II]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-174" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Homura|Homura]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-175" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Psyvariar 2|Psyvariar 2]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-176" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#ASO: Armored Scrum Object / Alpha Mission|ASO: Armored Scrum Object / Alpha Mission]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-177" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#ASO II / Alpha Mission II|ASO II / Alpha Mission II]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-178" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Ghost Pilots|Ghost Pilots]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-179" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#KOF Sky Stage|KOF Sky Stage]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-180" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Last Resort|Last Resort]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-181" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Prehistoric Isle in 1930|Prehistoric Isle in 1930]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-182" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Sky Adventure|Sky Adventure]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-183" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Trouble ☆ Witches AC|Trouble ☆ Witches AC]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-184" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Cotton|Cotton]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-185" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Cotton 2|Cotton 2]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-186" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Cotton Boomerang|Cotton Boomerang]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-187" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Guardian Force|Guardian Force]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-188" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Psyvariar|Psyvariar]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-189" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Psyvariar Revision|Psyvariar Revision]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-190" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Akkanvader / Space Invaders '95|Akkanvader / Space Invaders '95]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-191" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Chuka Taisen|Chuka Taisen]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-192" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Darius|Darius]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-193" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Darius Extra|Darius Extra]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-194" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Darius II|Darius II]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-195" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Darius Gaiden|Darius Gaiden]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-196" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Darius Gaiden Extra|Darius Gaiden Extra]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-197" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Fighting Hawk|Fighting Hawk]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-198" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#G-Darius|G-Darius]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-199" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Gekirindan|Gekirindan]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-200" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Grid Seeker|Grid Seeker]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-201" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Gun Frontier|Gun Frontier]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-202" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Master of Weapon|Master of Weapon]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-203" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Mega Blast|Mega Blast]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-204" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Metal Black|Metal Black]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-205" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Raycrisis|Raycrisis]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-206" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Rayforce / Layer Section|Rayforce / Layer Section]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-207" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Raystorm|Raystorm]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-208" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Ryu Jin|Ryu Jin]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-209" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Scramble Formation / Tokio|Scramble Formation / Tokio]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-210" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Space Invaders Anniversary|Space Invaders Anniversary]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-211" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Syvalion|Syvalion]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-212" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Giga Wing|Giga Wing]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-213" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Giga Wing 2|Giga Wing 2]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-214" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Kyuukyoku Tiger II|Kyuukyoku Tiger II]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-215" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Night Raid|Night Raid]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-216" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Yokushin: Giga Wing Generations|Yokushin: Giga Wing Generations]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-217" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Aka to Blue Type-R|Aka to Blue Type-R]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-218" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Argus no Senshi / Rygar|Argus no Senshi / Rygar]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-219" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Eight Forces|Eight Forces]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-220" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Gemini Wing|Gemini Wing]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-221" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Raiga: Strato Fighter|Raiga: Strato Fighter]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-222" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Hyper Duel|Hyper Duel]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-223" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Thunder Force AC|Thunder Force AC]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-224" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Star Force|Star Force]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-225" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Batsugun|Batsugun]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-226" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Dogyuun!|Dogyuun!]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-227" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Kyuukyoku Tiger / Twin Cobra|Kyuukyoku Tiger / Twin Cobra]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-228" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Same! Same! Same! / Fire Shark|Same! Same! Same! / Fire Shark]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-229" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Tatsujin / Truxton|Tatsujin / Truxton]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-230" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#V-V / Grind Stormer|V-V / Grind Stormer]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-231" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Ikaruga|Ikaruga]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-232" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Radiant Silvergun|Radiant Silvergun]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-233" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#G Stream 2020|G Stream 2020]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-234" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Shooting Love 2007|Shooting Love 2007]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-235" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Trizeal|Trizeal]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-236" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#XII Stag|XII Stag]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-237" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Acrobat Mission|Acrobat Mission]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-238" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Atomic Robo-Kid|Atomic Robo-Kid]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-239" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Omega Fighter|Omega Fighter]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-240" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Uchuu Senkan Gomora / Bio-Ship Paladin|Uchuu Senkan Gomora / Bio-Ship Paladin]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-241" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Rabio Lepus|Rabio Lepus]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-242" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Sonic Wings|Sonic Wings]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-243" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Sonic Wings 2|Sonic Wings 2]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-244" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Sonic Wings 3|Sonic Wings 3]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-245" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Sonic Wings Limited|Sonic Wings Limited]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-246" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Turbo Force|Turbo Force]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-247" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Asuka & Asuka|Asuka & Asuka]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-248" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Earth Joker: UN Defense Force|Earth Joker: UN Defense Force]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-249" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Storm Blade|Storm Blade]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-250" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Vasara|Vasara]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-251" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Vasara 2|Vasara 2]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-252" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Sengeki Striker|Sengeki Striker]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-253" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Shienryu|Shienryu]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-254" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Triggerheart Exelica|Triggerheart Exelica]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-255" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#War of Aero|War of Aero]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-256" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Crimzon Clover|Crimzon Clover]]</td>
+      </tr>
+      <tr id="mw-customcollapsible-257" class="mw-collapsible mw-collapsed">
+        <td colspan="25">[[#Game Title|Game Title]]</td>
+      </tr>
+    </table>
 
 layout:
     sort:
@@ -133,7 +881,7 @@ layout:
             {{Anchor|Ninja Commando}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="7" | [[Ninja Commando]]
+            ! colspan="7" | [[Ninja Commando]] (ADK)
             |-
             ! Character !! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -168,7 +916,7 @@ layout:
             {{Anchor|Sky Soldiers}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Sky Soldiers]]
+            ! colspan="6" | [[Sky Soldiers]] (ADK)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -191,7 +939,7 @@ layout:
             {{Anchor|Twinkle Star Sprites}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Twinkle Star Sprites]]
+            ! colspan="6" | [[Twinkle Star Sprites]] (ADK)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -213,7 +961,7 @@ layout:
             {{Anchor|Stagger 1}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Stagger 1]]
+            ! colspan="6" | [[Stagger 1]] (Afega)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -233,7 +981,7 @@ layout:
             {{Anchor|BlaZeon}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[BlaZeon]]
+            ! colspan="6" | [[BlaZeon]] (A.I.)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -255,7 +1003,7 @@ layout:
             {{Anchor|Blazing Star}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Blazing Star]]
+            ! colspan="6" | [[Blazing Star]] (Aicom / Yumekobo)
             |-
             ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -288,7 +1036,7 @@ layout:
             {{Anchor|Prehistoric Isle 2}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Prehistoric Isle 2]]
+            ! colspan="5" | [[Prehistoric Isle 2]] (Aicom / Yumekobo)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -313,7 +1061,7 @@ layout:
             {{Anchor|Pulstar}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Pulstar]]
+            ! colspan="5" | [[Pulstar]] (Aicom / Yumekobo)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -335,7 +1083,7 @@ layout:
             {{Anchor|Viewpoint}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Viewpoint]]
+            ! colspan="6" | [[Viewpoint]] (Aicom / Yumekobo)
             |-
             ! Autofire || Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -363,7 +1111,7 @@ layout:
             {{Anchor|Shikigami no Shiro}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Shikigami no Shiro]]
+            ! colspan="6" | [[Shikigami no Shiro]] (Alfa System)
             |-
             ! Character !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -396,7 +1144,7 @@ layout:
             {{Anchor|Shikigami no Shiro II}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Shikigami no Shiro II]]
+            ! colspan="6" | [[Shikigami no Shiro II]] (Alfa System)
             |-
             ! Character !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -438,7 +1186,7 @@ layout:
             {{Anchor|Shikigami no Shiro III}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="7" | [[Shikigami no Shiro III]]
+            ! colspan="7" | [[Shikigami no Shiro III]] (Alfa System)
             |-
             ! Character !! Type !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -487,7 +1235,7 @@ layout:
             {{Anchor|Rezon}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Rezon]]
+            ! colspan="5" | [[Rezon]] (Allumer)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -509,7 +1257,7 @@ layout:
             {{Anchor|Zing Zing Zip}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Zing Zing Zip]]
+            ! colspan="5" | [[Zing Zing Zip]] (Allumer)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -531,7 +1279,7 @@ layout:
             {{Anchor|Purikura Daisakusen}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Purikura Daisakusen]]
+            ! colspan="6" | [[Purikura Daisakusen]] (Atlus)
             |-
             ! Character !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -555,7 +1303,7 @@ layout:
             {{Anchor|1941 Counter Attack}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[1941 Counter Attack]]
+            ! colspan="6" | [[1941 Counter Attack]] (Capcom)
             |-
             ! Mode !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -579,7 +1327,7 @@ layout:
             {{Anchor|1942}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[1942]]
+            ! colspan="5" | [[1942]] (Capcom)
             |-
             !Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -605,7 +1353,7 @@ layout:
             {{Anchor|1943}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[1943]]
+            ! colspan="6" | [[1943]] (Capcom)
             |-
             ! Mode !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -632,7 +1380,7 @@ layout:
             {{Anchor|1943 kai}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[1943 kai]]
+            ! colspan="6" | [[1943 kai]] (Capcom)
             |-
             ! Mode !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -656,7 +1404,7 @@ layout:
             {{Anchor|19XX: The War Against Destiny}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[19XX: The War Against Destiny]]
+            ! colspan="6" | [[19XX: The War Against Destiny]] (Capcom)
             |-
             ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -673,7 +1421,7 @@ layout:
             
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
-            ! colspan="5" | [[Area 88]] / U.N. Squadron
+            ! colspan="5" | [[Area 88]] (Capcom) / U.N. Squadron
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -697,7 +1445,7 @@ layout:
             {{Anchor|Chariot (Wonder 3)}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Chariot]] (Wonder 3)
+            ! colspan="6" | [[Chariot]] (Capcom) (Wonder 3)
             |-
             ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -712,7 +1460,7 @@ layout:
             
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
-            ! colspan="5" | [[Exed Exes]]
+            ! colspan="5" | [[Exed Exes]] (Capcom)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -736,7 +1484,7 @@ layout:
             {{Anchor|Last Duel}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Last Duel]]
+            ! colspan="6" | [[Last Duel]] (Capcom)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -758,7 +1506,7 @@ layout:
             {{Anchor|Lost Worlds / Forgotten Worlds}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="7" | [[Lost Worlds]] / Forgotten Worlds
+            ! colspan="7" | [[Lost Worlds]] (Capcom) / Forgotten Worlds
             |-
             ! Version !! Mode !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -788,7 +1536,7 @@ layout:
             {{Anchor|Ultimate Ecology}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Ultimate Ecology]]
+            ! colspan="6" | [[Ultimate Ecology]] (Capcom)
             |-
             ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -812,7 +1560,7 @@ layout:
             {{Anchor|U.S. Navy}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[U.S. Navy]]
+            ! colspan="6" | [[U.S. Navy]] (Capcom)
             |-
             ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -837,7 +1585,7 @@ layout:
             {{Anchor|Varth}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Varth]]
+            ! colspan="6" | [[Varth]] (Capcom)
             |-
             ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -862,7 +1610,7 @@ layout:
             {{Anchor|Akai Katana}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Akai Katana]]
+            ! colspan="6" | [[Akai Katana]] (CAVE)
             |-
             ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -888,7 +1636,7 @@ layout:
             {{Anchor|Akai Katana Shin}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Akai Katana Shin]]
+            ! colspan="6" | [[Akai Katana Shin]] (CAVE)
             |-
             ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -915,7 +1663,7 @@ layout:
             {{Anchor|Dangun Feveron}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="7" | [[Dangun Feveron]]
+            ! colspan="7" | [[Dangun Feveron]] (CAVE)
             |-
             ! Mode !! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -954,7 +1702,7 @@ layout:
             {{Anchor|Deathsmiles}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="7" | [[Deathsmiles]]
+            ! colspan="7" | [[Deathsmiles]] (CAVE)
             |-
             ! Character !! Route !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -1001,7 +1749,7 @@ layout:
             {{Anchor|Deathsmiles Mega Black Label}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Deathsmiles]] Mega Black Label
+            ! colspan="6" | [[Deathsmiles]] (CAVE) Mega Black Label
             |-
             ! Character !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -1037,7 +1785,7 @@ layout:
             {{Anchor|Deathsmiles II}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Deathsmiles II]]
+            ! colspan="6" | [[Deathsmiles II]] (CAVE)
             |-
             ! Character !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -1069,7 +1817,7 @@ layout:
             {{Anchor|Dodonpachi}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="7" | [[Dodonpachi]]
+            ! colspan="7" | [[Dodonpachi]] (CAVE)
             |-
             ! colspan="2" | Ship
             ! Score !! Player !! Date / Source !! Comment !! Replay
@@ -1124,7 +1872,7 @@ layout:
             {{Anchor|Dodonpachi Campaign Version}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Dodonpachi Campaign Version]]
+            ! colspan="5" | [[Dodonpachi Campaign Version]] (CAVE)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -1144,7 +1892,7 @@ layout:
             {{Anchor|Dodonpachi Daioujou}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="7" | [[Dodonpachi Daioujou]]
+            ! colspan="7" | [[Dodonpachi Daioujou]] (CAVE)
             |-
             ! colspan="2" | Ship
             ! Score !! Player !! Date / Source !! Comment !! Replay
@@ -1206,7 +1954,7 @@ layout:
             {{Anchor|Dodonpachi Daioujou Black Label}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="7" | [[Dodonpachi Daioujou Black Label]]
+            ! colspan="7" | [[Dodonpachi Daioujou Black Label]] (CAVE)
             |-
             ! colspan="2" | Ship
             ! Score !! Player !! Date / Source !! Comment !! Replay
@@ -1243,7 +1991,7 @@ layout:
             
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
-            ! colspan="6" |  [[Dodonpachi Daifukkatsu]]
+            ! colspan="6" |  [[Dodonpachi Daifukkatsu]] (CAVE)
             |-
             ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -1270,7 +2018,7 @@ layout:
             {{Anchor|Dodonpachi Daifukkatsu 1.5}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="8" | [[Dodonpachi Daifukkatsu 1.5]]
+            ! colspan="8" | [[Dodonpachi Daifukkatsu 1.5]] (CAVE)
             |-
             ! colspan="2" | Ship
             !  Loop !! Score !! Player !! Date / Source !! Comment !! Replay
@@ -1340,7 +2088,7 @@ layout:
             {{Anchor|Dodonpachi Daifukkatsu Black Label}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="7" | [[Dodonpachi Daifukkatsu Black Label]]
+            ! colspan="7" | [[Dodonpachi Daifukkatsu Black Label]] (CAVE)
             |-
             ! colspan="2" | Ship
             ! Score !! Player !! Date / Source !! Comment !! Replay
@@ -1389,7 +2137,7 @@ layout:
             {{Anchor|DDP SDOJ}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="8" | [[Dodonpachi Saidaioujou]]
+            ! colspan="8" | [[Dodonpachi Saidaioujou]] (CAVE)
             |-
             ! colspan="2" | Ship
             ! TLB !! Score !! Player !! Date / Source !! Comment !! Replay
@@ -1464,7 +2212,7 @@ layout:
             {{Anchor|Donpachi}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Donpachi]]
+            ! colspan="6" | [[Donpachi]] (CAVE)
             |-
             ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -1491,7 +2239,7 @@ layout:
             {{Anchor|ESP Galuda}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[ESP Galuda]]
+            ! colspan="6" | [[ESP Galuda]] (CAVE)
             |-
             ! Character !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -1516,7 +2264,7 @@ layout:
             {{Anchor|ESP Galuda II}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[ESP Galuda II]]
+            ! colspan="6" | [[ESP Galuda II]] (CAVE)
             |-
             ! Character !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -1543,7 +2291,7 @@ layout:
             {{Anchor|ESP Ra. De.}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[ESP Ra. De.]]
+            ! colspan="6" | [[ESP Ra. De.]] (CAVE)
             |-
             ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -1560,7 +2308,7 @@ layout:
             
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
-            ! colspan="6" | [[Guwange]]
+            ! colspan="6" | [[Guwange]] (CAVE)
             |-
             ! Character !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -1590,7 +2338,7 @@ layout:
             {{Anchor|Ibara}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Ibara]]
+            ! colspan="6" | [[Ibara]] (CAVE)
             |-
             ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -1617,7 +2365,7 @@ layout:
             {{Anchor|Ibara Kuro: Black Label}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Ibara Black Label]]
+            ! colspan="6" | [[Ibara Black Label]] (CAVE)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -1640,7 +2388,7 @@ layout:
             {{Anchor|Ketsui}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="7" | [[Ketsui]]
+            ! colspan="7" | [[Ketsui]] (CAVE)
             |-
             ! Ship !! Loop !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -1671,7 +2419,7 @@ layout:
             {{Anchor|Muchi Muchi Pork}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="8" | [[Muchi Muchi Pork]]
+            ! colspan="8" | [[Muchi Muchi Pork]] (CAVE)
             |-
             ! Mode !! Character !! Loop !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -1713,7 +2461,7 @@ layout:
             {{Anchor|Mushihimesama}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="7" | [[Mushihimesama]]
+            ! colspan="7" | [[Mushihimesama]] (CAVE)
             |-
             ! Autofire !! Mode !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -1741,7 +2489,7 @@ layout:
             
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
-            ! colspan="7" | [[Mushihimesama Futari]]
+            ! colspan="7" | [[Mushihimesama Futari]] (CAVE)
             |-
             ! Mode !! Character !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -1764,7 +2512,7 @@ layout:
             
             {| class="wikitable"  style="text-align: center"
             |-
-            ! colspan="8" | [[Mushihimesama Futari 1.5]]
+            ! colspan="8" | [[Mushihimesama Futari 1.5]] (CAVE)
             |-
             ! Mode !! colspan="2" | Character
             ! Score !! Player !! Date / Source !! Comment !! Replay
@@ -1826,7 +2574,7 @@ layout:
             {{Anchor|Mushihimesama Futari Black Label}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="7" | [[Mushihimesama Futari Black Label]]
+            ! colspan="7" | [[Mushihimesama Futari Black Label]] (CAVE)
             |-
             ! Mode !! Character !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -1865,7 +2613,7 @@ layout:
             {{Anchor|Pink Sweets: Ibara Sorekara}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="7" | [[Pink Sweets: Ibara Sorekara]]
+            ! colspan="7" | [[Pink Sweets: Ibara Sorekara]] (CAVE)
             |-
             ! Mode !! Character !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -1906,7 +2654,7 @@ layout:
             {{Anchor|Progear no Arashi}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="7" | [[Progear no Arashi]]
+            ! colspan="7" | [[Progear no Arashi]] (CAVE)
             |-
             ! colspan="2" | Ship
             ! Score !! Player !! Date / Source !! Comment !! Replay
@@ -1955,7 +2703,7 @@ layout:
             {{Anchor|Rafflesia}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Rafflesia]]
+            ! colspan="5" | [[Rafflesia]] (Coreland)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -1975,7 +2723,7 @@ layout:
             {{Anchor|Gyrodine}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Gyrodine]]
+            ! colspan="5" | [[Gyrodine]] (Crux)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -1997,7 +2745,7 @@ layout:
             {{Anchor|The Great Ragtime Show / Boogie Wings}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[The Great Ragtime Show]] / Boogie Wings
+            ! colspan="6" | [[The Great Ragtime Show]] (Data East) / Boogie Wings
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -2017,7 +2765,7 @@ layout:
             {{Anchor|Kuuga - Operation Code Vapor Trail}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="7" | [[Kuuga - Operation Code Vapor Trail]]
+            ! colspan="7" | [[Kuuga - Operation Code Vapor Trail]] (Data East)
             |-
             ! Autofire !! Character !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -2052,7 +2800,7 @@ layout:
             {{Anchor|Skull Fang}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Skull Fang]]
+            ! colspan="6" | [[Skull Fang]] (Data East)
             |-
             ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -2066,7 +2814,7 @@ layout:
             
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
-            ! colspan="6" | [[SRD: Super Real Darwin]]
+            ! colspan="6" | [[SRD: Super Real Darwin]] (Data East)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -2094,7 +2842,7 @@ layout:
             {{Anchor|Wonder Planet}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Wonder Planet]]
+            ! colspan="5" | [[Wonder Planet]] (Data East)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -2114,7 +2862,7 @@ layout:
             {{Anchor|Sand Scorpion}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Sand Scorpion]]
+            ! colspan="6" | [[Sand Scorpion]] (Face)
             |-
             ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -2136,7 +2884,7 @@ layout:
             {{Anchor|Air Gallet / Akuu Gallet}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Air Gallet]] / Akuu Gallet
+            ! colspan="5" | [[Air Gallet]] (Gazelle) / Akuu Gallet
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -2158,7 +2906,7 @@ layout:
             {{Anchor|Border Down}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Border Down]]
+            ! colspan="6" | [[Border Down]] (G.Rev)
             |-
             ! Route !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -2187,7 +2935,7 @@ layout:
             {{Anchor|Mamoru-kun wa Norowarete Shimatta / Mamorukun Curse!}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="7" | [[Mamoru-kun wa Norowarete Shimatta]] / Mamorukun Curse!
+            ! colspan="7" | [[Mamoru-kun wa Norowarete Shimatta]] (G.Rev) / Mamorukun Curse!
             |-
             ! Mode !! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -2222,7 +2970,7 @@ layout:
             {{Anchor|Strania: The Stella Machina}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="7" | [[Strania: The Stella Machina]]
+            ! colspan="7" | [[Strania: The Stella Machina]] (G.Rev)
             |-
             ! Ship !! Mode !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -2269,7 +3017,7 @@ layout:
             {{Anchor|Under Defeat}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Under Defeat]]
+            ! colspan="6" | [[Under Defeat]] (G.Rev)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -2292,7 +3040,7 @@ layout:
             {{Anchor|Dodonpachi II: Bee Storm}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Dodonpachi II: Bee Storm]]
+            ! colspan="6" | [[Dodonpachi II: Bee Storm]] (IGS)
             |-
             ! Mode !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -2319,7 +3067,7 @@ layout:
             {{Anchor|Air Duel}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Air Duel]]
+            ! colspan="6" | [[Air Duel]] (Irem)
             |-
             ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -2334,7 +3082,7 @@ layout:
             
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
-            ! colspan="5" | [[Dragon Breed]]
+            ! colspan="5" | [[Dragon Breed]] (Irem)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -2359,7 +3107,7 @@ layout:
             {{Anchor|Fire Barrel / Air Assault}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Fire Barrel]] / Air Assault
+            ! colspan="6" | [[Fire Barrel]] (Irem) / Air Assault
             |-
             ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -2373,7 +3121,7 @@ layout:
             
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
-            ! colspan="6" | [[Gallop: Armed Police Unit]] / Cosmic Cop
+            ! colspan="6" | [[Gallop: Armed Police Unit]] (Irem) / Cosmic Cop
             |-
             ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -2421,7 +3169,7 @@ layout:
             {{Anchor|Image Fight}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Image Fight]]
+            ! colspan="5" | [[Image Fight]] (Irem)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -2443,7 +3191,7 @@ layout:
             {{Anchor|Kaitei Daisensou / In the Hunt}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Kaitei Daisensou]] / In the Hunt
+            ! colspan="5" | [[Kaitei Daisensou]] (Irem) / In the Hunt
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -2465,7 +3213,7 @@ layout:
             {{Anchor|Mahou Keibitai Gun Hohki / Mystic Riders}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Mahou Keibitai Gun Hohki]] / Mystic Riders
+            ! colspan="6" | [[Mahou Keibitai Gun Hohki]] (Irem) / Mystic Riders
             |-
             ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -2489,7 +3237,7 @@ layout:
             {{Anchor|Mr. Heli no Daibouken / Battle Chopper}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Mr. Heli no Daibouken]] / Battle Chopper
+            ! colspan="6" | [[Mr. Heli no Daibouken]] (Irem) / Battle Chopper
             |-
             ! Mode !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -2513,7 +3261,7 @@ layout:
             {{Anchor|R-Type}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[R-Type]]
+            ! colspan="5" | [[R-Type]] (Irem)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -2535,7 +3283,7 @@ layout:
             {{Anchor|R-Type II}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[R-Type II]]
+            ! colspan="5" | [[R-Type II]] (Irem)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -2558,7 +3306,7 @@ layout:
             {{Anchor|R-Type Leo}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[R-Type Leo]]
+            ! colspan="6" | [[R-Type Leo]] (Irem)
             |-
             ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -2573,7 +3321,7 @@ layout:
             
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
-            ! colspan="6" | [[Thunder Blaster]] / Lethal Thunder
+            ! colspan="6" | [[Thunder Blaster]] (Irem) / Lethal Thunder
             |-
             ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -2599,7 +3347,7 @@ layout:
             {{Anchor|X-Multiply}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[X-Multiply]]
+            ! colspan="5" | [[X-Multiply]] (Irem)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -2622,7 +3370,7 @@ layout:
             {{Anchor|Cybattler}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Cybattler]]
+            ! colspan="6" | [[Cybattler]] (Jaleco)
             |-
             ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -2646,7 +3394,7 @@ layout:
             {{Anchor|E.D.F. Earth Defense Force}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[E.D.F. Earth Defense Force]]
+            ! colspan="5" | [[E.D.F. Earth Defense Force]] (Jaleco)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -2668,7 +3416,7 @@ layout:
             {{Anchor|Game Tengoku / The Game Paradise}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="7" | [[Game Tengoku]] / The Game Paradise
+            ! colspan="7" | [[Game Tengoku]] (Jaleco) / The Game Paradise
             |-
             ! Mode !! Character/Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -2703,7 +3451,7 @@ layout:
             
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
-            ! colspan="5" | [[Plus Alpha]]
+            ! colspan="5" | [[Plus Alpha]] (Jaleco)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -2743,7 +3491,7 @@ layout:
             {{Anchor|Arbalester}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Arbalester]]
+            ! colspan="5" | [[Arbalester]] (Jorudan)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -2763,7 +3511,7 @@ layout:
             {{Anchor|Air Buster}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Air Buster]]
+            ! colspan="5" | [[Air Buster]] (Kaneko)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -2785,7 +3533,7 @@ layout:
             {{Anchor|Bakuretsu Breaker / Explosive Breaker}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Bakuretsu Breaker]] / Explosive Breaker
+            ! colspan="6" | [[Bakuretsu Breaker]] (Kaneko) / Explosive Breaker
             |-
             ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -2810,7 +3558,7 @@ layout:
             {{Anchor|Cyvern: The Dragon Weapons}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Cyvern: The Dragon Weapons]]
+            ! colspan="5" | [[Cyvern: The Dragon Weapons]] (Kaneko)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -2832,7 +3580,7 @@ layout:
             {{Anchor|Cyvern Plus}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Cyvern Plus]]
+            ! colspan="5" | [[Cyvern Plus]] (Kaneko)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -2842,7 +3590,7 @@ layout:
             
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
-            ! colspan="5" | [[Heavy Unit]]
+            ! colspan="5" | [[Heavy Unit]] (Kaneko)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -2866,7 +3614,7 @@ layout:
             {{Anchor|Battlantis}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Battlantis]]
+            ! colspan="5" | [[Battlantis]] (Konami)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -2888,7 +3636,7 @@ layout:
             {{Anchor|Detana! TwinBee}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Detana! TwinBee]]
+            ! colspan="6" | [[Detana! TwinBee]] (Konami)
             |-
             ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -2913,7 +3661,7 @@ layout:
             {{Anchor|Flak Attack}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Flak Attack]]
+            ! colspan="5" | [[Flak Attack]] (Konami)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -2935,7 +3683,7 @@ layout:
             {{Anchor|Gokujyou Parodius}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Gokujyou Parodius]]
+            ! colspan="6" | [[Gokujyou Parodius]] (Konami)
             |-
             ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -2965,7 +3713,7 @@ layout:
             
             {| class="wikitable"  style="text-align: center"
             |-
-            ! colspan="6" | [[Gradius]]
+            ! colspan="6" | [[Gradius]] (Konami)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -2995,7 +3743,7 @@ layout:
             {{Anchor|Gradius II}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Gradius II]]
+            ! colspan="6" | [[Gradius II]] (Konami)
             |-
             ! Power Meter !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -3036,7 +3784,7 @@ layout:
             {{Anchor|Gradius III}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="8" | [[Gradius III]]
+            ! colspan="8" | [[Gradius III]] (Konami)
             |-
             ! Mode !! Autofire !! Weapon !! Score <br>[stage reached] !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -3098,7 +3846,7 @@ layout:
             {{Anchor|Gradius IV}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Gradius IV]]
+            ! colspan="6" | [[Gradius IV]] (Konami)
             |-
             ! Power Meter !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -3126,7 +3874,7 @@ layout:
             
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
-            ! colspan="6" | [[Life Force]]
+            ! colspan="6" | [[Life Force]] (Konami)
             |-
             ! Player Side !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -3175,7 +3923,7 @@ layout:
             {{Anchor|Parodius Da!}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="7" | [[Parodius Da!]]
+            ! colspan="7" | [[Parodius Da!]] (Konami)
             |-
             ! Autofire !! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -3214,7 +3962,7 @@ layout:
             {{Anchor|Sexy Parodius}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Sexy Parodius]]
+            ! colspan="6" | [[Sexy Parodius]] (Konami)
             |-
             ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -3240,7 +3988,7 @@ layout:
             
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
-            ! colspan="5" | [[Salamander]]
+            ! colspan="5" | [[Salamander]] (Konami)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -3264,7 +4012,7 @@ layout:
             {{Anchor|Salamander 2}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Salamander 2]]
+            ! colspan="5" | [[Salamander 2]] (Konami)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -3286,7 +4034,7 @@ layout:
             {{Anchor|Thunder Cross}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Thunder Cross]]
+            ! colspan="5" | [[Thunder Cross]] (Konami)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -3370,7 +4118,7 @@ layout:
             {{Anchor|Thunder Cross II}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Thunder Cross II]]
+            ! colspan="6" | [[Thunder Cross II]] (Konami)
             |-
             ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -3396,7 +4144,7 @@ layout:
             {{Anchor|Trigon}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Trigon]]
+            ! colspan="6" | [[Trigon]] (Konami)
             |-
             ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -3425,7 +4173,7 @@ layout:
             {{Anchor|TwinBee Yahhoo!}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[TwinBee Yahhoo!]]
+            ! colspan="6" | [[TwinBee Yahhoo!]] (Konami)
             |-
             ! Mode !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -3457,7 +4205,7 @@ layout:
             {{Anchor|Xexex}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Xexex]]
+            ! colspan="6" | [[Xexex]] (Konami)
             |-
             ! Version !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -3484,7 +4232,7 @@ layout:
             {{Anchor|Chaos Field}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Chaos Field]]
+            ! colspan="6" | [[Chaos Field]] (Milestone)
             |-
             ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -3511,7 +4259,7 @@ layout:
             {{Anchor|Karous}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Karous]]
+            ! colspan="5" | [[Karous]] (Milestone)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -3534,7 +4282,7 @@ layout:
             {{Anchor|Illvelo}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Illvelo]]
+            ! colspan="5" | [[Illvelo]] (Milestone)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -3559,7 +4307,7 @@ layout:
             {{Anchor|Radirgy}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Radirgy]]
+            ! colspan="5" | [[Radirgy]] (Milestone)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -3584,7 +4332,7 @@ layout:
             {{Anchor|Radirgy Noa}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Radirgy Noa]]
+            ! colspan="5" | [[Radirgy Noa]] (Milestone)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -3607,7 +4355,7 @@ layout:
             {{Anchor|Double Wings}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Double Wings]]
+            ! colspan="5" | [[Double Wings]] (Mitchell)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -3627,7 +4375,7 @@ layout:
             {{Anchor|Assault}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Assault]]
+            ! colspan="6" | [[Assault]] (Namco)
             |-
             ! Version !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -3653,7 +4401,7 @@ layout:
             {{Anchor|Assault Plus}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Assault Plus]]
+            ! colspan="6" | [[Assault Plus]] (Namco)
             |-
             ! Version !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -3679,7 +4427,7 @@ layout:
             {{Anchor|Bosconian}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Bosconian]]
+            ! colspan="6" | [[Bosconian]] (Namco)
             |-
             ! Version !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -3699,7 +4447,7 @@ layout:
             {{Anchor|Cosmo Gang: The Video}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Cosmo Gang: The Video]]
+            ! colspan="6" | [[Cosmo Gang: The Video]] (Namco)
             |-
             ! Mode !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -3723,7 +4471,7 @@ layout:
             {{Anchor|Dangerous Seed}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Dangerous Seed]]
+            ! colspan="6" | [[Dangerous Seed]] (Namco)
             |-
             ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -3747,7 +4495,7 @@ layout:
             {{Anchor|Dragon Saber}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Dragon Saber]]
+            ! colspan="6" | [[Dragon Saber]] (Namco)
             |-
             ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -3771,7 +4519,7 @@ layout:
             {{Anchor|Dragon Spirit}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Dragon Spirit]]
+            ! colspan="6" | [[Dragon Spirit]] (Namco)
             |-
             ! Version !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -3798,7 +4546,7 @@ layout:
             {{Anchor|F/A / Fighter & Attacker}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="7" | [[F/A]] / Fighter & Attacker
+            ! colspan="7" | [[F/A]] (Namco) / Fighter & Attacker
             |-
             ! Autofire !! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -3846,7 +4594,7 @@ layout:
             {{Anchor|Galaga}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Galaga]]
+            ! colspan="6" | [[Galaga]] (Namco)
             |-
             ! Setting !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -3862,7 +4610,7 @@ layout:
             
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
-            ! colspan="5" | [[Galaga '88]]
+            ! colspan="5" | [[Galaga '88]] (Namco)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -3876,7 +4624,7 @@ layout:
             
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
-            ! colspan="5" | [[Gaplus]]
+            ! colspan="5" | [[Gaplus]] (Namco)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -3900,7 +4648,7 @@ layout:
             {{Anchor|Metal Hawk}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Metal Hawk]]
+            ! colspan="6" | [[Metal Hawk]] (Namco)
             |-
             ! Version !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -3924,7 +4672,7 @@ layout:
             {{Anchor|Namco Classic Collection Vol. 1}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="7" | [[Namco Classic Collection Vol. 1]]
+            ! colspan="7" | [[Namco Classic Collection Vol. 1]] (Namco)
             |-
             ! Game !! Mode !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -3957,7 +4705,7 @@ layout:
             {{Anchor|Nebulas Ray}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Nebulas Ray]]
+            ! colspan="6" | [[Nebulas Ray]] (Namco)
             |-
             ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -3982,7 +4730,7 @@ layout:
             {{Anchor|Ordyne}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Ordyne]]
+            ! colspan="6" | [[Ordyne]] (Namco)
             |-
             ! Mode !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -4007,7 +4755,7 @@ layout:
             {{Anchor|Phelios}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Phelios]]
+            ! colspan="6" | [[Phelios]] (Namco)
             |-
             ! Mode !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -4032,7 +4780,7 @@ layout:
             {{Anchor|Pistol Daimyou no Bouken}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Pistol Daimyou no Bouken]]
+            ! colspan="6" | [[Pistol Daimyou no Bouken]] (Namco)
             |-
             ! Version !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -4056,7 +4804,7 @@ layout:
             {{Anchor|Sky Kid}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Sky Kid]]
+            ! colspan="5" | [[Sky Kid]] (Namco)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -4078,7 +4826,7 @@ layout:
             {{Anchor|Sky Kid Deluxe}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Sky Kid Deluxe]]
+            ! colspan="5" | [[Sky Kid Deluxe]] (Namco)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -4088,7 +4836,7 @@ layout:
             
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
-            ! colspan="5" | [[Super Xevious]]
+            ! colspan="5" | [[Super Xevious]] (Namco)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -4116,7 +4864,7 @@ layout:
             {{Anchor|Tenkomori Shooting}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Tenkomori Shooting]]
+            ! colspan="6" | [[Tenkomori Shooting]] (Namco)
             |-
             ! Mode !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -4132,7 +4880,7 @@ layout:
             
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
-            ! colspan="5" | [[Xevious]]
+            ! colspan="5" | [[Xevious]] (Namco)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -4178,7 +4926,7 @@ layout:
             {{Anchor|Xevious 3D/G}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Xevious 3D/G]]
+            ! colspan="5" | [[Xevious 3D/G]] (Namco)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -4200,7 +4948,7 @@ layout:
             {{Anchor|Terra Force}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Terra Force]]
+            ! colspan="5" | [[Terra Force]] (Nichibutsu)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -4222,7 +4970,7 @@ layout:
             {{Anchor|Argus}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Argus]]
+            ! colspan="5" | [[Argus]] (NMK)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -4244,7 +4992,7 @@ layout:
             {{Anchor|Black Heart}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Black Heart]]
+            ! colspan="6" | [[Black Heart]] (NMK)
             |-
             ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -4268,7 +5016,7 @@ layout:
             {{Anchor|Choujikuu Yousai Macross}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Choujikuu Yousai Macross]]
+            ! colspan="6" | [[Choujikuu Yousai Macross]] (NMK)
             |-
             ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -4292,7 +5040,7 @@ layout:
             {{Anchor|Choujikuu Yousai Macross II}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="7" | [[Choujikuu Yousai Macross II]]
+            ! colspan="7" | [[Choujikuu Yousai Macross II]] (NMK)
             |-
             ! Course !! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -4327,7 +5075,7 @@ layout:
             {{Anchor|Gunnail}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Gunnail]]
+            ! colspan="6" | [[Gunnail]] (NMK)
             |-
             ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -4352,7 +5100,7 @@ layout:
             {{Anchor|Hacha Mecha Fighter}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Hacha Mecha Fighter]]
+            ! colspan="6" | [[Hacha Mecha Fighter]] (NMK)
             |-
             ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -4378,7 +5126,7 @@ layout:
             {{Anchor|Operation Ragnarok / Zed Blade}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Operation Ragnarok]] / Zed Blade
+            ! colspan="6" | [[Operation Ragnarok]] (NMK) / Zed Blade
             |-
             ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -4402,7 +5150,7 @@ layout:
             {{Anchor|P-47 Aces}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[P-47 Aces]]
+            ! colspan="6" | [[P-47 Aces]] (NMK)
             |-
             ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -4437,7 +5185,7 @@ layout:
             
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
-            ! colspan="5" | [[P-47: The Freedom Fighter]]
+            ! colspan="5" | [[P-47: The Freedom Fighter]] (NMK)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -4469,7 +5217,7 @@ layout:
             {{Anchor|Rapid Hero}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Rapid Hero]]
+            ! colspan="5" | [[Rapid Hero]] (NMK)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -4483,7 +5231,7 @@ layout:
             
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
-            ! colspan="5" | [[Task Force Harrier]]
+            ! colspan="5" | [[Task Force Harrier]] (NMK)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -4547,7 +5295,7 @@ layout:
             {{Anchor|Tenseiryu / Saint Dragon}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Tenseiryu]] / Saint Dragon
+            ! colspan="6" | [[Tenseiryu]] (NMK) / Saint Dragon
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -4561,7 +5309,7 @@ layout:
             
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
-            ! colspan="6" | [[Thunder Dragon]]
+            ! colspan="6" | [[Thunder Dragon]] (NMK)
             |-
             ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -4600,7 +5348,7 @@ layout:
             {{Anchor|Thunder Dragon 2}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Thunder Dragon 2]]
+            ! colspan="6" | [[Thunder Dragon 2]] (NMK)
             |-
             ! Player Side !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -4614,7 +5362,7 @@ layout:
             
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
-            ! colspan="5" | [[USAAF Mustang]]
+            ! colspan="5" | [[USAAF Mustang]] (NMK)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -4654,7 +5402,7 @@ layout:
             {{Anchor|Valtric}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Valtric]]
+            ! colspan="5" | [[Valtric]] (NMK)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -4678,7 +5426,7 @@ layout:
             {{Anchor|Wangan Sensou / Desert War}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Wangan Sensou]] / Desert War
+            ! colspan="6" | [[Wangan Sensou]] (NMK) / Desert War
             |-
             ! Mode !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -4705,7 +5453,7 @@ layout:
             {{Anchor|Dragon Blaze}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Dragon Blaze]]
+            ! colspan="6" | [[Dragon Blaze]] (Psikyo)
             |-
             ! Character !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -4734,7 +5482,7 @@ layout:
             {{Anchor|Gunbird}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Gunbird]]
+            ! colspan="6" | [[Gunbird]] (Psikyo)
             |-
             ! Character !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -4765,7 +5513,7 @@ layout:
             {{Anchor|Gunbird 2}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Gunbird 2]]
+            ! colspan="6" | [[Gunbird 2]] (Psikyo)
             |-
             ! Character !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -4801,7 +5549,7 @@ layout:
             {{Anchor|Pilot Kids}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Pilot Kids]]
+            ! colspan="5" | [[Pilot Kids]] (Psikyo)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -4823,7 +5571,7 @@ layout:
             {{Anchor|Sengoku Ace}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Sengoku Ace]]
+            ! colspan="6" | [[Sengoku Ace]] (Psikyo)
             |-
             ! Character !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -4856,7 +5604,7 @@ layout:
             {{Anchor|Sengoku Blade}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Sengoku Blade]]
+            ! colspan="6" | [[Sengoku Blade]] (Psikyo)
             |-
             ! Character !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -4889,7 +5637,7 @@ layout:
             {{Anchor|Sol Divide}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Sol Divide]]
+            ! colspan="6" | [[Sol Divide]] (Psikyo)
             |-
             ! Character !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -4915,7 +5663,7 @@ layout:
             {{Anchor|Space Bomber}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Space Bomber]]
+            ! colspan="6" | [[Space Bomber]] (Psikyo)
             |-
             ! Version !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -4942,7 +5690,7 @@ layout:
             {{Anchor|Strikers 1945}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Strikers 1945]]
+            ! colspan="6" | [[Strikers 1945]] (Psikyo)
             |-
             ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -4978,7 +5726,7 @@ layout:
             {{Anchor|Strikers 1945 II}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Strikers 1945 II]]
+            ! colspan="6" | [[Strikers 1945 II]] (Psikyo)
             |-
             ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -5017,7 +5765,7 @@ layout:
             {{Anchor|Strikers 1999}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Strikers 1999]]
+            ! colspan="6" | [[Strikers 1999]] (Psikyo)
             |-
             ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -5058,7 +5806,7 @@ layout:
             {{Anchor|Strikers 1945 Plus}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Strikers 1945 Plus]]
+            ! colspan="5" | [[Strikers 1945 Plus]] (Psikyo)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -5083,7 +5831,7 @@ layout:
             {{Anchor|Zero Gunner}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Zero Gunner]]
+            ! colspan="5" | [[Zero Gunner]] (Psikyo)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -5103,7 +5851,7 @@ layout:
             {{Anchor|Zero Gunner 2}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Zero Gunner 2]]
+            ! colspan="6" | [[Zero Gunner 2]] (Psikyo)
             |-
             ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -5130,7 +5878,7 @@ layout:
             {{Anchor|1944: The Loop Master}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[1944: The Loop Master]]
+            ! colspan="5" | [[1944: The Loop Master]] (Raizing / 8ing)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -5153,7 +5901,7 @@ layout:
             {{Anchor|Armed Police Batrider}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="7" | [[Armed Police Batrider]]
+            ! colspan="7" | [[Armed Police Batrider]] (Raizing / 8ing)
             |-
             ! colspan="2" | Team
             ! Score !! Player !! Date / Source !! Comment !! Replay
@@ -5192,7 +5940,7 @@ layout:
             
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
-            ! colspan="5" | [[Battle Bakraid]]
+            ! colspan="5" | [[Battle Bakraid]] (Raizing / 8ing)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -5260,7 +6008,7 @@ layout:
             {{Anchor|Battle Garegga}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="7" | [[Battle Garegga]]
+            ! colspan="7" | [[Battle Garegga]] (Raizing / 8ing)
             |-
             ! Mode !! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -5313,7 +6061,7 @@ layout:
             
             Note: Japanese scoreboard closed March 2014 due to the detection of an infinite pattern.
             
-            * [[World Record Progression for Battle Garegga|World Record Progression]]
+            * [[World Record Progression for Battle Garegga|World Record Progression]] (Raizing / 8ing)
             * [https://wiki.denfaminicogamer.jp/highscore/1996_001_%E3%83%90%E3%83%88%E3%83%AB%E3%82%AC%E3%83%AC%E3%83%83%E3%82%AC JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=28714 Shmups Forum Hi-Score Topic]
 </nowiki></div>
@@ -5330,7 +6078,7 @@ layout:
             {{Anchor|Brave Blade}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Brave Blade]]
+            ! colspan="5" | [[Brave Blade]] (Raizing / 8ing)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -5356,7 +6104,7 @@ layout:
             {{Anchor|Great Mahou Daisakusen}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Great Mahou Daisakusen]]
+            ! colspan="6" | [[Great Mahou Daisakusen]] (Raizing / 8ing)
             |-
             ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -5411,7 +6159,7 @@ layout:
             {{Anchor|Mahou Daisakusen}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Mahou Daisakusen]]
+            ! colspan="6" | [[Mahou Daisakusen]] (Raizing / 8ing)
             |-
             ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -5443,7 +6191,7 @@ layout:
             {{Anchor|Shippu Mahou Daisakusen}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Shippu Mahou Daisakusen]]
+            ! colspan="6" | [[Shippu Mahou Daisakusen]] (Raizing / 8ing)
             |-
             ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-<section begin=shippumd-bornnam/>
@@ -5483,7 +6231,7 @@ layout:
             {{Anchor|Soukyugurentai}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Soukyugurentai]]
+            ! colspan="6" | [[Soukyugurentai]] (Raizing / 8ing)
             |-
             ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -5510,7 +6258,7 @@ layout:
             {{Anchor|Change Air Blade}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Change Air Blade]]
+            ! colspan="5" | [[Change Air Blade]] (Sammy)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -5533,7 +6281,7 @@ layout:
             {{Anchor|Caladrius Blaze AC}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="8" | [[Caladrius Blaze]] AC
+            ! colspan="8" | [[Caladrius Blaze]] (Seibu Kaihatsu / Moss) AC
             |-
             ! Mode !! Character !! Element Shot !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -5606,7 +6354,7 @@ layout:
             
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
-            ! colspan="6" | [[Raiden]]
+            ! colspan="6" | [[Raiden]] (Seibu Kaihatsu / Moss)
             |-
             ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -5637,7 +6385,7 @@ layout:
             {{Anchor|Raiden II}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Raiden II]]
+            ! colspan="6" | [[Raiden II]] (Seibu Kaihatsu / Moss)
             |-
             ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -5674,7 +6422,7 @@ layout:
             {{Anchor|Raiden III}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Raiden III]]
+            ! colspan="6" | [[Raiden III]] (Seibu Kaihatsu / Moss)
             |-
             ! Mode !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -5699,7 +6447,7 @@ layout:
             {{Anchor|Raiden IV}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="7" | [[Raiden IV]]
+            ! colspan="7" | [[Raiden IV]] (Seibu Kaihatsu / Moss)
             |-
             ! colspan="2" | Mode
             ! Score !! Player !! Date / Source !! Comment !! Replay
@@ -5734,7 +6482,7 @@ layout:
             {{Anchor|Raiden DX}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="8" | [[Raiden DX]]
+            ! colspan="8" | [[Raiden DX]] (Seibu Kaihatsu / Moss)
             |-
             ! Autofire !! colspan="2" | Mode
             ! Score !! Player !! Date / Source !! Comment !! Replay
@@ -5792,7 +6540,7 @@ layout:
             {{Anchor|Raiden Fighters}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Raiden Fighters]]
+            ! colspan="6" | [[Raiden Fighters]] (Seibu Kaihatsu / Moss)
             |-
             ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -5828,7 +6576,7 @@ layout:
             {{Anchor|Raiden Fighters 2}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Raiden Fighters 2]]
+            ! colspan="6" | [[Raiden Fighters 2]] (Seibu Kaihatsu / Moss)
             |-
             ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -5875,7 +6623,7 @@ layout:
             {{Anchor|Raiden Fighters Jet}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Raiden Fighters Jet]]
+            ! colspan="5" | [[Raiden Fighters Jet]] (Seibu Kaihatsu / Moss)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -5927,7 +6675,7 @@ layout:
             {{Anchor|Meta Fox}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Meta Fox]]
+            ! colspan="6" | [[Meta Fox]] (Seta)
             |-
             ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -5951,7 +6699,7 @@ layout:
             {{Anchor|Tokushu Butai U.A.G.}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Tokushu Butai U.A.G.]]
+            ! colspan="5" | [[Tokushu Butai U.A.G.]] (Seta)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -5975,7 +6723,7 @@ layout:
             {{Anchor|Twin Eagle}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Twin Eagle]]
+            ! colspan="5" | [[Twin Eagle]] (Seta)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -5997,7 +6745,7 @@ layout:
             {{Anchor|Twin Eagle II}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Twin Eagle II]]
+            ! colspan="6" | [[Twin Eagle II]] (Seta)
             |-
             ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -6009,7 +6757,7 @@ layout:
             
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
-            ! colspan="5" | [[Ultra Keibitai]] / Ultra X Weapons
+            ! colspan="5" | [[Ultra Keibitai]] (Seta) / Ultra X Weapons
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -6033,7 +6781,7 @@ layout:
             {{Anchor|Homura}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Homura]]
+            ! colspan="5" | [[Homura]] (Skonec)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -6056,7 +6804,7 @@ layout:
             {{Anchor|Psyvariar 2}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Psyvariar 2]]
+            ! colspan="6" | [[Psyvariar 2]] (Skonec)
             |-
             ! Type !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -6081,7 +6829,7 @@ layout:
             {{Anchor|ASO: Armored Scrum Object / Alpha Mission}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[ASO: Armored Scrum Object]] / Alpha Mission
+            ! colspan="5" | [[ASO: Armored Scrum Object]] (SNK) / Alpha Mission
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -6107,7 +6855,7 @@ layout:
             {{Anchor|ASO II / Alpha Mission II}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[ASO II]] / Alpha Mission II
+            ! colspan="5" | [[ASO II]] (SNK) / Alpha Mission II
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -6133,7 +6881,7 @@ layout:
             {{Anchor|Ghost Pilots}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Ghost Pilots]]
+            ! colspan="5" | [[Ghost Pilots]] (SNK)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -6155,7 +6903,7 @@ layout:
             {{Anchor|KOF Sky Stage}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[KOF Sky Stage]]
+            ! colspan="6" | [[KOF Sky Stage]] (SNK)
             |-
             ! Character !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -6187,7 +6935,7 @@ layout:
             {{Anchor|Last Resort}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Last Resort]]
+            ! colspan="6" | [[Last Resort]] (SNK)
             |-
             ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -6212,7 +6960,7 @@ layout:
             {{Anchor|Prehistoric Isle in 1930}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Prehistoric Isle in 1930]]
+            ! colspan="5" | [[Prehistoric Isle in 1930]] (SNK)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -6232,7 +6980,7 @@ layout:
             {{Anchor|Sky Adventure}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Sky Adventure]]
+            ! colspan="5" | [[Sky Adventure]] (SNK)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -6254,7 +7002,7 @@ layout:
             {{Anchor|Trouble ☆ Witches AC}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="7" | [[Trouble ☆ Witches]] AC
+            ! colspan="7" | [[Trouble ☆ Witches]] (Studio Siesta) AC
             |-
             ! Difficulty !! Character !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -6308,7 +7056,7 @@ layout:
             {{Anchor|Cotton}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="7" | [[Cotton]]
+            ! colspan="7" | [[Cotton]] (Success)
             |-
             ! Mode !! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -6338,7 +7086,7 @@ layout:
             {{Anchor|Cotton 2}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Cotton 2]]
+            ! colspan="5" | [[Cotton 2]] (Success)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -6360,7 +7108,7 @@ layout:
             {{Anchor|Cotton Boomerang}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Cotton Boomerang]]
+            ! colspan="5" | [[Cotton Boomerang]] (Success)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -6384,7 +7132,7 @@ layout:
             {{Anchor|Guardian Force}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Guardian Force]]
+            ! colspan="5" | [[Guardian Force]] (Success)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -6406,7 +7154,7 @@ layout:
             {{Anchor|Psyvariar}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Psyvariar]]
+            ! colspan="5" | [[Psyvariar]] (Success)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -6429,7 +7177,7 @@ layout:
             {{Anchor|Psyvariar Revision}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Psyvariar Revision]]
+            ! colspan="5" | [[Psyvariar Revision]] (Success)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -6452,7 +7200,7 @@ layout:
             {{Anchor|Akkanvader / Space Invaders '95}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Akkanvader]] / Space Invaders '95
+            ! colspan="5" | [[Akkanvader]] (Taito) / Space Invaders '95
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -6475,7 +7223,7 @@ layout:
             {{Anchor|Chuka Taisen}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Chuka Taisen]]
+            ! colspan="5" | [[Chuka Taisen]] (Taito)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -6497,7 +7245,7 @@ layout:
             {{Anchor|Darius}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Darius]]
+            ! colspan="6" | [[Darius]] (Taito)
             |-
             ! Route !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -6528,7 +7276,7 @@ layout:
             {{Anchor|Darius Extra}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Darius Extra]]
+            ! colspan="6" | [[Darius Extra]] (Taito)
             |-
             ! Route !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -6559,7 +7307,7 @@ layout:
             {{Anchor|Darius II}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="7" | [[Darius II]]
+            ! colspan="7" | [[Darius II]] (Taito)
             |-
             ! Screen !! Route !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -6611,7 +7359,7 @@ layout:
             {{Anchor|Darius Gaiden}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Darius Gaiden]]
+            ! colspan="6" | [[Darius Gaiden]] (Taito)
             |-
             ! Route !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -6669,7 +7417,7 @@ layout:
             {{Anchor|Darius Gaiden Extra}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Darius Gaiden Extra]]
+            ! colspan="5" | [[Darius Gaiden Extra]] (Taito)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -6681,7 +7429,7 @@ layout:
             
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
-            ! colspan="5" | [[Exzisus]]
+            ! colspan="5" | [[Exzisus]] (Taito)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -6717,7 +7465,7 @@ layout:
             {{Anchor|Fighting Hawk}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Fighting Hawk]]
+            ! colspan="5" | [[Fighting Hawk]] (Taito)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -6740,7 +7488,7 @@ layout:
             {{Anchor|G-Darius}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[G-Darius]]
+            ! colspan="6" | [[G-Darius]] (Taito)
             |-
             ! Route !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -6771,7 +7519,7 @@ layout:
             {{Anchor|Gekirindan}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Gekirindan]]
+            ! colspan="6" | [[Gekirindan]] (Taito)
             |-
             ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -6797,7 +7545,7 @@ layout:
             {{Anchor|Grid Seeker}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Grid Seeker]]
+            ! colspan="6" | [[Grid Seeker]] (Taito)
             |-
             ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -6823,7 +7571,7 @@ layout:
             {{Anchor|Gun Frontier}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Gun Frontier]]
+            ! colspan="6" | [[Gun Frontier]] (Taito)
             |-
             ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -6837,7 +7585,7 @@ layout:
             
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
-            ! colspan="5" | [[Halley's Comet]]
+            ! colspan="5" | [[Halley's Comet]] (Taito)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -6855,7 +7603,7 @@ layout:
             
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
-            ! colspan="5" | [[Insector X]]
+            ! colspan="5" | [[Insector X]] (Taito)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -6869,7 +7617,7 @@ layout:
             
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
-            ! colspan="5" | [[Kiki Kaikai]]
+            ! colspan="5" | [[Kiki Kaikai]] (Taito)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -6897,7 +7645,7 @@ layout:
             {{Anchor|Master of Weapon}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Master of Weapon]]
+            ! colspan="5" | [[Master of Weapon]] (Taito)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -6919,7 +7667,7 @@ layout:
             {{Anchor|Mega Blast}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Mega Blast]]
+            ! colspan="5" | [[Mega Blast]] (Taito)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -6939,7 +7687,7 @@ layout:
             {{Anchor|Metal Black}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Metal Black]]
+            ! colspan="6" | [[Metal Black]] (Taito)
             |-
             ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -6963,7 +7711,7 @@ layout:
             {{Anchor|Raycrisis}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Raycrisis]]
+            ! colspan="6" | [[Raycrisis]] (Taito)
             |-
             ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -6990,7 +7738,7 @@ layout:
             {{Anchor|Rayforce / Layer Section}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Rayforce]] / Layer Section
+            ! colspan="6" | [[Rayforce]] (Taito) / Layer Section
             |-
             ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -7015,7 +7763,7 @@ layout:
             {{Anchor|Raystorm}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Raystorm]]
+            ! colspan="6" | [[Raystorm]] (Taito)
             |-
             ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -7039,7 +7787,7 @@ layout:
             {{Anchor|Ryu Jin}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Ryu Jin]]
+            ! colspan="6" | [[Ryu Jin]] (Taito)
             |-
             ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -7063,7 +7811,7 @@ layout:
             {{Anchor|Scramble Formation / Tokio}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Scramble Formation]] / Tokio
+            ! colspan="5" | [[Scramble Formation]] (Taito) / Tokio
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -7085,7 +7833,7 @@ layout:
             {{Anchor|Space Invaders Anniversary}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="7" | [[Space Invaders Anniversary]]
+            ! colspan="7" | [[Space Invaders Anniversary]] (Taito)
             |-
             ! colspan="2" | Mode
             ! Score !! Player !! Date / Source !! Comment !! Replay
@@ -7109,7 +7857,7 @@ layout:
             {{Anchor|Syvalion}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Syvalion]]
+            ! colspan="6" | [[Syvalion]] (Taito)
             |-
             ! Mode !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -7131,7 +7879,7 @@ layout:
             {{Anchor|Giga Wing}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Giga Wing]]
+            ! colspan="6" | [[Giga Wing]] (Takumi)
             |-
             ! Character/Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -7160,7 +7908,7 @@ layout:
             {{Anchor|Giga Wing 2}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Giga Wing 2]]
+            ! colspan="6" | [[Giga Wing 2]] (Takumi)
             |-
             ! Character/Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -7193,7 +7941,7 @@ layout:
             {{Anchor|Kyuukyoku Tiger II}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Kyuukyoku Tiger II]]
+            ! colspan="6" | [[Kyuukyoku Tiger II]] (Takumi)
             |-
             ! Player Side !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -7210,7 +7958,7 @@ layout:
             
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
-            ! colspan="6" | [[Mars Matrix]]
+            ! colspan="6" | [[Mars Matrix]] (Takumi)
             |-
             ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -7275,7 +8023,7 @@ layout:
             {{Anchor|Night Raid}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Night Raid]]
+            ! colspan="6" | [[Night Raid]] (Takumi)
             |-
             ! Mode !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -7298,7 +8046,7 @@ layout:
             {{Anchor|Yokushin: Giga Wing Generations}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | Yokushin: [[Giga Wing Generations]]
+            ! colspan="6" | Yokushin: [[Giga Wing Generations]] (Takumi)
             |-
             ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -7329,7 +8077,7 @@ layout:
             {{Anchor|Aka to Blue Type-R}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Aka to Blue Type-R]]
+            ! colspan="6" | [[Aka to Blue Type-R]] (Tanoshimasu)
             |-
             ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -7361,7 +8109,7 @@ layout:
             {{Anchor|Argus no Senshi / Rygar}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Argus no Senshi]] / Rygar
+            ! colspan="6" | [[Argus no Senshi]] (Tecmo) / Rygar
             |-
             ! Difficulty !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -7387,7 +8135,7 @@ layout:
             {{Anchor|Eight Forces}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Eight Forces]]
+            ! colspan="6" | [[Eight Forces]] (Tecmo)
             |-
             ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -7411,7 +8159,7 @@ layout:
             {{Anchor|Gemini Wing}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Gemini Wing]]
+            ! colspan="5" | [[Gemini Wing]] (Tecmo)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -7433,7 +8181,7 @@ layout:
             {{Anchor|Raiga: Strato Fighter}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Raiga: Strato Fighter]]
+            ! colspan="6" | [[Raiga: Strato Fighter]] (Tecmo)
             |-
             ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -7458,7 +8206,7 @@ layout:
             {{Anchor|Hyper Duel}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Hyper Duel]]
+            ! colspan="5" | [[Hyper Duel]] (Tecnosoft)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -7480,7 +8228,7 @@ layout:
             {{Anchor|Thunder Force AC}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Thunder Force]] AC
+            ! colspan="6" | [[Thunder Force]] (Tecnosoft) AC
             |-
             ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -7510,7 +8258,7 @@ layout:
             {{Anchor|Star Force}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Star Force]]
+            ! colspan="6" | [[Star Force]] (Tecnosoft)
             |-
             ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -7534,7 +8282,7 @@ layout:
             {{Anchor|Batsugun}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="7" | [[Batsugun]]
+            ! colspan="7" | [[Batsugun]] (Toaplan)
             |-
             ! Autofire !! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -7558,7 +8306,7 @@ layout:
             
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
-            ! colspan="6" | [[Batsugun Special]]
+            ! colspan="6" | [[Batsugun Special]] (Toaplan)
             |-
             ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -7578,7 +8326,7 @@ layout:
             
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
-            ! colspan="5" | [[Daisenpuu]]
+            ! colspan="5" | [[Daisenpuu]] (Toaplan)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -7602,7 +8350,7 @@ layout:
             {{Anchor|Dogyuun!}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Dogyuun!]]
+            ! colspan="5" | [[Dogyuun!]] (Toaplan)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -7618,7 +8366,7 @@ layout:
             
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
-            ! colspan="6" | [[Fixeight]]
+            ! colspan="6" | [[Fixeight]] (Toaplan)
             |-
             ! Character !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -7671,7 +8419,7 @@ layout:
             
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
-            ! colspan="6" | [[Hellfire]]
+            ! colspan="6" | [[Hellfire]] (Toaplan)
             |-
             ! Version !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -7688,7 +8436,7 @@ layout:
             
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
-            ! colspan="5" | [[Hishouzame]] / Flying Shark
+            ! colspan="5" | [[Hishouzame]] (Toaplan) / Flying Shark
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -7734,7 +8482,7 @@ layout:
             {{Anchor|Kyuukyoku Tiger / Twin Cobra}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Kyuukyoku Tiger]] / Twin Cobra
+            ! colspan="5" | [[Kyuukyoku Tiger]] (Toaplan) / Twin Cobra
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -7756,7 +8504,7 @@ layout:
             
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
-            ! colspan="5" | [[Out Zone]]
+            ! colspan="5" | [[Out Zone]] (Toaplan)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -7800,7 +8548,7 @@ layout:
             {{Anchor|Same! Same! Same! / Fire Shark}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Same! Same! Same!]] / Fire Shark
+            ! colspan="6" | [[Same! Same! Same!]] (Toaplan) / Fire Shark
             |-
             ! Version !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -7836,7 +8584,7 @@ layout:
             
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
-            ! colspan="5" | [[Slap Fight]]
+            ! colspan="5" | [[Slap Fight]] (Toaplan)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -7864,7 +8612,7 @@ layout:
             {{Anchor|Tatsujin / Truxton}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Tatsujin]] / Truxton
+            ! colspan="5" | [[Tatsujin]] (Toaplan) / Truxton
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -7902,7 +8650,7 @@ layout:
             
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
-            ! colspan="5" | [[Tatsujin Ou]] / Truxton II
+            ! colspan="5" | [[Tatsujin Ou]] (Toaplan) / Truxton II
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -7916,7 +8664,7 @@ layout:
             
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
-            ! colspan="5" | [[Tiger Heli]]
+            ! colspan="5" | [[Tiger Heli]] (Toaplan)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -7940,7 +8688,7 @@ layout:
             {{Anchor|V-V / Grind Stormer}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[V-V]] / Grind Stormer
+            ! colspan="6" | [[V-V]] (Toaplan) / Grind Stormer
             |-
             ! Mode !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -7955,7 +8703,7 @@ layout:
             
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
-            ! colspan="6" | [[Vimana]]
+            ! colspan="6" | [[Vimana]] (Toaplan)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -8075,7 +8823,7 @@ layout:
             
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
-            ! colspan="5" | [[Zero Wing]]
+            ! colspan="5" | [[Zero Wing]] (Toaplan)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -8099,7 +8847,7 @@ layout:
             {{Anchor|Ikaruga}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="7" | [[Ikaruga]]
+            ! colspan="7" | [[Ikaruga]] (Treasure)
             |-
             ! Mode !! Difficulty !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -8140,7 +8888,7 @@ layout:
             {{Anchor|Radiant Silvergun}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Radiant Silvergun]]
+            ! colspan="6" | [[Radiant Silvergun]] (Treasure)
             |-
             ! Route !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -8165,7 +8913,7 @@ layout:
             {{Anchor|G Stream 2020}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[G Stream 2020]]
+            ! colspan="5" | [[G Stream 2020]] (Triangle Service / Oriental Soft)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -8190,7 +8938,7 @@ layout:
             {{Anchor|Shooting Love 2007}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="7" | [[Shooting Love 2007]]
+            ! colspan="7" | [[Shooting Love 2007]] (Triangle Service / Oriental Soft)
             |-
             ! Game !! Ship / Mode !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -8227,7 +8975,7 @@ layout:
             {{Anchor|Trizeal}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Trizeal]]
+            ! colspan="5" | [[Trizeal]] (Triangle Service / Oriental Soft)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -8250,7 +8998,7 @@ layout:
             {{Anchor|XII Stag}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[XII Stag]]
+            ! colspan="5" | [[XII Stag]] (Triangle Service / Oriental Soft)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -8272,7 +9020,7 @@ layout:
             {{Anchor|Acrobat Mission}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Acrobat Mission]]
+            ! colspan="6" | [[Acrobat Mission]] (UPL)
             |-
             ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -8298,7 +9046,7 @@ layout:
             {{Anchor|Atomic Robo-Kid}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Atomic Robo-Kid]]
+            ! colspan="5" | [[Atomic Robo-Kid]] (UPL)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -8314,7 +9062,7 @@ layout:
             
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
-            ! colspan="5" | [[Koutetsu Yousai Strahl]]
+            ! colspan="5" | [[Koutetsu Yousai Strahl]] (UPL)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -8338,7 +9086,7 @@ layout:
             {{Anchor|Omega Fighter}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Omega Fighter]]
+            ! colspan="5" | [[Omega Fighter]] (UPL)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -8360,7 +9108,7 @@ layout:
             {{Anchor|Uchuu Senkan Gomora / Bio-Ship Paladin}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Uchuu Senkan Gomora]] / Bio-Ship Paladin
+            ! colspan="6" | [[Uchuu Senkan Gomora]] (UPL) / Bio-Ship Paladin
             |-
             ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -8374,7 +9122,7 @@ layout:
             
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
-            ! colspan="5" | [[XX Mission]]
+            ! colspan="5" | [[XX Mission]] (UPL)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -8396,7 +9144,7 @@ layout:
             {{Anchor|Rabio Lepus}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Rabio Lepus]]
+            ! colspan="6" | [[Rabio Lepus]] (Video System)
             |-
             ! Mode !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -8420,7 +9168,7 @@ layout:
             {{Anchor|Sonic Wings}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Sonic Wings]]
+            ! colspan="6" | [[Sonic Wings]] (Video System)
             |-
             ! Ship / Character !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -8457,7 +9205,7 @@ layout:
             {{Anchor|Sonic Wings 2}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Sonic Wings 2]]
+            ! colspan="6" | [[Sonic Wings 2]] (Video System)
             |-
             ! Ship / Character !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -8496,7 +9244,7 @@ layout:
             {{Anchor|Sonic Wings 3}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Sonic Wings 3]]
+            ! colspan="6" | [[Sonic Wings 3]] (Video System)
             |-
             ! Character !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -8536,7 +9284,7 @@ layout:
             {{Anchor|Sonic Wings Limited}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Sonic Wings Limited]]
+            ! colspan="6" | [[Sonic Wings Limited]] (Video System)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -8558,7 +9306,7 @@ layout:
             {{Anchor|Turbo Force}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Turbo Force]]
+            ! colspan="6" | [[Turbo Force]] (Video System)
             |-
             ! Version !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -8584,7 +9332,7 @@ layout:
             {{Anchor|Asuka & Asuka}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Asuka & Asuka]]
+            ! colspan="5" | [[Asuka & Asuka]] (Visco)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -8594,7 +9342,7 @@ layout:
             
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
-            ! colspan="5" | [[Captain Tomaday]]
+            ! colspan="5" | [[Captain Tomaday]] (Visco)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -8618,7 +9366,7 @@ layout:
             {{Anchor|Earth Joker: UN Defense Force}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Earth Joker: UN Defense Force]]
+            ! colspan="5" | [[Earth Joker: UN Defense Force]] (Visco)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -8638,7 +9386,7 @@ layout:
             {{Anchor|Storm Blade}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Storm Blade]]
+            ! colspan="5" | [[Storm Blade]] (Visco)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -8660,7 +9408,7 @@ layout:
             {{Anchor|Vasara}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Vasara]]
+            ! colspan="6" | [[Vasara]] (Visco)
             |-
             ! Character !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -8688,7 +9436,7 @@ layout:
             {{Anchor|Vasara 2}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Vasara 2]]
+            ! colspan="6" | [[Vasara 2]] (Visco)
             |-
             ! Character !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -8717,7 +9465,7 @@ layout:
             {{Anchor|Sengeki Striker}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Sengeki Striker]]
+            ! colspan="5" | [[Sengeki Striker]] (Warashi)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -8741,7 +9489,7 @@ layout:
             {{Anchor|Shienryu}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Shienryu]]
+            ! colspan="5" | [[Shienryu]] (Warashi)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -8765,7 +9513,7 @@ layout:
             {{Anchor|Triggerheart Exelica}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Triggerheart Exelica]]
+            ! colspan="6" | [[Triggerheart Exelica]] (Warashi)
             |-
             ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -8790,7 +9538,7 @@ layout:
             {{Anchor|War of Aero}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[War of Aero]]
+            ! colspan="5" | [[War of Aero]] (Yang Chen)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -8813,7 +9561,7 @@ layout:
             {{Anchor|Crimzon Clover}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="7" | [[Crimzon Clover]]
+            ! colspan="7" | [[Crimzon Clover]] (Yotsubane)
             |-
             ! Mode !! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-

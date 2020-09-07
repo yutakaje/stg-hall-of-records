@@ -26,7 +26,9 @@ try {
     $companies = parseCompanies($contents);
 
     $games = convertToGameList($companies);
-    $toc = createToc($games);
+    //$toc = createToc($games);
+    $toc = createBetterToc($games);
+
     $db = convertToDatabase($description, $toc, $games);
     saveContents($db);
 } catch (\Throwable $error) {
@@ -37,6 +39,94 @@ try {
         $error->getTraceAsString(),
     ]);
     exit('Unexpected server error');
+}
+
+function createBetterToc(array $allGames): string
+{
+    $grouped = [];
+
+    foreach ($allGames as $game) {
+        $grouped[mb_substr($game->name, 0, 1)][] = $game;
+    }
+
+    foreach ($grouped as $char => $games) {
+        sort($grouped[$char]);
+    }
+
+
+    ksort($grouped);
+
+    // Quick fix to put numbers in front.
+    $last = array_pop($grouped);
+    $grouped = array_merge(
+        ['0-9' => $last],
+        $grouped,
+    );
+
+    $tocEntries = [];
+    foreach ($grouped as $char => $games) {
+        $tocEntries[] = '|-';
+        $tocEntries[] = "| {$char} || " . implode(' | ', array_map(
+            fn (\stdClass $game) => "[[#{$game->name}|{$game->name}]]",
+            $games
+        ));
+    }
+
+
+    return str_replace(
+        [
+            '{{ headers }}',
+            '{{ game-entries }}',
+        ],
+        [
+            implode(PHP_EOL . '    ', array_map(
+                fn (string $char, $games) => str_replace(
+                    [
+                        '{{ char }}',
+                        '{{ classes }}',
+                    ],
+                    [
+                        $char,
+                        implode(' ', array_map(
+                            fn (\stdClass $game) => "mw-customtoggle-{$game->id}",
+                            $games
+                        ))
+                    ],
+                    '<th class="{{ classes }}" style="padding-left:10px;padding-right:10px;">{{ char }}</th>'
+                ),
+                array_keys($grouped),
+                $grouped
+            )),
+            implode(PHP_EOL, array_map(
+                fn (\stdClass $game) => str_replace(
+                    [
+                        '{{ id }}',
+                        '{{ name }}',
+                        '{{ colspan }}',
+                    ],
+                    [
+                        $game->id,
+                        $game->name,
+                        sizeof($grouped),
+                    ],
+                    <<<'HTML'
+  <tr id="mw-customcollapsible-{{ id }}" class="mw-collapsible mw-collapsed">
+    <td colspan="{{ colspan }}">[[#{{ name }}|{{ name }}]]</td>
+  </tr>
+HTML
+                ),
+                $allGames
+            ))
+        ],
+        <<<'HTML'
+<table class="wikitable">
+  <tr>
+    {{ headers }}
+  <tr>
+{{ game-entries }}
+</table>
+HTML
+    );
 }
 
 function createToc(array $allGames): string
@@ -92,7 +182,11 @@ function convertToDatabase(
             [
                 $game->name,
                 $game->company,
-                str_replace(PHP_EOL, PHP_EOL . '            ', trim($game->content))
+                str_replace(
+                    ']]',
+                    "]] ({$game->company})",
+                    str_replace(PHP_EOL, PHP_EOL . '            ', trim($game->content))
+                )
             ],
             <<<'TPL'
 == {{ game-name }} ==
@@ -118,8 +212,10 @@ function convertToGameList(array $companies): array
 {
     $allGames = [];
 
+    $id = 1;
     foreach ($companies as $company) {
         foreach ($company->games as $game) {
+            $game->id = $id++;
             $game->company = $company->name;
             $allGames[] = $game;
         }
