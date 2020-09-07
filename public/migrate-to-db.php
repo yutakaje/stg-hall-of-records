@@ -45,14 +45,14 @@ function createBetterToc(array $allGames): string
 {
     $grouped = [];
 
+    usort(
+        $allGames,
+        fn (\stdClass $lhs, \stdClass $rhs) => strtolower($lhs->name) <=> strtolower($rhs->name)
+    );
+
     foreach ($allGames as $game) {
         $grouped[mb_substr($game->name, 0, 1)][] = $game;
     }
-
-    foreach ($grouped as $char => $games) {
-        sort($grouped[$char]);
-    }
-
 
     ksort($grouped);
 
@@ -122,7 +122,7 @@ HTML
 <table class="wikitable">
   <tr>
     {{ headers }}
-  <tr>
+  </tr>
 {{ game-entries }}
 </table>
 HTML
@@ -172,6 +172,24 @@ function convertToDatabase(
     string $toc,
     array $games
 ): string {
+    $addCompanyName = function (\stdClass $game): string {
+        $content = str_replace(PHP_EOL, PHP_EOL . '            ', trim($game->content));
+
+        $pos = strpos($content, ']]');
+        if ($pos === false) {
+            return $content;
+        }
+
+        $pos = strpos($content, "\n", $pos);
+        if ($pos === false) {
+            return $content;
+        }
+
+        return substr($content, 0, $pos)
+            . " ({$game->company})"
+            . substr($content, $pos);
+    };
+
     return globalSection($description, $toc) . PHP_EOL . implode(PHP_EOL, array_map(
         fn (\stdClass $game) => str_replace(
             [
@@ -182,17 +200,14 @@ function convertToDatabase(
             [
                 $game->name,
                 $game->company,
-                str_replace(
-                    ']]',
-                    "]] ({$game->company})",
-                    str_replace(PHP_EOL, PHP_EOL . '            ', trim($game->content))
-                )
+                $addCompanyName($game),
             ],
             <<<'TPL'
 == {{ game-name }} ==
 <div style="display:none"><nowiki>
 name: "{{ game-name }}"
 company: "{{ company-name }}"
+needs-work: true
 
 layout:
     templates:
@@ -228,7 +243,7 @@ function parseGames(string $contents): array
 {
     $games = [];
 
-    $beginString = '{| class="wikitable" style="text-align: center"';
+    $beginString = '{| class="wikitable" style="';
 
     preg_match_all('/' . preg_quote($beginString, '/') . '/u', $contents, $matches, PREG_OFFSET_CAPTURE);
 
@@ -246,7 +261,8 @@ function parseGames(string $contents): array
             $content = substr($contents, $startPos);
         }
 
-        $game->content = '{| class="wikitable" style="text-align: center"' . $content;
+        //$game->content = '{| class="wikitable" style="text-align: center"' . $content;
+        $game->content = $beginString . $content;
         $game->name = explode(PHP_EOL, $game->content)[2];
         if (($pos = strpos($game->name, '|')) !== false) {
             $game->name = trim(str_replace(['[[', ']]'], '', substr($game->name, $pos + 1)));
@@ -355,7 +371,7 @@ layout:
             {% endif %}
             {% endfor %}
         game: |
-            {| class="wikitable" style="text-align: center
+            {| class="wikitable" style="text-align: center"
             |-
             ! colspan="{{ game.headers|length }}" | {{ game.properties.name }}
             |-
