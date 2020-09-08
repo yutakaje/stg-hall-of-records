@@ -512,7 +512,7 @@ TEXT,
 {{ include('games') }}
 TPL,
             'games' => <<<'TPL'
-{% for game in games %}
+{% for game in games.all %}
 {% if game.template %}
 {{ game.template|raw }}
 {% else %}

@@ -64,17 +64,16 @@ final class MediaWikiExporter
         );
     }
 
-    /**
-     * @return \stdClass[]
-     */
-    private function createGameVariables(Layout $globalLayout): array
+    private function createGameVariables(Layout $globalLayout): \stdClass
     {
-        return $this->games->all()
+        $games = new \stdClass();
+        $games->all = $this->games->all()
             ->sort($globalLayout->sort('games'))
             ->map(fn (Game $game) => $this->createGameVariable(
                 $game,
                 $globalLayout,
             ));
+        return $games;
     }
 
     private function createGameVariable(
