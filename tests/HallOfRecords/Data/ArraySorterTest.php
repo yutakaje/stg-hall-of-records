@@ -23,7 +23,7 @@ class ArraySorterTest extends \Tests\TestCase
         $items = [
             $this->createItem(10, 'Ship', 'easy'),
             $this->createItem(100, 'Loop', 'easy'),
-            $this->createItem(120, 'Score', 'normal'),
+            $this->createItem(120, 'score', 'normal'),
             $this->createItem(9, 'Player', 'normal'),
             $this->createItem(14, 'Comment', 'hard'),
         ];
@@ -41,7 +41,7 @@ class ArraySorterTest extends \Tests\TestCase
         $items = [
             $this->createItem(10, 'Ship', 'easy'),
             $this->createItem(100, 'Loop', 'easy'),
-            $this->createItem(120, 'Score', 'normal'),
+            $this->createItem(120, 'score', 'normal'),
             $this->createItem(9, 'Player', 'normal'),
             $this->createItem(14, 'Comment', 'hard'),
         ];
@@ -59,7 +59,7 @@ class ArraySorterTest extends \Tests\TestCase
             'Sort by id asc'
         );
         self::assertSame(
-            ['Ship', 'Score', 'Player', 'Loop', 'Comment'],
+            ['Ship', 'score', 'Player', 'Loop', 'Comment'],
             array_map(
                 fn ($item) => $item->name(),
                 $sorter->sort($items, [

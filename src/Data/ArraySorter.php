@@ -58,7 +58,10 @@ final class ArraySorter
         ItemInterface $rhs,
         string $propertyName
     ): int {
-        return $lhs->property($propertyName) <=> $rhs->property($propertyName);
+        // Ignore case for sorting.
+        $lhsValue = $lhs->property($propertyName);
+        $rhsValue = $rhs->property($propertyName);
+        return $this->lower($lhsValue) <=> $this->lower($rhsValue);
     }
 
     private function sortDescending(
@@ -66,7 +69,10 @@ final class ArraySorter
         ItemInterface $rhs,
         string $propertyName
     ): int {
-        return $rhs->property($propertyName) <=> $lhs->property($propertyName);
+        // Ignore case for sorting.
+        $lhsValue = $lhs->property($propertyName);
+        $rhsValue = $rhs->property($propertyName);
+        return $this->lower($rhsValue) <=> $this->lower($lhsValue);
     }
 
     /**
@@ -92,5 +98,20 @@ final class ArraySorter
         $rhsPriority = $valuePriorities[$rhsValue] ?? PHP_INT_MAX;
 
         return $lhsPriority <=> $rhsPriority;
+    }
+
+    /**
+     * Ignore case for sorting.
+     *
+     * @param mixed $value
+     * @return mixed
+     */
+    private function lower($value)
+    {
+        if (!is_string($value)) {
+            return $value;
+        }
+
+        return strtolower($value);
     }
 }
