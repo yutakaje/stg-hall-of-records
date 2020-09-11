@@ -91,10 +91,14 @@ class YamlParserTest extends \Tests\TestCase
                     'layout' => new ParsedProperties([
                         'columns' => [],
                     ]),
+                    'name-sort' => 'Mushihimesama Futari 1.5',
+                    'name-sort-jp' => 'むしひめさまふたりVer 1.5',
                 ]),
                 new ParsedProperties([
                     'name' => 'Ketsui: Kizuna Jigoku Tachi',
                     'name-jp' => 'ケツイ ～絆地獄たち～',
+                    'name-sort' => 'Ketsui: Kizuna Jigoku Tachi',
+                    'name-sort-jp' => 'けつい ～きずなじごくたち～',
                     'company' => 'Cave',
                     'scores' => [
                         new ParsedProperties([
@@ -211,6 +215,7 @@ class YamlParserTest extends \Tests\TestCase
                             'game' => $this->getFixedGameTemplate(),
                         ],
                     ]),
+                    'name-sort' => 'Great Mahou Daisakusen',
                 ]),
             ],
             $parsedData->get('games')
@@ -266,6 +271,7 @@ TPL,
             [
                 'name' => 'Mushihimesama Futari 1.5',
                 'name-jp' => '虫姫さまふたりVer 1.5',
+                'name-kana' => 'むしひめさまふたりVer 1.5',
                 'company' => 'Cave',
                 'scores' => [
                     [
@@ -291,6 +297,7 @@ TPL,
             [
                 'name' => 'Ketsui: Kizuna Jigoku Tachi',
                 'name-jp' => 'ケツイ ～絆地獄たち～',
+                'name-sort-jp' => 'けつい ～きずなじごくたち～',
                 'company' => 'Cave',
                 'scores' => [
                     [

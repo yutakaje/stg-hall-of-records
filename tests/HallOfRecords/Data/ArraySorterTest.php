@@ -21,11 +21,11 @@ class ArraySorterTest extends \Tests\TestCase
     public function testWithEmptyArray(): void
     {
         $items = [
-            $this->createItem(10, 'Ship', 'easy'),
-            $this->createItem(100, 'Loop', 'easy'),
-            $this->createItem(120, 'score', 'normal'),
-            $this->createItem(9, 'Player', 'normal'),
-            $this->createItem(14, 'Comment', 'hard'),
+            $this->createItem(10, 'Ship', ['difficulty' => 'easy']),
+            $this->createItem(100, 'Loop', ['difficulty' => 'easy']),
+            $this->createItem(120, 'score', ['difficulty' => 'normal']),
+            $this->createItem(9, 'Player', ['difficulty' => 'normal']),
+            $this->createItem(14, 'Comment', ['difficulty' => 'hard']),
         ];
 
         $sorter = new ArraySorter();
@@ -39,11 +39,11 @@ class ArraySorterTest extends \Tests\TestCase
     public function testWithEnLocale(): void
     {
         $items = [
-            $this->createItem(10, 'Ship', 'easy'),
-            $this->createItem(100, 'Loop', 'easy'),
-            $this->createItem(120, 'score', 'normal'),
-            $this->createItem(9, 'Player', 'normal'),
-            $this->createItem(14, 'Comment', 'hard'),
+            $this->createItem(10, 'Ship', ['difficulty' => 'easy']),
+            $this->createItem(100, 'Loop', ['difficulty' => 'easy']),
+            $this->createItem(120, 'score', ['difficulty' => 'normal']),
+            $this->createItem(9, 'Player', ['difficulty' => 'normal']),
+            $this->createItem(14, 'Comment', ['difficulty' => 'hard']),
         ];
 
         $sorter = new ArraySorter();
@@ -100,11 +100,11 @@ class ArraySorterTest extends \Tests\TestCase
     public function testWithJpLocale(): void
     {
         $items = [
-            $this->createItem(10, 'ゆたか', 'イージー'),
-            $this->createItem(100, 'かすかべ', 'イージー'),
-            $this->createItem(120, 'たては', 'ノーマル'),
-            $this->createItem(9, 'しんどう', 'ノーマル'),
-            $this->createItem(14, 'うおたろう', 'ハード'),
+            $this->createItem(10, 'ゆたか', ['difficulty' => 'イージー']),
+            $this->createItem(100, 'かすかべ', ['difficulty' => 'イージー']),
+            $this->createItem(120, 'たては', ['difficulty' => 'ノーマル']),
+            $this->createItem(9, 'しんどう', ['difficulty' => 'ノーマル']),
+            $this->createItem(14, 'うおたろう', ['difficulty' => 'ハード']),
         ];
 
         $sorter = new ArraySorter();
@@ -158,24 +158,53 @@ class ArraySorterTest extends \Tests\TestCase
         );
     }
 
+    public function testWithJpLocaleKanji(): void
+    {
+        $items = [
+            $this->createItem(38, 'ケツイ ～絆地獄たち～', ['name-sort' => 'けつい ～きずなじごくたち～']),
+            $this->createItem(14, '虫姫さまふたりVer 1.5', ['name-sort' => 'むしひめさまふたりVer 1.5']),
+            $this->createItem(120, '赤い刀', ['name-sort' => 'あかいかたな']),
+        ];
+
+        $sorter = new ArraySorter();
+
+        self::assertSame(
+            [120, 38, 14],
+            array_map(
+                fn ($item) => $item->id(),
+                $sorter->sort($items, [
+                    'name' => 'asc',
+                ])
+            ),
+            'Sort by name (kana)'
+        );
+    }
+
+    /**
+     * @param array<string,mixed> $properties
+     */
     private function createItem(
         int $id,
         string $name,
-        string $difficulty
+        array $properties = []
     ): ItemInterface {
-        return new class ($id, $name, $difficulty) implements ItemInterface {
+        return new class ($id, $name, $properties) implements ItemInterface {
             private int $id;
             private string $name;
-            private string $difficulty;
+            /** @var array<string,mixed> */
+            private array $properties;
 
+            /**
+             * @param array<string,mixed> $properties
+             */
             public function __construct(
                 int $id,
                 string $name,
-                string $difficulty
+                array $properties
             ) {
                 $this->id = $id;
                 $this->name = $name;
-                $this->difficulty = $difficulty;
+                $this->properties = $properties;
             }
 
             public function id(): int
@@ -188,11 +217,6 @@ class ArraySorterTest extends \Tests\TestCase
                 return $this->name;
             }
 
-            public function difficulty(): string
-            {
-                return $this->difficulty;
-            }
-
             /**
              * @return mixed
              */
@@ -203,10 +227,8 @@ class ArraySorterTest extends \Tests\TestCase
                         return $this->id;
                     case 'name':
                         return $this->name;
-                    case 'difficulty':
-                        return $this->difficulty;
                     default:
-                        return null;
+                        return $this->properties[$name] ?? null;
                 }
             }
         };

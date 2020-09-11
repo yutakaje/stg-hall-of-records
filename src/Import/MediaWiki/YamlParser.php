@@ -55,6 +55,17 @@ final class YamlParser
      */
     private function parseGame(array $properties): ParsedProperties
     {
+        // `name-kana` ist just an alias for `name-sort-jp`.
+        if (isset($properties['name-kana'])) {
+            $properties['name-sort-jp'] = $properties['name-kana'];
+            unset($properties['name-kana']);
+        }
+
+        // Name used for sorting does usually not differ from its original name.
+        if (!isset($properties['name-sort'])) {
+            $properties['name-sort'] = $properties['name'] ?? '';
+        }
+
         $properties['scores'] = array_map(
             fn (array $score) => new ParsedProperties($score),
             $properties['scores'] ?? []
