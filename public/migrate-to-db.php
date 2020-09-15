@@ -27,7 +27,8 @@ try {
 
     $games = convertToGameList($companies);
     //$toc = createToc($games);
-    $toc = createBetterToc($games);
+    //$toc = createBetterToc($games);
+    $toc = '';
 
     $db = convertToDatabase($description, $toc, $games);
     saveContents($db);
@@ -358,17 +359,36 @@ layout:
     templates:
         main: |
             {{ description|raw }}
-            __NOTOC__
+            {{ include('toc') }}
             {{ include('games') }}
+        toc: |
+            <table class="wikitable">
+              <tr>
+            {% set numNonEmptyGroups = 0 %}
+            {% for group in games.grouped.byInitials %}
+            {% if group.games %}
+                <th class="{% for game in group.games %}mw-customtoggle-{{ game.properties.id }} {% endfor %}" style="padding-left:10px;padding-right:10px;">{{ group.title }}</th>
+            {% set numNonEmptyGroups = numNonEmptyGroups + 1 %}
+            {% endif %}
+            {% endfor %}
+              </tr>
+            {% for group in games.grouped.byInitials %}
+            {% for game in group.games %}
+              <tr id="mw-customcollapsible-{{ game.properties.id }}" class="mw-collapsible mw-collapsed">
+                <td colspan="{{ numNonEmptyGroups }}">[[#{{ game.properties.name }}|{{ game.properties.name }}]]</td>
+              </tr>
+            {% endfor %}
+            {% endfor %}
+            </table>
+            __NOTOC__
         games: |
-            {% for game in games %}
+            {% for game in games.all %}
             {% if game.template %}
             {{ game.template|raw }}
-
             {% else %}
             {{ include('game') }}
-
             {% endif %}
+
             {% endfor %}
         game: |
             {| class="wikitable" style="text-align: center"
@@ -376,11 +396,23 @@ layout:
             ! colspan="{{ game.headers|length }}" | {{ game.properties.name }}
             |-
             ! {{ game.headers|join(' !! ') }}
-            {% for columns in game.scores %}
-            |-
-            | {{ columns|join(' || ') }}
+            {% for score in game.scores %}
+            {{ include('score') }}
             {% endfor %}
             |}
+
+            {% if game.properties.description %}
+            {{ game.properties.description }}
+
+            {% endif %}
+            {% if game.links %}
+            {% for link in game.links %}
+            * [{{ link.url}} {{link.title}}]
+            {% endfor %}
+            {% endif %}
+        score: |
+            |-
+            | {% for column in score.columns %}{% if column.attrs %}{{ column.attrs|raw }} | {% endif %}{{ column.value }}{% if not loop.last %} || {% endif %}{% endfor %}
 
 
 translations:
