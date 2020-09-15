@@ -11,12 +11,6 @@
 
 declare(strict_types=1);
 
-use DI\ContainerBuilder;
-use Stg\HallOfRecords\MediaWikiDatabaseFetcher;
-use Stg\HallOfRecords\MediaWikiGenerator;
-use Twig\Environment;
-use Twig\Loader\FilesystemLoader;
-
 $rootDir = dirname(__DIR__);
 require "{$rootDir}/vendor/autoload.php";
 
@@ -45,11 +39,6 @@ try {
 function createBetterToc(array $allGames): string
 {
     $grouped = [];
-
-    usort(
-        $allGames,
-        fn (\stdClass $lhs, \stdClass $rhs) => strtolower($lhs->name) <=> strtolower($rhs->name)
-    );
 
     foreach ($allGames as $game) {
         $grouped[mb_substr($game->name, 0, 1)][] = $game;
@@ -191,20 +180,22 @@ function convertToDatabase(
             . substr($content, $pos);
     };
 
-    return globalSection($description, $toc) . PHP_EOL . implode(PHP_EOL, array_map(
-        fn (\stdClass $game) => str_replace(
-            [
-                '{{ game-name }}',
-                '{{ company-name }}',
-                '{{ game-content }}',
-            ],
-            [
-                $game->name,
-                $game->company,
-                $addCompanyName($game),
-            ],
-            <<<'TPL'
-== {{ game-name }} ==
+    return globalSection($description, $toc) . PHP_EOL .
+        '== Games ==' . PHP_EOL .
+        implode(PHP_EOL, array_map(
+            fn (\stdClass $game) => str_replace(
+                [
+                    '{{ game-name }}',
+                    '{{ company-name }}',
+                    '{{ game-content }}',
+                ],
+                [
+                    $game->name,
+                    $game->company,
+                    $addCompanyName($game),
+                ],
+                <<<'TPL'
+=== {{ game-name }} ===
 <div style="display:none"><nowiki>
 name: "{{ game-name }}"
 company: "{{ company-name }}"
@@ -212,16 +203,16 @@ needs-work: true
 
 layout:
     templates:
-        game : |
+        game: |
             {{Anchor|{{ game-name }}}}
             {{ game-content }}
 </nowiki></div>
 
 
 TPL
-        ),
-        $games
-    ));
+            ),
+            $games
+        ));
 }
 
 function convertToGameList(array $companies): array
@@ -236,6 +227,11 @@ function convertToGameList(array $companies): array
             $allGames[] = $game;
         }
     }
+
+    usort(
+        $allGames,
+        fn (\stdClass $lhs, \stdClass $rhs) => strtolower($lhs->name) <=> strtolower($rhs->name)
+    );
 
     return $allGames;
 }
@@ -333,7 +329,7 @@ function globalSection(string $description, string $toc): string
             str_replace(PHP_EOL, PHP_EOL . '    ', trim($description) . PHP_EOL . PHP_EOL . $toc),
         ],
         <<<'OUTPUT'
-== Global ==
+== Global settings ==
 Values defined in this section will apply to all the games in the database. Its main purpose is to reduce redundant translations for reocurring values (e.g. company names, common column names, ...).
 
 <div style="display:none"><nowiki>
