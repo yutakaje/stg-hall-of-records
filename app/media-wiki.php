@@ -11,6 +11,10 @@
 
 declare(strict_types=1);
 
+use Monolog\Handler\RotatingFileHandler;
+use Monolog\Logger;
+use Monolog\Processor\UidProcessor;
+use Psr\Log\LoggerInterface;
 use Stg\HallOfRecords\Data\Game\GameRepository;
 use Stg\HallOfRecords\Data\Game\GameRepositoryInterface;
 use Stg\HallOfRecords\Data\Score\ScoreRepository;
@@ -39,4 +43,15 @@ return [
         'https://shmups.wiki/index.php?title=STG_Hall_of_Records/Database&action=edit'
     ),
     MediaWikiGenerator::class => DI\autowire(),
+
+    LoggerInterface::class => static function (): Logger {
+        $logger = new Logger('stg-hall-of-records');
+        $logger->pushProcessor(new UidProcessor());
+        $logger->pushHandler(new RotatingFileHandler(
+            dirname(__DIR__) . '/logs/app.log',
+            30,
+            Logger::DEBUG
+        ));
+        return $logger;
+    },
 ];

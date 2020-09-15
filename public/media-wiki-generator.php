@@ -12,6 +12,8 @@
 declare(strict_types=1);
 
 use DI\ContainerBuilder;
+use Psr\Log\LoggerInterface;
+use Stg\HallOfRecords\Error\ErrorHandler;
 use Stg\HallOfRecords\MediaWikiDatabaseFetcher;
 use Stg\HallOfRecords\MediaWikiGenerator;
 use Twig\Environment;
@@ -20,10 +22,14 @@ use Twig\Loader\FilesystemLoader;
 $rootDir = dirname(__DIR__);
 require "{$rootDir}/vendor/autoload.php";
 
+$errorHandler = new ErrorHandler();
+
 try {
     $builder = new ContainerBuilder();
     $builder->addDefinitions("{$rootDir}/app/media-wiki.php");
     $container = $builder->build();
+
+    $errorHandler->registerLogger($container->get(LoggerInterface::class));
 
     $locales = 'en,jp';
     $input = '';
@@ -73,8 +79,8 @@ try {
         'error' => $errorMessage,
     ]);
 } catch (\Throwable $error) {
+    // Make sure that unexpected errors do not leak to the client.
+    $identifier = $errorHandler->logError($error);
     http_response_code(500);
-    // @TODO: Use Monolog or similiar.
-    error_log($error->getMessage());
-    exit('Unexpected server error');
+    exit("Unexpected server error (identifier: {$identifier})");
 }
