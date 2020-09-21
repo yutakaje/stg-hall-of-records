@@ -1,7 +1,180 @@
-== Global settings ==
-Values defined in this section will apply to all the games in the database. Its main purpose is to reduce redundant translations for reocurring values (e.g. company names, common column names, ...).
+'''Attention: This page serves as a database and is not meant to be consumed by end users. If you came here for the STG Hall of Records, follow one of these links:'''
 
-<div style="display:none"><nowiki>
+* English version: https://shmups.wiki/library/STG_Hall_of_Records
+* 日本語版: https://shmups.wiki/library/STG記録の殿堂
+
+== Introduction ==
+The contents of this page serve as a database and are meant to be put into a [https://shmups.wiki/records/ generator]. The generator converts the raw data, written in YAML, into actual wiki pages for different languages.
+
+=== Structure ===
+Every section of data is enclosed in &lt;nowiki&gt;&lt;/nowiki&gt; tags. Everything outside outside of these tags will be ignored by the parser. The first section is named ''global'' and contains settings for the whole page, all the remaining sections each contain data about a single game.
+
+==== Global settings ====
+Values defined in this section apply to all the games in the database or the whole page in general (e.g. description, sorting of games, common translations, ...). For further information, please refer to the [[#Global settings-value|actual value]], most of the settings are documented.
+
+==== Game ====
+'''WIP'''
+Each game is defined by the following properties:
+
+<pre>
+name: Name of the game
+name-jp: 日本語のタイトル / Japanese title in kanji
+name-kana: にほんごのたいとる / Japanese title in hiragana
+company: Developer / Publisher
+
+scores: Score entries (see below)
+
+links:
+  - url: https://example.org/the-link
+    title: Title for the link
+  - url: https://example.org/other-link
+    title: Second link title
+
+description: "Description containing notes about counterstops and other noteworthy stuff."
+
+layout: Layout information (see below)
+
+translations: Game-specific translations (see below)
+</pre>
+
+For each score the properties listed below are available. They are heavily game-dependent and usually not all of them are useful. Unnecessary properties can (and should) be omitted.
+
+<pre>
+player: Name of the player (required)
+score: Score (required)
+ship: Selected ship / character
+mode: Game mode / difficulty
+weapon: Weapon / style
+version: Version (1P, 2P, Japan, World, Old, New, ...)
+autofire: Flag whether autofire was used or not
+scored-date: Date the score was achieved (YYYY-MM-DD|YYYY-MM|YYYY)
+published-date: Date the score was published (YYYY-MM-DD|YYYY-MM|YYYY)
+source: Information source
+added-date: Date the score was added to the HoR (YYYY-MM-DD|YYYY-MM|YYYY) (required)
+comments: List of additional comments
+links: List of links to replay, Blog, ...
+image-url: URL pointing to a screenshot of the score
+</pre>
+
+Additional properties may be specified. In this case the generator will treat their values verbatim.
+
+For every property a property with the same name and a locale suffix can be specified. Its value will be used on the page in the corresponding language instead of the value of the original property. Currently only '-jp' for Japanese is used but this can be extended to support more languages.
+
+===== Example =====
+<pre>
+&lt;pre&gt;&lt;nowiki&gt;
+name: "Ketsui: Kizuna Jigoku Tachi"
+name-jp: ケツイ ～絆地獄たち～
+name-kana: けつい ～きずなじごくたち～
+company: Cave
+
+scores:
+  - player: SPS
+    score: 507,780,433
+    ship: Type A
+    mode: Omote
+    scored-date: "2014-08"
+    source: Arcadia August 2014
+    comments:
+
+  - player: SPS
+    score: 481,402,383
+    ship: Type B
+    mode: Omote
+    scored-date: "2014-11"
+    source: Arcadia November 2014
+    comments:
+      - 6L 0B remaining
+      - 1st loop 276m
+
+  - player: SPS
+    score: 489,893,348
+    ship: Type A
+    mode: Omote
+    scored-date: "2010-04"
+    source: Old score
+    comments:
+
+  - player: GAN
+    score: 569,741,232
+    ship: Type B
+    mode: Ura
+    scored-date: "2016-03"
+    source: JHA March 2016
+    comments:
+      - 6L remaining
+
+  - player: SPS
+    score: 583,614,753
+    ship: Type A
+    mode: Ura
+    scored-date: "2014-05-27"
+    source: Arcadia September 2014 / [https:// Twitter]
+    comments:
+      - 6L 0B remaining
+      - 1st loop 285m
+
+links:
+  - url: https://example.org/jha/ketsui
+    title: JHA Leaderboard
+    title-jp: 日本ハイスコア協会
+  - url: https://example.org/farm/ketsui
+    title: Shmups Forum Hi-Score Topic
+
+translations:
+  - property: ship
+    value: Type A
+    value-en: Tiger Schwert
+    value-jp: TYPE-A ティーゲルシュベルト
+  - property: ship
+    value: Type B
+    value-en: Panzer Jäger
+    value-jp: TYPE-B パンツァーイェーガー
+  - property: mode
+    value: Omote
+    value-jp: 表2週
+  - property: mode
+    value: Ura
+    value-jp: 裏2週
+
+layout:
+    columns:
+      - label: Ship
+        label-jp: 自機
+        template: "{{ ship }}"
+        groupSameValues: true
+
+      - label: Loop
+        label-jp: 2週種
+        template: "{{ mode }}"
+
+      - label: Score
+        label-jp: スコア
+        template: "{{ score }}"
+
+      - label: Player
+        label-jp: プレイヤー
+        template: "{{ player }}"
+        groupSameValues: true
+
+      - label: Date / Source
+        label-jp: 年月日 / 情報元
+        template: "{{ scored-date }} / {{ source }}"
+
+      - label: Comment
+        label-jp: 備考
+        template: "{{ comments|join('; ') }}"
+
+    sort:
+        scores:
+            ship: [ Type A, Type B ]
+            mode: asc
+&lt;/nowiki&gt;&lt;/pre&gt;
+</pre>
+
+{{Anchor|Global settings-value}}
+== Global settings ==
+<pre><nowiki>
 name: global
 
 description: |
@@ -100,11 +273,10 @@ translations:
   - property: company
     value: Raizing / 8ing
     value-jp: ライジング / エイティング
-
-</nowiki></div>
+</nowiki></pre>
 == Games ==
 === 1941 Counter Attack ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "1941 Counter Attack"
 company: "Capcom"
 needs-work: true
@@ -125,11 +297,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=11606 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === 1942 ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "1942"
 company: "Capcom"
 needs-work: true
@@ -152,11 +324,11 @@ layout:
             Note: Micom Basic magazine (August 1985) lists an unverified score of 89,706,000 by ガッツマン.
             
             * [https://shmups.system11.org/viewtopic.php?t=177 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === 1943 ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "1943"
 company: "Capcom"
 needs-work: true
@@ -180,11 +352,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=177 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === 1943 kai ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "1943 kai"
 company: "Capcom"
 needs-work: true
@@ -205,11 +377,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=177 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === 1944: The Loop Master ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "1944: The Loop Master"
 company: "Raizing / 8ing"
 needs-work: true
@@ -229,11 +401,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2000_037_1944_%E3%82%B6%E3%83%BB%E3%83%AB%E3%83%BC%E3%83%97%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=37237 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === 19XX: The War Against Destiny ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "19XX: The War Against Destiny"
 company: "Capcom"
 needs-work: true
@@ -257,11 +429,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1996_005_19XX JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=62431 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === A-Jax ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "A-Jax"
 company: "Konami"
 needs-work: true
@@ -282,11 +454,11 @@ layout:
             Note: Japanese scoreboard closed May 1988 due to the detection of an infinite pattern.
             
             * [https://shmups.system11.org/viewtopic.php?t=58238 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Acrobat Mission ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Acrobat Mission"
 company: "UPL"
 needs-work: true
@@ -309,11 +481,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=52718 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Air Buster ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Air Buster"
 company: "Kaneko"
 needs-work: true
@@ -332,11 +504,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=54749 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Air Duel ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Air Duel"
 company: "Irem"
 needs-work: true
@@ -358,11 +530,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1990_010_%E3%82%A8%E3%82%A2%E3%83%87%E3%83%A5%E3%82%A8%E3%83%AB JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=42877 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Air Gallet / Akuu Gallet ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Air Gallet / Akuu Gallet"
 company: "Gazelle"
 needs-work: true
@@ -381,11 +553,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?f=2&t=66146 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Aka to Blue Type-R ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Aka to Blue Type-R"
 company: "Tanoshimasu"
 needs-work: true
@@ -414,11 +586,11 @@ layout:
             |}
             
             * [https://wiki.denfaminicogamer.jp/highscore/2019_005_%E3%82%A2%E3%82%AB%E3%81%A8%E3%83%96%E3%83%AB%E3%83%BC_TYPE-R JHA Leaderboard]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Akai Katana ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Akai Katana"
 company: "CAVE"
 needs-work: true
@@ -441,11 +613,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?f=2&t=45652 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Akai Katana Shin ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Akai Katana Shin"
 company: "CAVE"
 needs-work: true
@@ -469,11 +641,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2012_008_%E8%B5%A4%E3%81%84%E5%88%80_%E7%9C%9F%EF%BC%88%E3%83%8D%E3%82%B7%E3%82%AB%E7%89%88%EF%BC%89 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?f=2&t=45652 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Akkanvader / Space Invaders '95 ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Akkanvader / Space Invaders '95"
 company: "Taito"
 needs-work: true
@@ -493,11 +665,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1995_013_%E3%81%82%E3%81%A3%E3%81%8B%E3%82%93%E3%81%B9%E3%81%87%E3%81%A0%E3%81%81%E3%80%9C JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=33065 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Andro Dunos ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Andro Dunos"
 company: "Visco"
 needs-work: true
@@ -529,11 +701,11 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=19702 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Arbalester ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Arbalester"
 company: "Jorudan"
 needs-work: true
@@ -550,11 +722,11 @@ layout:
             |-
             | {{v|a1|3,348,000}} || Comb-Sniper-NOM || Gamest August 1989 || ||
             |}
-</nowiki></div>
+</nowiki></pre>
 
 
 === Area 88 / U.N. Squadron ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Area 88 / U.N. Squadron"
 company: "Capcom"
 needs-work: true
@@ -575,11 +747,11 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 9,999,990.
             
             * [https://shmups.system11.org/viewtopic.php?t=11308 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Argus ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Argus"
 company: "NMK"
 needs-work: true
@@ -598,11 +770,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=61657 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Argus no Senshi / Rygar ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Argus no Senshi / Rygar"
 company: "Tecmo"
 needs-work: true
@@ -625,11 +797,11 @@ layout:
             Note: Japanese scoreboard closed November 2018 due to the detection of an infinite pattern.
             
             * [https://wiki.denfaminicogamer.jp/highscore/1986_005_%E3%82%A2%E3%83%AB%E3%82%B4%E3%82%B9%E3%81%AE%E6%88%A6%E5%A3%AB JHA Leaderboard]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Armed Police Batrider ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Armed Police Batrider"
 company: "Raizing / 8ing"
 needs-work: true
@@ -675,11 +847,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=35079 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Ashura Blaster ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Ashura Blaster"
 company: "Visco"
 needs-work: true
@@ -700,11 +872,11 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 9,999,900.
             
             * [https://shmups.system11.org/viewtopic.php?t=49692 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === ASO II / Alpha Mission II ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "ASO II / Alpha Mission II"
 company: "SNK"
 needs-work: true
@@ -727,11 +899,11 @@ layout:
             Note: No official score keeping tradition due to the detection of an infinite pattern right after the release of the game.
             
             * [https://shmups.system11.org/viewtopic.php?t=62179 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === ASO: Armored Scrum Object / Alpha Mission ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "ASO: Armored Scrum Object / Alpha Mission"
 company: "SNK"
 needs-work: true
@@ -754,11 +926,11 @@ layout:
             Note: Japanese scoreboard closed September 1986 due to the detection of an infinite pattern. Shmups Wiki scoreboard closed after the achievement of the counterstop at 9,999,900.
             
             * [https://shmups.system11.org/viewtopic.php?t=62179 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Assault ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Assault"
 company: "Namco"
 needs-work: true
@@ -781,11 +953,11 @@ layout:
             Note: Control panel dedicated.
             
             * [https://shmups.system11.org/viewtopic.php?t=63722 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Assault Plus ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Assault Plus"
 company: "Namco"
 needs-work: true
@@ -808,11 +980,11 @@ layout:
             Note: Control panel dedicated.
             
             * [https://shmups.system11.org/viewtopic.php?t=63722 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Asuka & Asuka ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Asuka & Asuka"
 company: "Visco"
 needs-work: true
@@ -829,11 +1001,11 @@ layout:
             |-
             | {{v|a1|924,700}} || BAD-北大和のILM || Gamest June 1989 || ||
             |}
-</nowiki></div>
+</nowiki></pre>
 
 
 === Atomic Robo-Kid ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Atomic Robo-Kid"
 company: "UPL"
 needs-work: true
@@ -856,11 +1028,11 @@ layout:
             Note: Japanese scoreboard closed due to the detection of an infinite pattern.
             
             * [https://shmups.system11.org/viewtopic.php?t=59890 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === B-Wings ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "B-Wings"
 company: "Data East"
 needs-work: true
@@ -899,11 +1071,11 @@ layout:
             |}
             
             Note: Scoreboard closed after the achievement of the counterstop at 9,999,999.
-</nowiki></div>
+</nowiki></pre>
 
 
 === Bakuretsu Breaker / Explosive Breaker ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Bakuretsu Breaker / Explosive Breaker"
 company: "Kaneko"
 needs-work: true
@@ -925,11 +1097,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1992_011_%E7%88%86%E7%83%88%E3%83%96%E3%83%AC%E3%82%A4%E3%82%AB%E3%83%BC JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=61632 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Batsugun ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Batsugun"
 company: "Toaplan"
 needs-work: true
@@ -960,11 +1132,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=49323 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Batsugun Special ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Batsugun Special"
 company: "Toaplan"
 needs-work: true
@@ -991,11 +1163,11 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 99,999,990.
             
             * [https://shmups.system11.org/viewtopic.php?t=49323 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Battlantis ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Battlantis"
 company: "Konami"
 needs-work: true
@@ -1014,11 +1186,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=59610 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Battle Bakraid ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Battle Bakraid"
 company: "Raizing / 8ing"
 needs-work: true
@@ -1047,11 +1219,11 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 63,999,990. Competition moved over to Battle Bakraid (Unlimited Ver.).
             
             * [https://shmups.system11.org/viewtopic.php?t=16137 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Battle Bakraid (Unlimited Ver.) ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Battle Bakraid (Unlimited Ver.)"
 company: "Raizing / 8ing"
 needs-work: true
@@ -1084,11 +1256,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1999_026_%E3%83%90%E3%83%88%E3%83%AB%E3%83%90%E3%82%AF%E3%83%AC%E3%82%A4%E3%83%89_%E3%82%A2%E3%83%B3%E3%83%AA%E3%83%9F%E3%83%86%E3%83%83%E3%83%89Ver. JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=16137 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Battle Garegga ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Battle Garegga"
 company: "Raizing / 8ing"
 needs-work: true
@@ -1155,11 +1327,11 @@ layout:
             * [[World Record Progression for Battle Garegga|World Record Progression]]
             * [https://wiki.denfaminicogamer.jp/highscore/1996_001_%E3%83%90%E3%83%88%E3%83%AB%E3%82%AC%E3%83%AC%E3%83%83%E3%82%AC JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=28714 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Black Heart ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Black Heart"
 company: "NMK"
 needs-work: true
@@ -1180,11 +1352,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=42548 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === BlaZeon ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "BlaZeon"
 company: "A.I."
 needs-work: true
@@ -1203,11 +1375,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=53219 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Blazing Star ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Blazing Star"
 company: "Aicom / Yumekobo"
 needs-work: true
@@ -1237,11 +1409,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1998_022_%E3%83%96%E3%83%AC%E3%82%A4%E3%82%B8%E3%83%B3%E3%82%B0%E3%82%B9%E3%82%BF%E3%83%BC JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=34730 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Border Down ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Border Down"
 company: "G.Rev"
 needs-work: true
@@ -1267,11 +1439,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2003_025_%E3%83%9C%E3%83%BC%E3%83%80%E3%83%BC%E3%83%80%E3%82%A6%E3%83%B3 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=22953 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Bosconian ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Bosconian"
 company: "Namco"
 needs-work: true
@@ -1288,11 +1460,11 @@ layout:
             |-
             | Old || {{v|a1|6,202,090}} || フジマサ || July 18th, 2020 / [https://twitter.com/f8qiHibT5S1FZTf/status/1284420414110744576 Twitter] || round 237 ||
             |}
-</nowiki></div>
+</nowiki></pre>
 
 
 === Brave Blade ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Brave Blade"
 company: "Raizing / 8ing"
 needs-work: true
@@ -1315,11 +1487,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2000_066_%E3%83%96%E3%83%AC%E3%82%A4%E3%83%96%E3%83%96%E3%83%AC%E3%82%A4%E3%83%89 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=3664 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Caladrius Blaze AC ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Caladrius Blaze AC"
 company: "Seibu Kaihatsu / Moss"
 needs-work: true
@@ -1399,11 +1571,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2013_002_%E3%82%AB%E3%83%A9%E3%83%89%E3%83%AA%E3%82%A6%E3%82%B9AC JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=45659 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Captain Tomaday ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Captain Tomaday"
 company: "Visco"
 needs-work: true
@@ -1424,11 +1596,11 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 99,999.99.
             
             * [https://shmups.system11.org/viewtopic.php?t=42666 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Change Air Blade ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Change Air Blade"
 company: "Sammy"
 needs-work: true
@@ -1448,11 +1620,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1999_042_%E3%83%81%E3%82%A7%E3%83%B3%E3%82%B8%E3%82%A8%E3%82%A2%E3%83%96%E3%83%AC%E3%83%BC%E3%83%89 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=28896 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Chaos Field ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Chaos Field"
 company: "Milestone"
 needs-work: true
@@ -1476,11 +1648,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2004_011_%E3%82%AB%E3%82%AA%E3%82%B9%E3%83%95%E3%82%A3%E3%83%BC%E3%83%AB%E3%83%89 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=42140 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Chariot (Wonder 3) ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Chariot (Wonder 3)"
 company: "Capcom"
 needs-work: true
@@ -1502,11 +1674,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1991_052_%E3%83%81%E3%83%A3%E3%83%AA%E3%82%AA%E3%83%83%E3%83%88%EF%BC%88%E3%83%AF%E3%83%B3%E3%83%80%E3%83%BC3%EF%BC%89 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=17553 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Choujikuu Yousai Macross ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Choujikuu Yousai Macross"
 company: "NMK"
 needs-work: true
@@ -1527,11 +1699,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?f=2&t=65803 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Choujikuu Yousai Macross II ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Choujikuu Yousai Macross II"
 company: "NMK"
 needs-work: true
@@ -1563,11 +1735,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?f=2&t=65803 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Chuka Taisen ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Chuka Taisen"
 company: "Taito"
 needs-work: true
@@ -1586,11 +1758,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=57818 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Cosmo Gang: The Video ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Cosmo Gang: The Video"
 company: "Namco"
 needs-work: true
@@ -1611,11 +1783,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=58080 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Cotton ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Cotton"
 company: "Success"
 needs-work: true
@@ -1642,11 +1814,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=51321 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Cotton 2 ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Cotton 2"
 company: "Success"
 needs-work: true
@@ -1665,11 +1837,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=53296 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Cotton Boomerang ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Cotton Boomerang"
 company: "Success"
 needs-work: true
@@ -1690,11 +1862,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=54167 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Crimzon Clover ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Crimzon Clover"
 company: "Yotsubane"
 needs-work: true
@@ -1783,11 +1955,11 @@ layout:
             
             
             <big>'''Template (Please copy this to create a new entry)'''</big>
-</nowiki></div>
+</nowiki></pre>
 
 
 === Cybattler ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Cybattler"
 company: "Jaleco"
 needs-work: true
@@ -1808,11 +1980,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=37705 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Cyvern Plus ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Cyvern Plus"
 company: "Kaneko"
 needs-work: true
@@ -1829,11 +2001,11 @@ layout:
             |-
             | {{v|a1|41,104,500}} || CFK-NRK ||2000|| Altair (1p side) || [https://youtu.be/ZyQlTFSJ1qY Youtube]
             |}
-</nowiki></div>
+</nowiki></pre>
 
 
 === Cyvern: The Dragon Weapons ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Cyvern: The Dragon Weapons"
 company: "Kaneko"
 needs-work: true
@@ -1852,11 +2024,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=45820 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Daioh ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Daioh"
 company: "Athena"
 needs-work: true
@@ -1878,11 +2050,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1993_001_%E5%A4%A7%E7%8E%8B JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=35513 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Daisenpuu ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Daisenpuu"
 company: "Toaplan"
 needs-work: true
@@ -1903,11 +2075,11 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=35471 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Dangerous Seed ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Dangerous Seed"
 company: "Namco"
 needs-work: true
@@ -1928,11 +2100,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=42760 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Dangun Feveron ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Dangun Feveron"
 company: "CAVE"
 needs-work: true
@@ -1968,11 +2140,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1998_019_%E5%BC%BE%E9%8A%83%E3%83%95%E3%82%A3%E3%83%BC%E3%83%90%E3%83%AD%E3%83%B3 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=37015 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Darius ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Darius"
 company: "Taito"
 needs-work: true
@@ -2000,11 +2172,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1987_007_%E3%83%80%E3%83%A9%E3%82%A4%E3%82%A2%E3%82%B9 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=37042 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Darius Extra ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Darius Extra"
 company: "Taito"
 needs-work: true
@@ -2032,11 +2204,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=37042 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Darius Gaiden ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Darius Gaiden"
 company: "Taito"
 needs-work: true
@@ -2091,11 +2263,11 @@ layout:
             Note: Japanese scoreboard closed May 1995 due to the detection of an invincibility glitch. For details, see [https://youtu.be/CR-k61OP-Ag this video].
             
             * [https://shmups.system11.org/viewtopic.php?t=173 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Darius Gaiden Extra ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Darius Gaiden Extra"
 company: "Taito"
 needs-work: true
@@ -2114,11 +2286,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=37052 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Darius II ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Darius II"
 company: "Taito"
 needs-work: true
@@ -2167,11 +2339,11 @@ layout:
             Note: Japanese scoreboard for all routes except lower V' closed January 1991 due to the detection of an infinite pattern in zones K, M, and N.
             
             * [https://shmups.system11.org/viewtopic.php?t=52848 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Darwin 4078 ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Darwin 4078"
 company: "Data East"
 needs-work: true
@@ -2190,11 +2362,11 @@ layout:
             |}
             
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
-</nowiki></div>
+</nowiki></pre>
 
 
 === Deathsmiles ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Deathsmiles"
 company: "CAVE"
 needs-work: true
@@ -2238,11 +2410,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2007_012_%E3%83%87%E3%82%B9%E3%82%B9%E3%83%9E%E3%82%A4%E3%83%AB%E3%82%BA JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=58071 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Deathsmiles II ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Deathsmiles II"
 company: "CAVE"
 needs-work: true
@@ -2271,11 +2443,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2009_010_%E3%83%87%E3%82%B9%E3%82%B9%E3%83%9E%E3%82%A4%E3%83%AB%E3%82%BAII_Ver.4.00 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=32044 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Deathsmiles Mega Black Label ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Deathsmiles Mega Black Label"
 company: "CAVE"
 needs-work: true
@@ -2308,11 +2480,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2008_012_%E3%83%87%E3%82%B9%E3%82%B9%E3%83%9E%E3%82%A4%E3%83%AB%E3%82%BA_%E3%83%A1%E3%82%AC%E3%83%96%E3%83%A9%E3%83%83%E3%82%AF%E3%83%AC%E3%83%BC%E3%83%99%E3%83%AB JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=58071 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Detana! TwinBee ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Detana! TwinBee"
 company: "Konami"
 needs-work: true
@@ -2334,11 +2506,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1991_055_%E5%87%BA%E3%81%9F%E3%81%AA!!%E3%83%84%E3%82%A4%E3%83%B3%E3%83%93%E3%83%BC JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=58416 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Dodonpachi ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Dodonpachi"
 company: "CAVE"
 needs-work: true
@@ -2390,11 +2562,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1997_007_%E6%80%92%E9%A6%96%E9%A0%98%E8%9C%82 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=56826 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Dodonpachi Campaign Version ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Dodonpachi Campaign Version"
 company: "CAVE"
 needs-work: true
@@ -2411,11 +2583,11 @@ layout:
             |-
             | {{v|a1|5,448,702,440}} || SOF-WTN || 2003 / superplay VHS || A-Laser, 2L remaining, max hit 4754, 1st loop 1.836b || [https://youtu.be/rv1JK2Ezk9U Youtube]
             |}
-</nowiki></div>
+</nowiki></pre>
 
 
 === Dodonpachi Daifukkatsu ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Dodonpachi Daifukkatsu"
 company: "CAVE"
 needs-work: true
@@ -2439,11 +2611,11 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 99,999,999,999. Competition moved over to Dodonpachi Daifukkatsu 1.5.
             
             * [https://wiki.denfaminicogamer.jp/highscore/2008_009_%E6%80%92%E9%A6%96%E9%A0%98%E8%9C%82%E5%A4%A7%E5%BE%A9%E6%B4%BB JHA Leaderboard]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Dodonpachi Daifukkatsu 1.5 ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Dodonpachi Daifukkatsu 1.5"
 company: "CAVE"
 needs-work: true
@@ -2510,11 +2682,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2008_010_%E6%80%92%E9%A6%96%E9%A0%98%E8%9C%82%E5%A4%A7%E5%BE%A9%E6%B4%BB_ver1.5 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=45588 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Dodonpachi Daifukkatsu Black Label ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Dodonpachi Daifukkatsu Black Label"
 company: "CAVE"
 needs-work: true
@@ -2557,11 +2729,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2010_012_%E6%80%92%E9%A6%96%E9%A0%98%E8%9C%82%E5%A4%A7%E5%BE%A9%E6%B4%BB%E3%83%96%E3%83%A9%E3%83%83%E3%82%AF%E3%83%AC%E3%83%BC%E3%83%99%E3%83%AB JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=45588 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Dodonpachi Daioujou ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Dodonpachi Daioujou"
 company: "CAVE"
 needs-work: true
@@ -2620,11 +2792,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2002_007_%E6%80%92%E9%A6%96%E9%A0%98%E8%9C%82%E5%A4%A7%E5%BE%80%E7%94%9F JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=10147 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Dodonpachi Daioujou Black Label ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Dodonpachi Daioujou Black Label"
 company: "CAVE"
 needs-work: true
@@ -2668,11 +2840,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2002_006_%E6%80%92%E9%A6%96%E9%A0%98%E8%9C%82%E5%A4%A7%E5%BE%80%E7%94%9F%E3%83%96%E3%83%A9%E3%83%83%E3%82%AF%E3%83%AC%E3%83%BC%E3%83%99%E3%83%AB JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=17432 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Dodonpachi II: Bee Storm ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Dodonpachi II: Bee Storm"
 company: "IGS"
 needs-work: true
@@ -2696,11 +2868,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=56704 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Dodonpachi Saidaioujou ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Dodonpachi Saidaioujou"
 company: "CAVE"
 needs-work: true
@@ -2775,11 +2947,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2012_012_%E6%80%92%E9%A6%96%E9%A0%98%E8%9C%82%E6%9C%80%E5%A4%A7%E5%BE%80%E7%94%9F JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=47668 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Dogyuun! ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Dogyuun!"
 company: "Toaplan"
 needs-work: true
@@ -2802,11 +2974,11 @@ layout:
             Note: Japanese scoreboard closed May 1994 due to the detection of an infinite pattern. Shmups Wiki scoreboard closed after the achievement of the counterstop at 99,999,990.
             
             * [https://shmups.system11.org/viewtopic.php?t=58959 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Donpachi ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Donpachi"
 company: "CAVE"
 needs-work: true
@@ -2830,11 +3002,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1995_008_%E9%A6%96%E9%A0%98%E8%9C%82 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?f=2&t=60135 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Double Wings ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Double Wings"
 company: "Mitchell"
 needs-work: true
@@ -2851,11 +3023,11 @@ layout:
             |-
             | {{v|a1|4,204,500}} || hamami || Arcadia August 2014 || ||
             |}
-</nowiki></div>
+</nowiki></pre>
 
 
 === Dragon Blaze ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Dragon Blaze"
 company: "Psikyo"
 needs-work: true
@@ -2881,11 +3053,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2000_031_%E3%83%89%E3%83%A9%E3%82%B4%E3%83%B3%E3%83%96%E3%83%AC%E3%82%A4%E3%82%BA JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=51579 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Dragon Breed ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Dragon Breed"
 company: "Irem"
 needs-work: true
@@ -2907,11 +3079,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1989_004_%E3%83%89%E3%83%A9%E3%82%B4%E3%83%B3%E3%83%96%E3%83%AA%E3%83%BC%E3%83%89 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=38613 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Dragon Saber ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Dragon Saber"
 company: "Namco"
 needs-work: true
@@ -2932,11 +3104,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=43455 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Dragon Spirit ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Dragon Spirit"
 company: "Namco"
 needs-work: true
@@ -2960,11 +3132,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1987_001_%E3%83%89%E3%83%A9%E3%82%B4%E3%83%B3%E3%82%B9%E3%83%94%E3%83%AA%E3%83%83%E3%83%88 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=43455 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === E.D.F. Earth Defense Force ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "E.D.F. Earth Defense Force"
 company: "Jaleco"
 needs-work: true
@@ -2983,11 +3155,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=52717 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Earth Joker: UN Defense Force ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Earth Joker: UN Defense Force"
 company: "Visco"
 needs-work: true
@@ -3004,11 +3176,11 @@ layout:
             |-
             | {{v|a1|2,264,300}} || hamami || Arcadia December 2013 || ||
             |}
-</nowiki></div>
+</nowiki></pre>
 
 
 === Eight Forces ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Eight Forces"
 company: "Tecmo"
 needs-work: true
@@ -3029,11 +3201,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=24116 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === ESP Galuda ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "ESP Galuda"
 company: "CAVE"
 needs-work: true
@@ -3055,11 +3227,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2003_012_%E3%82%A8%E3%82%B9%E3%83%97%E3%82%AC%E3%83%AB%E3%83%BC%E3%83%80 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=151 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === ESP Galuda II ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "ESP Galuda II"
 company: "CAVE"
 needs-work: true
@@ -3083,11 +3255,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2005_012_%E3%82%A8%E3%82%B9%E3%83%97%E3%82%AC%E3%83%AB%E3%83%BC%E3%83%80II JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=6270 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === ESP Ra. De. ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "ESP Ra. De."
 company: "CAVE"
 needs-work: true
@@ -3111,11 +3283,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1998_032_%E3%82%A8%E3%82%B9%E3%83%97%E3%83%AC%E3%82%A4%E3%83%89 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=50469 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Exed Exes ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Exed Exes"
 company: "Capcom"
 needs-work: true
@@ -3136,11 +3308,11 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=42461 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Exzisus ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Exzisus"
 company: "Taito"
 needs-work: true
@@ -3173,11 +3345,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1987_006_%E3%82%A4%E3%82%B0%E3%82%B8%E3%83%BC%E3%82%B6%E3%82%B9 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=31706 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === F/A / Fighter & Attacker ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "F/A / Fighter & Attacker"
 company: "Namco"
 needs-work: true
@@ -3222,11 +3394,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1992_004_F_A JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=59867 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Fantasy Zone ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Fantasy Zone"
 company: "Sega"
 needs-work: true
@@ -3249,11 +3421,11 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 99,999,990.
             
             * [https://shmups.system11.org/viewtopic.php?t=55601 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Fighting Hawk ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Fighting Hawk"
 company: "Taito"
 needs-work: true
@@ -3273,11 +3445,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1989_010_%E3%83%95%E3%82%A1%E3%82%A4%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E3%83%9B%E3%83%BC%E3%82%AF JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=30307 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Fire Barrel / Air Assault ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Fire Barrel / Air Assault"
 company: "Irem"
 needs-work: true
@@ -3298,11 +3470,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=58401 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Fixeight ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Fixeight"
 company: "Toaplan"
 needs-work: true
@@ -3362,11 +3534,11 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=35180 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Flak Attack ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Flak Attack"
 company: "Konami"
 needs-work: true
@@ -3385,11 +3557,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=59585 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === G Stream 2020 ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "G Stream 2020"
 company: "Triangle Service / Oriental Soft"
 needs-work: true
@@ -3411,11 +3583,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=44717 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === G-Darius ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "G-Darius"
 company: "Taito"
 needs-work: true
@@ -3443,11 +3615,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1997_004_G%E3%83%80%E3%83%A9%E3%82%A4%E3%82%A2%E3%82%B9 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=178 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Galaga ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Galaga"
 company: "Namco"
 needs-work: true
@@ -3470,11 +3642,11 @@ layout:
             Note: Due to a display issue of scores with 7+ digits, scores can only be tracked on 2p side.
             
             * [https://shmups.system11.org/viewtopic.php?t=39648 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Galaga '88 ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Galaga '88"
 company: "Namco"
 needs-work: true
@@ -3495,11 +3667,11 @@ layout:
             Note: Japanese scoreboard closed June 1988 due to the detection of an infinite pattern.
             
             * [https://shmups.system11.org/viewtopic.php?t=39648 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Gallop: Armed Police Unit / Cosmic Cop ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Gallop: Armed Police Unit / Cosmic Cop"
 company: "Irem"
 needs-work: true
@@ -3544,11 +3716,11 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 999,999.
             
             * [https://shmups.system11.org/viewtopic.php?t=59563 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Game Tengoku / The Game Paradise ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Game Tengoku / The Game Paradise"
 company: "Jaleco"
 needs-work: true
@@ -3590,11 +3762,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1995_012_%E3%82%B2%E3%83%BC%E3%83%A0%E5%A4%A9%E5%9B%BD JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?f=2&t=65720 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Game Title ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Game Title"
 company: "Yotsubane"
 needs-work: true
@@ -3614,11 +3786,11 @@ layout:
             
             * [ JHA Leaderboard]
             * [ Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Gaplus ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Gaplus"
 company: "Namco"
 needs-work: true
@@ -3639,11 +3811,11 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 100,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=39648 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Gekirindan ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Gekirindan"
 company: "Taito"
 needs-work: true
@@ -3666,11 +3838,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=39915 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Gemini Wing ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Gemini Wing"
 company: "Tecmo"
 needs-work: true
@@ -3689,11 +3861,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=37797 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Ghost Pilots ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Ghost Pilots"
 company: "SNK"
 needs-work: true
@@ -3712,11 +3884,11 @@ layout:
             |}
             
             Note: No official score keeping tradition due to the detection of an infinite pattern right after the release of the game.
-</nowiki></div>
+</nowiki></pre>
 
 
 === Giga Wing ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Giga Wing"
 company: "Takumi"
 needs-work: true
@@ -3742,11 +3914,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1999_030_%E3%82%AE%E3%82%AC%E3%82%A6%E3%82%A4%E3%83%B3%E3%82%B0 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=36587 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Giga Wing 2 ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Giga Wing 2"
 company: "Takumi"
 needs-work: true
@@ -3776,11 +3948,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2001_048_%E3%82%AE%E3%82%AC%E3%82%A6%E3%82%A4%E3%83%B3%E3%82%B02 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=61898 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Gokujyou Parodius ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Gokujyou Parodius"
 company: "Konami"
 needs-work: true
@@ -3837,11 +4009,11 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=58157 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Gradius II ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Gradius II"
 company: "Konami"
 needs-work: true
@@ -3879,11 +4051,11 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=58157 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Gradius III ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Gradius III"
 company: "Konami"
 needs-work: true
@@ -3942,11 +4114,11 @@ layout:
             Note: Japanese scoreboard for Normal Mode only kept track of the highest stage reached, not highest score. The board was closed July 1990 due to the detection of an invincibility glitch (for details, see [https://youtu.be/ppOJkFtCD2M this video]). Therefore, only the ranking for Beginner Mode stayed open. Even though the glitch was fixed in the New Version, this did not spark a re-opening of the scoreboard for Normal Mode.
             
             * [https://shmups.system11.org/viewtopic.php?t=58160 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Gradius IV ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Gradius IV"
 company: "Konami"
 needs-work: true
@@ -3981,11 +4153,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1999_058_%E3%82%B0%E3%83%A9%E3%83%87%E3%82%A3%E3%82%A6%E3%82%B9IV JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=9078 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Great Mahou Daisakusen ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Great Mahou Daisakusen"
 company: "Raizing / 8ing"
 needs-work: true
@@ -4037,11 +4209,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2000_053_%E3%82%B0%E3%83%AC%E3%83%BC%E3%83%88%E9%AD%94%E6%B3%95%E5%A4%A7%E4%BD%9C%E6%88%A6 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=38055 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Grid Seeker ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Grid Seeker"
 company: "Taito"
 needs-work: true
@@ -4064,11 +4236,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1992_010_%E3%82%B0%E3%83%AA%E3%83%83%E3%83%89%E3%82%B7%E3%83%BC%E3%82%AB%E3%83%BC JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=44183 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Guardian Force ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Guardian Force"
 company: "Success"
 needs-work: true
@@ -4087,11 +4259,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=58573 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Gun Frontier ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Gun Frontier"
 company: "Taito"
 needs-work: true
@@ -4112,11 +4284,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=43693 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Gunbird ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Gunbird"
 company: "Psikyo"
 needs-work: true
@@ -4144,11 +4316,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1994_004_%E3%82%AC%E3%83%B3%E3%83%90%E3%83%BC%E3%83%89 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=51577 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Gunbird 2 ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Gunbird 2"
 company: "Psikyo"
 needs-work: true
@@ -4181,11 +4353,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1998_016_%E3%82%AC%E3%83%B3%E3%83%90%E3%83%BC%E3%83%892 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=37146 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Gunnail ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Gunnail"
 company: "NMK"
 needs-work: true
@@ -4207,11 +4379,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1993_005_%E3%82%AC%E3%83%B3%E3%83%8D%E3%82%A4%E3%83%AB JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=49747 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Guwange ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Guwange"
 company: "CAVE"
 needs-work: true
@@ -4238,11 +4410,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1999_003_%E3%81%90%E3%82%8F%E3%82%93%E3%81%92 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=34853 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Gyrodine ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Gyrodine"
 company: "Crux"
 needs-work: true
@@ -4261,11 +4433,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=35792 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Hacha Mecha Fighter ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Hacha Mecha Fighter"
 company: "NMK"
 needs-work: true
@@ -4288,11 +4460,11 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 99,999,999.
             
             * [https://shmups.system11.org/viewtopic.php?t=48933 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Halley's Comet ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Halley's Comet"
 company: "Taito"
 needs-work: true
@@ -4317,11 +4489,11 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 9,999,990.
             
             * [https://shmups.system11.org/viewtopic.php?t=34729 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Heavy Unit ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Heavy Unit"
 company: "Kaneko"
 needs-work: true
@@ -4342,11 +4514,11 @@ layout:
             Note: Japanese scoreboard closed due to the achievment of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=52541 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Hellfire ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Hellfire"
 company: "Toaplan"
 needs-work: true
@@ -4370,11 +4542,11 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=17247 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Hishouzame / Flying Shark ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Hishouzame / Flying Shark"
 company: "Toaplan"
 needs-work: true
@@ -4417,11 +4589,11 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=43885 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Homura ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Homura"
 company: "Skonec"
 needs-work: true
@@ -4441,11 +4613,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2005_007_%E3%83%9B%E3%83%A0%E3%83%A9 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=11378 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Hyper Duel ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Hyper Duel"
 company: "Tecnosoft"
 needs-work: true
@@ -4464,11 +4636,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=36797 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Ibara ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Ibara"
 company: "CAVE"
 needs-work: true
@@ -4490,11 +4662,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2005_029_%E9%8B%B3%E8%96%94%E8%96%87 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=18254 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Ibara Black Label ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Ibara Black Label"
 company: "CAVE"
 needs-work: true
@@ -4516,11 +4688,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2006_030_%E9%8B%B3%E8%96%94%E8%96%87%E9%BB%92_%E3%83%96%E3%83%A9%E3%83%83%E3%82%AF%E3%83%AC%E3%83%BC%E3%83%99%E3%83%AB JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=41469 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Ikaruga ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Ikaruga"
 company: "Treasure"
 needs-work: true
@@ -4558,11 +4730,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2001_005_%E6%96%91%E9%B3%A9 JHA Leaderboard (Naomi)] [https://wiki.denfaminicogamer.jp/highscore/2013_006_%E6%96%91%E9%B3%A9%EF%BC%88%E3%83%8D%E3%82%B7%E3%82%AB%E7%89%88%EF%BC%89 (Nesica)]
             * [https://shmups.system11.org/viewtopic.php?t=48471 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Illvelo ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Illvelo"
 company: "Milestone"
 needs-work: true
@@ -4584,11 +4756,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2008_023_%E3%82%A4%E3%83%AB%E3%83%99%E3%83%AD JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=32456 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Image Fight ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Image Fight"
 company: "Irem"
 needs-work: true
@@ -4607,11 +4779,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=51576 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Insector X ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Insector X"
 company: "Taito"
 needs-work: true
@@ -4632,11 +4804,11 @@ layout:
             Note: Scoreboard closed after the achievement of the theoretical max score 867,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=37328 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Kaitei Daisensou / In the Hunt ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Kaitei Daisensou / In the Hunt"
 company: "Irem"
 needs-work: true
@@ -4655,11 +4827,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=38612 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Karous ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Karous"
 company: "Milestone"
 needs-work: true
@@ -4679,11 +4851,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2006_006_%E3%82%AB%E3%83%A9%E3%82%B9 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=13085 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Ketsui ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Ketsui"
 company: "CAVE"
 needs-work: true
@@ -4711,11 +4883,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2003_034_%E3%82%B1%E3%83%84%E3%82%A4 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=65086 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Kiki Kaikai ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Kiki Kaikai"
 company: "Taito"
 needs-work: true
@@ -4740,11 +4912,11 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 9,999,990.
             
             * [https://shmups.system11.org/viewtopic.php?t=53292 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === KOF Sky Stage ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "KOF Sky Stage"
 company: "SNK"
 needs-work: true
@@ -4773,11 +4945,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=46724 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Koutetsu Yousai Strahl ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Koutetsu Yousai Strahl"
 company: "UPL"
 needs-work: true
@@ -4798,11 +4970,11 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 999,999.
             
             * [https://shmups.system11.org/viewtopic.php?t=36260 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Kuuga - Operation Code Vapor Trail ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Kuuga - Operation Code Vapor Trail"
 company: "Data East"
 needs-work: true
@@ -4834,11 +5006,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1990_001_%E7%A9%BA%E7%89%99 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=49918 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Kyuukyoku Tiger / Twin Cobra ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Kyuukyoku Tiger / Twin Cobra"
 company: "Toaplan"
 needs-work: true
@@ -4867,11 +5039,11 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=34664 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Kyuukyoku Tiger II ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Kyuukyoku Tiger II"
 company: "Takumi"
 needs-work: true
@@ -4895,11 +5067,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=34762 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Last Duel ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Last Duel"
 company: "Capcom"
 needs-work: true
@@ -4918,11 +5090,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=29454 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Last Resort ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Last Resort"
 company: "SNK"
 needs-work: true
@@ -4944,11 +5116,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1992_014_%E3%83%A9%E3%82%B9%E3%83%88%E3%83%AA%E3%82%BE%E3%83%BC%E3%83%88 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=59541 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Life Force ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Life Force"
 company: "Konami"
 needs-work: true
@@ -4994,11 +5166,11 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=5877 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Lost Worlds / Forgotten Worlds ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Lost Worlds / Forgotten Worlds"
 company: "Capcom"
 needs-work: true
@@ -5025,11 +5197,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=21630 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Mad Shark ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Mad Shark"
 company: "Allumer"
 needs-work: true
@@ -5056,11 +5228,11 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=57570 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Mahou Daisakusen ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Mahou Daisakusen"
 company: "Raizing / 8ing"
 needs-work: true
@@ -5089,11 +5261,11 @@ layout:
             
             
             <span id="Shippu_Mahou_Daisakusen"></span><section begin=shippumd/>
-</nowiki></div>
+</nowiki></pre>
 
 
 === Mahou Keibitai Gun Hohki / Mystic Riders ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Mahou Keibitai Gun Hohki / Mystic Riders"
 company: "Irem"
 needs-work: true
@@ -5114,11 +5286,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=56908 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Mamoru-kun wa Norowarete Shimatta / Mamorukun Curse! ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Mamoru-kun wa Norowarete Shimatta / Mamorukun Curse!"
 company: "G.Rev"
 needs-work: true
@@ -5150,11 +5322,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2008_008_%E3%81%BE%E3%82%82%E3%82%8B%E3%82%AF%E3%83%B3%E3%81%AF%E5%91%AA%E3%82%8F%E3%82%8C%E3%81%A6%E3%81%97%E3%81%BE%E3%81%A3%E3%81%9F%EF%BC%81 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=33257 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Mars Matrix ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Mars Matrix"
 company: "Takumi"
 needs-work: true
@@ -5216,11 +5388,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2000_083_%E3%83%9E%E3%83%BC%E3%82%BA%E3%83%9E%E3%83%88%E3%83%AA%E3%83%83%E3%82%AF%E3%82%B9 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=61629 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Master of Weapon ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Master of Weapon"
 company: "Taito"
 needs-work: true
@@ -5239,11 +5411,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=53291 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Mazinger Z ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Mazinger Z"
 company: "Banpresto"
 needs-work: true
@@ -5300,11 +5472,11 @@ layout:
             |}
             
             Note: Scoreboard closed after the achievement of the counterstop at 9,999,999.
-</nowiki></div>
+</nowiki></pre>
 
 
 === Mega Blast ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Mega Blast"
 company: "Taito"
 needs-work: true
@@ -5321,11 +5493,11 @@ layout:
             |-
             | {{v|a1|822,900}} || ねこりぃ || Arcadia September 2002 || ||
             |}
-</nowiki></div>
+</nowiki></pre>
 
 
 === Meta Fox ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Meta Fox"
 company: "Seta"
 needs-work: true
@@ -5346,11 +5518,11 @@ layout:
             |}
             
             * [https://wiki.denfaminicogamer.jp/highscore/1989_114_%E3%83%A1%E3%82%BF%E3%83%95%E3%82%A9%E3%83%83%E3%82%AF%E3%82%B9 JHA Leaderboard]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Metal Black ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Metal Black"
 company: "Taito"
 needs-work: true
@@ -5371,11 +5543,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=48626 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Metal Hawk ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Metal Hawk"
 company: "Namco"
 needs-work: true
@@ -5396,11 +5568,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=58076 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Mr. Heli no Daibouken / Battle Chopper ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Mr. Heli no Daibouken / Battle Chopper"
 company: "Irem"
 needs-work: true
@@ -5421,11 +5593,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=53359 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Muchi Muchi Pork ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Muchi Muchi Pork"
 company: "CAVE"
 needs-work: true
@@ -5464,11 +5636,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2007_021_%E3%82%80%E3%81%A1%E3%82%80%E3%81%A1%E3%83%9D%E3%83%BC%E3%82%AF JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?f=2&t=54254 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Mushihimesama ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Mushihimesama"
 company: "CAVE"
 needs-work: true
@@ -5503,11 +5675,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2004_003_%E8%99%AB%E5%A7%AB%E3%81%95%E3%81%BE JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=38179 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Mushihimesama Futari ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Mushihimesama Futari"
 company: "CAVE"
 needs-work: true
@@ -5591,11 +5763,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2006_002_%E8%99%AB%E5%A7%AB%E3%81%95%E3%81%BE%E3%81%B5%E3%81%9F%E3%82%8A_Ver1.5 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=60592 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Mushihimesama Futari Black Label ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Mushihimesama Futari Black Label"
 company: "CAVE"
 needs-work: true
@@ -5631,11 +5803,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2007_010_%E8%99%AB%E5%A7%AB%E3%81%95%E3%81%BE%E3%81%B5%E3%81%9F%E3%82%8A%E3%83%96%E3%83%A9%E3%83%83%E3%82%AF%E3%83%AC%E3%83%BC%E3%83%99%E3%83%AB JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=60592 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Namco Classic Collection Vol. 1 ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Namco Classic Collection Vol. 1"
 company: "Namco"
 needs-work: true
@@ -5668,11 +5840,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1995_014_%E3%83%8A%E3%83%A0%E3%82%B3%E3%82%AF%E3%83%A9%E3%82%B7%E3%83%83%E3%82%AF%E3%82%B3%E3%83%AC%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%B3Vol.1 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=39648 Shmups Forum Hi-Score Topic (Galaga)] [https://shmups.system11.org/viewtopic.php?t=39729 (Xevious)]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Nebulas Ray ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Nebulas Ray"
 company: "Namco"
 needs-work: true
@@ -5694,11 +5866,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1994_005_%E3%83%8D%E3%83%93%E3%83%A5%E3%83%A9%E3%82%B9%E3%83%AC%E3%82%A4 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=42761 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Night Raid ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Night Raid"
 company: "Takumi"
 needs-work: true
@@ -5718,11 +5890,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2001_034_%E3%83%8A%E3%82%A4%E3%83%88%E3%83%AC%E3%82%A4%E3%83%89 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=22165 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Ninja Commando ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Ninja Commando"
 company: "ADK"
 needs-work: true
@@ -5754,11 +5926,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=33806 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Nostradamus ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Nostradamus"
 company: "Face"
 needs-work: true
@@ -5783,11 +5955,11 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 9,999,990.
             
             * [https://shmups.system11.org/viewtopic.php?t=57781 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Omega Fighter ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Omega Fighter"
 company: "UPL"
 needs-work: true
@@ -5806,11 +5978,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=43829 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Operation Ragnarok / Zed Blade ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Operation Ragnarok / Zed Blade"
 company: "NMK"
 needs-work: true
@@ -5831,11 +6003,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=29484 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Ordyne ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Ordyne"
 company: "Namco"
 needs-work: true
@@ -5857,11 +6029,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1988_002_%E3%82%AA%E3%83%BC%E3%83%80%E3%82%A4%E3%83%B3 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=32980 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Out Zone ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Out Zone"
 company: "Toaplan"
 needs-work: true
@@ -5902,11 +6074,11 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 9,999,999.
             
             * [https://shmups.system11.org/viewtopic.php?t=34506 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === P-47 Aces ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "P-47 Aces"
 company: "NMK"
 needs-work: true
@@ -5948,11 +6120,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1995_018_P-47ACES JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?f=2&t=65906 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === P-47: The Freedom Fighter ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "P-47: The Freedom Fighter"
 company: "NMK"
 needs-work: true
@@ -5981,11 +6153,11 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 99,999,999.
             
             * [https://shmups.system11.org/viewtopic.php?t=57594 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Parodius Da! ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Parodius Da!"
 company: "Konami"
 needs-work: true
@@ -6021,11 +6193,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1990_006_%E3%83%91%E3%83%AD%E3%83%87%E3%82%A3%E3%82%A6%E3%82%B9%E3%81%A0%EF%BC%81 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=36785 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Phelios ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Phelios"
 company: "Namco"
 needs-work: true
@@ -6047,11 +6219,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1989_008_%E3%83%95%E3%82%A7%E3%83%AA%E3%82%AA%E3%82%B9 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=57981 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Pilot Kids ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Pilot Kids"
 company: "Psikyo"
 needs-work: true
@@ -6070,11 +6242,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=14815 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Pink Sweets: Ibara Sorekara ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Pink Sweets: Ibara Sorekara"
 company: "CAVE"
 needs-work: true
@@ -6112,11 +6284,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=54091 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Pistol Daimyou no Bouken ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Pistol Daimyou no Bouken"
 company: "Namco"
 needs-work: true
@@ -6137,11 +6309,11 @@ layout:
             |}
             
             Note: Japanese scoreboard for Old Version closed due to the detection of an infinite pattern.
-</nowiki></div>
+</nowiki></pre>
 
 
 === Plus Alpha ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Plus Alpha"
 company: "Jaleco"
 needs-work: true
@@ -6178,11 +6350,11 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 99,999,990.
             
             * [https://shmups.system11.org/viewtopic.php?t=8363 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Prehistoric Isle 2 ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Prehistoric Isle 2"
 company: "Aicom / Yumekobo"
 needs-work: true
@@ -6204,11 +6376,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1999_048_%E5%8E%9F%E5%A7%8B%E5%B3%B62 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=34777 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Prehistoric Isle in 1930 ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Prehistoric Isle in 1930"
 company: "SNK"
 needs-work: true
@@ -6225,11 +6397,11 @@ layout:
             |-
             | {{v|a1|1,663,000}} || G.M.C.Z. || Arcadia June 2008 || ||
             |}
-</nowiki></div>
+</nowiki></pre>
 
 
 === Progear no Arashi ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Progear no Arashi"
 company: "CAVE"
 needs-work: true
@@ -6275,11 +6447,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2001_029_%E3%83%97%E3%83%AD%E3%82%AE%E3%82%A2%E3%81%AE%E5%B5%90 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=18674 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Psyvariar ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Psyvariar"
 company: "Success"
 needs-work: true
@@ -6299,11 +6471,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2000_073_%E3%82%B5%E3%82%A4%E3%83%B4%E3%82%A1%E3%83%AA%E3%82%A2 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?f=2&t=66695 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Psyvariar 2 ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Psyvariar 2"
 company: "Skonec"
 needs-work: true
@@ -6325,11 +6497,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2003_011_%E3%82%B5%E3%82%A4%E3%83%B4%E3%82%A1%E3%83%AA%E3%82%A22 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=21612 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Psyvariar Revision ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Psyvariar Revision"
 company: "Success"
 needs-work: true
@@ -6349,11 +6521,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2000_062_%E3%82%B5%E3%82%A4%E3%83%B4%E3%82%A1%E3%83%AA%E3%82%A2%E3%83%AA%E3%83%93%E3%82%B8%E3%83%A7%E3%83%B3 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?f=2&t=66695 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Pulstar ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Pulstar"
 company: "Aicom / Yumekobo"
 needs-work: true
@@ -6372,11 +6544,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=38384 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Purikura Daisakusen ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Purikura Daisakusen"
 company: "Atlus"
 needs-work: true
@@ -6397,11 +6569,11 @@ layout:
             |-
             | Kurara || {{v|c1|63,146,100}} || LKR || Arcadia January 2008 || 1L remaining, 1-Up x2, Box Clown x23 ||
             |}
-</nowiki></div>
+</nowiki></pre>
 
 
 === R-Type ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "R-Type"
 company: "Irem"
 needs-work: true
@@ -6420,11 +6592,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=2047 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === R-Type II ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "R-Type II"
 company: "Irem"
 needs-work: true
@@ -6444,11 +6616,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1989_003_R%E3%83%BB%E3%82%BF%E3%82%A4%E3%83%97II JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=39202 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === R-Type Leo ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "R-Type Leo"
 company: "Irem"
 needs-work: true
@@ -6470,11 +6642,11 @@ layout:
             
             * [https://shmups.system11.org/viewtopic.php?t=39150 Shmups Forum Hi-Score Topic]
             * [https://wiki.denfaminicogamer.jp/highscore/1991_007_R%E3%83%BB%E3%82%BF%E3%82%A4%E3%83%97_%E3%83%AC%E3%82%AA JHA Leaderboard]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Rabio Lepus ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Rabio Lepus"
 company: "Video System"
 needs-work: true
@@ -6495,11 +6667,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=33288 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Radiant Silvergun ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Radiant Silvergun"
 company: "Treasure"
 needs-work: true
@@ -6521,11 +6693,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1998_024_%E3%83%AC%E3%82%A4%E3%83%87%E3%82%A3%E3%82%A2%E3%83%B3%E3%83%88%E3%82%B7%E3%83%AB%E3%83%90%E3%83%BC%E3%82%AC%E3%83%B3 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=45677 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Radirgy ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Radirgy"
 company: "Milestone"
 needs-work: true
@@ -6547,11 +6719,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2005_008_%E3%83%A9%E3%82%B8%E3%83%AB%E3%82%AE JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=15847 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Radirgy Noa ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Radirgy Noa"
 company: "Milestone"
 needs-work: true
@@ -6571,11 +6743,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2009_007_%E3%83%A9%E3%82%B8%E3%83%AB%E3%82%AE%E3%83%8E%E3%82%A2 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=35098 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Rafflesia ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Rafflesia"
 company: "Coreland"
 needs-work: true
@@ -6592,11 +6764,11 @@ layout:
             |-
             | {{v|a1|4,495,700}} || Retro-B || ? || played on Mame32 0.60 || [https://youtu.be/s8ZpPWMKssg Youtube]
             |}
-</nowiki></div>
+</nowiki></pre>
 
 
 === Raiden ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Raiden"
 company: "Seibu Kaihatsu / Moss"
 needs-work: true
@@ -6624,11 +6796,11 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=42751 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Raiden DX ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Raiden DX"
 company: "Seibu Kaihatsu / Moss"
 needs-work: true
@@ -6683,11 +6855,11 @@ layout:
             Note: Japanese scoreboard for Expert Course closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=15936 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Raiden Fighters ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Raiden Fighters"
 company: "Seibu Kaihatsu / Moss"
 needs-work: true
@@ -6720,11 +6892,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=34720 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Raiden Fighters 2 ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Raiden Fighters 2"
 company: "Seibu Kaihatsu / Moss"
 needs-work: true
@@ -6768,11 +6940,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1997_010_%E3%83%A9%E3%82%A4%E3%83%87%E3%83%B3%E3%83%95%E3%82%A1%E3%82%A4%E3%82%BF%E3%83%BC%E3%82%BA2 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=34721 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Raiden Fighters Jet ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Raiden Fighters Jet"
 company: "Seibu Kaihatsu / Moss"
 needs-work: true
@@ -6792,11 +6964,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1998_005_%E3%83%A9%E3%82%A4%E3%83%87%E3%83%B3%E3%83%95%E3%82%A1%E3%82%A4%E3%82%BF%E3%83%BC%E3%82%BAJET JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=10150 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Raiden II ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Raiden II"
 company: "Seibu Kaihatsu / Moss"
 needs-work: true
@@ -6830,11 +7002,11 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=38782 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Raiden III ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Raiden III"
 company: "Seibu Kaihatsu / Moss"
 needs-work: true
@@ -6856,11 +7028,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2005_035_%E9%9B%B7%E9%9B%BBIII JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=56616 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Raiden IV ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Raiden IV"
 company: "Seibu Kaihatsu / Moss"
 needs-work: true
@@ -6892,11 +7064,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2007_020_%E9%9B%B7%E9%9B%BBIV JHA Leaderboard (Taito Type X)] [https://wiki.denfaminicogamer.jp/highscore/2012_006_%E9%9B%B7%E9%9B%BBIV%EF%BC%88%E3%83%8D%E3%82%B7%E3%82%AB%E7%89%88%EF%BC%89 (Nesica)]
             * [https://shmups.system11.org/viewtopic.php?t=56617 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Raiga: Strato Fighter ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Raiga: Strato Fighter"
 company: "Tecmo"
 needs-work: true
@@ -6918,11 +7090,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1991_001_%E9%9B%B7%E7%89%99 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=61667 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Rapid Hero ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Rapid Hero"
 company: "NMK"
 needs-work: true
@@ -6943,11 +7115,11 @@ layout:
             Note: No official score keeping tradition due to the detection of an infinite pattern right after the release of the game.
             
             * [https://shmups.system11.org/viewtopic.php?t=61684 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Raycrisis ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Raycrisis"
 company: "Taito"
 needs-work: true
@@ -6971,11 +7143,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1998_007_%E3%83%AC%E3%82%A4%E3%82%AF%E3%83%A9%E3%82%A4%E3%82%B7%E3%82%B9 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=9079 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Rayforce / Layer Section ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Rayforce / Layer Section"
 company: "Taito"
 needs-work: true
@@ -6997,11 +7169,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1994_008_%E3%83%AC%E3%82%A4%E3%83%95%E3%82%A9%E3%83%BC%E3%82%B9 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=35037 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Raystorm ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Raystorm"
 company: "Taito"
 needs-work: true
@@ -7022,11 +7194,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=45782 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Rezon ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Rezon"
 company: "Allumer"
 needs-work: true
@@ -7045,11 +7217,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=29021 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Ryu Jin ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Ryu Jin"
 company: "Taito"
 needs-work: true
@@ -7070,11 +7242,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=39867 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Salamander ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Salamander"
 company: "Konami"
 needs-work: true
@@ -7095,11 +7267,11 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=5877 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Salamander 2 ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Salamander 2"
 company: "Konami"
 needs-work: true
@@ -7118,11 +7290,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=5877 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Same! Same! Same! / Fire Shark ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Same! Same! Same! / Fire Shark"
 company: "Toaplan"
 needs-work: true
@@ -7165,11 +7337,11 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 100,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=35418 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Sand Scorpion ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Sand Scorpion"
 company: "Face"
 needs-work: true
@@ -7188,11 +7360,11 @@ layout:
             |-
             | ON || {{v|b1|6,338,800}} || HKR || Gamest December 1992 || 1st loop 2.11m, no miss ||
             |}
-</nowiki></div>
+</nowiki></pre>
 
 
 === Scramble Formation / Tokio ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Scramble Formation / Tokio"
 company: "Taito"
 needs-work: true
@@ -7211,11 +7383,11 @@ layout:
             |}
             
             Note: Micom Basic magazine (October 1986) lists an unverified score of 422,028,000 by 中村優 (loop 28).
-</nowiki></div>
+</nowiki></pre>
 
 
 === Scramble Spirits ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Scramble Spirits"
 company: "Sega"
 needs-work: true
@@ -7239,11 +7411,11 @@ layout:
             |}
             
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
-</nowiki></div>
+</nowiki></pre>
 
 
 === Sengeki Striker ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Sengeki Striker"
 company: "Warashi"
 needs-work: true
@@ -7264,11 +7436,11 @@ layout:
             Note: Japanese scoreboard closed due to the detection of an infinite pattern.
             
             * [https://shmups.system11.org/viewtopic.php?t=34188 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Sengoku Ace ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Sengoku Ace"
 company: "Psikyo"
 needs-work: true
@@ -7298,11 +7470,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1993_012_%E6%88%A6%E5%9B%BD%E3%82%A8%E3%83%BC%E3%82%B9 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=56034 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Sengoku Blade ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Sengoku Blade"
 company: "Psikyo"
 needs-work: true
@@ -7332,11 +7504,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1996_014_%E6%88%A6%E5%9B%BD%E3%83%96%E3%83%AC%E3%83%BC%E3%83%89 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=56034 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Sexy Parodius ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Sexy Parodius"
 company: "Konami"
 needs-work: true
@@ -7369,11 +7541,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=36785 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Shienryu ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Shienryu"
 company: "Warashi"
 needs-work: true
@@ -7394,11 +7566,11 @@ layout:
             Note: Japanese scoreboard closed February 2019 due to the detection of an infinite pattern.
             
             * [https://shmups.system11.org/viewtopic.php?t=176 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Shikigami no Shiro ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Shikigami no Shiro"
 company: "Alfa System"
 needs-work: true
@@ -7428,11 +7600,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2001_017_%E5%BC%8F%E7%A5%9E%E3%81%AE%E5%9F%8E JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=17924 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Shikigami no Shiro II ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Shikigami no Shiro II"
 company: "Alfa System"
 needs-work: true
@@ -7471,11 +7643,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2003_026_%E5%BC%8F%E7%A5%9E%E3%81%AE%E5%9F%8EII JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=135 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Shikigami no Shiro III ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Shikigami no Shiro III"
 company: "Alfa System"
 needs-work: true
@@ -7521,11 +7693,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2006_032_%E5%BC%8F%E7%A5%9E%E3%81%AE%E5%9F%8EIII JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=18288 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Shippu Mahou Daisakusen ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Shippu Mahou Daisakusen"
 company: "Raizing / 8ing"
 needs-work: true
@@ -7562,11 +7734,11 @@ layout:
             
             * [https://shmups.system11.org/viewtopic.php?t=56902 Shmups Forum Hi-Score Topic]
             <section end=shippumd/>
-</nowiki></div>
+</nowiki></pre>
 
 
 === Shooting Love 2007 ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Shooting Love 2007"
 company: "Triangle Service / Oriental Soft"
 needs-work: true
@@ -7600,11 +7772,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2007_002_%E3%82%B7%E3%83%A5%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E3%83%A9%E3%83%96%E3%80%822007 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=50137 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Skull Fang ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Skull Fang"
 company: "Data East"
 needs-work: true
@@ -7625,11 +7797,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=56869 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Sky Adventure ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Sky Adventure"
 company: "SNK"
 needs-work: true
@@ -7648,11 +7820,11 @@ layout:
             |-
             | {{v|b1|11,471}} || KDK-Takeyuki || Arcadia March 2003 || ||
             |}
-</nowiki></div>
+</nowiki></pre>
 
 
 === Sky Kid ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Sky Kid"
 company: "Namco"
 needs-work: true
@@ -7671,11 +7843,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=45255 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Sky Kid Deluxe ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Sky Kid Deluxe"
 company: "Namco"
 needs-work: true
@@ -7692,11 +7864,11 @@ layout:
             |-
             | {{v|a1|1,276,830}} || 西利明&少女隊 || Micom Basic July 1986 || bomb attack x24 ||
             |}
-</nowiki></div>
+</nowiki></pre>
 
 
 === Sky Smasher ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Sky Smasher"
 company: "Nihon System"
 needs-work: true
@@ -7720,11 +7892,11 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=55501 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Sky Soldiers ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Sky Soldiers"
 company: "ADK"
 needs-work: true
@@ -7744,11 +7916,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1988_008_%E3%82%B9%E3%82%AB%E3%82%A4%E3%82%BD%E3%83%AB%E3%82%B8%E3%83%A3%E3%83%BC JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=49328 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Slap Fight ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Slap Fight"
 company: "Toaplan"
 needs-work: true
@@ -7773,11 +7945,11 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 9,999,990.
             
             * [https://shmups.system11.org/viewtopic.php?t=38634 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Sol Divide ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Sol Divide"
 company: "Psikyo"
 needs-work: true
@@ -7800,11 +7972,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=30862 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Sonic Boom ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Sonic Boom"
 company: "Sega"
 needs-work: true
@@ -7825,11 +7997,11 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=59020 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Sonic Wings ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Sonic Wings"
 company: "Video System"
 needs-work: true
@@ -7863,11 +8035,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1992_005_%E3%82%BD%E3%83%8B%E3%83%83%E3%82%AF%E3%82%A6%E3%82%A3%E3%83%B3%E3%82%B0%E3%82%B9 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=31802 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Sonic Wings 2 ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Sonic Wings 2"
 company: "Video System"
 needs-work: true
@@ -7903,11 +8075,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=33163 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Sonic Wings 3 ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Sonic Wings 3"
 company: "Video System"
 needs-work: true
@@ -7944,11 +8116,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=33163 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Sonic Wings Limited ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Sonic Wings Limited"
 company: "Video System"
 needs-work: true
@@ -7967,11 +8139,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=55924 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Soukyugurentai ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Soukyugurentai"
 company: "Raizing / 8ing"
 needs-work: true
@@ -7995,11 +8167,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1996_007_%E8%92%BC%E7%A9%B9%E7%B4%85%E8%93%AE%E9%9A%8A JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?p=1207408 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Space Bomber ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Space Bomber"
 company: "Psikyo"
 needs-work: true
@@ -8023,11 +8195,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=55934 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Space Invaders Anniversary ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Space Invaders Anniversary"
 company: "Taito"
 needs-work: true
@@ -8048,11 +8220,11 @@ layout:
             |-
             | Extra Version || {{v|b1|22,090}} || SG-ELF || Arcadia July 2004 || ||
             |}
-</nowiki></div>
+</nowiki></pre>
 
 
 === SRD: Super Real Darwin ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "SRD: Super Real Darwin"
 company: "Data East"
 needs-work: true
@@ -8077,11 +8249,11 @@ layout:
             |}
             
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
-</nowiki></div>
+</nowiki></pre>
 
 
 === Stagger 1 ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Stagger 1"
 company: "Afega"
 needs-work: true
@@ -8098,11 +8270,11 @@ layout:
             |-
             | {{v|a1|9,007,800}} || ほむＢ || Arcadia January 2013 || 1L remaining, Oliver, autofire ||
             |}
-</nowiki></div>
+</nowiki></pre>
 
 
 === Star Force ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Star Force"
 company: "Tehkan"
 needs-work: true
@@ -8123,11 +8295,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=64492 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Storm Blade ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Storm Blade"
 company: "Visco"
 needs-work: true
@@ -8146,11 +8318,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=12039 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Strania: The Stella Machina ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Strania: The Stella Machina"
 company: "G.Rev"
 needs-work: true
@@ -8194,11 +8366,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2011_014_%E6%98%9F%E9%9C%9C%E9%8B%BC%E6%A9%9F%E3%82%B9%E3%83%88%E3%83%A9%E3%83%8B%E3%82%A2_Ver.1.11 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=36135 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Strikers 1945 ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Strikers 1945"
 company: "Psikyo"
 needs-work: true
@@ -8231,11 +8403,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1995_009_%E3%82%B9%E3%83%88%E3%83%A9%E3%82%A4%E3%82%AB%E3%83%BC%E3%82%BA1945 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=51578 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Strikers 1945 II ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Strikers 1945 II"
 company: "Psikyo"
 needs-work: true
@@ -8271,11 +8443,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1997_008_%E3%82%B9%E3%83%88%E3%83%A9%E3%82%A4%E3%82%AB%E3%83%BC%E3%82%BA1945II JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=182 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Strikers 1945 Plus ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Strikers 1945 Plus"
 company: "Psikyo"
 needs-work: true
@@ -8297,11 +8469,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1999_036_%E3%82%B9%E3%83%88%E3%83%A9%E3%82%A4%E3%82%AB%E3%83%BC%E3%82%BA1945_%E3%83%97%E3%83%A9%E3%82%B9 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=11995 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Strikers 1999 ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Strikers 1999"
 company: "Psikyo"
 needs-work: true
@@ -8339,11 +8511,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1999_016_%E3%82%B9%E3%83%88%E3%83%A9%E3%82%A4%E3%82%AB%E3%83%BC%E3%82%BA1999 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=56620 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Super Xevious ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Super Xevious"
 company: "Namco"
 needs-work: true
@@ -8368,11 +8540,11 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 9,999,990.
             
             * [https://shmups.system11.org/viewtopic.php?t=39729 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Syvalion ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Syvalion"
 company: "Taito"
 needs-work: true
@@ -8391,11 +8563,11 @@ layout:
             |-
             | Real Combat || {{v|b1|24,433,640}} || G.M.C.INI || Gamest August 1991 || ||
             |}
-</nowiki></div>
+</nowiki></pre>
 
 
 === Task Force Harrier ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Task Force Harrier"
 company: "NMK"
 needs-work: true
@@ -8456,11 +8628,11 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=39000 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Tatakae! Big Fighter ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Tatakae! Big Fighter"
 company: "Nichibutsu"
 needs-work: true
@@ -8481,11 +8653,11 @@ layout:
             Note: Japanese scoreboard closed due to the detection of an infinite pattern.
             
             * [https://wiki.denfaminicogamer.jp/highscore/1989_001_%E6%88%A6%E3%81%88%EF%BC%81%E3%83%93%E3%83%83%E3%82%B0%E3%83%95%E3%82%A1%E3%82%A4%E3%82%BF%E3%83%BC JHA Leaderboard]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Tatsujin / Truxton ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Tatsujin / Truxton"
 company: "Toaplan"
 needs-work: true
@@ -8530,11 +8702,11 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=53008 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Tatsujin Ou / Truxton II ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Tatsujin Ou / Truxton II"
 company: "Toaplan"
 needs-work: true
@@ -8555,11 +8727,11 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=34858 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Tenkomori Shooting ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Tenkomori Shooting"
 company: "Namco"
 needs-work: true
@@ -8582,11 +8754,11 @@ layout:
             |}
             
             * [https://wiki.denfaminicogamer.jp/highscore/1998_014_%E3%81%A6%E3%82%93%E3%81%93%E3%82%82%E3%82%8A%E3%82%B7%E3%83%A5%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0 JHA Leaderboard]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Tenseiryu / Saint Dragon ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Tenseiryu / Saint Dragon"
 company: "NMK"
 needs-work: true
@@ -8607,11 +8779,11 @@ layout:
             Note: Gamest magazine (September 1989) lists a score of 25,764,100 by FACILITY-ARIS. This score was deemed impossible in JHA issue July 2020 and subsequently removed from the database. [https://twitter.com/JHA_information/status/1294983587700174849 Read the official statement here].
             
             * [https://shmups.system11.org/viewtopic.php?t=15717 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Terra Cresta ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Terra Cresta"
 company: "Nichibutsu"
 needs-work: true
@@ -8642,11 +8814,11 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=28531 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Terra Force ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Terra Force"
 company: "Nichibutsu"
 needs-work: true
@@ -8665,11 +8837,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=9817 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === The Great Ragtime Show / Boogie Wings ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "The Great Ragtime Show / Boogie Wings"
 company: "Data East"
 needs-work: true
@@ -8686,11 +8858,11 @@ layout:
             |-
             | {{v|a1|4,354,850}} || ザ・YMN || Gamest August 1998 (Micom Basic September 1998) || 2L remaining, autofire ||
             |}
-</nowiki></div>
+</nowiki></pre>
 
 
 === Thunder Blaster / Lethal Thunder ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Thunder Blaster / Lethal Thunder"
 company: "Irem"
 needs-work: true
@@ -8713,11 +8885,11 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 9,999,990.
             
             * [https://shmups.system11.org/viewtopic.php?t=59562 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Thunder Cross ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Thunder Cross"
 company: "Konami"
 needs-work: true
@@ -8798,11 +8970,11 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=60060 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Thunder Cross II ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Thunder Cross II"
 company: "Konami"
 needs-work: true
@@ -8825,11 +8997,11 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=60060 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Thunder Dragon ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Thunder Dragon"
 company: "NMK"
 needs-work: true
@@ -8865,11 +9037,11 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=49739 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Thunder Dragon 2 ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Thunder Dragon 2"
 company: "NMK"
 needs-work: true
@@ -8890,11 +9062,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=47008 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Thunder Force AC ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Thunder Force AC"
 company: "Tecnosoft"
 needs-work: true
@@ -8918,11 +9090,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=27396 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Tiger Heli ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Tiger Heli"
 company: "Toaplan"
 needs-work: true
@@ -8943,11 +9115,11 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 9,999,990.
             
             * [https://shmups.system11.org/viewtopic.php?t=34665 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Tokushu Butai U.A.G. ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Tokushu Butai U.A.G."
 company: "Seta"
 needs-work: true
@@ -8968,11 +9140,11 @@ layout:
             |}
             
             Note: Japanese scoreboard closed March 1988 due to the detection of an infinite pattern.
-</nowiki></div>
+</nowiki></pre>
 
 
 === Triggerheart Exelica ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Triggerheart Exelica"
 company: "Warashi"
 needs-work: true
@@ -8994,11 +9166,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2006_020_%E3%83%88%E3%83%AA%E3%82%AC%E3%83%BC%E3%83%8F%E3%83%BC%E3%83%88_%E3%82%A8%E3%82%B0%E3%82%BC%E3%83%AA%E3%82%AB JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=19754 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Trigon ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Trigon"
 company: "Konami"
 needs-work: true
@@ -9024,11 +9196,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1990_009_%E3%83%88%E3%83%A9%E3%82%A4%E3%82%B4%E3%83%B3 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=60057 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Trizeal ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Trizeal"
 company: "Triangle Service / Oriental Soft"
 needs-work: true
@@ -9048,11 +9220,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2004_025_%E3%83%88%E3%83%A9%E3%82%A4%E3%82%B8%E3%83%BC%E3%83%AB JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=21196 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Trouble ☆ Witches AC ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Trouble ☆ Witches AC"
 company: "Studio Siesta"
 needs-work: true
@@ -9103,11 +9275,11 @@ layout:
             |}
             
             * [https://wiki.denfaminicogamer.jp/highscore/2009_002_%E3%83%88%E3%83%A9%E3%83%96%E3%83%AB%E2%98%86%E3%82%A6%E3%82%A3%E3%83%83%E3%83%81%E3%83%BC%E3%82%BAAC JHA Leaderboard]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Turbo Force ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Turbo Force"
 company: "Video System"
 needs-work: true
@@ -9130,11 +9302,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1991_003_%E3%82%BF%E3%83%BC%E3%83%9C%E3%83%95%E3%82%A9%E3%83%BC%E3%82%B9 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=61518 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Twin Eagle ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Twin Eagle"
 company: "Seta"
 needs-work: true
@@ -9153,11 +9325,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=28525 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Twin Eagle II ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Twin Eagle II"
 company: "Seta"
 needs-work: true
@@ -9176,11 +9348,11 @@ layout:
             |-
             | ON || {{v|b1|7,899,140}} || MRU-キビシー || Gamest November 1994 (Micom Basic November 1994) || ||
             |}
-</nowiki></div>
+</nowiki></pre>
 
 
 === TwinBee Yahhoo! ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "TwinBee Yahhoo!"
 company: "Konami"
 needs-work: true
@@ -9209,11 +9381,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1995_003_%E3%83%84%E3%82%A4%E3%83%B3%E3%83%93%E3%83%BC%E3%83%A4%E3%83%83%E3%83%9B%E3%83%BC%EF%BC%81 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=51575 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Twinkle Star Sprites ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Twinkle Star Sprites"
 company: "ADK"
 needs-work: true
@@ -9232,11 +9404,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=34876 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === U.S. Navy ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "U.S. Navy"
 company: "Capcom"
 needs-work: true
@@ -9258,11 +9430,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1990_005_U.S.%E3%83%8D%E3%82%A4%E3%83%93%E3%83%BC JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=11308 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Uchuu Senkan Gomora / Bio-Ship Paladin ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Uchuu Senkan Gomora / Bio-Ship Paladin"
 company: "UPL"
 needs-work: true
@@ -9283,11 +9455,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=53189 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Ultimate Ecology ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Ultimate Ecology"
 company: "Capcom"
 needs-work: true
@@ -9308,11 +9480,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=59293 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Ultra Keibitai / Ultra X Weapons ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Ultra Keibitai / Ultra X Weapons"
 company: "Seta"
 needs-work: true
@@ -9333,11 +9505,11 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 9,999,999.
             
             * [https://wiki.denfaminicogamer.jp/highscore/1995_005_%E3%82%A6%E3%83%AB%E3%83%88%E3%83%A9%E8%AD%A6%E5%82%99%E9%9A%8A JHA Leaderboard]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Under Defeat ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Under Defeat"
 company: "G.Rev"
 needs-work: true
@@ -9357,11 +9529,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2005_009_%E3%82%A2%E3%83%B3%E3%83%80%E3%83%BC%E3%83%87%E3%82%A3%E3%83%95%E3%82%A3%E3%83%BC%E3%83%88 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=41470 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === USAAF Mustang ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "USAAF Mustang"
 company: "NMK"
 needs-work: true
@@ -9398,11 +9570,11 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=39000 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === V-V / Grind Stormer ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "V-V / Grind Stormer"
 company: "Toaplan"
 needs-work: true
@@ -9424,11 +9596,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1993_002_V%E3%83%BB%E3%83%95%E3%82%A1%E3%82%A4%E3%83%96 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=35012 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Valtric ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Valtric"
 company: "NMK"
 needs-work: true
@@ -9449,11 +9621,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=59663 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Varth ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Varth"
 company: "Capcom"
 needs-work: true
@@ -9475,11 +9647,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1992_001_%E3%83%90%E3%83%BC%E3%82%B9 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=52339 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Vasara ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Vasara"
 company: "Visco"
 needs-work: true
@@ -9504,11 +9676,11 @@ layout:
             Note: Japanese scoreboard closed due to the detection of an infinite pattern.
             
             * [https://shmups.system11.org/viewtopic.php?t=1549 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Vasara 2 ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Vasara 2"
 company: "Visco"
 needs-work: true
@@ -9534,11 +9706,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2001_022_%E5%A9%86%E8%A3%9F%E7%BE%852 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=1549 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Viewpoint ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Viewpoint"
 company: "Aicom / Yumekobo"
 needs-work: true
@@ -9563,11 +9735,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=36319 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Vimana ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Vimana"
 company: "Toaplan"
 needs-work: true
@@ -9694,11 +9866,11 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 100,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=24628 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Viper Phase 1 ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Viper Phase 1"
 company: "Seibu Kaihatsu / Moss"
 needs-work: true
@@ -9724,11 +9896,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2005_035_%E9%9B%B7%E9%9B%BBIII JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=56616 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Wangan Sensou / Desert War ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Wangan Sensou / Desert War"
 company: "NMK"
 needs-work: true
@@ -9752,11 +9924,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1995_007_%E6%B9%BE%E5%B2%B8%E6%88%A6%E4%BA%89 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=63981 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === War of Aero ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "War of Aero"
 company: "Yang Chen"
 needs-work: true
@@ -9776,11 +9948,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1993_013_%E3%82%A6%E3%82%A9%E3%83%BC%E3%82%AA%E3%83%96%E3%82%A8%E3%82%A2%E3%83%AD JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=44924 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Wonder Planet ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Wonder Planet"
 company: "Data East"
 needs-work: true
@@ -9797,11 +9969,11 @@ layout:
             |-
             | {{v|a1|10,285,830}} || FUL || Micom Basic December 1987 || ||
             |}
-</nowiki></div>
+</nowiki></pre>
 
 
 === X-Multiply ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "X-Multiply"
 company: "Irem"
 needs-work: true
@@ -9821,11 +9993,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1989_023_X%E3%83%9E%E3%83%AB%E3%83%81%E3%83%97%E3%83%A9%E3%82%A4 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=37703 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Xevious ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Xevious"
 company: "Namco"
 needs-work: true
@@ -9868,11 +10040,11 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 9,999,990.
             
             * [https://shmups.system11.org/viewtopic.php?t=39729 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Xevious 3D/G ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Xevious 3D/G"
 company: "Namco"
 needs-work: true
@@ -9891,11 +10063,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=39729 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Xexex ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Xexex"
 company: "Konami"
 needs-work: true
@@ -9919,11 +10091,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1991_004_%E3%82%BC%E3%82%AF%E3%82%BB%E3%82%AF%E3%82%B9 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=3389 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === XII Stag ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "XII Stag"
 company: "Triangle Service / Oriental Soft"
 needs-work: true
@@ -9942,11 +10114,11 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=46230 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === XX Mission ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "XX Mission"
 company: "UPL"
 needs-work: true
@@ -9965,11 +10137,11 @@ layout:
             |}
             
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
-</nowiki></div>
+</nowiki></pre>
 
 
 === Yokushin: Giga Wing Generations ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Yokushin: Giga Wing Generations"
 company: "Takumi"
 needs-work: true
@@ -9997,11 +10169,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2004_009_%E7%BF%BC%E7%A5%9E JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=1412 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Zero Gunner ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Zero Gunner"
 company: "Psikyo"
 needs-work: true
@@ -10018,11 +10190,11 @@ layout:
             |-
             | {{v|a1|1,703,300}} || JKP-RDX-寛千代 || Arcadia November 2000 || used AH1-SX, no miss / no bomb ||
             |}
-</nowiki></div>
+</nowiki></pre>
 
 
 === Zero Gunner 2 ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Zero Gunner 2"
 company: "Psikyo"
 needs-work: true
@@ -10046,11 +10218,11 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2001_030_%E3%82%BC%E3%83%AD%E3%82%AC%E3%83%B3%E3%83%8A%E3%83%BC2 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=28463 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Zero Wing ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Zero Wing"
 company: "Toaplan"
 needs-work: true
@@ -10071,11 +10243,11 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=38614 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 
 
 === Zing Zing Zip ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Zing Zing Zip"
 company: "Allumer"
 needs-work: true
@@ -10094,5 +10266,5 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?f=2&t=66050 Shmups Forum Hi-Score Topic]
-</nowiki></div>
+</nowiki></pre>
 

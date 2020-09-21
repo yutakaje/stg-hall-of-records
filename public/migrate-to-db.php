@@ -180,7 +180,8 @@ function convertToDatabase(
             . substr($content, $pos);
     };
 
-    return globalSection($description, $toc) . PHP_EOL .
+    return introduction() . PHP_EOL .
+        globalSection($description, $toc) . PHP_EOL .
         '== Games ==' . PHP_EOL .
         implode(PHP_EOL, array_map(
             fn (\stdClass $game) => str_replace(
@@ -196,7 +197,7 @@ function convertToDatabase(
                 ],
                 <<<'TPL'
 === {{ game-name }} ===
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "{{ game-name }}"
 company: "{{ company-name }}"
 needs-work: true
@@ -206,7 +207,7 @@ layout:
         game: |
             {{Anchor|{{ game-name }}}}
             {{ game-content }}
-</nowiki></div>
+</nowiki></pre>
 
 
 TPL
@@ -330,9 +331,7 @@ function globalSection(string $description, string $toc): string
         ],
         <<<'OUTPUT'
 == Global settings ==
-Values defined in this section will apply to all the games in the database. Its main purpose is to reduce redundant translations for reocurring values (e.g. company names, common column names, ...).
-
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: global
 
 description: |
@@ -418,8 +417,188 @@ translations:
   - property: company
     value: Raizing / 8ing
     value-jp: ライジング / エイティング
-
-</nowiki></div>
+</nowiki></pre>
 OUTPUT
     );
+}
+
+function introduction(): string
+{
+    return <<<'OUTPUT'
+'''Attention: This page serves as a database and is not meant to be consumed by end users. If you came here for the STG Hall of Records, follow one of these links:'''
+
+* English version: https://shmups.wiki/library/STG_Hall_of_Records
+* 日本語版: https://shmups.wiki/library/STG記録の殿堂
+
+== Introduction ==
+The contents of this page serve as a database and are meant to be put into a [https://shmups.wiki/records/ generator]. The generator converts the raw data, written in YAML, into actual wiki pages for different languages.
+
+=== Structure ===
+Every section of data is enclosed in &lt;nowiki&gt;&lt;/nowiki&gt; tags. Everything outside outside of these tags will be ignored by the parser. The first section is named ''global'' and contains settings for the whole page, all the remaining sections each contain data about a single game.
+
+==== Global settings ====
+Values defined in this section apply to all the games in the database or the whole page in general (e.g. description, sorting of games, common translations, ...). For further information, please refer to the [[#Global settings-value|actual value]], most of the settings are documented.
+
+==== Game ====
+'''WIP'''
+Each game is defined by the following properties:
+
+<pre>
+name: Name of the game
+name-jp: 日本語のタイトル / Japanese title in kanji
+name-kana: にほんごのたいとる / Japanese title in hiragana
+company: Developer / Publisher
+
+scores: Score entries (see below)
+
+links:
+  - url: https://example.org/the-link
+    title: Title for the link
+  - url: https://example.org/other-link
+    title: Second link title
+
+description: "Description containing notes about counterstops and other noteworthy stuff."
+
+layout: Layout information (see below)
+
+translations: Game-specific translations (see below)
+</pre>
+
+For each score the properties listed below are available. They are heavily game-dependent and usually not all of them are useful. Unnecessary properties can (and should) be omitted.
+
+<pre>
+player: Name of the player (required)
+score: Score (required)
+ship: Selected ship / character
+mode: Game mode / difficulty
+weapon: Weapon / style
+version: Version (1P, 2P, Japan, World, Old, New, ...)
+autofire: Flag whether autofire was used or not
+scored-date: Date the score was achieved (YYYY-MM-DD|YYYY-MM|YYYY)
+published-date: Date the score was published (YYYY-MM-DD|YYYY-MM|YYYY)
+source: Information source
+added-date: Date the score was added to the HoR (YYYY-MM-DD|YYYY-MM|YYYY) (required)
+comments: List of additional comments
+links: List of links to replay, Blog, ...
+image-url: URL pointing to a screenshot of the score
+</pre>
+
+Additional properties may be specified. In this case the generator will treat their values verbatim.
+
+For every property a property with the same name and a locale suffix can be specified. Its value will be used on the page in the corresponding language instead of the value of the original property. Currently only '-jp' for Japanese is used but this can be extended to support more languages.
+
+===== Example =====
+<pre>
+&lt;pre&gt;&lt;nowiki&gt;
+name: "Ketsui: Kizuna Jigoku Tachi"
+name-jp: ケツイ ～絆地獄たち～
+name-kana: けつい ～きずなじごくたち～
+company: Cave
+
+scores:
+  - player: SPS
+    score: 507,780,433
+    ship: Type A
+    mode: Omote
+    scored-date: "2014-08"
+    source: Arcadia August 2014
+    comments:
+
+  - player: SPS
+    score: 481,402,383
+    ship: Type B
+    mode: Omote
+    scored-date: "2014-11"
+    source: Arcadia November 2014
+    comments:
+      - 6L 0B remaining
+      - 1st loop 276m
+
+  - player: SPS
+    score: 489,893,348
+    ship: Type A
+    mode: Omote
+    scored-date: "2010-04"
+    source: Old score
+    comments:
+
+  - player: GAN
+    score: 569,741,232
+    ship: Type B
+    mode: Ura
+    scored-date: "2016-03"
+    source: JHA March 2016
+    comments:
+      - 6L remaining
+
+  - player: SPS
+    score: 583,614,753
+    ship: Type A
+    mode: Ura
+    scored-date: "2014-05-27"
+    source: Arcadia September 2014 / [https:// Twitter]
+    comments:
+      - 6L 0B remaining
+      - 1st loop 285m
+
+links:
+  - url: https://example.org/jha/ketsui
+    title: JHA Leaderboard
+    title-jp: 日本ハイスコア協会
+  - url: https://example.org/farm/ketsui
+    title: Shmups Forum Hi-Score Topic
+
+translations:
+  - property: ship
+    value: Type A
+    value-en: Tiger Schwert
+    value-jp: TYPE-A ティーゲルシュベルト
+  - property: ship
+    value: Type B
+    value-en: Panzer Jäger
+    value-jp: TYPE-B パンツァーイェーガー
+  - property: mode
+    value: Omote
+    value-jp: 表2週
+  - property: mode
+    value: Ura
+    value-jp: 裏2週
+
+layout:
+    columns:
+      - label: Ship
+        label-jp: 自機
+        template: "{{ ship }}"
+        groupSameValues: true
+
+      - label: Loop
+        label-jp: 2週種
+        template: "{{ mode }}"
+
+      - label: Score
+        label-jp: スコア
+        template: "{{ score }}"
+
+      - label: Player
+        label-jp: プレイヤー
+        template: "{{ player }}"
+        groupSameValues: true
+
+      - label: Date / Source
+        label-jp: 年月日 / 情報元
+        template: "{{ scored-date }} / {{ source }}"
+
+      - label: Comment
+        label-jp: 備考
+        template: "{{ comments|join('; ') }}"
+
+    sort:
+        scores:
+            ship: [ Type A, Type B ]
+            mode: asc
+&lt;/nowiki&gt;&lt;/pre&gt;
+</pre>
+
+{{Anchor|Global settings-value}}
+OUTPUT;
 }
