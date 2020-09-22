@@ -5,6 +5,36 @@ Values defined in this section will apply to all the games in the database. Its 
 name: global
 
 layout:
+    columns:
+      - label: Player
+        label-jp: プレイヤー
+        template: "{{ player }}"
+
+      - label: Ship
+        label-jp: 自機
+        template: "{{ ship }}"
+
+      - label: Mode
+        template: "{{ mode }}"
+
+      - label: Style
+        template: "{{ weapon }}"
+
+      - label: Score
+        label-jp: スコア
+        template: "{{ score }}"
+
+      - label: Scored date
+        template: "{{ scored-date }}"
+
+      - label: Source
+        label-jp: 情報元
+        template: "{{ source }}"
+
+      - label: Comment
+        label-jp: 備考
+        template: "{{ comments|join('; ') }}"
+
     templates:
         games: |
             {% for game in games %}

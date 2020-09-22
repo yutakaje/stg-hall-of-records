@@ -114,7 +114,7 @@ class MediaWikiImporterTest extends \Tests\TestCase
 
         // Ignore properties for other locales when comparing values.
         if (isset($setting->additionalProperties()['gameId'])) {
-            if ($setting->name() === 'layout') {
+            if ($setting->name() === 'layout' && isset($value['columns'])) {
                 $value['columns'] = array_map(
                     fn (array $column) => $this->removeLocalizedProperties($column),
                     $value['columns']
@@ -241,6 +241,45 @@ class MediaWikiImporterTest extends \Tests\TestCase
             0 => $this->globalSetting('name', 'global'),
             1 => $this->globalSetting('layout', [
                 'templates' => $this->templates(),
+                'columns' => [
+                    0 => [
+                        'label' => 'Player',
+                        'label-jp' => 'プレイヤー',
+                        'template' => '{{ player }}',
+                    ],
+                    1 => [
+                        'label' => 'Ship',
+                        'label-jp' => '自機',
+                        'template' => '{{ ship }}',
+                    ],
+                    2 => [
+                        'label' => 'Mode',
+                        'template' => '{{ mode }}',
+                    ],
+                    3 => [
+                        'label' => 'Style',
+                        'template' => '{{ weapon }}',
+                    ],
+                    4 => [
+                        'label' => 'Score',
+                        'label-jp' => 'スコア',
+                        'template' => '{{ score }}',
+                    ],
+                    5 => [
+                        'label' => 'Scored date',
+                        'template' => '{{ scored-date }}',
+                    ],
+                    6 => [
+                        'label' => 'Source',
+                        'label-jp' => '情報元',
+                        'template' => '{{ source }}',
+                    ],
+                    7 => [
+                        'label' => 'Comment',
+                        'label-jp' => '備考',
+                        'template' => "{{ comments|join('; ') }}",
+                    ],
+                ],
             ]),
             2 => $this->globalSetting('translations', [
                 [
@@ -366,10 +405,7 @@ class MediaWikiImporterTest extends \Tests\TestCase
                 'templates' => [
                     'game' => $this->fixedGameTemplate(),
                 ],
-                'columns' => [],
-                'sort' => [],
             ]),
-            8 => $this->gameSetting($gameIds[2], 'links', []),
         ];
 
         if ($locale === 'en') {
@@ -378,6 +414,12 @@ class MediaWikiImporterTest extends \Tests\TestCase
                 'Panzer Jäger',
             ];
         } elseif ($locale === 'jp') {
+            $settings[1]['value']['columns'][0]['label'] = 'プレイヤー';
+            $settings[1]['value']['columns'][1]['label'] = '自機';
+            $settings[1]['value']['columns'][4]['label'] = 'スコア';
+            $settings[1]['value']['columns'][6]['label'] = '情報元';
+            $settings[1]['value']['columns'][7]['label'] = '備考';
+
             $settings[3]['value']['sort']['scores']['mode'] = [
                 'オリジナルモード',
                 'マニアックモード',

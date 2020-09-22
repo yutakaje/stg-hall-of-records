@@ -87,10 +87,6 @@ class YamlParserTest extends \Tests\TestCase
                             'source' => 'Superplay DVD',
                         ]),
                     ],
-                    'links' => [],
-                    'layout' => new ParsedProperties([
-                        'columns' => [],
-                    ]),
                     'name-sort' => 'Mushihimesama Futari 1.5',
                     'name-sort-jp' => 'むしひめさまふたりVer 1.5',
                 ]),
@@ -208,9 +204,7 @@ class YamlParserTest extends \Tests\TestCase
                     'name' => 'Great Mahou Daisakusen',
                     'company' => 'Raizing / 8ing',
                     'scores' => [],
-                    'links' => [],
                     'layout' => new ParsedProperties([
-                        'columns' => [],
                         'templates' => [
                             'game' => $this->getFixedGameTemplate(),
                         ],

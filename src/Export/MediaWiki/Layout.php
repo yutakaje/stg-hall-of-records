@@ -91,4 +91,59 @@ final class Layout
     {
         return $this->columns;
     }
+
+    public function merge(Layout $layout): self
+    {
+        return new self(
+            $this->templates,
+            $this->mergeSort($layout->sort),
+            $this->mergeGroup($layout->group),
+            $this->mergeColumns($layout->columns)
+        );
+    }
+
+    /**
+     * @param array<string,mixed> $sort
+     * @return array<string,mixed>
+     */
+    private function mergeSort(array $sort): array
+    {
+        $merged = $this->sort;
+
+        foreach ($sort as $name => $values) {
+            $merged[$name] = array_merge(
+                $merged[$name] ?? [],
+                $values
+            );
+        }
+
+        return $merged;
+    }
+
+    /**
+     * @param array<string,string[]> $group
+     * @return array<string,string[]>
+     */
+    private function mergeGroup(array $group): array
+    {
+        $merged = $this->group;
+
+        foreach ($group as $name => $values) {
+            $merged[$name] = array_merge(
+                $merged[$name] ?? [],
+                $values
+            );
+        }
+
+        return $merged;
+    }
+
+    /**
+     * @param array<string,mixed>[] $columns
+     * @return array<string,mixed>[]
+     */
+    private function mergeColumns(array $columns): array
+    {
+        return $this->columns != null ? $this->columns : $columns;
+    }
 }

@@ -23,20 +23,21 @@ final class GameVariable extends \stdClass
      */
     public function __construct(
         Game $game,
+        Layout $layout,
         Settings $settings,
         array $scores
     ) {
-        $layout = $layout = Layout::createFromArray(
-            $settings->get('layout', [])
-        );
+        $emptyColumnRemover = new EmptyColumnRemover($scores);
+        $columns = $emptyColumnRemover->remove($layout->columns());
+        $scores = $emptyColumnRemover->scores();
 
         $this->properties = $game->properties();
-        $this->headers = array_map(
-            fn (array $column) => $column['label'] ?? '',
-            $layout->columns()
-        );
         $this->scores = $scores;
         $this->links = $settings->get('links', []);
         $this->template = $layout->template('game');
+        $this->headers = array_map(
+            fn (array $column) => $column['label'] ?? '',
+            $columns
+        );
     }
 }

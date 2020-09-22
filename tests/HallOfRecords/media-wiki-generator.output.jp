@@ -10,21 +10,39 @@ Mostly limited to a number of older games, Japanese scorekeeping sometimes sets 
 
 <table class="wikitable">
   <tr>
-    <th class="mw-customtoggle-2 " style="padding-left:10px;padding-right:10px;">か行</th>
-    <th class="mw-customtoggle-1 " style="padding-left:10px;padding-right:10px;">ま行</th>
-    <th class="mw-customtoggle-3 " style="padding-left:10px;padding-right:10px;">#</th>
-  </tr>
-  <tr id="mw-customcollapsible-2" class="mw-collapsible mw-collapsed">
-    <td colspan="3">[[#ケツイ ～絆地獄たち～|ケツイ ～絆地獄たち～]]</td>
-  </tr>
-  <tr id="mw-customcollapsible-1" class="mw-collapsible mw-collapsed">
-    <td colspan="3">[[#虫姫さまふたりVer 1.5|虫姫さまふたりVer 1.5]]</td>
+    <th class="mw-customtoggle-3 " style="padding-left:10px;padding-right:10px;">か行</th>
+    <th class="mw-customtoggle-2 " style="padding-left:10px;padding-right:10px;">ま行</th>
+    <th class="mw-customtoggle-1 mw-customtoggle-4 " style="padding-left:10px;padding-right:10px;">#</th>
   </tr>
   <tr id="mw-customcollapsible-3" class="mw-collapsible mw-collapsed">
+    <td colspan="3">[[#ケツイ ～絆地獄たち～|ケツイ ～絆地獄たち～]]</td>
+  </tr>
+  <tr id="mw-customcollapsible-2" class="mw-collapsible mw-collapsed">
+    <td colspan="3">[[#虫姫さまふたりVer 1.5|虫姫さまふたりVer 1.5]]</td>
+  </tr>
+  <tr id="mw-customcollapsible-1" class="mw-collapsible mw-collapsed">
+    <td colspan="3">[[#Akai Katana|Akai Katana]]</td>
+  </tr>
+  <tr id="mw-customcollapsible-4" class="mw-collapsible mw-collapsed">
     <td colspan="3">[[#Great Mahou Daisakusen|Great Mahou Daisakusen]]</td>
   </tr>
 </table>
 __NOTOC__
+
+{| class="wikitable" style="text-align: center"
+|-
+! colspan="5" | Akai Katana
+|-
+! プレイヤー !! 自機 !! スコア !! Scored date !! 情報元
+|-
+| AKF || Type 3 / Suzuran &amp;amp; Shion || 540,176,130 || 2012年07月 || Arcadia July 2012
+|-
+| 太菱 || Type 1 / Sumire &amp;amp; Tsubaki || 472,554,090 || 2011年07月 || Arcadia July 2011
+|-
+| LON || Type 2 / Kikyou &amp;amp; Botan || 454,324,700 || 2012年02月 || Arcadia February 2012
+|}
+
+
 
 {| class="wikitable" style="text-align: center"
 |-

@@ -35,6 +35,10 @@ final class YamlParser
      */
     private function parseGlobalProperties(array $properties): ParsedProperties
     {
+        if (isset($properties['layout'])) {
+            $properties['layout'] = $this->parseLayout($properties['layout'] ?? []);
+        }
+
         return new ParsedProperties($properties);
     }
 
@@ -66,15 +70,23 @@ final class YamlParser
             $properties['name-sort'] = $properties['name'] ?? '';
         }
 
-        $properties['scores'] = array_map(
-            fn (array $score) => new ParsedProperties($score),
-            $properties['scores'] ?? []
-        );
-        $properties['layout'] = $this->parseLayout($properties['layout'] ?? []);
-        $properties['links'] = array_map(
-            fn (array $link) => new ParsedProperties($link),
-            $properties['links'] ?? []
-        );
+        if (isset($properties['scores'])) {
+            $properties['scores'] = array_map(
+                fn (array $score) => new ParsedProperties($score),
+                $properties['scores']
+            );
+        }
+
+        if (isset($properties['layout'])) {
+            $properties['layout'] = $this->parseLayout($properties['layout']);
+        }
+
+        if (isset($properties['links'])) {
+            $properties['links'] = array_map(
+                fn (array $link) => new ParsedProperties($link),
+                $properties['links']
+            );
+        }
 
         return new ParsedProperties($properties);
     }
@@ -84,13 +96,15 @@ final class YamlParser
      */
     private function parseLayout(array $properties): ParsedProperties
     {
-        $properties['columns'] = array_map(
-            fn (array $column) => new ParsedProperties($column),
-            array_filter(
-                $properties['columns'] ?? [],
-                fn ($column) => is_array($column)
-            )
-        );
+        if (isset($properties['columns'])) {
+            $properties['columns'] = array_map(
+                fn (array $column) => new ParsedProperties($column),
+                array_filter(
+                    $properties['columns'],
+                    fn ($column) => is_array($column)
+                )
+            );
+        }
 
         return new ParsedProperties($properties);
     }

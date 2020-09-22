@@ -88,12 +88,13 @@ final class MediaWikiExporter
         $settings = $this->settings->filterByGame($game->id());
         $layout = Layout::createFromArray(
             $settings->get('layout', [])
-        );
+        )->merge($globalLayout);
 
         return new GameVariable(
             $game,
+            $layout,
             $settings,
-            $this->createScoreVariables($game, $layout, $globalLayout)
+            $this->createScoreVariables($game, $layout)
         );
     }
 
@@ -102,19 +103,14 @@ final class MediaWikiExporter
      */
     private function createScoreVariables(
         Game $game,
-        Layout $layout,
-        Layout $globalLayout
+        Layout $layout
     ): array {
         // Group scores by distinct features and take the top X
         // entries out of each group.
         return $this->scores->filterByGame($game->id())
-            ->top(array_merge(
-                $layout->group('scores'),
-                $globalLayout->group('scores')
-            ))->sort(array_merge(
-                $layout->sort('scores'),
-                $globalLayout->sort('scores')
-            ))->map(fn (Score $score) => $this->createScoreVariable(
+            ->top($layout->group('scores'))
+            ->sort($layout->sort('scores'))
+            ->map(fn (Score $score) => $this->createScoreVariable(
                 $score,
                 $layout
             ));

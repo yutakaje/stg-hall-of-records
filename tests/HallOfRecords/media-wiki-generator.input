@@ -38,7 +38,7 @@ Generated Japanese output: https://shmups.wiki/library/STG_Hall_of_Records/Datab
 == Global ==
 Values defined in this section will apply to all the games in the database. Its main purpose is to reduce redundant translations for reocurring values (e.g. company names, common column names, ...).
 
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: global
 
 description: |
@@ -70,6 +70,43 @@ layout:
           - mode
           - weapon
           - version
+
+    columns:
+      - label: Player
+        label-jp: プレイヤー
+        template: "{{ player }}"
+        id: player
+
+      - label: Ship
+        label-jp: 自機
+        template: "{{ ship }}"
+        id: ship
+
+      - label: Mode
+        template: "{{ mode }}"
+        id: mode
+
+      - label: Style
+        template: "{{ weapon }}"
+
+      - label: Score
+        label-jp: スコア
+        template: "{{ score }}"
+        id: score
+
+      - label: Scored date
+        template: "{{ scored-date }}"
+        id: scored-date
+
+      - label: Source
+        label-jp: 情報元
+        template: "{{ source }}"
+        id: source
+
+      - label: Comment
+        label-jp: 備考
+        template: "{{ comments|join('; ') }}"
+        id: comments
 
     templates:
         main: |
@@ -137,10 +174,36 @@ translations:
     value: Raizing / 8ing
     value-jp: ライジング / エイティング
 
-</nowiki></div>
+</nowiki></pre>
+
+== Akai Katana ==
+<pre><nowiki>
+name: "Akai Katana"
+company: "CAVE"
+
+scores:
+  - player: 太菱
+    score: 472,554,090
+    ship: Type 1 / Sumire & Tsubaki
+    scored-date: "2011-07"
+    source: Arcadia July 2011
+
+  - player: LON
+    score: 454,324,700
+    ship: Type 2 / Kikyou & Botan
+    scored-date: "2012-02"
+    source: Arcadia February 2012
+
+  - player: AKF
+    score: 540,176,130
+    ship: Type 3 / Suzuran & Shion
+    scored-date: "2012-07"
+    source: Arcadia July 2012
+
+</nowiki></pre>
 
 == Mushihimesama Futari v1.5 ==
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: Mushihimesama Futari 1.5
 name-jp: 虫姫さまふたりVer 1.5
 name-kana: むしひめさまふたりVer 1.5
@@ -367,10 +430,10 @@ translations:
   - property: weapon
     value: Abnormal
     value-jp: アブノーマル
-</nowiki></div>
+</nowiki></pre>
 
 == Ketsui ==
-<div style="display:none"><nowiki>
+<pre><nowiki>
 name: "Ketsui: Kizuna Jigoku Tachi"
 name-jp: ケツイ ～絆地獄たち～
 name-kana: けつい ～きずなじごくたち～
@@ -478,11 +541,11 @@ layout:
             ship: [ Type A, Type B ]
             mode: asc
 
-</nowiki></div>
+</nowiki></pre>
 
 
 == Great Mahou Daisakusen ==
-<nowiki>
+<pre><nowiki>
 name: Great Mahou Daisakusen
 company: Raizing / 8ing
 
@@ -532,4 +595,4 @@ layout:
 
             * [https://example.org/some_link_id JHA Leaderboard]
             * [https://example.org/some_other_link Shmups Forum Hi-Score Topic]
-</nowiki>
+</nowiki></pre>

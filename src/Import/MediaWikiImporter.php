@@ -109,6 +109,10 @@ final class MediaWikiImporter
         $translator = $this->createTranslator($settings, $locale);
 
         foreach ($settings->all() as $name => $value) {
+            if ($name === 'layout') {
+                $value = $this->translateLayout($value, $locale, $translator);
+            }
+
             $this->settings->add(new GlobalSetting(
                 $name,
                 $value
@@ -192,24 +196,31 @@ final class MediaWikiImporter
         string $locale,
         Translator $translator
     ): array {
-        return array_merge($layout->all(), [
-            'columns' => array_map(
+        $properties = $layout->all();
+
+        if (isset($properties['columns'])) {
+            $properties['columns'] = array_map(
                 fn (ParsedProperties $column) => $this->translateLayoutColumn(
                     $column,
                     $locale,
                     $translator
                 ),
-                $layout->get('columns', []),
-            ),
-            'sort' => array_map(
+                $properties['columns']
+            );
+        }
+
+        if (isset($properties['sort'])) {
+            $properties['sort'] = array_map(
                 fn (array $sort) => $this->translateLayoutSort(
                     $sort,
                     $locale,
                     $translator
                 ),
-                $layout->get('sort', [])
-            ),
-        ]);
+                $properties['sort']
+            );
+        }
+
+        return $properties;
     }
 
     /**
