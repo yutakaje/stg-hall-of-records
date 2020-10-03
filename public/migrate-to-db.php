@@ -334,16 +334,23 @@ function globalSection(string $description, string $toc): string
 <pre><nowiki>
 name: global
 
+# Main description in wiki syntax, available as variable `description` within the templates.
 description: |
     {# description #}
 
+# Layout information applicable to the whole page or all the games in the database.
 layout:
+
+    # Sort order for the games within the page or the scores within each game respectively.
     sort:
         games:
             name: asc
         scores:
             score: desc
 
+    # Properties to group scores by. Every combination of these properties forms a category within a game.
+    # Example: If grouped by ship only, all the scores achieved with the same ship are put into the same
+    # category no matter the mode, weapon or any property.
     group:
         scores:
           - ship
@@ -351,6 +358,7 @@ layout:
           - weapon
           - version
 
+    # Wiki templates. The one named `main` is the entry point, everything else gets included from there.
     templates:
         main: |
             {{ description|raw }}
@@ -409,7 +417,7 @@ layout:
             |-
             | {% for column in score.columns %}{% if column.attrs %}{{ column.attrs|raw }} | {% endif %}{{ column.value }}{% if not loop.last %} || {% endif %}{% endfor %}
 
-
+# Common translations applicable to all games in the database.
 translations:
   - property: company
     value: CAVE
@@ -436,12 +444,13 @@ The contents of this page serve as a database and are meant to be put into a [ht
 === Structure ===
 Every section of data is enclosed in &lt;nowiki&gt;&lt;/nowiki&gt; tags. Everything outside outside of these tags will be ignored by the parser. The first section is named ''global'' and contains settings for the whole page, all the remaining sections each contain data about a single game.
 
+For every property, another one with the same name and a locale suffix can be specified. Its value will be used on the page in the corresponding language instead of the value of the original property. Currently only ''-jp'' for Japanese is used but this can be extended to support more languages.
+
 ==== Global settings ====
 Values defined in this section apply to all the games in the database or the whole page in general (e.g. description, sorting of games, common translations, ...). For further information, please refer to the [[#Global settings-value|actual value]], most of the settings are documented.
 
 ==== Game ====
-'''WIP'''
-Each game is defined by the following properties:
+For each game the following properties are available:
 
 <pre>
 name: Name of the game
@@ -449,7 +458,7 @@ name-jp: 日本語のタイトル / Japanese title in kanji
 name-kana: にほんごのたいとる / Japanese title in hiragana
 company: Developer / Publisher
 
-scores: Score entries (see below)
+scores: Score entries (see section below)
 
 links:
   - url: https://example.org/the-link
@@ -461,9 +470,17 @@ description: "Description containing notes about counterstops and other notewort
 
 layout: Layout information (see below)
 
-translations: Game-specific translations (see below)
+# Game specific translations, applicable to all scores within the game.
+translations:
+  - property: mode
+    value: Original
+    value-jp: オリジナルモード
+  - property: mode
+    value: Maniac
+    value-jp: マニアックモード
 </pre>
 
+===== Score =====
 For each score the properties listed below are available. They are heavily game-dependent and usually not all of them are useful. Unnecessary properties can (and should) be omitted.
 
 <pre>
@@ -485,8 +502,6 @@ image-url: URL pointing to a screenshot of the score
 
 Additional properties may be specified. In this case the generator will treat their values verbatim.
 
-For every property a property with the same name and a locale suffix can be specified. Its value will be used on the page in the corresponding language instead of the value of the original property. Currently only '-jp' for Japanese is used but this can be extended to support more languages.
-
 ===== Example =====
 <pre>
 &lt;pre&gt;&lt;nowiki&gt;
@@ -502,6 +517,7 @@ scores:
     mode: Omote
     scored-date: "2014-08"
     source: Arcadia August 2014
+    added-date: "2020-06-14"
     comments:
 
   - player: SPS
@@ -510,6 +526,7 @@ scores:
     mode: Omote
     scored-date: "2014-11"
     source: Arcadia November 2014
+    added-date: "2020-06-13"
     comments:
       - 6L 0B remaining
       - 1st loop 276m
@@ -520,6 +537,7 @@ scores:
     mode: Omote
     scored-date: "2010-04"
     source: Old score
+    added-date: "2020-06-07"
     comments:
 
   - player: GAN
@@ -528,6 +546,7 @@ scores:
     mode: Ura
     scored-date: "2016-03"
     source: JHA March 2016
+    added-date: "2020-06-21"
     comments:
       - 6L remaining
 
@@ -537,6 +556,7 @@ scores:
     mode: Ura
     scored-date: "2014-05-27"
     source: Arcadia September 2014 / [https:// Twitter]
+    added-date: "2020-06-23"
     comments:
       - 6L 0B remaining
       - 1st loop 285m
