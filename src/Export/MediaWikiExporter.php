@@ -29,7 +29,7 @@ final class MediaWikiExporter
     private SettingRepositoryInterface $settings;
     private GameRepositoryInterface $games;
     private ScoreRepositoryInterface $scores;
-    private TwigFactory $twigFactory;
+    private Twig $twig;
 
     public function __construct(
         SettingRepositoryInterface $settings,
@@ -39,17 +39,18 @@ final class MediaWikiExporter
         $this->settings = $settings;
         $this->games = $games;
         $this->scores = $scores;
-        $this->twigFactory = new TwigFactory();
+        $this->twig = new Twig();
     }
 
     public function export(string $locale = ''): string
     {
-        $this->twigFactory->registerFormatter(new Formatter($locale));
-
         $globalSettings = $this->settings->filterGlobal();
         $globalLayout = Layout::createFromArray(
             $globalSettings->get('layout', [])
         );
+
+        $this->twig->registerFormatter(new Formatter($locale));
+        $this->twig->addTemplates($globalLayout->templates());
 
         return $this->createMainTemplate($globalLayout)->render([
             'description' => $globalSettings->get('description', ''),
@@ -59,9 +60,7 @@ final class MediaWikiExporter
 
     private function createMainTemplate(Layout $globalLayout): MainTemplate
     {
-        return new MainTemplate(
-            $this->twigFactory->create($globalLayout->templates())
-        );
+        return new MainTemplate($this->twig);
     }
 
     private function createGameVariables(
@@ -89,6 +88,12 @@ final class MediaWikiExporter
         $layout = Layout::createFromArray(
             $settings->get('layout', [])
         )->merge($globalLayout);
+
+        if ($layout->template('game') !== '') {
+            $this->twig->addTemplates([
+                "game-{$game->id()}" => $layout->template('game'),
+            ]);
+        }
 
         return new GameVariable(
             $game,
@@ -126,7 +131,7 @@ final class MediaWikiExporter
         return new ScoreVariable(
             $score,
             $layout,
-            $this->twigFactory
+            $this->twig
         );
     }
 

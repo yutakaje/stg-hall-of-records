@@ -513,11 +513,9 @@ TEXT,
 TPL,
             'games' => <<<'TPL'
 {% for game in games.all %}
-{% if game.template %}
-{{ game.template|raw }}
-{% else %}
-{{ include('game') }}
-{% endif %}
+{# Use custom game template where available. #}
+{% set customTemplate = "game-#{game.properties.id}" %}
+{{ include([customTemplate, 'game']) }}
 {% endfor %}
 
 TPL,

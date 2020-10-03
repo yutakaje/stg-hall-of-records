@@ -135,11 +135,9 @@ layout:
             __NOTOC__
         games: |
             {% for game in games.all %}
-            {% if game.template %}
-            {{ game.template|raw }}
-            {% else %}
-            {{ include('game') }}
-            {% endif %}
+            {# Use custom game template where available. #}
+            {% set customTemplate = "game-#{game.properties.id}" %}
+            {{ include([customTemplate, 'game']) }}
 
             {% endfor %}
         game: |
@@ -554,7 +552,7 @@ layout:
         game : |
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Great Mahou Daisakusen]]
+            ! colspan="6" | [[{{ game.properties.name }}]]
             |-
             ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-

@@ -34,7 +34,6 @@ final class GameVariable extends \stdClass
         $this->properties = $game->properties();
         $this->scores = $scores;
         $this->links = $settings->get('links', []);
-        $this->template = $layout->template('game');
         $this->headers = array_map(
             fn (array $column) => $column['label'] ?? '',
             $columns

@@ -14,19 +14,19 @@ declare(strict_types=1);
 namespace Stg\HallOfRecords\Export\MediaWiki;
 
 use Stg\HallOfRecords\Data\Score\Score;
-use Stg\HallOfRecords\Export\TwigFactory;
+use Stg\HallOfRecords\Export\Twig;
 use Twig\Environment;
 
 final class ScoreVariable extends \stdClass
 {
-    private TwigFactory $twigFactory;
+    private Twig $twig;
 
     public function __construct(
         Score $score,
         Layout $layout,
-        TwigFactory $twigFactory
+        Twig $twig
     ) {
-        $this->twigFactory = $twigFactory;
+        $this->twig = $twig;
 
         $this->columns = array_map(
             fn (array $column) => $this->createColumn($column, $score),
@@ -39,11 +39,14 @@ final class ScoreVariable extends \stdClass
      */
     private function createColumn(array $column, Score $score): \stdClass
     {
+        $this->twig->addTemplates([
+            'current-column' => $this->preparePlaceholders($column['template'] ?? ''),
+        ]);
+
         $variable = new \stdClass();
-        $variable->value = $this->renderTemplate(
-            $this->createRenderer($column['template'] ?? ''),
-            $score
-        );
+        $variable->value = $this->twig->render('current-column', [
+            'score' => $score->properties(),
+        ]);
         $variable->attrs = $this->getColumnAttrs($column, $score);
         return $variable;
     }
@@ -59,20 +62,6 @@ final class ScoreVariable extends \stdClass
         }
 
         return $score->attribute('layout')['columns'][$columnId] ?? '';
-    }
-
-    private function createRenderer(string $template): Environment
-    {
-        return $this->twigFactory->create([
-            'template' => $this->preparePlaceholders($template),
-        ]);
-    }
-
-    private function renderTemplate(Environment $twig, Score $score): string
-    {
-        return $twig->render('template', [
-            'score' => $score->properties(),
-        ]);
     }
 
     private function preparePlaceholders(string $template): string

@@ -17,12 +17,17 @@ use Twig\Environment;
 use Twig\Loader\ArrayLoader;
 use Twig\TwigFilter;
 
-final class TwigFactory
+final class Twig
 {
+    /** @var array<string,string> */
+    private array $templates;
+    private Environment $twig;
     private Formatter $formatter;
 
     public function __construct()
     {
+        $this->templates = [];
+        $this->twig = $this->createTwig();
         $this->formatter = new Formatter();
     }
 
@@ -34,10 +39,24 @@ final class TwigFactory
     /**
      * @param array<string,string> $templates
      */
-    public function create(array $templates): Environment
+    public function addTemplates(array $templates): void
+    {
+        $this->templates = array_merge($this->templates, $templates);
+        $this->twig = $this->createTwig();
+    }
+
+    /**
+     * @param array<string,mixed> $context
+     */
+    public function render(string $templateName, array $context = []): string
+    {
+        return $this->twig->render($templateName, $context);
+    }
+
+    private function createTwig(): Environment
     {
         $twig = new Environment(
-            new ArrayLoader($templates)
+            new ArrayLoader($this->templates)
         );
         $this->addFilters($twig);
         return $twig;

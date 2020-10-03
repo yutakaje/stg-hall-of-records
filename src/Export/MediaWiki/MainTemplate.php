@@ -13,13 +13,13 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Export\MediaWiki;
 
-use Twig\Environment;
+use Stg\HallOfRecords\Export\Twig;
 
 final class MainTemplate
 {
-    private Environment $twig;
+    private Twig $twig;
 
-    public function __construct(Environment $twig)
+    public function __construct(Twig $twig)
     {
         $this->twig = $twig;
     }
