@@ -21,25 +21,34 @@ final class Layout
     private array $sort;
     /** @var array<string,string[]> */
     private array $group;
-    /** @var array<string,mixed>[] */
+    /** @var array<string,array<string,mixed>> */
     private array $columns;
+    /** @var string[] */
+    private array $columnOrder;
 
     /**
      * @param array<string,string> $templates
      * @param array<string,mixed[]> $sort
      * @param array<string,string[]> $group
-     * @param array<string,mixed>[] $columns
+     * @param array<string,array<string,mixed>> $columns
+     * @param string[] $columnOrder
      */
     public function __construct(
         array $templates,
         array $sort,
         array $group,
-        array $columns
+        array $columns,
+        array $columnOrder
     ) {
         $this->templates = $templates;
         $this->sort = $sort;
         $this->group = $group;
         $this->columns = $columns;
+        $this->columnOrder = $columnOrder;
+
+        foreach ($this->columns as $name => $properties) {
+            $this->columns[$name]['name'] = $name;
+        }
     }
 
     /**
@@ -51,7 +60,8 @@ final class Layout
             $properties['templates'] ?? [],
             $properties['sort'] ?? [],
             $properties['group'] ?? [],
-            $properties['columns'] ?? []
+            $properties['columns'] ?? [],
+            $properties['column-order'] ?? [],
         );
     }
 
@@ -89,7 +99,28 @@ final class Layout
      */
     public function columns(): array
     {
-        return $this->columns;
+        return array_values($this->columns);
+    }
+
+    /**
+     * @return array<string,mixed>
+     */
+    public function column(string $name): array
+    {
+        if (!isset($this->columns[$name])) {
+            throw new \InvalidArgumentException(
+                "Column named `{$name}` does not exist"
+            );
+        }
+        return $this->columns[$name];
+    }
+
+    /**
+     * @return string[]
+     */
+    public function columnOrder(): array
+    {
+        return $this->columnOrder;
     }
 
     public function merge(Layout $layout): self
@@ -98,7 +129,8 @@ final class Layout
             $this->templates,
             $this->mergeSort($layout->sort),
             $this->mergeGroup($layout->group),
-            $this->mergeColumns($layout->columns)
+            $this->mergeColumns($layout->columns),
+            $this->mergeColumnOrder($layout->columnOrder)
         );
     }
 
@@ -144,6 +176,21 @@ final class Layout
      */
     private function mergeColumns(array $columns): array
     {
-        return $this->columns != null ? $this->columns : $columns;
+        $merged = $columns;
+
+        foreach ($this->columns as $name => $properties) {
+            $merged[$name] = array_merge($merged[$name] ?? [], $properties);
+        }
+
+        return $merged;
+    }
+
+    /**
+     * @param string[] $columnOrder
+     * @return string[]
+     */
+    private function mergeColumnOrder(array $columnOrder): array
+    {
+        return $this->columnOrder != null ? $this->columnOrder : $columnOrder;
     }
 }

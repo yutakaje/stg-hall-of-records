@@ -64,6 +64,45 @@ TEXT,
                                 'version',
                             ],
                         ],
+                        'column-order' => [
+                            'player',
+                            'ship',
+                            'mode',
+                            'weapon',
+                            'score',
+                            'scored-date+source',
+                            'comments',
+                        ],
+                        'columns' => [
+                            'player' => [
+                                'label' => 'Player',
+                                'template' => '{{ player }}',
+                            ],
+                            'score' => [
+                                'label' => 'Score',
+                                'template' => '{{ score }}',
+                            ],
+                            'ship' => [
+                                'label' => 'Ship',
+                                'template' => '{{ ship }}',
+                            ],
+                            'mode' => [
+                                'label' => 'Mode',
+                                'template' => '{{ mode }}',
+                            ],
+                            'weapon' => [
+                                'label' => 'Weapon',
+                                'template' => '{{ weapon }}',
+                            ],
+                            'scored-date+source' => [
+                                'label' => 'Date / Source',
+                                'template' => '{{ scored-date }} / {{ source }}',
+                            ],
+                            'comments' => [
+                                'label' => 'Comments',
+                                'template' => "{{ comments|join('; ') }}",
+                            ],
+                        ],
                         'templates' => $this->templates(),
                     ],
                 ]),
@@ -78,37 +117,21 @@ TEXT,
                                     'gameId' => $gameIds[0],
                                     'name' => 'layout',
                                     'value' => [
+                                        'column-order' => [
+                                            'mode',
+                                            'ship',
+                                            'weapon',
+                                            'score',
+                                            'player',
+                                            'scored-date+source',
+                                            'comments',
+                                        ],
                                         'columns' => [
-                                            [
-                                                'label' => 'Mode',
-                                                'template' => '{{ mode }}',
-                                                'groupSameValues' => true,
-                                            ],
-                                            [
+                                            'ship' => [
                                                 'label' => 'Character',
-                                                'template' => '{{ ship }}',
-                                                'groupSameValues' => true,
                                             ],
-                                            [
+                                            'weapon' => [
                                                 'label' => 'Style',
-                                                'template' => '{{ weapon }}',
-                                            ],
-                                            [
-                                                'label' => 'Score',
-                                                'template' => '{{ score }}',
-                                            ],
-                                            [
-                                                'label' => 'Player',
-                                                'template' => '{{ player }}',
-                                                'groupSameValues' => true,
-                                            ],
-                                            [
-                                                'label' => 'Date / Source',
-                                                'template' => '{{ scored-date }} / {{ source }}',
-                                            ],
-                                            [
-                                                'label' => 'Comments',
-                                                'template' => "{{ comments|join('; ') }}",
                                             ],
                                         ],
                                         'sort' => [
@@ -139,31 +162,8 @@ TEXT,
                                     'name' => 'layout',
                                     'value' => [
                                         'columns' => [
-                                            [
-                                                'label' => 'Ship',
-                                                'template' => '{{ ship }}',
-                                                'groupSameValues' => true,
-                                            ],
-                                            [
+                                            'mode' => [
                                                 'label' => 'Loop',
-                                                'template' => '{{ mode }}',
-                                            ],
-                                            [
-                                                'label' => 'Score',
-                                                'template' => '{{ score }}',
-                                            ],
-                                            [
-                                                'label' => 'Player',
-                                                'template' => '{{ player }}',
-                                                'groupSameValues' => true,
-                                            ],
-                                            [
-                                                'label' => 'Date / Source',
-                                                'template' => '{{ scored-date }} / {{ source }}',
-                                            ],
-                                            [
-                                                'label' => 'Comments',
-                                                'template' => "{{ comments|join('; ') }}",
                                             ],
                                         ],
                                         'sort' => [

@@ -27,16 +27,53 @@ final class GameVariable extends \stdClass
         Settings $settings,
         array $scores
     ) {
-        $emptyColumnRemover = new EmptyColumnRemover($scores);
-        $columns = $emptyColumnRemover->remove($layout->columns());
-        $scores = $emptyColumnRemover->scores();
+        $columnFinder = new EmptyColumnFinder();
+        $emptyColumns = $columnFinder->find($layout->columnOrder(), $scores);
+
+        $columns = $this->getNonEmptyColumns($layout, $emptyColumns);
 
         $this->properties = $game->properties();
-        $this->scores = $scores;
+        $this->scores = array_map(
+            fn (ScoreVariable $score) => $this->removeEmptyColumns($score, $emptyColumns),
+            $scores
+        );
         $this->links = $settings->get('links', []);
         $this->headers = array_map(
             fn (array $column) => $column['label'] ?? '',
             $columns
         );
+    }
+
+    /**
+     * @param string[] $emptyColumns
+     * @return array<string,mixed>[]
+     */
+    private function getNonEmptyColumns(Layout $layout, array $emptyColumns): array
+    {
+        return array_values(array_filter(
+            array_map(
+                fn (string $name) => $layout->column($name),
+                $layout->columnOrder()
+            ),
+            fn (array $column) => !in_array($column['name'], $emptyColumns, true)
+        ));
+    }
+
+    /**
+     * @param string[] $emptyColumns
+     */
+    private function removeEmptyColumns(
+        ScoreVariable $score,
+        array $emptyColumns
+    ): ScoreVariable {
+        $score->columns = array_values(array_filter(
+            $score->columns,
+            fn (\stdClass $column) => array_search(
+                $column->name,
+                $emptyColumns,
+                true
+            ) === false
+        ));
+        return $score;
     }
 }

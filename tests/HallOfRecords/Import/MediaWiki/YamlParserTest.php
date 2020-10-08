@@ -159,35 +159,43 @@ class YamlParserTest extends \Tests\TestCase
                         ],
                     ],
                     'layout' => new ParsedProperties([
+                        'column-order' => [
+                            'player',
+                            'mode',
+                            'ship',
+                            'score',
+                            'scored-date+source',
+                            'comments',
+                        ],
                         'columns' => [
-                            new ParsedProperties([
+                            'ship' => new ParsedProperties([
                                 'label' => 'Ship',
                                 'label-jp' => '自機',
                                 'template' => '{{ ship }}',
                                 'groupSameValues' => true,
                             ]),
-                            new ParsedProperties([
+                            'mode' => new ParsedProperties([
                                 'label' => 'Loop',
                                 'label-jp' => '2週種',
                                 'template' => '{{ mode }}',
                             ]),
-                            new ParsedProperties([
+                            'score' => new ParsedProperties([
                                 'label' => 'Score',
                                 'label-jp' => 'スコア',
                                 'template' => '{{ score }}',
                             ]),
-                            new ParsedProperties([
+                            'player' => new ParsedProperties([
                                 'label' => 'Player',
                                 'label-jp' => 'プレイヤー',
                                 'template' => '{{ player }}',
                                 'groupSameValues' => true,
                             ]),
-                            new ParsedProperties([
+                            'scored-date+source' => new ParsedProperties([
                                 'label' => 'Date / Source',
                                 'label-jp' => '年月日 / 情報元',
                                 'template' => '{{ scored-date }} / {{ source }}',
                             ]),
-                            new ParsedProperties([
+                            'comments' => new ParsedProperties([
                                 'label' => 'Comment',
                                 'label-jp' => '備考',
                                 'template' => '{{ comments }}',
@@ -356,35 +364,43 @@ TPL,
                     ],
                 ],
                 'layout' => [
+                    'column-order' => [
+                        'player',
+                        'mode',
+                        'ship',
+                        'score',
+                        'scored-date+source',
+                        'comments',
+                    ],
                     'columns' => [
-                        [
+                        'ship' => [
                             'label' => 'Ship',
                             'label-jp' => '自機',
                             'template' => '{{ ship }}',
                             'groupSameValues' => true,
                         ],
-                        [
+                        'mode' => [
                             'label' => 'Loop',
                             'label-jp' => '2週種',
                             'template' => '{{ mode }}',
                         ],
-                        [
+                        'score' => [
                             'label' => 'Score',
                             'label-jp' => 'スコア',
                             'template' => '{{ score }}',
                         ],
-                        [
+                        'player' => [
                             'label' => 'Player',
                             'label-jp' => 'プレイヤー',
                             'template' => '{{ player }}',
                             'groupSameValues' => true,
                         ],
-                        [
+                        'scored-date+source' => [
                             'label' => 'Date / Source',
                             'label-jp' => '年月日 / 情報元',
                             'template' => '{{ scored-date }} / {{ source }}',
                         ],
-                        [
+                        'comments' => [
                             'label' => 'Comment',
                             'label-jp' => '備考',
                             'template' => '{{ comments }}',

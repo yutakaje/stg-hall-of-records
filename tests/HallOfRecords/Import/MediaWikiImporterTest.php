@@ -241,40 +241,50 @@ class MediaWikiImporterTest extends \Tests\TestCase
             0 => $this->globalSetting('name', 'global'),
             1 => $this->globalSetting('layout', [
                 'templates' => $this->templates(),
+                'column-order' => [
+                    'player',
+                    'mode',
+                    'ship',
+                    'weapon',
+                    'score',
+                    'scored-date',
+                    'source',
+                    'comments',
+                ],
                 'columns' => [
-                    0 => [
+                    'player' => [
                         'label' => 'Player',
                         'label-jp' => 'プレイヤー',
                         'template' => '{{ player }}',
                     ],
-                    1 => [
+                    'ship' => [
                         'label' => 'Ship',
                         'label-jp' => '自機',
                         'template' => '{{ ship }}',
                     ],
-                    2 => [
+                    'mode' => [
                         'label' => 'Mode',
                         'template' => '{{ mode }}',
                     ],
-                    3 => [
-                        'label' => 'Style',
+                    'weapon' => [
+                        'label' => 'Weapon',
                         'template' => '{{ weapon }}',
                     ],
-                    4 => [
+                    'score' => [
                         'label' => 'Score',
                         'label-jp' => 'スコア',
                         'template' => '{{ score }}',
                     ],
-                    5 => [
+                    'scored-date' => [
                         'label' => 'Scored date',
                         'template' => '{{ scored-date }}',
                     ],
-                    6 => [
+                    'source' => [
                         'label' => 'Source',
                         'label-jp' => '情報元',
                         'template' => '{{ source }}',
                     ],
-                    7 => [
+                    'comments' => [
                         'label' => 'Comment',
                         'label-jp' => '備考',
                         'template' => "{{ comments|join('; ') }}",
@@ -289,37 +299,26 @@ class MediaWikiImporterTest extends \Tests\TestCase
                 ],
             ]),
             3 => $this->gameSetting($gameIds[0], 'layout', [
+                'column-order' => [
+                    'mode',
+                    'ship',
+                    'weapon',
+                    'score',
+                    'player',
+                    'scored-date+source',
+                    'comments',
+                ],
                 'columns' => [
-                    [
-                        'label' => 'Mode',
-                        'template' => '{{ mode }}',
-                        'groupSameValues' => true,
-                    ],
-                    [
+                    'ship' => [
                         'label' => 'Character',
-                        'template' => '{{ ship }}',
                         'groupSameValues' => true,
                     ],
-                    [
+                    'weapon' => [
                         'label' => 'Style',
-                        'template' => '{{ weapon }}',
                     ],
-                    [
-                        'label' => 'Score',
-                        'template' => '{{ score }}',
-                    ],
-                    [
-                        'label' => 'Player',
-                        'template' => '{{ player }}',
-                        'groupSameValues' => true,
-                    ],
-                    [
+                    'scored-date+source' => [
                         'label' => 'Date / Source',
                         'template' => '{{ scored-date }} / {{ source }}',
-                    ],
-                    [
-                        'label' => 'Comment',
-                        'template' => "{{ comments|join('; ') }}",
                     ],
                 ],
                 'sort' => [
@@ -352,32 +351,21 @@ class MediaWikiImporterTest extends \Tests\TestCase
                 ],
             ]),
             5 => $this->gameSetting($gameIds[1], 'layout', [
+                'column-order' => [
+                    'ship',
+                    'mode',
+                    'score',
+                    'player',
+                    'scored-date',
+                    'source',
+                    'comments',
+                ],
                 'columns' => [
-                    [
-                        'label' => 'Ship',
-                        'template' => '{{ ship }}',
-                        'groupSameValues' => true,
-                    ],
-                    [
+                    'mode' => [
                         'label' => 'Loop',
-                        'template' => '{{ mode }}',
                     ],
-                    [
-                        'label' => 'Score',
-                        'template' => '{{ score }}',
-                    ],
-                    [
-                        'label' => 'Player',
-                        'template' => '{{ player }}',
-                        'groupSameValues' => true,
-                    ],
-                    [
-                        'label' => 'Date / Source',
-                        'template' => '{{ scored-date }} / {{ source }}',
-                    ],
-                    [
-                        'label' => 'Comment',
-                        'template' => "{{ comments|join('; ') }}",
+                    'scored-date' => [
+                        'label' => 'Scored date',
                     ],
                 ],
                 'sort' => [
@@ -414,11 +402,11 @@ class MediaWikiImporterTest extends \Tests\TestCase
                 'Panzer Jäger',
             ];
         } elseif ($locale === 'jp') {
-            $settings[1]['value']['columns'][0]['label'] = 'プレイヤー';
-            $settings[1]['value']['columns'][1]['label'] = '自機';
-            $settings[1]['value']['columns'][4]['label'] = 'スコア';
-            $settings[1]['value']['columns'][6]['label'] = '情報元';
-            $settings[1]['value']['columns'][7]['label'] = '備考';
+            $settings[1]['value']['columns']['player']['label'] = 'プレイヤー';
+            $settings[1]['value']['columns']['ship']['label'] = '自機';
+            $settings[1]['value']['columns']['score']['label'] = 'スコア';
+            $settings[1]['value']['columns']['source']['label'] = '情報元';
+            $settings[1]['value']['columns']['comments']['label'] = '備考';
 
             $settings[3]['value']['sort']['scores']['mode'] = [
                 'オリジナルモード',
@@ -437,12 +425,8 @@ class MediaWikiImporterTest extends \Tests\TestCase
             $settings[4]['value'][0]['title'] = '日本ハイスコア協会';
             $settings[4]['value'][1]['title'] = 'ザ・ファーム';
 
-            $settings[5]['value']['columns'][0]['label'] = '自機';
-            $settings[5]['value']['columns'][1]['label'] = '2週種';
-            $settings[5]['value']['columns'][2]['label'] = 'スコア';
-            $settings[5]['value']['columns'][3]['label'] = 'プレイヤー';
-            $settings[5]['value']['columns'][4]['label'] = '年月日 / 情報元';
-            $settings[5]['value']['columns'][5]['label'] = '備考';
+            $settings[5]['value']['columns']['mode']['label'] = '2周種';
+            $settings[5]['value']['columns']['scored-date']['label'] = '年月日';
             $settings[5]['value']['sort']['scores']['ship'] = [
                 'TYPE-A ティーゲルシュベルト',
                 'TYPE-B パンツァーイェーガー',
@@ -855,19 +839,19 @@ class MediaWikiImporterTest extends \Tests\TestCase
             ]);
             $scores[13] = array_merge($scores[13], [
                 'ship' => 'TYPE-A ティーゲルシュベルト',
-                'mode' => '表2週',
+                'mode' => '表2周',
             ]);
             $scores[14] = array_merge($scores[14], [
                 'ship' => 'TYPE-A ティーゲルシュベルト',
-                'mode' => '裏2週',
+                'mode' => '裏2周',
             ]);
             $scores[15] = array_merge($scores[15], [
                 'ship' => 'TYPE-B パンツァーイェーガー',
-                'mode' => '表2週',
+                'mode' => '表2周',
             ]);
             $scores[16] = array_merge($scores[16], [
                 'ship' => 'TYPE-B パンツァーイェーガー',
-                'mode' => '裏2週',
+                'mode' => '裏2周',
             ]);
         }
 

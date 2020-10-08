@@ -110,6 +110,11 @@ final class MediaWikiExporter
         Game $game,
         Layout $layout
     ): array {
+        $columns = array_map(
+            fn (string $name) => $layout->column($name),
+            $layout->columnOrder()
+        );
+
         // Group scores by distinct features and take the top X
         // entries out of each group.
         return $this->scores->filterByGame($game->id())
@@ -117,20 +122,20 @@ final class MediaWikiExporter
             ->sort($layout->sort('scores'))
             ->map(fn (Score $score) => $this->createScoreVariable(
                 $score,
-                $layout
+                $columns
             ));
     }
 
     /**
-     * @return ScoreVariable
+     * @param array<string,mixed>[] $columns
      */
     private function createScoreVariable(
         Score $score,
-        Layout $layout
+        array $columns
     ): ScoreVariable {
         return new ScoreVariable(
             $score,
-            $layout,
+            $columns,
             $this->twig
         );
     }

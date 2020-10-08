@@ -5,35 +5,53 @@ Values defined in this section will apply to all the games in the database. Its 
 name: global
 
 layout:
+    column-order:
+      - player
+      - mode
+      - ship
+      - weapon
+      - score
+      - scored-date
+      - source
+      - comments
+
     columns:
-      - label: Player
-        label-jp: プレイヤー
-        template: "{{ player }}"
+        player:
+            label: Player
+            label-jp: プレイヤー
+            template: "{{ player }}"
 
-      - label: Ship
-        label-jp: 自機
-        template: "{{ ship }}"
+        ship:
+            label: Ship
+            label-jp: 自機
+            template: "{{ ship }}"
 
-      - label: Mode
-        template: "{{ mode }}"
+        mode:
+            label: Mode
+            template: "{{ mode }}"
 
-      - label: Style
-        template: "{{ weapon }}"
+        weapon:
+            label: Weapon
+            template: "{{ weapon }}"
 
-      - label: Score
-        label-jp: スコア
-        template: "{{ score }}"
+        score:
+            label: Score
+            label-jp: スコア
+            template: "{{ score }}"
 
-      - label: Scored date
-        template: "{{ scored-date }}"
+        scored-date:
+            label: Scored date
+            template: "{{ scored-date }}"
 
-      - label: Source
-        label-jp: 情報元
-        template: "{{ source }}"
+        source:
+            label: Source
+            label-jp: 情報元
+            template: "{{ source }}"
 
-      - label: Comment
-        label-jp: 備考
-        template: "{{ comments|join('; ') }}"
+        comments:
+            label: Comment
+            label-jp: 備考
+            template: "{{ comments|join('; ') }}"
 
     templates:
         games: |
@@ -216,30 +234,26 @@ links:
     title-jp: ザ・ファーム
 
 layout:
+    column-order:
+      - mode
+      - ship
+      - weapon
+      - score
+      - player
+      - scored-date+source
+      - comments
+
     columns:
-      - label: Mode
-        template: "{{ mode }}"
-        groupSameValues: true
+        ship:
+            label: Character
+            groupSameValues: true
 
-      - label: Character
-        template: "{{ ship }}"
-        groupSameValues: true
+        weapon:
+            label: Style
 
-      - label: Style
-        template: "{{ weapon }}"
-
-      - label: Score
-        template: "{{ score }}"
-
-      - label: Player
-        template: "{{ player }}"
-        groupSameValues: true
-
-      - label: Date / Source
-        template: "{{ scored-date }} / {{ source }}"
-
-      - label: Comment
-        template: "{{ comments|join('; ') }}"
+        scored-date+source:
+            label: Date / Source
+            template: "{{ scored-date }} / {{ source }}"
 
     sort:
         scores:
@@ -335,38 +349,28 @@ translations:
     value-jp: TYPE-B パンツァーイェーガー
   - property: mode
     value: Omote
-    value-jp: 表2週
+    value-jp: 表2周
   - property: mode
     value: Ura
-    value-jp: 裏2週
+    value-jp: 裏2周
 
 layout:
+    column-order:
+      - ship
+      - mode
+      - score
+      - player
+      - scored-date
+      - source
+      - comments
+
     columns:
-      - label: Ship
-        label-jp: 自機
-        template: "{{ ship }}"
-        groupSameValues: true
-
-      - label: Loop
-        label-jp: 2週種
-        template: "{{ mode }}"
-
-      - label: Score
-        label-jp: スコア
-        template: "{{ score }}"
-
-      - label: Player
-        label-jp: プレイヤー
-        template: "{{ player }}"
-        groupSameValues: true
-
-      - label: Date / Source
-        label-jp: 年月日 / 情報元
-        template: "{{ scored-date }} / {{ source }}"
-
-      - label: Comment
-        label-jp: 備考
-        template: "{{ comments|join('; ') }}"
+        mode:
+            label: Loop
+            label-jp: 2周種
+        scored-date:
+            label: Scored date
+            label-jp: 年月日
 
     sort:
         scores:

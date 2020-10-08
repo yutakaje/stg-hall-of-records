@@ -21,16 +21,19 @@ final class ScoreVariable extends \stdClass
 {
     private Twig $twig;
 
+    /**
+     * @param array<string,mixed>[] $columns
+     */
     public function __construct(
         Score $score,
-        Layout $layout,
+        array $columns,
         Twig $twig
     ) {
         $this->twig = $twig;
 
         $this->columns = array_map(
             fn (array $column) => $this->createColumn($column, $score),
-            $layout->columns()
+            $columns
         );
     }
 
@@ -44,6 +47,7 @@ final class ScoreVariable extends \stdClass
         ]);
 
         $variable = new \stdClass();
+        $variable->name = $column['name'];
         $variable->value = $this->twig->render('current-column', [
             'score' => $score->properties(),
         ]);
@@ -56,12 +60,12 @@ final class ScoreVariable extends \stdClass
      */
     private function getColumnAttrs(array $column, Score $score): string
     {
-        $columnId = $column['id'] ?? null;
-        if ($columnId === null) {
+        $columnName = $column['name'] ?? null;
+        if ($columnName === null) {
             return '';
         }
 
-        return $score->attribute('layout')['columns'][$columnId] ?? '';
+        return $score->attribute('layout')['columns'][$columnName] ?? '';
     }
 
     private function preparePlaceholders(string $template): string

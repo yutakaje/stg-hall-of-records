@@ -46,17 +46,17 @@ __NOTOC__
 
 {| class="wikitable" style="text-align: center"
 |-
-! colspan="6" | ケツイ ～絆地獄たち～
+! colspan="7" | ケツイ ～絆地獄たち～
 |-
-! 自機 !! 2週種 !! スコア !! プレイヤー !! 年月日 / 情報元 !! 備考
+! 自機 !! 2周種 !! スコア !! プレイヤー !! 年月日 !! 情報元 !! 備考
 |-
-| TYPE-A ティーゲルシュベルト || 表2週 || 507,780,433 || SPS || 2014年08月 / Arcadia August 2014 || 
+| TYPE-A ティーゲルシュベルト || 表2周 || 507,780,433 || SPS || 2014年08月 || Arcadia August 2014 || 
 |-
-| TYPE-A ティーゲルシュベルト || 裏2週 || 583,614,753 || SPS || 2014年05月27日 / Arcadia September 2014 / [https:// Twitter] || 6L 0B remaining; 1st loop 285m
+| TYPE-A ティーゲルシュベルト || 裏2周 || 583,614,753 || SPS || 2014年05月27日 || Arcadia September 2014 / [https:// Twitter] || 6L 0B remaining; 1st loop 285m
 |-
-| TYPE-B パンツァーイェーガー || 表2週 || 481,402,383 || SPS || 2014年11月 / Arcadia November 2014 || 6L 0B remaining; 1st loop 276m
+| TYPE-B パンツァーイェーガー || 表2周 || 481,402,383 || SPS || 2014年11月 || Arcadia November 2014 || 6L 0B remaining; 1st loop 276m
 |-
-| TYPE-B パンツァーイェーガー || 裏2週 || 569,741,232 || GAN || 2016年03月 / JHA March 2016 || 6L remaining
+| TYPE-B パンツァーイェーガー || 裏2周 || 569,741,232 || GAN || 2016年03月 || JHA March 2016 || 6L remaining
 |}
 
 * [https://example.org/jha/ketsui 日本ハイスコア協会]
@@ -65,35 +65,35 @@ __NOTOC__
 
 {| class="wikitable" style="text-align: center"
 |-
-! colspan="7" | 虫姫さまふたりVer 1.5
+! colspan="8" | 虫姫さまふたりVer 1.5
 |-
-! Mode !! Character !! Style !! Score !! Player !! Date / Source !! Comment
+! Mode !! Character !! Style !! スコア !! プレイヤー !! Scored date !! 情報元 !! 備考
 |-
-| オリジナルモード || パルム || ノーマル || 530,358,660 || ABI || 2008年01月 / Arcadia January 2008 || 
+| オリジナルモード || パルム || ノーマル || 530,358,660 || ABI || 2008年01月 || Arcadia January 2008 || 
 |-
-| オリジナルモード || パルム || アブノーマル || 518,902,716 || にぼし || 2007年 / Superplay DVD || 
+| オリジナルモード || パルム || アブノーマル || 518,902,716 || にぼし || 2007年 || Superplay DVD || 
 |-
-| オリジナルモード || レコ || ノーマル || 550,705,999 || ABI || 2010年02月 / Blog || 5L 0B remaining; After stage 4: 273.7m
+| オリジナルモード || レコ || ノーマル || 550,705,999 || ABI || 2010年02月 || Blog || 5L 0B remaining; After stage 4: 273.7m
 |-
-| オリジナルモード || レコ || ノーマル || 538,378,364 || ISO / Niboshi || 2007年10月 / Arcadia October 2007 || 
+| オリジナルモード || レコ || ノーマル || 538,378,364 || ISO / Niboshi || 2007年10月 || Arcadia October 2007 || 
 |-
-| オリジナルモード || レコ || アブノーマル || 454,386,226 || yasu0219 || 2009年12月12日 / Xbox rankings || Highest score Xbox360
+| オリジナルモード || レコ || アブノーマル || 454,386,226 || yasu0219 || 2009年12月12日 || Xbox rankings || Highest score Xbox360
 |-
-| マニアックモード || パルム || アブノーマル || 981,872,827 || KTL-NAL || 2007年09月 / Superplay DVD || 5L 2B remaining; After stage 4: 693.8m
+| マニアックモード || パルム || アブノーマル || 981,872,827 || KTL-NAL || 2007年09月 || Superplay DVD || 5L 2B remaining; After stage 4: 693.8m
 |-
-| マニアックモード || パルム || アブノーマル || 973,020,065 || KTL-NAL || 2007年11月 / Arcadia November 2007 || 
+| マニアックモード || パルム || アブノーマル || 973,020,065 || KTL-NAL || 2007年11月 || Arcadia November 2007 || 
 |-
-| マニアックモード || レコ || ノーマル || 1,047,258,714 || Clover-TAC || 2015年03月 / Arcadia March 2015 || 5L 2B remaining; After stage 4: 745.1m
+| マニアックモード || レコ || ノーマル || 1,047,258,714 || Clover-TAC || 2015年03月 || Arcadia March 2015 || 5L 2B remaining; After stage 4: 745.1m
 |-
-| ウルトラモード || パルム || ノーマル || 2,956,728,306 || rescue_STG || 2017年04月08日 / Xbox rankings || Highest score Xbox360
+| ウルトラモード || パルム || ノーマル || 2,956,728,306 || rescue_STG || 2017年04月08日 || Xbox rankings || Highest score Xbox360
 |-
-| ウルトラモード || パルム || アブノーマル || style="background: #DFDFDF;" | 3,999,999,999 [4,263,416,356] || style="background: #DFDFDF;" | KGM || 2013年07月24日 / Xbox rankings || Highest score Xbox360
+| ウルトラモード || パルム || アブノーマル || style="background: #DFDFDF;" | 3,999,999,999 [4,263,416,356] || style="background: #DFDFDF;" | KGM || 2013年07月24日 || Xbox rankings || Highest score Xbox360
 |-
-| ウルトラモード || パルム || アブノーマル || style="background: #DFDFDF;" | 3,999,999,999 || style="background: #DFDFDF;" | Dame K.K || 2008年03月 / Arcadia March 2008 || 1L 0B remaining; Highest score Arcade
+| ウルトラモード || パルム || アブノーマル || style="background: #DFDFDF;" | 3,999,999,999 || style="background: #DFDFDF;" | Dame K.K || 2008年03月 || Arcadia March 2008 || 1L 0B remaining; Highest score Arcade
 |-
-| ウルトラモード || レコ || ノーマル || 3,999,999,999 || fufufu || 2009年05月27日 / Arcadia August 2009 || 0L 0B remaining; After stage 4: 2.205b
+| ウルトラモード || レコ || ノーマル || 3,999,999,999 || fufufu || 2009年05月27日 || Arcadia August 2009 || 0L 0B remaining; After stage 4: 2.205b
 |-
-| ウルトラモード || レコ || アブノーマル || 3,266,405,598 || lstze || 2014年? /  || 
+| ウルトラモード || レコ || アブノーマル || 3,266,405,598 || lstze || 2014年? ||  || 
 |}
 
 申請受付終了
