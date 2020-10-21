@@ -499,7 +499,6 @@ Every section of data is enclosed in &lt;nowiki&gt;&lt;/nowiki&gt; tags. Everyth
 Values defined in this section apply to all the games in the database or the whole page in general (e.g. description, sorting of games, common translations, ...). For further information, please refer to the [[#Global settings-value|actual value]], most of the settings are documented.
 
 ==== Game ====
-'''WIP'''
 Each game is defined by the following properties:
 
 <pre>
@@ -523,6 +522,7 @@ layout: Layout information (see below)
 translations: Game-specific translations (see below)
 </pre>
 
+===== Score =====
 For each score the properties listed below are available. They are heavily game-dependent and usually not all of them are useful. Unnecessary properties can (and should) be omitted.
 
 <pre>
@@ -545,6 +545,71 @@ image-url: URL pointing to a screenshot of the score
 Additional properties may be specified. In this case the generator will treat their values verbatim.
 
 For every property a property with the same name and a locale suffix can be specified. Its value will be used on the page in the corresponding language instead of the value of the original property. Currently only '-jp' for Japanese is used but this can be extended to support more languages.
+
+===== Layout =====
+Most properties from the global section can be expanded or overriden.
+
+<pre>
+layout:
+    # Overrides the globally defined column order for this game.
+    column-order:
+      - scored-date
+      - ship
+      - mode
+      - score
+      - auto-fire
+      - comments
+
+    # Additional column definitions. They can be used to define new game-specific columns (see
+    # `auto-fire`) or to override definitions for existing columns (see `mode`) for this game.
+    columns:
+        # Change label for existing column `mode`.
+        mode:
+            label: Loop
+            label-jp: 2周種
+        # Define new column `auto-fire`.
+        - auto-fire:
+            label: Auto fire
+            label-jp: オート連射
+            template: "{{ autofire }}"
+
+
+    # Sort order can either be a direction (asc = ascending, desc = descending; see `mode`)
+    # or a fixed order of values (see `ship`). These sort values will be applied *after* the
+    # ones from the global section.
+    sort:
+        scores:
+            ship: [ Type A, Type B ]
+            mode: asc
+</pre>
+
+===== Translations =====
+Each entry takes a property and a value along with its translations. Let's look at some examples:
+
+<pre>
+translations:
+  - property: ship
+    value: Tiger Schwert
+    value-jp: TYPE-A ティーゲルシュベルト
+  - property: ship
+    value: Panzer Jäger
+    value-jp: TYPE-B パンツァーイェーガー
+</pre>
+Example 1: Whenever a score contains the value of `Tiger Schwert`, it is translated to `TYPE-A ティーゲルシュベルト` for the Japanese locale and left as `Tiger Schwert` for the others. Same thing for `Panzer Jäger`.
+
+It is possible to use a simplified value for the score entries and then translate it into all the different languages.
+<pre>
+translations:
+  - property: ship
+    value: Type A
+    value-en: Tiger Schwert
+    value-jp: TYPE-A ティーゲルシュベルト
+  - property: ship
+    value: Type B
+    value-en: Panzer Jäger
+    value-jp: TYPE-B パンツァーイェーガー
+</pre>
+Example 2: Whenever a score contains the value of `Type A`, it is translated to `Tiger Schwert` for English and `TYPE-A ティーゲルシュベルト` for Japanese. Since there is a translation specified for all the available locales, the value `Type A` is not displayed at all and serves merely as a placeholder. Same thing for `Type B`.
 
 ===== Example =====
 <pre>
