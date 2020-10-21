@@ -163,7 +163,7 @@ Note: Japanese scoreboard for Peplos closed May 1998 due to the detection of an 
 |-
 | {{v|a1|95,683,500}} || イマサラT.O || Arcadia February 2013 || highest score Arcade ||
 |-
-| {{v|b1|103,300,100}} || うどんの日 || August 23rd, 2020 / [https://twitter.com/RU1OkFBRP5KYdHs/status/1297507291923529728 Twitter] || highest score Arcade Archives ||
+| {{v|b1|103,452,400}} || うどんの日 || September 24th, 2020 / [https://twitter.com/RU1OkFBRP5KYdHs/status/1309133167979360265 Twitter] || highest score Arcade Archives ||
 |}
 
 * [https://wiki.denfaminicogamer.jp/highscore/1999_048_%E5%8E%9F%E5%A7%8B%E5%B3%B62 JHA Leaderboard]
@@ -207,7 +207,7 @@ Note: Japanese scoreboard for Peplos closed May 1998 due to the detection of an 
 |-
 ! Character !! Score !! Player !! Date / Source !! Comment !! Replay
 |-
-| ??? || {{v|a1|5,999,970,630}} || 二番の男 || Arcadia May 2014 || || [http://www.nicovideo.jp/watch/sm22779253 Niconico]
+| ??? || {{v|a1|5,999,970,630}} || 二番の男 || January 27th, 2014 (Arcadia May 2014) / [https://twitter.com/cb235/status/427819988586483712 Twitter] || || [http://www.nicovideo.jp/watch/sm22779253 Niconico]
 |-
 | Fumiko O.V. || {{v|b1|5,612,215,820}} || 二番の男 || Arcadia July 2005 || || [http://www.nicovideo.jp/watch/sm9204136 Niconico]
 |-
@@ -616,6 +616,8 @@ Note: Scoreboard closed after the achievement of the counterstop at 10,000,000.
 | ON || {{v|b1|15,345,000}} || よどさん || October 28, 2018 (JHA November 2018) || ||
 |}
 
+Note: Higher scores have been posted in various places but these were all played on non-default extend settings, e.g. 1st 600,000 and then Every 1,400,000, which is the extend setting when both DIP 4 and 5 are set to OFF. However, the [https://imgur.com/fNf7qch PCB manual] states that the default extend setting is 1st 600,000, 2nd 2,000,000, and 3rd 4,500,000 with DIP switches 4 ON and 5 OFF.
+
 * [https://wiki.denfaminicogamer.jp/highscore/1992_001_%E3%83%90%E3%83%BC%E3%82%B9 JHA Leaderboard]
 * [https://shmups.system11.org/viewtopic.php?t=52339 Shmups Forum Hi-Score Topic]
 
@@ -639,13 +641,13 @@ Note: Scoreboard closed after the achievement of the counterstop at 10,000,000.
 
 {| class="wikitable" style="text-align: center"
 |-
-! colspan="6" | [[Akai Katana Shin]]
+! colspan="6" | [[Akai Katana]] Shin
 |-
 ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
 |-
 | Type 1 <br>Sumire & Tsubaki || {{v|a1|6,316,148,633}} || コッシー || November 23rd, 2019 (JHA December 2019) / [https://twitter.com/zubrowk777/status/1198178202876694528 Twitter] || ||
 |-
-| Type 2 <br>Kikyou & Botan || {{v|b1|8,507,327,782}} || NAT || June 25th, 2020 / [https://twitter.com/STG44118260/status/1276107408587108352 Twitter] || ||
+| Type 2 <br>Kikyou & Botan || {{v|b1|8,743,966,696}} || NAT || October 1st, 2020 / [https://twitter.com/STG44118260/status/1311601358420631553 Twitter] || ||
 |-
 | Type 3 <br>Suzuran & Shion || {{v|c1|6,417,031,312}} || NTK || Arcadia February 2013 || ||
 |}
@@ -690,12 +692,12 @@ Note: Scoreboard closed after the achievement of the counterstop at 10,000,000.
 ! Character !! Route !! Score !! Player !! Date / Source !! Comment !! Replay
 |-
 | rowspan="3" | Casper
-| No Canyon || {{v|a1|481,651,246}} || SPE || JHA August 2020 || ||
+| No Canyon || {{v|a1|496,091,187}} || SPE || JHA September 2020 || ||
 |-
 | rowspan="2" | Canyon
 | {{v|b1|607,878,422}} || Yusemi SWY || 2008 / superplay DVD || ||
 |-
-| {{v|c1|578,624,125}} || Yusemi SWY || September 2008 || ||
+| {{v|c1|578,624,125}} || Yusemi SWY || Arcadia September 2008 || ||
 |-
 | rowspan="3" | Follett
 | rowspan="2" | No Canyon
@@ -739,7 +741,7 @@ Note: Scoreboard closed after the achievement of the counterstop at 10,000,000.
 |-
 | {{v|f1|13,862,173,825}} || owata0401 || July 2nd, 2014 / [https://twitter.com/owata_0401/status/484284684579254274 Twitter] || highest score Xbox 360 || [https://www.nicovideo.jp/watch/sm23914133 Niconico]
 |-
-| Windia || {{v|g1|16,117,383,678}} || 白胡麻 || Arcadia November 2014 || ||
+| Windia || {{v|g1|16,117,383,678}} || 白胡麻 || April 19th, 2014 (Arcadia November 2014) / [https://twitter.com/Kernel_in/status/457466873412452352 Twitter] || ||
 |}
 
 * [https://wiki.denfaminicogamer.jp/highscore/2008_012_%E3%83%87%E3%82%B9%E3%82%B9%E3%83%9E%E3%82%A4%E3%83%AB%E3%82%BA_%E3%83%A1%E3%82%AC%E3%83%96%E3%83%A9%E3%83%83%E3%82%AF%E3%83%AC%E3%83%BC%E3%83%99%E3%83%AB JHA Leaderboard]
@@ -809,13 +811,14 @@ Note: Scoreboard closed after the achievement of the counterstop at 10,000,000.
 
 Note: Due to a major scoring glitch, the highest scores with and without exploiting said glitch will be listed. For details on this glitch, see [http://electricunderground.io/the-secret-dodonpachi-scoring-glitch-revealed/ this article].
 
+* [[STG_Hall_of_Records/World_Record_Progression_Dodonpachi|World Record Progression]]
 * [https://wiki.denfaminicogamer.jp/highscore/1997_007_%E6%80%92%E9%A6%96%E9%A0%98%E8%9C%82 JHA Leaderboard]
 * [https://shmups.system11.org/viewtopic.php?t=56826 Shmups Forum Hi-Score Topic]
 
 
 {| class="wikitable" style="text-align: center"
 |-
-! colspan="5" | [[Dodonpachi Campaign Version]]
+! colspan="5" | [[Dodonpachi]] Campaign Version
 |-
 ! Score !! Player !! Date / Source !! Comment !! Replay
 |-
@@ -877,19 +880,22 @@ Note: Due to a major scoring glitch, the highest scores with and without exploit
 
 {| class="wikitable" style="text-align: center"
 |-
-! colspan="7" | [[Dodonpachi Daioujou Black Label]]
+! colspan="7" | [[Dodonpachi Daioujou]] Black Label
 |-
 ! colspan="2" | Ship
 ! Score !! Player !! Date / Source !! Comment !! Replay
 |-
-| rowspan="7" | Type A
+| rowspan="8" | Type A
 | rowspan="2" | Shot
 | 2,095,984,550 || rowspan="2" | ISO / Niboshi
 | February 2nd, 2020 / [https://twitter.com/niboooji/status/1223905431417831424 Twitter] || max hit 2,850 ||
 |-
 | 1,962,269,990 || JHA March 2020 || 2L 0B remaining ||
 |-
-| Laser || 2,054,664,880 || RKB || September 15th, 2019 / [https://twitter.com/rkb49/status/1173164311931305986 Twitter] || max hit 2,880 ||
+| rowspan="2" | Laser
+| 2,054,664,880 || RKB || September 15th, 2019 / [https://twitter.com/rkb49/status/1173164311931305986 Twitter] || max hit 2,880 ||
+|-
+| 561,742,210 || 千石撫子 || JHA September 2020 || ||
 |-
 | rowspan="4" | Expert
 | 3,723,313,050 || WY. || September 8th, 2018 / [https://twitter.com/Plasmo_STG/status/1038448495399714816 Twitter] || played on GOTVG || [https://youtu.be/fOWhD8mViks Youtube]
@@ -900,10 +906,16 @@ Note: Due to a major scoring glitch, the highest scores with and without exploit
 |-
 | 3,511,462,970 || HFD || Arcadia December 2006 || ||
 |-
-| rowspan="3" | Type B
-| Shot || 2,348,299,000 || RKB || November 24th, 2019 / [https://twitter.com/rkb49/status/1198522997675450368 Twitter] || max hit 2,690 ||
+| rowspan="5" | Type B
+| rowspan="2" | Shot
+| 2,348,299,000 || RKB || November 24th, 2019 / [https://twitter.com/rkb49/status/1198522997675450368 Twitter] || max hit 2,690 ||
 |-
-| Laser || 2,050,334,100 || RKB || January 11th, 2020 / [https://twitter.com/rkb49/status/1215854958295207936 Twitter] ||  ||
+| 450,881,950 || 三井アウトレットパーク志木 || JHA September 2020 || ||
+|-
+| rowspan="2" | Laser
+| 2,050,334,100 || RKB || January 11th, 2020 / [https://twitter.com/rkb49/status/1215854958295207936 Twitter] ||  ||
+|-
+| 221,742,710 || 佐々木寿人 || JHA September 2020 || ||
 |-
 | Expert || 3,681,252,160 || ろくきち || January 15th, 2020 (JHA January 2020) / [https://twitter.com/rokukichi/status/1217441941870137345 Twitter] || || [https://youtu.be/-QXobCPVMV8 Youtube]
 |}
@@ -931,7 +943,7 @@ Note: Scoreboard closed after the achievement of the counterstop at 99,999,999,9
 
 {| class="wikitable" style="text-align: center"
 |-
-! colspan="8" | [[Dodonpachi Daifukkatsu 1.5]]
+! colspan="8" | [[Dodonpachi Daifukkatsu]] 1.5
 |-
 ! colspan="2" | Ship
 !  Loop !! Score !! Player !! Date / Source !! Comment !! Replay
@@ -991,7 +1003,7 @@ Note: Scoreboard closed after the achievement of the counterstop at 99,999,999,9
 
 {| class="wikitable" style="text-align: center"
 |-
-! colspan="7" | [[Dodonpachi Daifukkatsu Black Label]]
+! colspan="7" | [[Dodonpachi Daifukkatsu]] Black Label
 |-
 ! colspan="2" | Ship
 ! Score !! Player !! Date / Source !! Comment !! Replay
@@ -1093,7 +1105,7 @@ Note: Scoreboard closed after the achievement of the counterstop at 99,999,999,9
 * [https://wiki.denfaminicogamer.jp/highscore/2012_012_%E6%80%92%E9%A6%96%E9%A0%98%E8%9C%82%E6%9C%80%E5%A4%A7%E5%BE%80%E7%94%9F JHA Leaderboard]
 * [https://shmups.system11.org/viewtopic.php?t=47668 Shmups Forum Hi-Score Topic]
 
-
+{{Anchor|Donpachi}}
 {| class="wikitable" style="text-align: center"
 |-
 ! colspan="6" | [[Donpachi]]
@@ -1107,6 +1119,7 @@ Note: Scoreboard closed after the achievement of the counterstop at 99,999,999,9
 | Type C || {{v|c1|66,226,570}} || Plasmo || October 4th, 2017 (JHA October 2017) / [https://shmups.system11.org/viewtopic.php?p=1278763#p1278763 Shmups Forum] || max chain 206 ||
 |}
 
+* [[STG_Hall_of_Records/World_Record_Progression_Donpachi|World Record Progression]]
 * [https://wiki.denfaminicogamer.jp/highscore/1995_008_%E9%A6%96%E9%A0%98%E8%9C%82 JHA Leaderboard]
 * [https://shmups.system11.org/viewtopic.php?f=2&t=60135 Shmups Forum Hi-Score Topic]
 
@@ -1139,19 +1152,20 @@ Note: Scoreboard closed after the achievement of the counterstop at 99,999,999,9
 | Tateha || {{v|c1|1,006,663,918}} || NIG || Arcadia May 2014 || 6L 6 Waku 75% barrier remaining ||
 |}
 
+* [[STG_Hall_of_Records/World_Record_Progression_Espgaluda_II|World Record Progression]]
 * [https://wiki.denfaminicogamer.jp/highscore/2005_012_%E3%82%A8%E3%82%B9%E3%83%97%E3%82%AC%E3%83%AB%E3%83%BC%E3%83%80II JHA Leaderboard]
 * [https://shmups.system11.org/viewtopic.php?t=6270 Shmups Forum Hi-Score Topic]
 
 
 {| class="wikitable" style="text-align: center"
 |-
-! colspan="6" | [[ESP Ra. De.]]
+! colspan="6" | [[ESP Ra.De.]]
 |-
 ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
 |-
 | Irori || {{v|a1|44,645,250}} || Clover-TAC || JHA February 2020 || 2p side, 6L remaining, 497 gold, barrier 74% ||
 |-
-| J-B 5th || {{v|b1|41,753,570}} || Clover-TAC || JHA August 2020 || 2p side, one death ||
+| J-B 5th || {{v|b1|42,137,190}} || Clover-TAC || JHA September 2020 || 2p side, no miss, 870 gold, barrier 0% ||
 |-
 | Yusuke || {{v|c1|41,898,630}} || WSM-MKZ || January 22nd, 2019 (JHA February 2019) / [https://twitter.com/wsmmkz/status/1087576687062134787 Twitter] || 2p side, 6L remaining, 480 gold, barrier 70% ||
 |}
@@ -1183,13 +1197,16 @@ Note: Scoreboard closed after the achievement of the counterstop at 99,999,999.
 {{Anchor|Ibara}}
 {| class="wikitable" style="text-align: center"
 |-
-! colspan="6" | [[Ibara]]
+! colspan="7" | [[Ibara]]
 |-
-! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
+! Mode !! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
 |-
+| rowspan=2" | Normal
 | Bond || {{v|a1|36,010,010}} || ACR Archer || January 24th, 2010 (Arcadia May 2010) / [http://home.r00.itscom.net/archer/kimagure/ Blog] || after stage 3: 11.45m (0L 2,5B remaining), before final boss: 19.85m (4L 6B remaining) ||
 |-
-| Dyne || {{v|b1|31,388,410}} || WSM-いのうえ || Arcadia June 2013 || before final boss 18.48m ||
+| Dyne || {{v|b1|31,388,410}} || WSM-いのうえ || Arcadia June 2013 || before final boss 18.48m || [https://www.youtube.com/watch?v=n3pTS_IROMU Youtube]
+|-
+| Harder || Bond || 19,370,080 || お茶まにあ-KMT || 2006 / superplay DVD || ||
 |}
 
 * [https://wiki.denfaminicogamer.jp/highscore/2005_029_%E9%8B%B3%E8%96%94%E8%96%87 JHA Leaderboard]
@@ -1200,7 +1217,7 @@ Note: Scoreboard closed after the achievement of the counterstop at 99,999,999.
 {{Anchor|Ibara Kuro: Black Label}}
 {| class="wikitable" style="text-align: center"
 |-
-! colspan="6" | [[Ibara Black Label]]
+! colspan="6" | [[Ibara]] Black Label
 |-
 ! Score !! Player !! Date / Source !! Comment !! Replay
 |-
@@ -1257,7 +1274,7 @@ Note: Scoreboard closed after the achievement of the counterstop at 99,999,999.
 |-
 | 2 loops || {{v|g1|298,150,380}} || お茶まにあKMT || Arcadia July 2008 || 1st loop 169m ||
 |-
-| Manpuku || Momo (pink) || - || {{v|h1|169,831,420}} || raisonnable || July 15th, 2020 / [https://hiscores.shmup.com/game/11/Muchi_Muchi_Pork French Leaderboard] || || [https://youtu.be/p9wbpPQF7k8 Youtube]
+| Manpuku || Momo (pink) || - || {{v|h1|171,813,720}} || raisonnable || October 2nd, 2020 / [https://hiscores.shmup.com/game/11 French Leaderboard] || ||
 |}
 
 * [https://wiki.denfaminicogamer.jp/highscore/2007_021_%E3%82%80%E3%81%A1%E3%82%80%E3%81%A1%E3%83%9D%E3%83%BC%E3%82%AF JHA Leaderboard]
@@ -1317,7 +1334,7 @@ Note: Note: Japanese scoreboard closed because competition moved over to Mushihi
 
 {| class="wikitable"  style="text-align: center"
 |-
-! colspan="8" | [[Mushihimesama Futari 1.5]]
+! colspan="8" | [[Mushihimesama Futari]] 1.5
 |-
 ! Mode !! colspan="2" | Character
 ! Score !! Player !! Date / Source !! Comment !! Replay
@@ -1336,8 +1353,10 @@ Note: Note: Japanese scoreboard closed because competition moved over to Mushihi
 |-
 | Abnormal || 454,386,226 || yasu0219 || December 12th, 2009 / Xbox rankings || highest score Xbox360 ||
 |-
-| rowspan="3" | Maniac
-| rowspan="2" | Palm
+| rowspan="4" | Maniac
+| rowspan="3" | Palm
+| Normal || 835,183,728 || I.O || 2007 / [http://ranking.niyaozao.com/#/rank/8?_k=uz9r8s Chinese Leaderboard] || ||
+|-
 | rowspan="2" | Abnormal
 | 981,872,827 || rowspan="2" | KTL-NAL
 | September 2007 / superplay DVD || 5L 2B remaining, after stage 4: 693.8m ||
@@ -1353,7 +1372,7 @@ Note: Note: Japanese scoreboard closed because competition moved over to Mushihi
 | rowspan="3" | Abnormal
 | style="background: #DFDFDF;" | 3,999,999,999 || style="background: #DFDFDF;" | Dame K.K || style="background: #DFDFDF;" | Arcadia March 2008 || style="background: #DFDFDF;" | 1L 0B remaining, highest score Arcade || style="background: #DFDFDF;" | 
 |-
-| 3,999,999,999 [4,386,380,066] || Gusto || September 6th, 2020 / [https://twitter.com/gusyphus/status/1302524287585193987 Twitter] || no clear, highest score Xbox360 || [https://www.twitch.tv/videos/732971739 Twitch]
+| 3,999,999,999 [4,589,730,045] || Gusto || October 7th, 2020 / [https://twitter.com/gusyphus/status/1313665827737006080 Twitter] || no clear, highest score Xbox360 || [https://youtu.be/thHP1nV7p9o Youtube]
 |-
 | 3,999,999,999 [4,263,416,356] || KGM || July 24th, 2013 / Xbox rankings || clear || [https://youtu.be/EeLzh7VNujQ Youtube]
 |-
@@ -1371,7 +1390,7 @@ Note: Scoreboard for Ultra closed after the achievement of the counterstop at 3,
 
 {| class="wikitable" style="text-align: center"
 |-
-! colspan="7" | [[Mushihimesama Futari Black Label]]
+! colspan="7" | [[Mushihimesama Futari]] Black Label
 |-
 ! Mode !! Character !! Score !! Player !! Date / Source !! Comment !! Replay
 |-
@@ -1426,6 +1445,7 @@ Note: Scoreboard for Ultra closed after the achievement of the counterstop at 3,
 | {{v|h1|10,251,870}} || DGN || Arcadia January 2008 || ||
 |}
 
+* [[STG_Hall_of_Records/World_Record_Progression_Pink_Sweets|World Record Progression]]
 * [https://shmups.system11.org/viewtopic.php?t=54091 Shmups Forum Hi-Score Topic]
 
 
@@ -1448,10 +1468,10 @@ Note: Scoreboard for Ultra closed after the achievement of the counterstop at 3,
 | 216,289,290 || rowspan="2" | AAB!
 | February 12th, 2011 / [https://twitter.com/aab_ex/status/36367507510001664 Twitter] || ||
 |-
-| {{v|e1|173,613,660}} || June 21st, 2020 (JHA June 2020) / [https://twitter.com/aab_ex/status/1274695082126356481 Twitter] || ||
+| {{v|e1|181,103,090}} || September 22nd, 2020 (JHA September 2020) / [https://twitter.com/aab_ex/status/1308386056316710912 Twitter] || 6L remaining ||
 |-
 | rowspan="5" | Militant (Bolt)
-| α (Chain) || {{v|f1|220,265,660}} || R. || JHA November 2019 || 4L remaining, 1st loop 330k jewel, first death 2-2 ||
+| α (Chain) || {{v|f1|244,775,610}} || R. || JHA September 2020 || 8L 0B remaining, 1st loop 131m, death in 2-3, no bomb 2-4 boss ||
 |-
 | rowspan="2" | β (Nail)
 | {{v|g1|294,470,740}} || ミルみで || September 14th, 2019 || 9L 0B remaining, 1st loop 66.64m / 359k jewel || [https://youtu.be/duC-C0i_glM Youtube]
@@ -1461,7 +1481,7 @@ Note: Scoreboard for Ultra closed after the achievement of the counterstop at 3,
 | rowspan="2" | γ (Rivet)
 | {{v|i1|104,284,330}} || mist || June 29th, 2019 / [https://twitter.com/mistrein/status/1144855005028966400 Twitter] || All Clear, 6L 0B remaining ||
 |-
-| {{v|j1|36,191,720}} || 杖刀偶磨弓 || JHA December 2019 || died in 2-5 ||
+| {{v|j1|36,191,720}} || JAP || JHA December 2019 || died in 2-5 ||
 |}
 
 * [https://wiki.denfaminicogamer.jp/highscore/2001_029_%E3%83%97%E3%83%AD%E3%82%AE%E3%82%A2%E3%81%AE%E5%B5%90 JHA Leaderboard]
@@ -1577,12 +1597,14 @@ Note: Japanese scoreboard closed after the achievement of the target score of 10
 |-
 ! colspan="6" | [[Skull Fang]]
 |-
-! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
+! Mode !! Score !! Player !! Date / Source !! Comment !! Replay
 |-
-| Auto || {{v|a1|20,222,600}} || S.N || Arcadia July 1999 || Sif ||
+| style="background: #B9D9B9 | Auto || style="background: #B9D9B9 | 20,222,600 || style="background: #B9D9B9 | S.N || style="background: #B9D9B9 | Arcadia July 1999 || style="background: #B9D9B9 | Sif || style="background: #B9D9B9 |
 |-
-| Chase || {{v|b1|31,425,400}} || KDK-Takeyuki || Arcadia February 2009 || ||
+| Chase || 31,425,400 || KDK-Takeyuki || Arcadia February 2009 || ||
 |}
+
+Note: Japanese scoreboard for Auto Mode closed September 2019 due to the detection of an infinite pattern.
 
 * [https://shmups.system11.org/viewtopic.php?t=56869 Shmups Forum Hi-Score Topic]
 
@@ -1710,31 +1732,38 @@ Note: Scoreboard closed after the achievement of the counterstop at 9,999,990.
 |-
 ! Ship !! Mode !! Score !! Player !! Date / Source !! Comment !! Replay
 |-
-| rowspan="5" | Strania
+| rowspan="6" | Strania
 | rowspan="2" | Normal
-| {{v|a1|15,944,630}} || LevelFix || Arcadia January 2013 ||highest score Arcade || 
+| 15,944,630 || rowspan="2" | LevelFix
+| Arcadia January 2013 ||highest score Arcade || 
 |-
-| {{v|b1|15,950,590}} || LevelFix || 2012 / XBL ranking || highest score Xbox 360 || [http://www.nicovideo.jp/watch/sm18982006 Niconico]
+| 15,950,590 || 2012 / XBL ranking || highest score Xbox 360 || [http://www.nicovideo.jp/watch/sm18982006 Niconico]
 |-
 | rowspan="2" | Hard
-| {{v|c1|16,762,910}} || LevelFix || Arcadia March 2013 || highest score Arcade ||
+| 16,762,910 || rowspan="2" | LevelFix
+| Arcadia March 2013 || highest score Arcade ||
 |-
-| {{v|d1|16,841,510}} || LevelFix || 2016 / XBL ranking || highest score Xbox 360 || [http://www.nicovideo.jp/watch/sm28383797 Niconico]
+| 16,841,510 || 2016 / XBL ranking || highest score Xbox 360 || [http://www.nicovideo.jp/watch/sm28383797 Niconico]
 |-
-| Expert || {{v|e1|16,750,600}} || LevelFix || 2017 / superplay DVD|| ||
+| rowspan="2" | Expert
+| 16,750,600 || rowspan="2" | LevelFix
+| 2017 / superplay DVD|| ||
+|-
+| 16,636,410 || Arcadia March 2013 || ||
 |-
 | rowspan="5" | Vower
 | rowspan="2" | Normal
-| {{v|f1|17,320,780}} || りぶ || Arcadia June 2013 || highest score Arcade ||
+| 17,320,780 || りぶ || Arcadia June 2013 || highest score Arcade ||
 |-
-| {{v|g1|17,324,850}} || LevelFix || XBL ranking || highest score Xbox 360 ||
+| 17,324,850 || LevelFix || XBL ranking || highest score Xbox 360 ||
 |-
 | rowspan="2" | Hard
-| {{v|h1|18,551,720}} || LevelFix || Arcadia June 2012 || highest score Arcade ||
+| 18,551,720 || rowspan="2" | LevelFix
+| Arcadia June 2012 || highest score Arcade ||
 |-
-| {{v|i1|18,759,480}} || LevelFix || June 14th, 2012 / XBL ranking [https://twitter.com/level_fix/status/213196264693710848 Twitter] || highest score Xbox 360 ||
+| 18,759,480 || June 14th, 2012 / XBL ranking [https://twitter.com/level_fix/status/213196264693710848 Twitter] || highest score Xbox 360 ||
 |-
-| Expert || {{v|j1|18,809,670}} || LevelFix || July 6th, 2012 (Arcadia October 2012) / [https://twitter.com/level_fix/status/221191641619369985 Twitter] || ||
+| Expert || 18,809,670 || LevelFix || July 6th, 2012 (Arcadia October 2012) / [https://twitter.com/level_fix/status/221191641619369985 Twitter] || ||
 |}
 
 * [https://wiki.denfaminicogamer.jp/highscore/2011_014_%E6%98%9F%E9%9C%9C%E9%8B%BC%E6%A9%9F%E3%82%B9%E3%83%88%E3%83%A9%E3%83%8B%E3%82%A2_Ver.1.11 JHA Leaderboard]
@@ -2576,7 +2605,10 @@ Note: Japanese scoreboard closed after the achievement of the target score of 10
 |-
 | OFF || 2,986,500 || WSM-ツィ～まる。 || September 26th, 2019 (JHA October 2019) / [https://twitter.com/wsm_tuii3/status/1177227588365778944 Twitter] || ||
 |-
-| ON || 3,032,180 || WSM-ツィ～まる。 || August 2nd, 2020 (JHA August 2020) / [https://twitter.com/wsm_tuii3/status/1289912647253520384 Twitter] || ||
+| rowspan="2" | ON
+| 3,035,050 || WSM-ツィ～まる。 || October 4th, 2020 / [https://twitter.com/wsm_tuii3/status/1312743713630646273 Twitter] || ||
+|-
+| 3,032,180 || WSM-ツィ～まる。 || August 2nd, 2020 (JHA August 2020) / [https://twitter.com/wsm_tuii3/status/1289912647253520384 Twitter] || ||
 |}
 
 * [https://wiki.denfaminicogamer.jp/highscore/1990_009_%E3%83%88%E3%83%A9%E3%82%A4%E3%82%B4%E3%83%B3 JHA Leaderboard]
@@ -2629,45 +2661,54 @@ Note: Besides various aspects of gameplay, one major difference between the two 
 |-
 ! colspan="2" | Mode !! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
 |-
-| rowspan="9" | Story
-| rowspan="3" | Casual
-| RA || 310,176,710 || コッシー || JHA August 2020 || ||
+| rowspan="11" | Story
+| rowspan="5" | Casual
+| RA || 354,755,790 || コッシー || September 12th, 2020 (JHA September 2020) / [https://twitter.com/zubrowk777/status/1304730410014748673 Twitter] || ||
 |-
-| RS || 302,807,700 || コッシー || JHA August 2020 || ||
+| rowspan="2" | RS
+| 357,925,250 || R || [https://rollinggunner.am-all.net/players/ranking/2 Official Ranking] || ||
 |-
-| RX || 313,345,430 || HAM || JHA August 2020 || 5L 5B remaining ||
+| 347,071,100 || コッシー || JHA September 2020 || ||
+|-
+| rowspan="2" | RX
+| 361,622,730 || R || [https://rollinggunner.am-all.net/players/ranking/3 Official Ranking] || ||
+|-
+| 313,345,430 || HAM || JHA August 2020 || 5L 5B remaining ||
 |-
 | rowspan="3" | Original
-| RA || || || || ||
+| RA || 2,288,201,250 || 白木凪 || [https://rollinggunner.am-all.net/players/ranking/8 Official Ranking] || died against TLB ||
 |-
 | RS || 5,473,233,930 || KMB-きめら || JHA August 2020 || 2L remaining ||
 |-
-| RX || || || || ||
+| RX || 5,991,716,840 || グーニャファイターやれ || JHA September 2020 || 0L 1B remaining ||
 |-
 | rowspan="3" | Expert
-| RA || || || || ||
+| RA || 1,679,736,990 || Hey民 || [https://rollinggunner.am-all.net/players/ranking/12 Official Ranking] || died stage 5 midboss ||
 |-
-| RS || || || || ||
+| RS || 1,809,781,670 || Gou161 || [https://rollinggunner.am-all.net/players/ranking/10 Official Ranking] || died stage 5 boss ||
 |-
-| RX || || || || ||
+| RX || 4,043,406,710 || - || [https://rollinggunner.am-all.net/players/ranking/11 Official Ranking] || died against TLB ||
 |-
-| rowspan="6" | Score Attack
-| Stage 1 || rowspan="6" | -
+| rowspan="7" | Score Attack
+| rowspan="2" | Stage 1
+| rowspan="7" | -
+| 566,675,560 || 田口さんSPレベラッ！ || [https://rollinggunner.am-all.net/players/ranking/13 Official Ranking] || used RA ||
+|-
 | 101,409,490 || Okyan || JHA August 2020 || used RA ||
 |-
-| Stage 2 || || || || ||
+| Stage 2 || 534,748,660 || 田口さんSPレベラッ！ || [https://rollinggunner.am-all.net/players/ranking/17 Official Ranking] || used RS ||
 |-
-| Stage 3 || || || || ||
+| Stage 3 || 2,219,872,450 || 田口さんSPレベラッ！ || [https://rollinggunner.am-all.net/players/ranking/21 Official Ranking] || used RS ||
 |-
-| Stage 4 || || || || ||
+| Stage 4 || 2,047,988,390 || 田口さんSPレベラッ！ || [https://rollinggunner.am-all.net/players/ranking/25 Official Ranking] || used RS ||
 |-
-| Stage 5 || || || || ||
+| Stage 5 || 2,550,923,450 || 田口さんSPレベラッ！ || [https://rollinggunner.am-all.net/players/ranking/29 Official Ranking] || used RS ||
 |-
-| Stage 6 || || || || ||
+| Stage 6 || 5,123,874,870 || 田口さんSPレベラッ！ || [https://rollinggunner.am-all.net/players/ranking/33 Official Ranking] || used RS ||
 |}
 
+* [https://rollinggunner.am-all.net/players/ranking Official Ranking]
 * [https://shmups.system11.org/viewtopic.php?f=2&t=65836 Shmups Forum Hi-Score Topic]
-
 
 == Milestone ==
 
@@ -2963,7 +3004,7 @@ Note: Japanese scoreboard closed after the achievement of the target score of 10
 | rowspan="2" | Original
 | 565,420 || Jacob Upland || September 7th, 2020 / [https://imgur.com/u6BQKwH Image] || played on Mame || [https://youtu.be/Eu7QEECD13Q Youtube]
 |-
-| 564,670 || GEKI「ぷ」(ぬ) || Gamest April 1996 || ||
+| 564,670 || GEKI || Gamest April 1996 || ||
 |-
 | Arrangement || {{v|b1|1,421,290}} || CYR-WAR || Arcadia January 2011 || ||
 |-
@@ -2972,7 +3013,7 @@ Note: Japanese scoreboard closed after the achievement of the target score of 10
 | rowspan="2" | Xevious
 | Original || {{v|d1|1,713,080}} || K.N尊師 || JHA November 2016 || ||
 |-
-| Arrangement || {{v|e1|7,754,380}} || JMB-りゅう師匠 || Arcadia May 2012 || ||
+| Arrangement || {{v|e1|7,754,380}} || RR || Arcadia May 2012 || ||
 |}
 
 * [https://wiki.denfaminicogamer.jp/highscore/1995_014_%E3%83%8A%E3%83%A0%E3%82%B3%E3%82%AF%E3%83%A9%E3%82%B7%E3%83%83%E3%82%AF%E3%82%B3%E3%83%AC%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%B3Vol.1 JHA Leaderboard]
@@ -3316,7 +3357,7 @@ Note: Scoreboard closed after the achievement of the counterstop at 99,999,999.
 |-
 | OFF || {{v|a1|7,340,950}} || CLAW-やまもそ || Arcadia February 2013 || Type 1, W->AS->W, 0B remaining ||
 |-
-| ON || {{v|b1|8,353,000}} || ツィ～まる。 || Arcadia January 2013 || Type 1, W->AS->W ||
+| ON || {{v|b1|8,353,000}} || ツィ～まる。 || October 17th, 2012 (Arcadia January 2013) / [https://twitter.com/wsm_tuii3/status/258420795368423424 Twitter] || Type 1, W->AS->W ||
 |}
 
 * [https://shmups.system11.org/viewtopic.php?t=29484 Shmups Forum Hi-Score Topic]
@@ -3540,10 +3581,12 @@ Note: Japanese scoreboard closed after the achievement of the target score of 10
 |-
 ! Score !! Player !! Date / Source !! Comment !! Replay
 |-
-| {{v|a1|1,049,520}} || ACU-EPS || Micom Basic April 1987 || stage 7 ||
+| {{v|a1|1,049,520}} || ACU-EPS || Micom Basic April 1987 || stage 2-3 ||
 |-
-| {{v|b1|1,487,190}} || GMC.えるす || Micom Basic April 1987 || stage 5 ||
+| {{v|b1|1,487,190}} || GMC.えるす || Micom Basic April 1987 || stage 2-1 ||
 |}
+
+Note: It has been reported that the furthest a player has ever gotten is actually stage 3-1 ([https://igcc.jp/kenjo-03-01/ Source]).
 
 * [https://shmups.system11.org/viewtopic.php?t=59663 Shmups Forum Hi-Score Topic]
 
@@ -3576,11 +3619,7 @@ Note: Japanese scoreboard closed after the achievement of the target score of 10
 |-
 | Quaid || {{v|b1|4,286,700}} || CYS-SAK || November 3rd, 2019 (JHA November 2019) / [https://twitter.com/1ka2no394285ki/status/1206211120446312448 Twitter] || 3L 9B remaining ||
 |-
-| rowspan="2" | Rob
-| 4,022,900 || rowspan="2" | 三茶鮫
-| September 19th, 2020 / [https://twitter.com/PaperWeight/status/1307333853971791872 Twitter] || ||
-|-
-| 4,013,000 || June 26th, 2020 (JHA July 2020) / [https://twitter.com/PaperWeight/status/1276501830663409665 Twitter] || ||
+| Rob || 4,022,900 || 三茶鮫 ||| September 19th, 2020 (JHA September 2020) / [https://twitter.com/PaperWeight/status/1307333853971791872 Twitter] || used 1 bomb, autofire ||
 |-
 | Sonia || {{v|d1|4,013,500}} || 三茶鮫 || Arcadia April 2013 || 3L 9B remaining ||
 |}
@@ -3788,25 +3827,27 @@ Note: Japanese scoreboard closed after the achievement of the target score of 10
 |-
 ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
 |-
-| AV-8 Harrier || {{v|a1|3,359,000}} || KDK-Takeyuki || Arcadia April 2003 || Double x1 ||
+| AV-8 Harrier || 3,359,000 || KDK-Takeyuki || Arcadia April 2003 || Double x1 ||
 |-
-| F-117 Stealth || {{v|b1|3,398,000}} || 近くて遠い340万 || Arcadia October 2002 || ||
+| F-117 Stealth || 3,398,000 || 近くて遠い340万 || Arcadia October 2002 || ||
 |-
-| rowspan="2" | F-22 Raptor
-| {{v|c1|3,511,200}} || DBS || December 7th, 2016 / [https://twitter.com/dbsqawsedrftgyh/status/806545233303334913 Twitter] || ||
+| rowspan="3" | F-22 Raptor
+| 3,511,200 || DBS || December 7th, 2016 / [https://twitter.com/dbsqawsedrftgyh/status/806545233303334913 Twitter] || ||
 |-
-| {{v|d1|3,394,300}} || 両替士 || Arcadia May 2010 || ||
+| 3,463,000 || Y.C || August 26th, 2010 / [http://cafe.daum.net/shooting/810/17405 OCC Official Cafe] || ||
 |-
-| F-4 Phantom II || {{v|e1|3,432,200}} || CYS-SAK || October 30th, 2016 (JHA November 2016) / [https://twitter.com/1ka2no394285ki/status/792748345756221440 Twitter] || ||
+| 3,394,300 || 両替士 || Arcadia May 2010 || ||
 |-
-| F/A-18 Super Hornet || {{v|f1|3,372,700}} || ZCM-FCM || Arcadia August 2002 || ||
+| F-4 Phantom II || 3,432,200 || CYS-SAK || October 30th, 2016 (JHA November 2016) / [https://twitter.com/1ka2no394285ki/status/792748345756221440 Twitter] || ||
+|-
+| F/A-18 Super Hornet || 3,372,700 || ZCM-FCM || Arcadia August 2002 || ||
 |-
 | rowspan="3" | X-36
-| {{v|g1|3,601,800}} || CYS-SAK || February 17th, 2018 / [https://twitter.com/1ka2no394285ki/status/964894291767144449 Twitter] || played at home ||
+| 3,601,800 || CYS-SAK || February 17th, 2018 / [https://twitter.com/1ka2no394285ki/status/964894291767144449 Twitter] || played at home ||
 |-
-| {{v|h1|3,589,300}} || H.J (PASTA) || January 15th, 2020 / [https://imgur.com/PkZxIbm Image] || ||
+| 3,589,300 || H.J (PASTA) || January 15th, 2020 / [https://imgur.com/PkZxIbm Image] || ||
 |-
-| {{v|i1|3,578,200}} || CYS-SAK || October 8th, 2017 (JHA October 2017) / [https://twitter.com/1ka2no394285ki/status/917052533238935552 Twitter] || ||
+| 3,578,200 || CYS-SAK || October 8th, 2017 (JHA October 2017) / [https://twitter.com/1ka2no394285ki/status/917052533238935552 Twitter] || ||
 |}
 
 * [https://wiki.denfaminicogamer.jp/highscore/1999_016_%E3%82%B9%E3%83%88%E3%83%A9%E3%82%A4%E3%82%AB%E3%83%BC%E3%82%BA1999 JHA Leaderboard]
@@ -4011,7 +4052,7 @@ Note: Scoreboard closed after the achievement of the counterstop at 63,999,990. 
 
 Note: Japanese scoreboard closed March 2014 due to the detection of an infinite pattern.
 
-* [[World Record Progression for Battle Garegga|World Record Progression]]
+* [[STG_Hall_of_Records/World_Record_Progression_Battle_Garegga|World Record Progression]]
 * [https://wiki.denfaminicogamer.jp/highscore/1996_001_%E3%83%90%E3%83%88%E3%83%AB%E3%82%AC%E3%83%AC%E3%83%83%E3%82%AC JHA Leaderboard]
 * [https://shmups.system11.org/viewtopic.php?t=28714 Shmups Forum Hi-Score Topic]
 
@@ -4038,26 +4079,23 @@ Note: Japanese scoreboard closed March 2014 due to the detection of an infinite 
 |-
 ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
 |-
-| rowspan="2" | Birthday
-| 87,818,460 || rowspan="2" | Miku || September 7th, 2020 / [https://twitter.com/4Yt7z/status/1302907156925087746 Twitter] || 108 items ||
-|-
-| 84,525,350 || JHA August 2020 || 108 items ||
+| Birthday || 87,818,460 || Miku || September 7th, 2020 (JHA September 2020) / [https://twitter.com/4Yt7z/status/1302907156925087746 Twitter] || 108 items, missed 3 secret items ||
 |-
 | rowspan="2" | Chitta
-| 94,447,870 || rowspan="2" | SOF-WTN
-| August 23rd, 2020 / [https://twitter.com/sof_wtn/status/1297481522979590145 Twitter] || 108 items ||
+| 95,592,960 || rowspan="2" | SOF-WTN
+| October 4th, 2020 / [https://twitter.com/sof_wtn/status/1312754249026080768 Twitter] || 107 items ||
 |-
-| 93,664,750 || JHA August 2020 || ||
+| 94,447,870 || August 23rd, 2020 (JHA September 2020) / [https://twitter.com/sof_wtn/status/1297481522979590145 Twitter] || 108 items ||
 |-
 | rowspan="2" | Gain
 | 80,528,610 || Boredom || July 1st, 2020 / [https://twitter.com/boredom_79/status/1278389636155367424 Twitter] || 108 items || [https://youtu.be/DCEM2fnGBPU Youtube]
 |-
-| 31,653,130 || HTL-蕨ガイン見参 || JHA June 2020 || ||
+| 45,812,150 || JMB-りゅう || JHA September 2020 || ||
 |-
 | rowspan="2" | Golden
 | style="background: #DFDFDF;" | 99,999,999 [101,033,460] || style="background: #DFDFDF;" | Boredom || style="background: #DFDFDF;" | February 13th, 2020 / [https://twitter.com/boredom_79/status/1228024526904029184 Twitter] || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | 
 |-
-| 14,925,200 || 磨弓 || July 23rd, 2020 (JHA July 2020) / [https://twitter.com/JAP_prpr/status/1286152952567062530 Twitter] || 88 items ||
+| 28,881,820 || JAP || September 14th, 2020 (JHA September 2020) / [https://twitter.com/JAP_prpr/status/1305507730547851265 Twitter] || 100 items ||
 |-
 | Grimlen || style="background: #DFDFDF;" | 99,999,999 || style="background: #DFDFDF;" | KDK-Takeyuki || style="background: #DFDFDF;" | Arcadia July 2002 || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | 
 |-
@@ -5457,12 +5495,12 @@ Note: Scoreboard closed after the achievement of the counterstop at 999,999,999,
 ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
 |-
 | rowspan="2" | Blue Owl
-| 58,127,955,280 || rowspan="2" | Kagari 
-| September 21st, 2020 / [https://twitter.com/kagali314/status/1308001191444377600 Twitter] || 0L remaining ||
+| 60,182,045,400 || rowspan="2" | Kagari 
+| October 20th, 2020 / [https://twitter.com/kagali314/status/1318509928185647104 Twitter] || ||
 |-
-| 55,025,025,730 || July 18th, 2020 (JHA July 2020) / [https://twitter.com/kagali314/status/1284503244580896768 Twitter] || 0L remaining ||
+| 58,127,955,280 || September 21st, 2020 (JHA September 2020) / [https://twitter.com/kagali314/status/1308001191444377600 Twitter] || 1L remaining ||
 |-
-| Fire Bird || 46,173,081,580 || AFO || August 16th, 2020 (JHA August 2020) / [https://twitter.com/highmustang/status/1294942045367197696 Twitter] || 0L remaining ||
+| Fire Bird || 46,392,113,740 || AFO || JHA September 2020 || 0L remaining ||
 |}
 
 * [https://wiki.denfaminicogamer.jp/highscore/2019_005_%E3%82%A2%E3%82%AB%E3%81%A8%E3%83%96%E3%83%AB%E3%83%BC_TYPE-R JHA Leaderboard]
@@ -6116,9 +6154,9 @@ Note: Japanese scoreboard closed after the achievement of the target score of 10
 |-
 ! Route !! Score !! Player !! Date / Source !! Comment !! Replay
 |-
-| Stage 2 || {{v|a1|23,101,650}} || T³-CYR-WIZ || Arcadia December 2008 || after 3E: 4.80m, after 2E: 10.05m; in 5A: 12.22m ||
+| Stage 2 || {{v|a1|23,101,650}} || T³-CYR-WIZ || August 26th, 2008 (Arcadia December 2008) || after 3E: 4.80m, after 2E: 10.05m; in 5A: 12.22m || [https://youtu.be/j-AACK9hvgs Youtube]
 |-
-| Stage 4 || {{v|b1|27,550,780}} || T³-CYR-WIZ || Arcadia February 2009 || after 3E: 4.79m, after 4E: 14.33m; in 5A: 12.28m ||
+| Stage 4 || {{v|b1|27,550,780}} || T³-CYR-WIZ || November 15th, 2008 (Arcadia February 2009) || after 3E: 4.79m, after 4E: 14.33m; in 5A: 12.28m || [https://youtu.be/gJDCcK-zjWI Youtube]
 |}
 
 * [https://wiki.denfaminicogamer.jp/highscore/1998_024_%E3%83%AC%E3%82%A4%E3%83%87%E3%82%A3%E3%82%A2%E3%83%B3%E3%83%88%E3%82%B7%E3%83%AB%E3%83%90%E3%83%BC%E3%82%AC%E3%83%B3 JHA Leaderboard]
@@ -6303,7 +6341,7 @@ Note: Japanese scoreboard closed after the achievement of the target score of 10
 |-
 | AV-8 / Villiam || {{v|b1|1,715,900}} || D.I || JHA January 2020 || missed steel towers x2 ||
 |-
-| F-14 / Keith || {{v|c1|1,765,100}} || AXIOM-ZZZ || JHA August 2020 || autofire ||
+| F-14 / Keith || {{v|c1|1,770,200}} || AXIOM-ZZZ || JHA September 2020 || autofire ||
 |-
 | F-15 / Mao || {{v|d1|1,589,700}} || みっしー || JHA April 2017 || ||
 |-
@@ -6605,7 +6643,7 @@ Note: Japanese scoreboard closed February 2019 due to the detection of an infini
 | Type Z || 7,089,675,850 || CAT@OOD || July 18th, 2015 (JHA March 2016) / [https://twitter.com/Cat_ood/status/622317956102385664 Twitter] || 1 miss, 48:35:38 ||
 |-
 | rowspan="6" | Original
-| Type I || 9,893,684,258,250 || しゅみっと || July 25th, 2020 (JHA August 2020) / [https://twitter.com/Plasmo_STG/status/1287044608065703937 Twitter] || 2 deaths ||
+| Type I || 9,893,684,258,250 || しゅみっと || July 25th, 2020 (JHA August 2020) / [https://twitter.com/schmitt1943/status/1287040842247467011 Twitter] || 2 deaths ||
 |-
 | Type II || 9,634,583,540,790 || RET || JHA March 2016 || 2L remaining ||
 |-

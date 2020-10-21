@@ -13,7 +13,6 @@ Every section of data is enclosed in &lt;nowiki&gt;&lt;/nowiki&gt; tags. Everyth
 Values defined in this section apply to all the games in the database or the whole page in general (e.g. description, sorting of games, common translations, ...). For further information, please refer to the [[#Global settings-value|actual value]], most of the settings are documented.
 
 ==== Game ====
-'''WIP'''
 Each game is defined by the following properties:
 
 <pre>
@@ -37,6 +36,7 @@ layout: Layout information (see below)
 translations: Game-specific translations (see below)
 </pre>
 
+===== Score =====
 For each score the properties listed below are available. They are heavily game-dependent and usually not all of them are useful. Unnecessary properties can (and should) be omitted.
 
 <pre>
@@ -60,6 +60,71 @@ Additional properties may be specified. In this case the generator will treat th
 
 For every property a property with the same name and a locale suffix can be specified. Its value will be used on the page in the corresponding language instead of the value of the original property. Currently only '-jp' for Japanese is used but this can be extended to support more languages.
 
+===== Layout =====
+Most properties from the global section can be expanded or overriden.
+
+<pre>
+layout:
+    # Overrides the globally defined column order for this game.
+    column-order:
+      - scored-date
+      - ship
+      - mode
+      - score
+      - auto-fire
+      - comments
+
+    # Additional column definitions. They can be used to define new game-specific columns (see
+    # `auto-fire`) or to override definitions for existing columns (see `mode`) for this game.
+    columns:
+        # Change label for existing column `mode`.
+        mode:
+            label: Loop
+            label-jp: 2周種
+        # Define new column `auto-fire`.
+        - auto-fire:
+            label: Auto fire
+            label-jp: オート連射
+            template: "{{ autofire }}"
+
+
+    # Sort order can either be a direction (asc = ascending, desc = descending; see `mode`)
+    # or a fixed order of values (see `ship`). These sort values will be applied *after* the
+    # ones from the global section.
+    sort:
+        scores:
+            ship: [ Type A, Type B ]
+            mode: asc
+</pre>
+
+===== Translations =====
+Each entry takes a property and a value along with its translations. Let's look at some examples:
+
+<pre>
+translations:
+  - property: ship
+    value: Tiger Schwert
+    value-jp: TYPE-A ティーゲルシュベルト
+  - property: ship
+    value: Panzer Jäger
+    value-jp: TYPE-B パンツァーイェーガー
+</pre>
+Example 1: Whenever a score contains the value of `Tiger Schwert`, it is translated to `TYPE-A ティーゲルシュベルト` for the Japanese locale and left as `Tiger Schwert` for the others. Same thing for `Panzer Jäger`.
+
+It is possible to use a simplified value for the score entries and then translate it into all the different languages.
+<pre>
+translations:
+  - property: ship
+    value: Type A
+    value-en: Tiger Schwert
+    value-jp: TYPE-A ティーゲルシュベルト
+  - property: ship
+    value: Type B
+    value-en: Panzer Jäger
+    value-jp: TYPE-B パンツァーイェーガー
+</pre>
+Example 2: Whenever a score contains the value of `Type A`, it is translated to `Tiger Schwert` for English and `TYPE-A ティーゲルシュベルト` for Japanese. Since there is a translation specified for all the available locales, the value `Type A` is not displayed at all and serves merely as a placeholder. Same thing for `Type B`.
+
 ===== Example =====
 <pre>
 &lt;pre&gt;&lt;nowiki&gt;
@@ -75,6 +140,7 @@ scores:
     mode: Omote
     scored-date: "2014-08"
     source: Arcadia August 2014
+    added-date: "2020-06-14"
     comments:
 
   - player: SPS
@@ -83,6 +149,7 @@ scores:
     mode: Omote
     scored-date: "2014-11"
     source: Arcadia November 2014
+    added-date: "2020-06-13"
     comments:
       - 6L 0B remaining
       - 1st loop 276m
@@ -93,6 +160,7 @@ scores:
     mode: Omote
     scored-date: "2010-04"
     source: Old score
+    added-date: "2020-06-07"
     comments:
 
   - player: GAN
@@ -101,6 +169,7 @@ scores:
     mode: Ura
     scored-date: "2016-03"
     source: JHA March 2016
+    added-date: "2020-06-21"
     comments:
       - 6L remaining
 
@@ -109,7 +178,8 @@ scores:
     ship: Type A
     mode: Ura
     scored-date: "2014-05-27"
-    source: Arcadia September 2014 / [https:// Twitter]
+    source: Arcadia September 2014 / [https://example.org Twitter]
+    added-date: "2020-06-23"
     comments:
       - 6L 0B remaining
       - 1st loop 285m
@@ -120,6 +190,29 @@ links:
     title-jp: 日本ハイスコア協会
   - url: https://example.org/farm/ketsui
     title: Shmups Forum Hi-Score Topic
+
+layout:
+    column-order:
+      - ship
+      - mode
+      - score
+      - player
+      - scored-date
+      - source
+      - comments
+
+    columns:
+        mode:
+            label: Loop
+            label-jp: 2周種
+        scored-date:
+            label: Scored date
+            label-jp: 年月日
+
+    sort:
+        scores:
+            ship: [ Type A, Type B ]
+            mode: asc
 
 translations:
   - property: ship
@@ -132,43 +225,10 @@ translations:
     value-jp: TYPE-B パンツァーイェーガー
   - property: mode
     value: Omote
-    value-jp: 表2週
+    value-jp: 表
   - property: mode
     value: Ura
-    value-jp: 裏2週
-
-layout:
-    columns:
-      - label: Ship
-        label-jp: 自機
-        template: "{{ ship }}"
-        groupSameValues: true
-
-      - label: Loop
-        label-jp: 2週種
-        template: "{{ mode }}"
-
-      - label: Score
-        label-jp: スコア
-        template: "{{ score }}"
-
-      - label: Player
-        label-jp: プレイヤー
-        template: "{{ player }}"
-        groupSameValues: true
-
-      - label: Date / Source
-        label-jp: 年月日 / 情報元
-        template: "{{ scored-date }} / {{ source }}"
-
-      - label: Comment
-        label-jp: 備考
-        template: "{{ comments|join('; ') }}"
-
-    sort:
-        scores:
-            ship: [ Type A, Type B ]
-            mode: asc
+    value-jp: 裏
 &lt;/nowiki&gt;&lt;/pre&gt;
 </pre>
 
@@ -177,6 +237,7 @@ layout:
 <pre><nowiki>
 name: global
 
+# Main description in wiki syntax, available as variable `description` within the templates.
 description: |
     [[File:Micomlogo.jpg|800px|center]]
     
@@ -193,13 +254,19 @@ description: |
     
     
 
+# Layout information applicable to the whole page or all the games in the database.
 layout:
+
+    # Sort order for the games within the page or the scores within each game respectively.
     sort:
         games:
             name: asc
         scores:
             score: desc
 
+    # Properties to group scores by. Every combination of these properties forms a category within a game.
+    # Example: If grouped by ship only, all the scores achieved with the same ship are put into the same
+    # category no matter the mode, weapon or any property.
     group:
         scores:
           - ship
@@ -207,6 +274,58 @@ layout:
           - weapon
           - version
 
+    # Default order for the columns (see next property). For each game, only columns that have been set
+    # will be displayed.
+    column-order:
+      - player
+      - ship
+      - mode
+      - weapon
+      - score
+      - scored-date
+      - source
+      - comments
+
+    # Available columns. Columns specified here can be used for all games.
+    columns:
+        player:
+            label: Player
+            label-jp: プレイヤー
+            template: "{{ player }}"
+
+        score:
+            label: Score
+            label-jp: スコア
+            template: "{{ score }}"
+
+        ship:
+            label: Ship
+            label-jp: 自機
+            template: "{{ ship }}"
+
+        mode:
+            label: Mode
+            template: "{{ mode }}"
+
+        weapon:
+            label: Style
+            template: "{{ weapon }}"
+
+        scored-date:
+            label: Scored date
+            template: "{{ scored-date }}"
+
+        source:
+            label: Source
+            label-jp: 情報元
+            template: "{{ source }}"
+
+        comments:
+            label: Comment
+            label-jp: 備考
+            template: "{{ comments|join('; ') }}"
+
+    # Wiki templates. The one named `main` is the entry point, everything else gets included from there.
     templates:
         main: |
             {{ description|raw }}
@@ -234,11 +353,9 @@ layout:
             __NOTOC__
         games: |
             {% for game in games.all %}
-            {% if game.template %}
-            {{ game.template|raw }}
-            {% else %}
-            {{ include('game') }}
-            {% endif %}
+            {# Use custom game template where available. #}
+            {% set customTemplate = "game-#{game.properties.id}" %}
+            {{ include([customTemplate, 'game']) }}
 
             {% endfor %}
         game: |
@@ -265,7 +382,7 @@ layout:
             |-
             | {% for column in score.columns %}{% if column.attrs %}{{ column.attrs|raw }} | {% endif %}{{ column.value }}{% if not loop.last %} || {% endif %}{% endfor %}
 
-
+# Common translations applicable to all games in the database.
 translations:
   - property: company
     value: CAVE
@@ -278,6 +395,8 @@ translations:
 === 1941 Counter Attack ===
 <pre><nowiki>
 name: "1941 Counter Attack"
+name-jp:
+name-kana:
 company: "Capcom"
 needs-work: true
 
@@ -303,6 +422,8 @@ layout:
 === 1942 ===
 <pre><nowiki>
 name: "1942"
+name-jp:
+name-kana:
 company: "Capcom"
 needs-work: true
 
@@ -330,6 +451,8 @@ layout:
 === 1943 ===
 <pre><nowiki>
 name: "1943"
+name-jp:
+name-kana:
 company: "Capcom"
 needs-work: true
 
@@ -358,6 +481,8 @@ layout:
 === 1943 kai ===
 <pre><nowiki>
 name: "1943 kai"
+name-jp:
+name-kana:
 company: "Capcom"
 needs-work: true
 
@@ -383,6 +508,8 @@ layout:
 === 1944: The Loop Master ===
 <pre><nowiki>
 name: "1944: The Loop Master"
+name-jp:
+name-kana:
 company: "Raizing / 8ing"
 needs-work: true
 
@@ -407,6 +534,8 @@ layout:
 === 19XX: The War Against Destiny ===
 <pre><nowiki>
 name: "19XX: The War Against Destiny"
+name-jp:
+name-kana:
 company: "Capcom"
 needs-work: true
 
@@ -435,6 +564,8 @@ layout:
 === A-Jax ===
 <pre><nowiki>
 name: "A-Jax"
+name-jp:
+name-kana:
 company: "Konami"
 needs-work: true
 
@@ -460,6 +591,8 @@ layout:
 === Acrobat Mission ===
 <pre><nowiki>
 name: "Acrobat Mission"
+name-jp:
+name-kana:
 company: "UPL"
 needs-work: true
 
@@ -487,6 +620,8 @@ layout:
 === Air Buster ===
 <pre><nowiki>
 name: "Air Buster"
+name-jp:
+name-kana:
 company: "Kaneko"
 needs-work: true
 
@@ -510,6 +645,8 @@ layout:
 === Air Duel ===
 <pre><nowiki>
 name: "Air Duel"
+name-jp:
+name-kana:
 company: "Irem"
 needs-work: true
 
@@ -536,6 +673,8 @@ layout:
 === Air Gallet / Akuu Gallet ===
 <pre><nowiki>
 name: "Air Gallet / Akuu Gallet"
+name-jp:
+name-kana:
 company: "Gazelle"
 needs-work: true
 
@@ -559,6 +698,8 @@ layout:
 === Aka to Blue Type-R ===
 <pre><nowiki>
 name: "Aka to Blue Type-R"
+name-jp:
+name-kana:
 company: "Tanoshimasu"
 needs-work: true
 
@@ -573,12 +714,12 @@ layout:
             ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
             | rowspan="2" | Blue Owl
-            | 58,127,955,280 || rowspan="2" | Kagari 
-            | September 21st, 2020 / [https://twitter.com/kagali314/status/1308001191444377600 Twitter] || 0L remaining ||
+            | 60,182,045,400 || rowspan="2" | Kagari 
+            | October 20th, 2020 / [https://twitter.com/kagali314/status/1318509928185647104 Twitter] || ||
             |-
-            | 55,025,025,730 || July 18th, 2020 (JHA July 2020) / [https://twitter.com/kagali314/status/1284503244580896768 Twitter] || 0L remaining ||
+            | 58,127,955,280 || September 21st, 2020 (JHA September 2020) / [https://twitter.com/kagali314/status/1308001191444377600 Twitter] || 1L remaining ||
             |-
-            | Fire Bird || 46,173,081,580 || AFO || August 16th, 2020 (JHA August 2020) / [https://twitter.com/highmustang/status/1294942045367197696 Twitter] || 0L remaining ||
+            | Fire Bird || 46,392,113,740 || AFO || JHA September 2020 || 0L remaining ||
             |}
             
             * [https://wiki.denfaminicogamer.jp/highscore/2019_005_%E3%82%A2%E3%82%AB%E3%81%A8%E3%83%96%E3%83%AB%E3%83%BC_TYPE-R JHA Leaderboard]
@@ -588,6 +729,8 @@ layout:
 === Akai Katana ===
 <pre><nowiki>
 name: "Akai Katana"
+name-jp:
+name-kana:
 company: "CAVE"
 needs-work: true
 
@@ -615,6 +758,8 @@ layout:
 === Akai Katana Shin ===
 <pre><nowiki>
 name: "Akai Katana Shin"
+name-jp:
+name-kana:
 company: "CAVE"
 needs-work: true
 
@@ -624,13 +769,13 @@ layout:
             {{Anchor|Akai Katana Shin}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Akai Katana Shin]] (CAVE)
+            ! colspan="6" | [[Akai Katana]] Shin (CAVE)
             |-
             ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
             | Type 1 <br>Sumire & Tsubaki || {{v|a1|6,316,148,633}} || コッシー || November 23rd, 2019 (JHA December 2019) / [https://twitter.com/zubrowk777/status/1198178202876694528 Twitter] || ||
             |-
-            | Type 2 <br>Kikyou & Botan || {{v|b1|8,507,327,782}} || NAT || June 25th, 2020 / [https://twitter.com/STG44118260/status/1276107408587108352 Twitter] || ||
+            | Type 2 <br>Kikyou & Botan || {{v|b1|8,743,966,696}} || NAT || October 1st, 2020 / [https://twitter.com/STG44118260/status/1311601358420631553 Twitter] || ||
             |-
             | Type 3 <br>Suzuran & Shion || {{v|c1|6,417,031,312}} || NTK || Arcadia February 2013 || ||
             |}
@@ -643,6 +788,8 @@ layout:
 === Akkanvader / Space Invaders '95 ===
 <pre><nowiki>
 name: "Akkanvader / Space Invaders '95"
+name-jp:
+name-kana:
 company: "Taito"
 needs-work: true
 
@@ -667,6 +814,8 @@ layout:
 === Andro Dunos ===
 <pre><nowiki>
 name: "Andro Dunos"
+name-jp:
+name-kana:
 company: "Visco"
 needs-work: true
 
@@ -703,6 +852,8 @@ layout:
 === Arbalester ===
 <pre><nowiki>
 name: "Arbalester"
+name-jp:
+name-kana:
 company: "Jorudan"
 needs-work: true
 
@@ -724,6 +875,8 @@ layout:
 === Area 88 / U.N. Squadron ===
 <pre><nowiki>
 name: "Area 88 / U.N. Squadron"
+name-jp:
+name-kana:
 company: "Capcom"
 needs-work: true
 
@@ -749,6 +902,8 @@ layout:
 === Argus ===
 <pre><nowiki>
 name: "Argus"
+name-jp:
+name-kana:
 company: "NMK"
 needs-work: true
 
@@ -772,6 +927,8 @@ layout:
 === Argus no Senshi / Rygar ===
 <pre><nowiki>
 name: "Argus no Senshi / Rygar"
+name-jp:
+name-kana:
 company: "Tecmo"
 needs-work: true
 
@@ -799,6 +956,8 @@ layout:
 === Armed Police Batrider ===
 <pre><nowiki>
 name: "Armed Police Batrider"
+name-jp:
+name-kana:
 company: "Raizing / 8ing"
 needs-work: true
 
@@ -849,6 +1008,8 @@ layout:
 === Ashura Blaster ===
 <pre><nowiki>
 name: "Ashura Blaster"
+name-jp:
+name-kana:
 company: "Visco"
 needs-work: true
 
@@ -874,6 +1035,8 @@ layout:
 === ASO II / Alpha Mission II ===
 <pre><nowiki>
 name: "ASO II / Alpha Mission II"
+name-jp:
+name-kana:
 company: "SNK"
 needs-work: true
 
@@ -901,6 +1064,8 @@ layout:
 === ASO: Armored Scrum Object / Alpha Mission ===
 <pre><nowiki>
 name: "ASO: Armored Scrum Object / Alpha Mission"
+name-jp:
+name-kana:
 company: "SNK"
 needs-work: true
 
@@ -928,6 +1093,8 @@ layout:
 === Assault ===
 <pre><nowiki>
 name: "Assault"
+name-jp:
+name-kana:
 company: "Namco"
 needs-work: true
 
@@ -955,6 +1122,8 @@ layout:
 === Assault Plus ===
 <pre><nowiki>
 name: "Assault Plus"
+name-jp:
+name-kana:
 company: "Namco"
 needs-work: true
 
@@ -982,6 +1151,8 @@ layout:
 === Asuka & Asuka ===
 <pre><nowiki>
 name: "Asuka & Asuka"
+name-jp:
+name-kana:
 company: "Visco"
 needs-work: true
 
@@ -1003,6 +1174,8 @@ layout:
 === Atomic Robo-Kid ===
 <pre><nowiki>
 name: "Atomic Robo-Kid"
+name-jp:
+name-kana:
 company: "UPL"
 needs-work: true
 
@@ -1030,6 +1203,8 @@ layout:
 === B-Wings ===
 <pre><nowiki>
 name: "B-Wings"
+name-jp:
+name-kana:
 company: "Data East"
 needs-work: true
 
@@ -1073,6 +1248,8 @@ layout:
 === Bakuretsu Breaker / Explosive Breaker ===
 <pre><nowiki>
 name: "Bakuretsu Breaker / Explosive Breaker"
+name-jp:
+name-kana:
 company: "Kaneko"
 needs-work: true
 
@@ -1099,6 +1276,8 @@ layout:
 === Batsugun ===
 <pre><nowiki>
 name: "Batsugun"
+name-jp:
+name-kana:
 company: "Toaplan"
 needs-work: true
 
@@ -1134,6 +1313,8 @@ layout:
 === Batsugun Special ===
 <pre><nowiki>
 name: "Batsugun Special"
+name-jp:
+name-kana:
 company: "Toaplan"
 needs-work: true
 
@@ -1165,6 +1346,8 @@ layout:
 === Battlantis ===
 <pre><nowiki>
 name: "Battlantis"
+name-jp:
+name-kana:
 company: "Konami"
 needs-work: true
 
@@ -1188,6 +1371,8 @@ layout:
 === Battle Bakraid ===
 <pre><nowiki>
 name: "Battle Bakraid"
+name-jp:
+name-kana:
 company: "Raizing / 8ing"
 needs-work: true
 
@@ -1221,6 +1406,8 @@ layout:
 === Battle Bakraid (Unlimited Ver.) ===
 <pre><nowiki>
 name: "Battle Bakraid (Unlimited Ver.)"
+name-jp:
+name-kana:
 company: "Raizing / 8ing"
 needs-work: true
 
@@ -1258,6 +1445,8 @@ layout:
 === Battle Garegga ===
 <pre><nowiki>
 name: "Battle Garegga"
+name-jp:
+name-kana:
 company: "Raizing / 8ing"
 needs-work: true
 
@@ -1320,7 +1509,7 @@ layout:
             
             Note: Japanese scoreboard closed March 2014 due to the detection of an infinite pattern.
             
-            * [[World Record Progression for Battle Garegga|World Record Progression]]
+            * [[STG_Hall_of_Records/World_Record_Progression_Battle_Garegga|World Record Progression]]
             * [https://wiki.denfaminicogamer.jp/highscore/1996_001_%E3%83%90%E3%83%88%E3%83%AB%E3%82%AC%E3%83%AC%E3%83%83%E3%82%AC JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=28714 Shmups Forum Hi-Score Topic]
 </nowiki></pre>
@@ -1329,6 +1518,8 @@ layout:
 === Black Heart ===
 <pre><nowiki>
 name: "Black Heart"
+name-jp:
+name-kana:
 company: "NMK"
 needs-work: true
 
@@ -1354,6 +1545,8 @@ layout:
 === BlaZeon ===
 <pre><nowiki>
 name: "BlaZeon"
+name-jp:
+name-kana:
 company: "A.I."
 needs-work: true
 
@@ -1377,6 +1570,8 @@ layout:
 === Blazing Star ===
 <pre><nowiki>
 name: "Blazing Star"
+name-jp:
+name-kana:
 company: "Aicom / Yumekobo"
 needs-work: true
 
@@ -1411,6 +1606,8 @@ layout:
 === Border Down ===
 <pre><nowiki>
 name: "Border Down"
+name-jp:
+name-kana:
 company: "G.Rev"
 needs-work: true
 
@@ -1441,6 +1638,8 @@ layout:
 === Bosconian ===
 <pre><nowiki>
 name: "Bosconian"
+name-jp:
+name-kana:
 company: "Namco"
 needs-work: true
 
@@ -1462,6 +1661,8 @@ layout:
 === Brave Blade ===
 <pre><nowiki>
 name: "Brave Blade"
+name-jp:
+name-kana:
 company: "Raizing / 8ing"
 needs-work: true
 
@@ -1489,6 +1690,8 @@ layout:
 === Caladrius Blaze AC ===
 <pre><nowiki>
 name: "Caladrius Blaze AC"
+name-jp:
+name-kana:
 company: "Seibu Kaihatsu / Moss"
 needs-work: true
 
@@ -1573,6 +1776,8 @@ layout:
 === Captain Tomaday ===
 <pre><nowiki>
 name: "Captain Tomaday"
+name-jp:
+name-kana:
 company: "Visco"
 needs-work: true
 
@@ -1598,6 +1803,8 @@ layout:
 === Change Air Blade ===
 <pre><nowiki>
 name: "Change Air Blade"
+name-jp:
+name-kana:
 company: "Sammy"
 needs-work: true
 
@@ -1622,6 +1829,8 @@ layout:
 === Chaos Field ===
 <pre><nowiki>
 name: "Chaos Field"
+name-jp:
+name-kana:
 company: "Milestone"
 needs-work: true
 
@@ -1650,6 +1859,8 @@ layout:
 === Chariot (Wonder 3) ===
 <pre><nowiki>
 name: "Chariot (Wonder 3)"
+name-jp:
+name-kana:
 company: "Capcom"
 needs-work: true
 
@@ -1676,6 +1887,8 @@ layout:
 === Choujikuu Yousai Macross ===
 <pre><nowiki>
 name: "Choujikuu Yousai Macross"
+name-jp:
+name-kana:
 company: "NMK"
 needs-work: true
 
@@ -1701,6 +1914,8 @@ layout:
 === Choujikuu Yousai Macross II ===
 <pre><nowiki>
 name: "Choujikuu Yousai Macross II"
+name-jp:
+name-kana:
 company: "NMK"
 needs-work: true
 
@@ -1737,6 +1952,8 @@ layout:
 === Chuka Taisen ===
 <pre><nowiki>
 name: "Chuka Taisen"
+name-jp:
+name-kana:
 company: "Taito"
 needs-work: true
 
@@ -1760,6 +1977,8 @@ layout:
 === Cosmo Gang: The Video ===
 <pre><nowiki>
 name: "Cosmo Gang: The Video"
+name-jp:
+name-kana:
 company: "Namco"
 needs-work: true
 
@@ -1785,6 +2004,8 @@ layout:
 === Cotton ===
 <pre><nowiki>
 name: "Cotton"
+name-jp:
+name-kana:
 company: "Success"
 needs-work: true
 
@@ -1816,6 +2037,8 @@ layout:
 === Cotton 2 ===
 <pre><nowiki>
 name: "Cotton 2"
+name-jp:
+name-kana:
 company: "Success"
 needs-work: true
 
@@ -1839,6 +2062,8 @@ layout:
 === Cotton Boomerang ===
 <pre><nowiki>
 name: "Cotton Boomerang"
+name-jp:
+name-kana:
 company: "Success"
 needs-work: true
 
@@ -1864,6 +2089,8 @@ layout:
 === Crimzon Clover ===
 <pre><nowiki>
 name: "Crimzon Clover"
+name-jp:
+name-kana:
 company: "Yotsubane"
 needs-work: true
 
@@ -1887,7 +2114,7 @@ layout:
             | Type Z || 7,089,675,850 || CAT@OOD || July 18th, 2015 (JHA March 2016) / [https://twitter.com/Cat_ood/status/622317956102385664 Twitter] || 1 miss, 48:35:38 ||
             |-
             | rowspan="6" | Original
-            | Type I || 9,893,684,258,250 || しゅみっと || July 25th, 2020 (JHA August 2020) / [https://twitter.com/Plasmo_STG/status/1287044608065703937 Twitter] || 2 deaths ||
+            | Type I || 9,893,684,258,250 || しゅみっと || July 25th, 2020 (JHA August 2020) / [https://twitter.com/schmitt1943/status/1287040842247467011 Twitter] || 2 deaths ||
             |-
             | Type II || 9,634,583,540,790 || RET || JHA March 2016 || 2L remaining ||
             |-
@@ -1957,6 +2184,8 @@ layout:
 === Cybattler ===
 <pre><nowiki>
 name: "Cybattler"
+name-jp:
+name-kana:
 company: "Jaleco"
 needs-work: true
 
@@ -1982,6 +2211,8 @@ layout:
 === Cyvern Plus ===
 <pre><nowiki>
 name: "Cyvern Plus"
+name-jp:
+name-kana:
 company: "Kaneko"
 needs-work: true
 
@@ -2003,6 +2234,8 @@ layout:
 === Cyvern: The Dragon Weapons ===
 <pre><nowiki>
 name: "Cyvern: The Dragon Weapons"
+name-jp:
+name-kana:
 company: "Kaneko"
 needs-work: true
 
@@ -2026,6 +2259,8 @@ layout:
 === Daioh ===
 <pre><nowiki>
 name: "Daioh"
+name-jp:
+name-kana:
 company: "Athena"
 needs-work: true
 
@@ -2052,6 +2287,8 @@ layout:
 === Daisenpuu ===
 <pre><nowiki>
 name: "Daisenpuu"
+name-jp:
+name-kana:
 company: "Toaplan"
 needs-work: true
 
@@ -2077,6 +2314,8 @@ layout:
 === Dangerous Seed ===
 <pre><nowiki>
 name: "Dangerous Seed"
+name-jp:
+name-kana:
 company: "Namco"
 needs-work: true
 
@@ -2102,6 +2341,8 @@ layout:
 === Dangun Feveron ===
 <pre><nowiki>
 name: "Dangun Feveron"
+name-jp:
+name-kana:
 company: "CAVE"
 needs-work: true
 
@@ -2142,6 +2383,8 @@ layout:
 === Darius ===
 <pre><nowiki>
 name: "Darius"
+name-jp:
+name-kana:
 company: "Taito"
 needs-work: true
 
@@ -2174,6 +2417,8 @@ layout:
 === Darius Extra ===
 <pre><nowiki>
 name: "Darius Extra"
+name-jp:
+name-kana:
 company: "Taito"
 needs-work: true
 
@@ -2206,6 +2451,8 @@ layout:
 === Darius Gaiden ===
 <pre><nowiki>
 name: "Darius Gaiden"
+name-jp:
+name-kana:
 company: "Taito"
 needs-work: true
 
@@ -2265,6 +2512,8 @@ layout:
 === Darius Gaiden Extra ===
 <pre><nowiki>
 name: "Darius Gaiden Extra"
+name-jp:
+name-kana:
 company: "Taito"
 needs-work: true
 
@@ -2288,6 +2537,8 @@ layout:
 === Darius II ===
 <pre><nowiki>
 name: "Darius II"
+name-jp:
+name-kana:
 company: "Taito"
 needs-work: true
 
@@ -2341,6 +2592,8 @@ layout:
 === Darwin 4078 ===
 <pre><nowiki>
 name: "Darwin 4078"
+name-jp:
+name-kana:
 company: "Data East"
 needs-work: true
 
@@ -2364,6 +2617,8 @@ layout:
 === Deathsmiles ===
 <pre><nowiki>
 name: "Deathsmiles"
+name-jp:
+name-kana:
 company: "CAVE"
 needs-work: true
 
@@ -2378,12 +2633,12 @@ layout:
             ! Character !! Route !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
             | rowspan="3" | Casper
-            | No Canyon || {{v|a1|481,651,246}} || SPE || JHA August 2020 || ||
+            | No Canyon || {{v|a1|496,091,187}} || SPE || JHA September 2020 || ||
             |-
             | rowspan="2" | Canyon
             | {{v|b1|607,878,422}} || Yusemi SWY || 2008 / superplay DVD || ||
             |-
-            | {{v|c1|578,624,125}} || Yusemi SWY || September 2008 || ||
+            | {{v|c1|578,624,125}} || Yusemi SWY || Arcadia September 2008 || ||
             |-
             | rowspan="3" | Follett
             | rowspan="2" | No Canyon
@@ -2412,6 +2667,8 @@ layout:
 === Deathsmiles II ===
 <pre><nowiki>
 name: "Deathsmiles II"
+name-jp:
+name-kana:
 company: "CAVE"
 needs-work: true
 
@@ -2445,6 +2702,8 @@ layout:
 === Deathsmiles Mega Black Label ===
 <pre><nowiki>
 name: "Deathsmiles Mega Black Label"
+name-jp:
+name-kana:
 company: "CAVE"
 needs-work: true
 
@@ -2471,7 +2730,7 @@ layout:
             |-
             | {{v|f1|13,862,173,825}} || owata0401 || July 2nd, 2014 / [https://twitter.com/owata_0401/status/484284684579254274 Twitter] || highest score Xbox 360 || [https://www.nicovideo.jp/watch/sm23914133 Niconico]
             |-
-            | Windia || {{v|g1|16,117,383,678}} || 白胡麻 || Arcadia November 2014 || ||
+            | Windia || {{v|g1|16,117,383,678}} || 白胡麻 || April 19th, 2014 (Arcadia November 2014) / [https://twitter.com/Kernel_in/status/457466873412452352 Twitter] || ||
             |}
             
             * [https://wiki.denfaminicogamer.jp/highscore/2008_012_%E3%83%87%E3%82%B9%E3%82%B9%E3%83%9E%E3%82%A4%E3%83%AB%E3%82%BA_%E3%83%A1%E3%82%AC%E3%83%96%E3%83%A9%E3%83%83%E3%82%AF%E3%83%AC%E3%83%BC%E3%83%99%E3%83%AB JHA Leaderboard]
@@ -2482,6 +2741,8 @@ layout:
 === Detana! TwinBee ===
 <pre><nowiki>
 name: "Detana! TwinBee"
+name-jp:
+name-kana:
 company: "Konami"
 needs-work: true
 
@@ -2508,6 +2769,8 @@ layout:
 === Dodonpachi ===
 <pre><nowiki>
 name: "Dodonpachi"
+name-jp:
+name-kana:
 company: "CAVE"
 needs-work: true
 
@@ -2556,6 +2819,7 @@ layout:
             
             Note: Due to a major scoring glitch, the highest scores with and without exploiting said glitch will be listed. For details on this glitch, see [http://electricunderground.io/the-secret-dodonpachi-scoring-glitch-revealed/ this article].
             
+            * [[STG_Hall_of_Records/World_Record_Progression_Dodonpachi|World Record Progression]]
             * [https://wiki.denfaminicogamer.jp/highscore/1997_007_%E6%80%92%E9%A6%96%E9%A0%98%E8%9C%82 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=56826 Shmups Forum Hi-Score Topic]
 </nowiki></pre>
@@ -2564,6 +2828,8 @@ layout:
 === Dodonpachi Campaign Version ===
 <pre><nowiki>
 name: "Dodonpachi Campaign Version"
+name-jp:
+name-kana:
 company: "CAVE"
 needs-work: true
 
@@ -2573,7 +2839,7 @@ layout:
             {{Anchor|Dodonpachi Campaign Version}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="5" | [[Dodonpachi Campaign Version]] (CAVE)
+            ! colspan="5" | [[Dodonpachi]] Campaign Version (CAVE)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -2585,6 +2851,8 @@ layout:
 === Dodonpachi Daifukkatsu ===
 <pre><nowiki>
 name: "Dodonpachi Daifukkatsu"
+name-jp:
+name-kana:
 company: "CAVE"
 needs-work: true
 
@@ -2613,6 +2881,8 @@ layout:
 === Dodonpachi Daifukkatsu 1.5 ===
 <pre><nowiki>
 name: "Dodonpachi Daifukkatsu 1.5"
+name-jp:
+name-kana:
 company: "CAVE"
 needs-work: true
 
@@ -2622,7 +2892,7 @@ layout:
             {{Anchor|Dodonpachi Daifukkatsu 1.5}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="8" | [[Dodonpachi Daifukkatsu 1.5]] (CAVE)
+            ! colspan="8" | [[Dodonpachi Daifukkatsu]] 1.5 (CAVE)
             |-
             ! colspan="2" | Ship
             !  Loop !! Score !! Player !! Date / Source !! Comment !! Replay
@@ -2684,6 +2954,8 @@ layout:
 === Dodonpachi Daifukkatsu Black Label ===
 <pre><nowiki>
 name: "Dodonpachi Daifukkatsu Black Label"
+name-jp:
+name-kana:
 company: "CAVE"
 needs-work: true
 
@@ -2693,7 +2965,7 @@ layout:
             {{Anchor|Dodonpachi Daifukkatsu Black Label}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="7" | [[Dodonpachi Daifukkatsu Black Label]] (CAVE)
+            ! colspan="7" | [[Dodonpachi Daifukkatsu]] Black Label (CAVE)
             |-
             ! colspan="2" | Ship
             ! Score !! Player !! Date / Source !! Comment !! Replay
@@ -2731,6 +3003,8 @@ layout:
 === Dodonpachi Daioujou ===
 <pre><nowiki>
 name: "Dodonpachi Daioujou"
+name-jp:
+name-kana:
 company: "CAVE"
 needs-work: true
 
@@ -2794,6 +3068,8 @@ layout:
 === Dodonpachi Daioujou Black Label ===
 <pre><nowiki>
 name: "Dodonpachi Daioujou Black Label"
+name-jp:
+name-kana:
 company: "CAVE"
 needs-work: true
 
@@ -2803,19 +3079,22 @@ layout:
             {{Anchor|Dodonpachi Daioujou Black Label}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="7" | [[Dodonpachi Daioujou Black Label]] (CAVE)
+            ! colspan="7" | [[Dodonpachi Daioujou]] Black Label (CAVE)
             |-
             ! colspan="2" | Ship
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
-            | rowspan="7" | Type A
+            | rowspan="8" | Type A
             | rowspan="2" | Shot
             | 2,095,984,550 || rowspan="2" | ISO / Niboshi
             | February 2nd, 2020 / [https://twitter.com/niboooji/status/1223905431417831424 Twitter] || max hit 2,850 ||
             |-
             | 1,962,269,990 || JHA March 2020 || 2L 0B remaining ||
             |-
-            | Laser || 2,054,664,880 || RKB || September 15th, 2019 / [https://twitter.com/rkb49/status/1173164311931305986 Twitter] || max hit 2,880 ||
+            | rowspan="2" | Laser
+            | 2,054,664,880 || RKB || September 15th, 2019 / [https://twitter.com/rkb49/status/1173164311931305986 Twitter] || max hit 2,880 ||
+            |-
+            | 561,742,210 || 千石撫子 || JHA September 2020 || ||
             |-
             | rowspan="4" | Expert
             | 3,723,313,050 || WY. || September 8th, 2018 / [https://twitter.com/Plasmo_STG/status/1038448495399714816 Twitter] || played on GOTVG || [https://youtu.be/fOWhD8mViks Youtube]
@@ -2826,10 +3105,16 @@ layout:
             |-
             | 3,511,462,970 || HFD || Arcadia December 2006 || ||
             |-
-            | rowspan="3" | Type B
-            | Shot || 2,348,299,000 || RKB || November 24th, 2019 / [https://twitter.com/rkb49/status/1198522997675450368 Twitter] || max hit 2,690 ||
+            | rowspan="5" | Type B
+            | rowspan="2" | Shot
+            | 2,348,299,000 || RKB || November 24th, 2019 / [https://twitter.com/rkb49/status/1198522997675450368 Twitter] || max hit 2,690 ||
             |-
-            | Laser || 2,050,334,100 || RKB || January 11th, 2020 / [https://twitter.com/rkb49/status/1215854958295207936 Twitter] ||  ||
+            | 450,881,950 || 三井アウトレットパーク志木 || JHA September 2020 || ||
+            |-
+            | rowspan="2" | Laser
+            | 2,050,334,100 || RKB || January 11th, 2020 / [https://twitter.com/rkb49/status/1215854958295207936 Twitter] ||  ||
+            |-
+            | 221,742,710 || 佐々木寿人 || JHA September 2020 || ||
             |-
             | Expert || 3,681,252,160 || ろくきち || January 15th, 2020 (JHA January 2020) / [https://twitter.com/rokukichi/status/1217441941870137345 Twitter] || || [https://youtu.be/-QXobCPVMV8 Youtube]
             |}
@@ -2842,6 +3127,8 @@ layout:
 === Dodonpachi II: Bee Storm ===
 <pre><nowiki>
 name: "Dodonpachi II: Bee Storm"
+name-jp:
+name-kana:
 company: "IGS"
 needs-work: true
 
@@ -2870,6 +3157,8 @@ layout:
 === Dodonpachi Saidaioujou ===
 <pre><nowiki>
 name: "Dodonpachi Saidaioujou"
+name-jp:
+name-kana:
 company: "CAVE"
 needs-work: true
 
@@ -2949,6 +3238,8 @@ layout:
 === Dogyuun! ===
 <pre><nowiki>
 name: "Dogyuun!"
+name-jp:
+name-kana:
 company: "Toaplan"
 needs-work: true
 
@@ -2976,6 +3267,8 @@ layout:
 === Donpachi ===
 <pre><nowiki>
 name: "Donpachi"
+name-jp:
+name-kana:
 company: "CAVE"
 needs-work: true
 
@@ -2996,6 +3289,7 @@ layout:
             | Type C || {{v|c1|66,226,570}} || Plasmo || October 4th, 2017 (JHA October 2017) / [https://shmups.system11.org/viewtopic.php?p=1278763#p1278763 Shmups Forum] || max chain 206 ||
             |}
             
+            * [[STG_Hall_of_Records/World_Record_Progression_Donpachi|World Record Progression]]
             * [https://wiki.denfaminicogamer.jp/highscore/1995_008_%E9%A6%96%E9%A0%98%E8%9C%82 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?f=2&t=60135 Shmups Forum Hi-Score Topic]
 </nowiki></pre>
@@ -3004,6 +3298,8 @@ layout:
 === Double Wings ===
 <pre><nowiki>
 name: "Double Wings"
+name-jp:
+name-kana:
 company: "Mitchell"
 needs-work: true
 
@@ -3025,6 +3321,8 @@ layout:
 === Dragon Blaze ===
 <pre><nowiki>
 name: "Dragon Blaze"
+name-jp:
+name-kana:
 company: "Psikyo"
 needs-work: true
 
@@ -3042,11 +3340,7 @@ layout:
             |-
             | Quaid || {{v|b1|4,286,700}} || CYS-SAK || November 3rd, 2019 (JHA November 2019) / [https://twitter.com/1ka2no394285ki/status/1206211120446312448 Twitter] || 3L 9B remaining ||
             |-
-            | rowspan="2" | Rob
-            | 4,022,900 || rowspan="2" | 三茶鮫
-            | September 19th, 2020 / [https://twitter.com/PaperWeight/status/1307333853971791872 Twitter] || ||
-            |-
-            | 4,013,000 || June 26th, 2020 (JHA July 2020) / [https://twitter.com/PaperWeight/status/1276501830663409665 Twitter] || ||
+            | Rob || 4,022,900 || 三茶鮫 ||| September 19th, 2020 (JHA September 2020) / [https://twitter.com/PaperWeight/status/1307333853971791872 Twitter] || used 1 bomb, autofire ||
             |-
             | Sonia || {{v|d1|4,013,500}} || 三茶鮫 || Arcadia April 2013 || 3L 9B remaining ||
             |}
@@ -3059,6 +3353,8 @@ layout:
 === Dragon Breed ===
 <pre><nowiki>
 name: "Dragon Breed"
+name-jp:
+name-kana:
 company: "Irem"
 needs-work: true
 
@@ -3085,6 +3381,8 @@ layout:
 === Dragon Saber ===
 <pre><nowiki>
 name: "Dragon Saber"
+name-jp:
+name-kana:
 company: "Namco"
 needs-work: true
 
@@ -3110,6 +3408,8 @@ layout:
 === Dragon Spirit ===
 <pre><nowiki>
 name: "Dragon Spirit"
+name-jp:
+name-kana:
 company: "Namco"
 needs-work: true
 
@@ -3138,6 +3438,8 @@ layout:
 === E.D.F. Earth Defense Force ===
 <pre><nowiki>
 name: "E.D.F. Earth Defense Force"
+name-jp:
+name-kana:
 company: "Jaleco"
 needs-work: true
 
@@ -3161,6 +3463,8 @@ layout:
 === Earth Joker: UN Defense Force ===
 <pre><nowiki>
 name: "Earth Joker: UN Defense Force"
+name-jp:
+name-kana:
 company: "Visco"
 needs-work: true
 
@@ -3182,6 +3486,8 @@ layout:
 === Eight Forces ===
 <pre><nowiki>
 name: "Eight Forces"
+name-jp:
+name-kana:
 company: "Tecmo"
 needs-work: true
 
@@ -3207,6 +3513,8 @@ layout:
 === ESP Galuda ===
 <pre><nowiki>
 name: "ESP Galuda"
+name-jp:
+name-kana:
 company: "CAVE"
 needs-work: true
 
@@ -3233,6 +3541,8 @@ layout:
 === ESP Galuda II ===
 <pre><nowiki>
 name: "ESP Galuda II"
+name-jp:
+name-kana:
 company: "CAVE"
 needs-work: true
 
@@ -3253,30 +3563,33 @@ layout:
             | Tateha || {{v|c1|1,006,663,918}} || NIG || Arcadia May 2014 || 6L 6 Waku 75% barrier remaining ||
             |}
             
+            * [[STG_Hall_of_Records/World_Record_Progression_Espgaluda_II|World Record Progression]]
             * [https://wiki.denfaminicogamer.jp/highscore/2005_012_%E3%82%A8%E3%82%B9%E3%83%97%E3%82%AC%E3%83%AB%E3%83%BC%E3%83%80II JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=6270 Shmups Forum Hi-Score Topic]
 </nowiki></pre>
 
 
-=== ESP Ra. De. ===
+=== ESP Ra.De. ===
 <pre><nowiki>
-name: "ESP Ra. De."
+name: "ESP Ra.De."
+name-jp:
+name-kana:
 company: "CAVE"
 needs-work: true
 
 layout:
     templates:
         game: |
-            {{Anchor|ESP Ra. De.}}
+            {{Anchor|ESP Ra.De.}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[ESP Ra. De.]] (CAVE)
+            ! colspan="6" | [[ESP Ra.De.]] (CAVE)
             |-
             ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
             | Irori || {{v|a1|44,645,250}} || Clover-TAC || JHA February 2020 || 2p side, 6L remaining, 497 gold, barrier 74% ||
             |-
-            | J-B 5th || {{v|b1|41,753,570}} || Clover-TAC || JHA August 2020 || 2p side, one death ||
+            | J-B 5th || {{v|b1|42,137,190}} || Clover-TAC || JHA September 2020 || 2p side, no miss, 870 gold, barrier 0% ||
             |-
             | Yusuke || {{v|c1|41,898,630}} || WSM-MKZ || January 22nd, 2019 (JHA February 2019) / [https://twitter.com/wsmmkz/status/1087576687062134787 Twitter] || 2p side, 6L remaining, 480 gold, barrier 70% ||
             |}
@@ -3289,6 +3602,8 @@ layout:
 === Exed Exes ===
 <pre><nowiki>
 name: "Exed Exes"
+name-jp:
+name-kana:
 company: "Capcom"
 needs-work: true
 
@@ -3314,6 +3629,8 @@ layout:
 === Exzisus ===
 <pre><nowiki>
 name: "Exzisus"
+name-jp:
+name-kana:
 company: "Taito"
 needs-work: true
 
@@ -3351,6 +3668,8 @@ layout:
 === F/A / Fighter & Attacker ===
 <pre><nowiki>
 name: "F/A / Fighter & Attacker"
+name-jp:
+name-kana:
 company: "Namco"
 needs-work: true
 
@@ -3400,6 +3719,8 @@ layout:
 === Fantasy Zone ===
 <pre><nowiki>
 name: "Fantasy Zone"
+name-jp:
+name-kana:
 company: "Sega"
 needs-work: true
 
@@ -3427,6 +3748,8 @@ layout:
 === Fighting Hawk ===
 <pre><nowiki>
 name: "Fighting Hawk"
+name-jp:
+name-kana:
 company: "Taito"
 needs-work: true
 
@@ -3451,6 +3774,8 @@ layout:
 === Fire Barrel / Air Assault ===
 <pre><nowiki>
 name: "Fire Barrel / Air Assault"
+name-jp:
+name-kana:
 company: "Irem"
 needs-work: true
 
@@ -3476,6 +3801,8 @@ layout:
 === Fixeight ===
 <pre><nowiki>
 name: "Fixeight"
+name-jp:
+name-kana:
 company: "Toaplan"
 needs-work: true
 
@@ -3540,6 +3867,8 @@ layout:
 === Flak Attack ===
 <pre><nowiki>
 name: "Flak Attack"
+name-jp:
+name-kana:
 company: "Konami"
 needs-work: true
 
@@ -3563,6 +3892,8 @@ layout:
 === G Stream 2020 ===
 <pre><nowiki>
 name: "G Stream 2020"
+name-jp:
+name-kana:
 company: "Triangle Service / Oriental Soft"
 needs-work: true
 
@@ -3589,6 +3920,8 @@ layout:
 === G-Darius ===
 <pre><nowiki>
 name: "G-Darius"
+name-jp:
+name-kana:
 company: "Taito"
 needs-work: true
 
@@ -3621,6 +3954,8 @@ layout:
 === Galaga ===
 <pre><nowiki>
 name: "Galaga"
+name-jp:
+name-kana:
 company: "Namco"
 needs-work: true
 
@@ -3648,6 +3983,8 @@ layout:
 === Galaga '88 ===
 <pre><nowiki>
 name: "Galaga '88"
+name-jp:
+name-kana:
 company: "Namco"
 needs-work: true
 
@@ -3673,6 +4010,8 @@ layout:
 === Gallop: Armed Police Unit / Cosmic Cop ===
 <pre><nowiki>
 name: "Gallop: Armed Police Unit / Cosmic Cop"
+name-jp:
+name-kana:
 company: "Irem"
 needs-work: true
 
@@ -3722,6 +4061,8 @@ layout:
 === Game Tengoku / The Game Paradise ===
 <pre><nowiki>
 name: "Game Tengoku / The Game Paradise"
+name-jp:
+name-kana:
 company: "Jaleco"
 needs-work: true
 
@@ -3768,6 +4109,8 @@ layout:
 === Game Title ===
 <pre><nowiki>
 name: "Game Title"
+name-jp:
+name-kana:
 company: "Yotsubane"
 needs-work: true
 
@@ -3792,6 +4135,8 @@ layout:
 === Gaplus ===
 <pre><nowiki>
 name: "Gaplus"
+name-jp:
+name-kana:
 company: "Namco"
 needs-work: true
 
@@ -3817,6 +4162,8 @@ layout:
 === Gekirindan ===
 <pre><nowiki>
 name: "Gekirindan"
+name-jp:
+name-kana:
 company: "Taito"
 needs-work: true
 
@@ -3844,6 +4191,8 @@ layout:
 === Gemini Wing ===
 <pre><nowiki>
 name: "Gemini Wing"
+name-jp:
+name-kana:
 company: "Tecmo"
 needs-work: true
 
@@ -3867,6 +4216,8 @@ layout:
 === Ghost Pilots ===
 <pre><nowiki>
 name: "Ghost Pilots"
+name-jp:
+name-kana:
 company: "SNK"
 needs-work: true
 
@@ -3890,6 +4241,8 @@ layout:
 === Giga Wing ===
 <pre><nowiki>
 name: "Giga Wing"
+name-jp:
+name-kana:
 company: "Takumi"
 needs-work: true
 
@@ -3920,6 +4273,8 @@ layout:
 === Giga Wing 2 ===
 <pre><nowiki>
 name: "Giga Wing 2"
+name-jp:
+name-kana:
 company: "Takumi"
 needs-work: true
 
@@ -3954,6 +4309,8 @@ layout:
 === Gokujyou Parodius ===
 <pre><nowiki>
 name: "Gokujyou Parodius"
+name-jp:
+name-kana:
 company: "Konami"
 needs-work: true
 
@@ -4015,6 +4372,8 @@ layout:
 === Gradius II ===
 <pre><nowiki>
 name: "Gradius II"
+name-jp:
+name-kana:
 company: "Konami"
 needs-work: true
 
@@ -4057,6 +4416,8 @@ layout:
 === Gradius III ===
 <pre><nowiki>
 name: "Gradius III"
+name-jp:
+name-kana:
 company: "Konami"
 needs-work: true
 
@@ -4120,6 +4481,8 @@ layout:
 === Gradius IV ===
 <pre><nowiki>
 name: "Gradius IV"
+name-jp:
+name-kana:
 company: "Konami"
 needs-work: true
 
@@ -4159,6 +4522,8 @@ layout:
 === Great Mahou Daisakusen ===
 <pre><nowiki>
 name: "Great Mahou Daisakusen"
+name-jp:
+name-kana:
 company: "Raizing / 8ing"
 needs-work: true
 
@@ -4172,26 +4537,23 @@ layout:
             |-
             ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
-            | rowspan="2" | Birthday
-            | 87,818,460 || rowspan="2" | Miku || September 7th, 2020 / [https://twitter.com/4Yt7z/status/1302907156925087746 Twitter] || 108 items ||
-            |-
-            | 84,525,350 || JHA August 2020 || 108 items ||
+            | Birthday || 87,818,460 || Miku || September 7th, 2020 (JHA September 2020) / [https://twitter.com/4Yt7z/status/1302907156925087746 Twitter] || 108 items, missed 3 secret items ||
             |-
             | rowspan="2" | Chitta
-            | 94,447,870 || rowspan="2" | SOF-WTN
-            | August 23rd, 2020 / [https://twitter.com/sof_wtn/status/1297481522979590145 Twitter] || 108 items ||
+            | 95,592,960 || rowspan="2" | SOF-WTN
+            | October 4th, 2020 / [https://twitter.com/sof_wtn/status/1312754249026080768 Twitter] || 107 items ||
             |-
-            | 93,664,750 || JHA August 2020 || ||
+            | 94,447,870 || August 23rd, 2020 (JHA September 2020) / [https://twitter.com/sof_wtn/status/1297481522979590145 Twitter] || 108 items ||
             |-
             | rowspan="2" | Gain
             | 80,528,610 || Boredom || July 1st, 2020 / [https://twitter.com/boredom_79/status/1278389636155367424 Twitter] || 108 items || [https://youtu.be/DCEM2fnGBPU Youtube]
             |-
-            | 31,653,130 || HTL-蕨ガイン見参 || JHA June 2020 || ||
+            | 45,812,150 || JMB-りゅう || JHA September 2020 || ||
             |-
             | rowspan="2" | Golden
             | style="background: #DFDFDF;" | 99,999,999 [101,033,460] || style="background: #DFDFDF;" | Boredom || style="background: #DFDFDF;" | February 13th, 2020 / [https://twitter.com/boredom_79/status/1228024526904029184 Twitter] || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | 
             |-
-            | 14,925,200 || 磨弓 || July 23rd, 2020 (JHA July 2020) / [https://twitter.com/JAP_prpr/status/1286152952567062530 Twitter] || 88 items ||
+            | 28,881,820 || JAP || September 14th, 2020 (JHA September 2020) / [https://twitter.com/JAP_prpr/status/1305507730547851265 Twitter] || 100 items ||
             |-
             | Grimlen || style="background: #DFDFDF;" | 99,999,999 || style="background: #DFDFDF;" | KDK-Takeyuki || style="background: #DFDFDF;" | Arcadia July 2002 || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | 
             |-
@@ -4215,6 +4577,8 @@ layout:
 === Grid Seeker ===
 <pre><nowiki>
 name: "Grid Seeker"
+name-jp:
+name-kana:
 company: "Taito"
 needs-work: true
 
@@ -4242,6 +4606,8 @@ layout:
 === Guardian Force ===
 <pre><nowiki>
 name: "Guardian Force"
+name-jp:
+name-kana:
 company: "Success"
 needs-work: true
 
@@ -4265,6 +4631,8 @@ layout:
 === Gun Frontier ===
 <pre><nowiki>
 name: "Gun Frontier"
+name-jp:
+name-kana:
 company: "Taito"
 needs-work: true
 
@@ -4290,6 +4658,8 @@ layout:
 === Gunbird ===
 <pre><nowiki>
 name: "Gunbird"
+name-jp:
+name-kana:
 company: "Psikyo"
 needs-work: true
 
@@ -4322,6 +4692,8 @@ layout:
 === Gunbird 2 ===
 <pre><nowiki>
 name: "Gunbird 2"
+name-jp:
+name-kana:
 company: "Psikyo"
 needs-work: true
 
@@ -4359,6 +4731,8 @@ layout:
 === Gunnail ===
 <pre><nowiki>
 name: "Gunnail"
+name-jp:
+name-kana:
 company: "NMK"
 needs-work: true
 
@@ -4385,6 +4759,8 @@ layout:
 === Guwange ===
 <pre><nowiki>
 name: "Guwange"
+name-jp:
+name-kana:
 company: "CAVE"
 needs-work: true
 
@@ -4416,6 +4792,8 @@ layout:
 === Gyrodine ===
 <pre><nowiki>
 name: "Gyrodine"
+name-jp:
+name-kana:
 company: "Crux"
 needs-work: true
 
@@ -4439,6 +4817,8 @@ layout:
 === Hacha Mecha Fighter ===
 <pre><nowiki>
 name: "Hacha Mecha Fighter"
+name-jp:
+name-kana:
 company: "NMK"
 needs-work: true
 
@@ -4466,6 +4846,8 @@ layout:
 === Halley's Comet ===
 <pre><nowiki>
 name: "Halley's Comet"
+name-jp:
+name-kana:
 company: "Taito"
 needs-work: true
 
@@ -4495,6 +4877,8 @@ layout:
 === Heavy Unit ===
 <pre><nowiki>
 name: "Heavy Unit"
+name-jp:
+name-kana:
 company: "Kaneko"
 needs-work: true
 
@@ -4520,6 +4904,8 @@ layout:
 === Hellfire ===
 <pre><nowiki>
 name: "Hellfire"
+name-jp:
+name-kana:
 company: "Toaplan"
 needs-work: true
 
@@ -4548,6 +4934,8 @@ layout:
 === Hishouzame / Flying Shark ===
 <pre><nowiki>
 name: "Hishouzame / Flying Shark"
+name-jp:
+name-kana:
 company: "Toaplan"
 needs-work: true
 
@@ -4595,6 +4983,8 @@ layout:
 === Homura ===
 <pre><nowiki>
 name: "Homura"
+name-jp:
+name-kana:
 company: "Skonec"
 needs-work: true
 
@@ -4619,6 +5009,8 @@ layout:
 === Hyper Duel ===
 <pre><nowiki>
 name: "Hyper Duel"
+name-jp:
+name-kana:
 company: "Tecnosoft"
 needs-work: true
 
@@ -4642,6 +5034,8 @@ layout:
 === Ibara ===
 <pre><nowiki>
 name: "Ibara"
+name-jp:
+name-kana:
 company: "CAVE"
 needs-work: true
 
@@ -4651,23 +5045,28 @@ layout:
             {{Anchor|Ibara}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Ibara]] (CAVE)
+            ! colspan="7" | [[Ibara]] (CAVE)
             |-
-            ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
+            ! Mode !! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
+            | rowspan=2" | Normal
             | Bond || {{v|a1|36,010,010}} || ACR Archer || January 24th, 2010 (Arcadia May 2010) / [http://home.r00.itscom.net/archer/kimagure/ Blog] || after stage 3: 11.45m (0L 2,5B remaining), before final boss: 19.85m (4L 6B remaining) ||
             |-
-            | Dyne || {{v|b1|31,388,410}} || WSM-いのうえ || Arcadia June 2013 || before final boss 18.48m ||
+            | Dyne || {{v|b1|31,388,410}} || WSM-いのうえ || Arcadia June 2013 || before final boss 18.48m || [https://www.youtube.com/watch?v=n3pTS_IROMU Youtube]
+            |-
+            | Harder || Bond || 19,370,080 || お茶まにあ-KMT || 2006 / superplay DVD || ||
             |}
             
             * [https://wiki.denfaminicogamer.jp/highscore/2005_029_%E9%8B%B3%E8%96%94%E8%96%87 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=18254 Shmups Forum Hi-Score Topic]
-</nowiki></pre>
+ </nowiki></pre>
 
 
 === Ibara Black Label ===
 <pre><nowiki>
 name: "Ibara Black Label"
+name-jp:
+name-kana:
 company: "CAVE"
 needs-work: true
 
@@ -4679,7 +5078,7 @@ layout:
             {{Anchor|Ibara Kuro: Black Label}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[Ibara Black Label]] (CAVE)
+            ! colspan="6" | [[Ibara]] Black Label (CAVE)
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -4694,6 +5093,8 @@ layout:
 === Ikaruga ===
 <pre><nowiki>
 name: "Ikaruga"
+name-jp:
+name-kana:
 company: "Treasure"
 needs-work: true
 
@@ -4736,6 +5137,8 @@ layout:
 === Illvelo ===
 <pre><nowiki>
 name: "Illvelo"
+name-jp:
+name-kana:
 company: "Milestone"
 needs-work: true
 
@@ -4762,6 +5165,8 @@ layout:
 === Image Fight ===
 <pre><nowiki>
 name: "Image Fight"
+name-jp:
+name-kana:
 company: "Irem"
 needs-work: true
 
@@ -4785,6 +5190,8 @@ layout:
 === Insector X ===
 <pre><nowiki>
 name: "Insector X"
+name-jp:
+name-kana:
 company: "Taito"
 needs-work: true
 
@@ -4810,6 +5217,8 @@ layout:
 === Kaitei Daisensou / In the Hunt ===
 <pre><nowiki>
 name: "Kaitei Daisensou / In the Hunt"
+name-jp:
+name-kana:
 company: "Irem"
 needs-work: true
 
@@ -4833,6 +5242,8 @@ layout:
 === Karous ===
 <pre><nowiki>
 name: "Karous"
+name-jp:
+name-kana:
 company: "Milestone"
 needs-work: true
 
@@ -4857,6 +5268,8 @@ layout:
 === Ketsui ===
 <pre><nowiki>
 name: "Ketsui"
+name-jp:
+name-kana:
 company: "CAVE"
 needs-work: true
 
@@ -4889,6 +5302,8 @@ layout:
 === Kiki Kaikai ===
 <pre><nowiki>
 name: "Kiki Kaikai"
+name-jp:
+name-kana:
 company: "Taito"
 needs-work: true
 
@@ -4918,6 +5333,8 @@ layout:
 === KOF Sky Stage ===
 <pre><nowiki>
 name: "KOF Sky Stage"
+name-jp:
+name-kana:
 company: "SNK"
 needs-work: true
 
@@ -4951,6 +5368,8 @@ layout:
 === Koutetsu Yousai Strahl ===
 <pre><nowiki>
 name: "Koutetsu Yousai Strahl"
+name-jp:
+name-kana:
 company: "UPL"
 needs-work: true
 
@@ -4976,6 +5395,8 @@ layout:
 === Kuuga - Operation Code Vapor Trail ===
 <pre><nowiki>
 name: "Kuuga - Operation Code Vapor Trail"
+name-jp:
+name-kana:
 company: "Data East"
 needs-work: true
 
@@ -5012,6 +5433,8 @@ layout:
 === Kyuukyoku Tiger / Twin Cobra ===
 <pre><nowiki>
 name: "Kyuukyoku Tiger / Twin Cobra"
+name-jp:
+name-kana:
 company: "Toaplan"
 needs-work: true
 
@@ -5045,6 +5468,8 @@ layout:
 === Kyuukyoku Tiger II ===
 <pre><nowiki>
 name: "Kyuukyoku Tiger II"
+name-jp:
+name-kana:
 company: "Takumi"
 needs-work: true
 
@@ -5073,6 +5498,8 @@ layout:
 === Last Duel ===
 <pre><nowiki>
 name: "Last Duel"
+name-jp:
+name-kana:
 company: "Capcom"
 needs-work: true
 
@@ -5096,6 +5523,8 @@ layout:
 === Last Resort ===
 <pre><nowiki>
 name: "Last Resort"
+name-jp:
+name-kana:
 company: "SNK"
 needs-work: true
 
@@ -5122,6 +5551,8 @@ layout:
 === Life Force ===
 <pre><nowiki>
 name: "Life Force"
+name-jp:
+name-kana:
 company: "Konami"
 needs-work: true
 
@@ -5172,6 +5603,8 @@ layout:
 === Lost Worlds / Forgotten Worlds ===
 <pre><nowiki>
 name: "Lost Worlds / Forgotten Worlds"
+name-jp:
+name-kana:
 company: "Capcom"
 needs-work: true
 
@@ -5203,6 +5636,8 @@ layout:
 === Mad Shark ===
 <pre><nowiki>
 name: "Mad Shark"
+name-jp:
+name-kana:
 company: "Allumer"
 needs-work: true
 
@@ -5234,6 +5669,8 @@ layout:
 === Mahou Daisakusen ===
 <pre><nowiki>
 name: "Mahou Daisakusen"
+name-jp:
+name-kana:
 company: "Raizing / 8ing"
 needs-work: true
 
@@ -5267,6 +5704,8 @@ layout:
 === Mahou Keibitai Gun Hohki / Mystic Riders ===
 <pre><nowiki>
 name: "Mahou Keibitai Gun Hohki / Mystic Riders"
+name-jp:
+name-kana:
 company: "Irem"
 needs-work: true
 
@@ -5292,6 +5731,8 @@ layout:
 === Mamoru-kun wa Norowarete Shimatta / Mamorukun Curse! ===
 <pre><nowiki>
 name: "Mamoru-kun wa Norowarete Shimatta / Mamorukun Curse!"
+name-jp:
+name-kana:
 company: "G.Rev"
 needs-work: true
 
@@ -5328,6 +5769,8 @@ layout:
 === Mars Matrix ===
 <pre><nowiki>
 name: "Mars Matrix"
+name-jp:
+name-kana:
 company: "Takumi"
 needs-work: true
 
@@ -5394,6 +5837,8 @@ layout:
 === Master of Weapon ===
 <pre><nowiki>
 name: "Master of Weapon"
+name-jp:
+name-kana:
 company: "Taito"
 needs-work: true
 
@@ -5417,6 +5862,8 @@ layout:
 === Mazinger Z ===
 <pre><nowiki>
 name: "Mazinger Z"
+name-jp:
+name-kana:
 company: "Banpresto"
 needs-work: true
 
@@ -5478,6 +5925,8 @@ layout:
 === Mega Blast ===
 <pre><nowiki>
 name: "Mega Blast"
+name-jp:
+name-kana:
 company: "Taito"
 needs-work: true
 
@@ -5499,6 +5948,8 @@ layout:
 === Meta Fox ===
 <pre><nowiki>
 name: "Meta Fox"
+name-jp:
+name-kana:
 company: "Seta"
 needs-work: true
 
@@ -5524,6 +5975,8 @@ layout:
 === Metal Black ===
 <pre><nowiki>
 name: "Metal Black"
+name-jp:
+name-kana:
 company: "Taito"
 needs-work: true
 
@@ -5549,6 +6002,8 @@ layout:
 === Metal Hawk ===
 <pre><nowiki>
 name: "Metal Hawk"
+name-jp:
+name-kana:
 company: "Namco"
 needs-work: true
 
@@ -5574,6 +6029,8 @@ layout:
 === Mr. Heli no Daibouken / Battle Chopper ===
 <pre><nowiki>
 name: "Mr. Heli no Daibouken / Battle Chopper"
+name-jp:
+name-kana:
 company: "Irem"
 needs-work: true
 
@@ -5599,6 +6056,8 @@ layout:
 === Muchi Muchi Pork ===
 <pre><nowiki>
 name: "Muchi Muchi Pork"
+name-jp:
+name-kana:
 company: "CAVE"
 needs-work: true
 
@@ -5631,7 +6090,7 @@ layout:
             |-
             | 2 loops || {{v|g1|298,150,380}} || お茶まにあKMT || Arcadia July 2008 || 1st loop 169m ||
             |-
-            | Manpuku || Momo (pink) || - || {{v|h1|169,831,420}} || raisonnable || July 15th, 2020 / [https://hiscores.shmup.com/game/11/Muchi_Muchi_Pork French Leaderboard] || || [https://youtu.be/p9wbpPQF7k8 Youtube]
+            | Manpuku || Momo (pink) || - || {{v|h1|171,813,720}} || raisonnable || October 2nd, 2020 / [https://hiscores.shmup.com/game/11 French Leaderboard] || ||
             |}
             
             * [https://wiki.denfaminicogamer.jp/highscore/2007_021_%E3%82%80%E3%81%A1%E3%82%80%E3%81%A1%E3%83%9D%E3%83%BC%E3%82%AF JHA Leaderboard]
@@ -5642,6 +6101,8 @@ layout:
 === Mushihimesama ===
 <pre><nowiki>
 name: "Mushihimesama"
+name-jp:
+name-kana:
 company: "CAVE"
 needs-work: true
 
@@ -5681,6 +6142,8 @@ layout:
 === Mushihimesama Futari ===
 <pre><nowiki>
 name: "Mushihimesama Futari"
+name-jp:
+name-kana:
 company: "CAVE"
 needs-work: true
 
@@ -5713,7 +6176,7 @@ layout:
             
             {| class="wikitable"  style="text-align: center"
             |-
-            ! colspan="8" | [[Mushihimesama Futari 1.5]]
+            ! colspan="8" | [[Mushihimesama Futari]] 1.5
             |-
             ! Mode !! colspan="2" | Character
             ! Score !! Player !! Date / Source !! Comment !! Replay
@@ -5732,8 +6195,10 @@ layout:
             |-
             | Abnormal || 454,386,226 || yasu0219 || December 12th, 2009 / Xbox rankings || highest score Xbox360 ||
             |-
-            | rowspan="3" | Maniac
-            | rowspan="2" | Palm
+            | rowspan="4" | Maniac
+            | rowspan="3" | Palm
+            | Normal || 835,183,728 || I.O || 2007 / [http://ranking.niyaozao.com/#/rank/8?_k=uz9r8s Chinese Leaderboard] || ||
+            |-
             | rowspan="2" | Abnormal
             | 981,872,827 || rowspan="2" | KTL-NAL
             | September 2007 / superplay DVD || 5L 2B remaining, after stage 4: 693.8m ||
@@ -5749,7 +6214,7 @@ layout:
             | rowspan="3" | Abnormal
             | style="background: #DFDFDF;" | 3,999,999,999 || style="background: #DFDFDF;" | Dame K.K || style="background: #DFDFDF;" | Arcadia March 2008 || style="background: #DFDFDF;" | 1L 0B remaining, highest score Arcade || style="background: #DFDFDF;" | 
             |-
-            | 3,999,999,999 [4,386,380,066] || Gusto || September 6th, 2020 / [https://twitter.com/gusyphus/status/1302524287585193987 Twitter] || no clear, highest score Xbox360 || [https://www.twitch.tv/videos/732971739 Twitch]
+            | 3,999,999,999 [4,589,730,045] || Gusto || October 7th, 2020 / [https://twitter.com/gusyphus/status/1313665827737006080 Twitter] || no clear, highest score Xbox360 || [https://youtu.be/thHP1nV7p9o Youtube]
             |-
             | 3,999,999,999 [4,263,416,356] || KGM || July 24th, 2013 / Xbox rankings || clear || [https://youtu.be/EeLzh7VNujQ Youtube]
             |-
@@ -5769,6 +6234,8 @@ layout:
 === Mushihimesama Futari Black Label ===
 <pre><nowiki>
 name: "Mushihimesama Futari Black Label"
+name-jp:
+name-kana:
 company: "CAVE"
 needs-work: true
 
@@ -5778,7 +6245,7 @@ layout:
             {{Anchor|Mushihimesama Futari Black Label}}
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="7" | [[Mushihimesama Futari Black Label]] (CAVE)
+            ! colspan="7" | [[Mushihimesama Futari]] Black Label (CAVE)
             |-
             ! Mode !! Character !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
@@ -5809,6 +6276,8 @@ layout:
 === Namco Classic Collection Vol. 1 ===
 <pre><nowiki>
 name: "Namco Classic Collection Vol. 1"
+name-jp:
+name-kana:
 company: "Namco"
 needs-work: true
 
@@ -5826,7 +6295,7 @@ layout:
             | rowspan="2" | Original
             | 565,420 || Jacob Upland || September 7th, 2020 / [https://imgur.com/u6BQKwH Image] || played on Mame || [https://youtu.be/Eu7QEECD13Q Youtube]
             |-
-            | 564,670 || GEKI「ぷ」(ぬ) || Gamest April 1996 || ||
+            | 564,670 || GEKI || Gamest April 1996 || ||
             |-
             | Arrangement || {{v|b1|1,421,290}} || CYR-WAR || Arcadia January 2011 || ||
             |-
@@ -5835,7 +6304,7 @@ layout:
             | rowspan="2" | Xevious
             | Original || {{v|d1|1,713,080}} || K.N尊師 || JHA November 2016 || ||
             |-
-            | Arrangement || {{v|e1|7,754,380}} || JMB-りゅう師匠 || Arcadia May 2012 || ||
+            | Arrangement || {{v|e1|7,754,380}} || RR || Arcadia May 2012 || ||
             |}
             
             * [https://wiki.denfaminicogamer.jp/highscore/1995_014_%E3%83%8A%E3%83%A0%E3%82%B3%E3%82%AF%E3%83%A9%E3%82%B7%E3%83%83%E3%82%AF%E3%82%B3%E3%83%AC%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%B3Vol.1 JHA Leaderboard]
@@ -5846,6 +6315,8 @@ layout:
 === Nebulas Ray ===
 <pre><nowiki>
 name: "Nebulas Ray"
+name-jp:
+name-kana:
 company: "Namco"
 needs-work: true
 
@@ -5872,6 +6343,8 @@ layout:
 === Night Raid ===
 <pre><nowiki>
 name: "Night Raid"
+name-jp:
+name-kana:
 company: "Takumi"
 needs-work: true
 
@@ -5896,6 +6369,8 @@ layout:
 === Ninja Commando ===
 <pre><nowiki>
 name: "Ninja Commando"
+name-jp:
+name-kana:
 company: "ADK"
 needs-work: true
 
@@ -5932,6 +6407,8 @@ layout:
 === Nostradamus ===
 <pre><nowiki>
 name: "Nostradamus"
+name-jp:
+name-kana:
 company: "Face"
 needs-work: true
 
@@ -5961,6 +6438,8 @@ layout:
 === Omega Fighter ===
 <pre><nowiki>
 name: "Omega Fighter"
+name-jp:
+name-kana:
 company: "UPL"
 needs-work: true
 
@@ -5984,6 +6463,8 @@ layout:
 === Operation Ragnarok / Zed Blade ===
 <pre><nowiki>
 name: "Operation Ragnarok / Zed Blade"
+name-jp:
+name-kana:
 company: "NMK"
 needs-work: true
 
@@ -5999,7 +6480,7 @@ layout:
             |-
             | OFF || {{v|a1|7,340,950}} || CLAW-やまもそ || Arcadia February 2013 || Type 1, W->AS->W, 0B remaining ||
             |-
-            | ON || {{v|b1|8,353,000}} || ツィ～まる。 || Arcadia January 2013 || Type 1, W->AS->W ||
+            | ON || {{v|b1|8,353,000}} || ツィ～まる。 || October 17th, 2012 (Arcadia January 2013) / [https://twitter.com/wsm_tuii3/status/258420795368423424 Twitter] || Type 1, W->AS->W ||
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=29484 Shmups Forum Hi-Score Topic]
@@ -6009,6 +6490,8 @@ layout:
 === Ordyne ===
 <pre><nowiki>
 name: "Ordyne"
+name-jp:
+name-kana:
 company: "Namco"
 needs-work: true
 
@@ -6035,6 +6518,8 @@ layout:
 === Out Zone ===
 <pre><nowiki>
 name: "Out Zone"
+name-jp:
+name-kana:
 company: "Toaplan"
 needs-work: true
 
@@ -6080,6 +6565,8 @@ layout:
 === P-47 Aces ===
 <pre><nowiki>
 name: "P-47 Aces"
+name-jp:
+name-kana:
 company: "NMK"
 needs-work: true
 
@@ -6126,6 +6613,8 @@ layout:
 === P-47: The Freedom Fighter ===
 <pre><nowiki>
 name: "P-47: The Freedom Fighter"
+name-jp:
+name-kana:
 company: "NMK"
 needs-work: true
 
@@ -6159,6 +6648,8 @@ layout:
 === Parodius Da! ===
 <pre><nowiki>
 name: "Parodius Da!"
+name-jp:
+name-kana:
 company: "Konami"
 needs-work: true
 
@@ -6199,6 +6690,8 @@ layout:
 === Phelios ===
 <pre><nowiki>
 name: "Phelios"
+name-jp:
+name-kana:
 company: "Namco"
 needs-work: true
 
@@ -6225,6 +6718,8 @@ layout:
 === Pilot Kids ===
 <pre><nowiki>
 name: "Pilot Kids"
+name-jp:
+name-kana:
 company: "Psikyo"
 needs-work: true
 
@@ -6248,6 +6743,8 @@ layout:
 === Pink Sweets: Ibara Sorekara ===
 <pre><nowiki>
 name: "Pink Sweets: Ibara Sorekara"
+name-jp:
+name-kana:
 company: "CAVE"
 needs-work: true
 
@@ -6283,6 +6780,7 @@ layout:
             | {{v|h1|10,251,870}} || DGN || Arcadia January 2008 || ||
             |}
             
+            * [[STG_Hall_of_Records/World_Record_Progression_Pink_Sweets|World Record Progression]]
             * [https://shmups.system11.org/viewtopic.php?t=54091 Shmups Forum Hi-Score Topic]
 </nowiki></pre>
 
@@ -6290,6 +6788,8 @@ layout:
 === Pistol Daimyou no Bouken ===
 <pre><nowiki>
 name: "Pistol Daimyou no Bouken"
+name-jp:
+name-kana:
 company: "Namco"
 needs-work: true
 
@@ -6315,6 +6815,8 @@ layout:
 === Plus Alpha ===
 <pre><nowiki>
 name: "Plus Alpha"
+name-jp:
+name-kana:
 company: "Jaleco"
 needs-work: true
 
@@ -6356,6 +6858,8 @@ layout:
 === Prehistoric Isle 2 ===
 <pre><nowiki>
 name: "Prehistoric Isle 2"
+name-jp:
+name-kana:
 company: "Aicom / Yumekobo"
 needs-work: true
 
@@ -6371,7 +6875,7 @@ layout:
             |-
             | {{v|a1|95,683,500}} || イマサラT.O || Arcadia February 2013 || highest score Arcade ||
             |-
-            | {{v|b1|103,300,100}} || うどんの日 || August 23rd, 2020 / [https://twitter.com/RU1OkFBRP5KYdHs/status/1297507291923529728 Twitter] || highest score Arcade Archives ||
+            | {{v|b1|103,452,400}} || うどんの日 || September 24th, 2020 / [https://twitter.com/RU1OkFBRP5KYdHs/status/1309133167979360265 Twitter] || highest score Arcade Archives ||
             |}
             
             * [https://wiki.denfaminicogamer.jp/highscore/1999_048_%E5%8E%9F%E5%A7%8B%E5%B3%B62 JHA Leaderboard]
@@ -6382,6 +6886,8 @@ layout:
 === Prehistoric Isle in 1930 ===
 <pre><nowiki>
 name: "Prehistoric Isle in 1930"
+name-jp:
+name-kana:
 company: "SNK"
 needs-work: true
 
@@ -6403,6 +6909,8 @@ layout:
 === Progear no Arashi ===
 <pre><nowiki>
 name: "Progear no Arashi"
+name-jp:
+name-kana:
 company: "CAVE"
 needs-work: true
 
@@ -6429,10 +6937,10 @@ layout:
             | 216,289,290 || rowspan="2" | AAB!
             | February 12th, 2011 / [https://twitter.com/aab_ex/status/36367507510001664 Twitter] || ||
             |-
-            | {{v|e1|173,613,660}} || June 21st, 2020 (JHA June 2020) / [https://twitter.com/aab_ex/status/1274695082126356481 Twitter] || ||
+            | {{v|e1|181,103,090}} || September 22nd, 2020 (JHA September 2020) / [https://twitter.com/aab_ex/status/1308386056316710912 Twitter] || 6L remaining ||
             |-
             | rowspan="5" | Militant (Bolt)
-            | α (Chain) || {{v|f1|220,265,660}} || R. || JHA November 2019 || 4L remaining, 1st loop 330k jewel, first death 2-2 ||
+            | α (Chain) || {{v|f1|244,775,610}} || R. || JHA September 2020 || 8L 0B remaining, 1st loop 131m, death in 2-3, no bomb 2-4 boss ||
             |-
             | rowspan="2" | β (Nail)
             | {{v|g1|294,470,740}} || ミルみで || September 14th, 2019 || 9L 0B remaining, 1st loop 66.64m / 359k jewel || [https://youtu.be/duC-C0i_glM Youtube]
@@ -6442,7 +6950,7 @@ layout:
             | rowspan="2" | γ (Rivet)
             | {{v|i1|104,284,330}} || mist || June 29th, 2019 / [https://twitter.com/mistrein/status/1144855005028966400 Twitter] || All Clear, 6L 0B remaining ||
             |-
-            | {{v|j1|36,191,720}} || 杖刀偶磨弓 || JHA December 2019 || died in 2-5 ||
+            | {{v|j1|36,191,720}} || JAP || JHA December 2019 || died in 2-5 ||
             |}
             
             * [https://wiki.denfaminicogamer.jp/highscore/2001_029_%E3%83%97%E3%83%AD%E3%82%AE%E3%82%A2%E3%81%AE%E5%B5%90 JHA Leaderboard]
@@ -6453,6 +6961,8 @@ layout:
 === Psyvariar ===
 <pre><nowiki>
 name: "Psyvariar"
+name-jp:
+name-kana:
 company: "Success"
 needs-work: true
 
@@ -6477,6 +6987,8 @@ layout:
 === Psyvariar 2 ===
 <pre><nowiki>
 name: "Psyvariar 2"
+name-jp:
+name-kana:
 company: "Skonec"
 needs-work: true
 
@@ -6503,6 +7015,8 @@ layout:
 === Psyvariar Revision ===
 <pre><nowiki>
 name: "Psyvariar Revision"
+name-jp:
+name-kana:
 company: "Success"
 needs-work: true
 
@@ -6527,6 +7041,8 @@ layout:
 === Pulstar ===
 <pre><nowiki>
 name: "Pulstar"
+name-jp:
+name-kana:
 company: "Aicom / Yumekobo"
 needs-work: true
 
@@ -6550,6 +7066,8 @@ layout:
 === Purikura Daisakusen ===
 <pre><nowiki>
 name: "Purikura Daisakusen"
+name-jp:
+name-kana:
 company: "Atlus"
 needs-work: true
 
@@ -6575,6 +7093,8 @@ layout:
 === R-Type ===
 <pre><nowiki>
 name: "R-Type"
+name-jp:
+name-kana:
 company: "Irem"
 needs-work: true
 
@@ -6598,6 +7118,8 @@ layout:
 === R-Type II ===
 <pre><nowiki>
 name: "R-Type II"
+name-jp:
+name-kana:
 company: "Irem"
 needs-work: true
 
@@ -6622,6 +7144,8 @@ layout:
 === R-Type Leo ===
 <pre><nowiki>
 name: "R-Type Leo"
+name-jp:
+name-kana:
 company: "Irem"
 needs-work: true
 
@@ -6648,6 +7172,8 @@ layout:
 === Rabio Lepus ===
 <pre><nowiki>
 name: "Rabio Lepus"
+name-jp:
+name-kana:
 company: "Video System"
 needs-work: true
 
@@ -6673,6 +7199,8 @@ layout:
 === Radiant Silvergun ===
 <pre><nowiki>
 name: "Radiant Silvergun"
+name-jp:
+name-kana:
 company: "Treasure"
 needs-work: true
 
@@ -6686,9 +7214,9 @@ layout:
             |-
             ! Route !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
-            | Stage 2 || {{v|a1|23,101,650}} || T³-CYR-WIZ || Arcadia December 2008 || after 3E: 4.80m, after 2E: 10.05m; in 5A: 12.22m ||
+            | Stage 2 || {{v|a1|23,101,650}} || T³-CYR-WIZ || August 26th, 2008 (Arcadia December 2008) || after 3E: 4.80m, after 2E: 10.05m; in 5A: 12.22m || [https://youtu.be/j-AACK9hvgs Youtube]
             |-
-            | Stage 4 || {{v|b1|27,550,780}} || T³-CYR-WIZ || Arcadia February 2009 || after 3E: 4.79m, after 4E: 14.33m; in 5A: 12.28m ||
+            | Stage 4 || {{v|b1|27,550,780}} || T³-CYR-WIZ || November 15th, 2008 (Arcadia February 2009) || after 3E: 4.79m, after 4E: 14.33m; in 5A: 12.28m || [https://youtu.be/gJDCcK-zjWI Youtube]
             |}
             
             * [https://wiki.denfaminicogamer.jp/highscore/1998_024_%E3%83%AC%E3%82%A4%E3%83%87%E3%82%A3%E3%82%A2%E3%83%B3%E3%83%88%E3%82%B7%E3%83%AB%E3%83%90%E3%83%BC%E3%82%AC%E3%83%B3 JHA Leaderboard]
@@ -6699,6 +7227,8 @@ layout:
 === Radirgy ===
 <pre><nowiki>
 name: "Radirgy"
+name-jp:
+name-kana:
 company: "Milestone"
 needs-work: true
 
@@ -6725,6 +7255,8 @@ layout:
 === Radirgy Noa ===
 <pre><nowiki>
 name: "Radirgy Noa"
+name-jp:
+name-kana:
 company: "Milestone"
 needs-work: true
 
@@ -6749,6 +7281,8 @@ layout:
 === Rafflesia ===
 <pre><nowiki>
 name: "Rafflesia"
+name-jp:
+name-kana:
 company: "Coreland"
 needs-work: true
 
@@ -6770,6 +7304,8 @@ layout:
 === Raiden ===
 <pre><nowiki>
 name: "Raiden"
+name-jp:
+name-kana:
 company: "Seibu Kaihatsu / Moss"
 needs-work: true
 
@@ -6802,6 +7338,8 @@ layout:
 === Raiden DX ===
 <pre><nowiki>
 name: "Raiden DX"
+name-jp:
+name-kana:
 company: "Seibu Kaihatsu / Moss"
 needs-work: true
 
@@ -6861,6 +7399,8 @@ layout:
 === Raiden Fighters ===
 <pre><nowiki>
 name: "Raiden Fighters"
+name-jp:
+name-kana:
 company: "Seibu Kaihatsu / Moss"
 needs-work: true
 
@@ -6898,6 +7438,8 @@ layout:
 === Raiden Fighters 2 ===
 <pre><nowiki>
 name: "Raiden Fighters 2"
+name-jp:
+name-kana:
 company: "Seibu Kaihatsu / Moss"
 needs-work: true
 
@@ -6946,6 +7488,8 @@ layout:
 === Raiden Fighters Jet ===
 <pre><nowiki>
 name: "Raiden Fighters Jet"
+name-jp:
+name-kana:
 company: "Seibu Kaihatsu / Moss"
 needs-work: true
 
@@ -6970,6 +7514,8 @@ layout:
 === Raiden II ===
 <pre><nowiki>
 name: "Raiden II"
+name-jp:
+name-kana:
 company: "Seibu Kaihatsu / Moss"
 needs-work: true
 
@@ -7008,6 +7554,8 @@ layout:
 === Raiden III ===
 <pre><nowiki>
 name: "Raiden III"
+name-jp:
+name-kana:
 company: "Seibu Kaihatsu / Moss"
 needs-work: true
 
@@ -7034,6 +7582,8 @@ layout:
 === Raiden IV ===
 <pre><nowiki>
 name: "Raiden IV"
+name-jp:
+name-kana:
 company: "Seibu Kaihatsu / Moss"
 needs-work: true
 
@@ -7070,6 +7620,8 @@ layout:
 === Raiga: Strato Fighter ===
 <pre><nowiki>
 name: "Raiga: Strato Fighter"
+name-jp:
+name-kana:
 company: "Tecmo"
 needs-work: true
 
@@ -7096,6 +7648,8 @@ layout:
 === Rapid Hero ===
 <pre><nowiki>
 name: "Rapid Hero"
+name-jp:
+name-kana:
 company: "NMK"
 needs-work: true
 
@@ -7121,6 +7675,8 @@ layout:
 === Raycrisis ===
 <pre><nowiki>
 name: "Raycrisis"
+name-jp:
+name-kana:
 company: "Taito"
 needs-work: true
 
@@ -7149,6 +7705,8 @@ layout:
 === Rayforce / Layer Section ===
 <pre><nowiki>
 name: "Rayforce / Layer Section"
+name-jp:
+name-kana:
 company: "Taito"
 needs-work: true
 
@@ -7175,6 +7733,8 @@ layout:
 === Raystorm ===
 <pre><nowiki>
 name: "Raystorm"
+name-jp:
+name-kana:
 company: "Taito"
 needs-work: true
 
@@ -7200,6 +7760,8 @@ layout:
 === Rezon ===
 <pre><nowiki>
 name: "Rezon"
+name-jp:
+name-kana:
 company: "Allumer"
 needs-work: true
 
@@ -7223,6 +7785,8 @@ layout:
 === Rolling Gunner ===
 <pre><nowiki>
 name: "Rolling Gunner"
+name-jp:
+name-kana:
 company: "Mebius"
 needs-work: true
 
@@ -7236,43 +7800,53 @@ layout:
             |-
             ! colspan="2" | Mode !! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
-            | rowspan="9" | Story
-            | rowspan="3" | Casual
-            | RA || 310,176,710 || コッシー || JHA August 2020 || ||
+            | rowspan="11" | Story
+            | rowspan="5" | Casual
+            | RA || 354,755,790 || コッシー || September 12th, 2020 (JHA September 2020) / [https://twitter.com/zubrowk777/status/1304730410014748673 Twitter] || ||
             |-
-            | RS || 302,807,700 || コッシー || JHA August 2020 || ||
+            | rowspan="2" | RS
+            | 357,925,250 || R || [https://rollinggunner.am-all.net/players/ranking/2 Official Ranking] || ||
             |-
-            | RX || 313,345,430 || HAM || JHA August 2020 || 5L 5B remaining ||
+            | 347,071,100 || コッシー || JHA September 2020 || ||
+            |-
+            | rowspan="2" | RX
+            | 361,622,730 || R || [https://rollinggunner.am-all.net/players/ranking/3 Official Ranking] || ||
+            |-
+            | 313,345,430 || HAM || JHA August 2020 || 5L 5B remaining ||
             |-
             | rowspan="3" | Original
-            | RA || || || || ||
+            | RA || 2,288,201,250 || 白木凪 || [https://rollinggunner.am-all.net/players/ranking/8 Official Ranking] || died against TLB ||
             |-
             | RS || 5,473,233,930 || KMB-きめら || JHA August 2020 || 2L remaining ||
             |-
-            | RX || || || || ||
+            | RX || 5,991,716,840 || グーニャファイターやれ || JHA September 2020 || 0L 1B remaining ||
             |-
             | rowspan="3" | Expert
-            | RA || || || || ||
+            | RA || 1,679,736,990 || Hey民 || [https://rollinggunner.am-all.net/players/ranking/12 Official Ranking] || died stage 5 midboss ||
             |-
-            | RS || || || || ||
+            | RS || 1,809,781,670 || Gou161 || [https://rollinggunner.am-all.net/players/ranking/10 Official Ranking] || died stage 5 boss ||
             |-
-            | RX || || || || ||
+            | RX || 4,043,406,710 || - || [https://rollinggunner.am-all.net/players/ranking/11 Official Ranking] || died against TLB ||
             |-
-            | rowspan="6" | Score Attack
-            | Stage 1 || rowspan="6" | -
+            | rowspan="7" | Score Attack
+            | rowspan="2" | Stage 1
+            | rowspan="7" | -
+            | 566,675,560 || 田口さんSPレベラッ！ || [https://rollinggunner.am-all.net/players/ranking/13 Official Ranking] || used RA ||
+            |-
             | 101,409,490 || Okyan || JHA August 2020 || used RA ||
             |-
-            | Stage 2 || || || || ||
+            | Stage 2 || 534,748,660 || 田口さんSPレベラッ！ || [https://rollinggunner.am-all.net/players/ranking/17 Official Ranking] || used RS ||
             |-
-            | Stage 3 || || || || ||
+            | Stage 3 || 2,219,872,450 || 田口さんSPレベラッ！ || [https://rollinggunner.am-all.net/players/ranking/21 Official Ranking] || used RS ||
             |-
-            | Stage 4 || || || || ||
+            | Stage 4 || 2,047,988,390 || 田口さんSPレベラッ！ || [https://rollinggunner.am-all.net/players/ranking/25 Official Ranking] || used RS ||
             |-
-            | Stage 5 || || || || ||
+            | Stage 5 || 2,550,923,450 || 田口さんSPレベラッ！ || [https://rollinggunner.am-all.net/players/ranking/29 Official Ranking] || used RS ||
             |-
-            | Stage 6 || || || || ||
+            | Stage 6 || 5,123,874,870 || 田口さんSPレベラッ！ || [https://rollinggunner.am-all.net/players/ranking/33 Official Ranking] || used RS ||
             |}
             
+            * [https://rollinggunner.am-all.net/players/ranking Official Ranking]
             * [https://shmups.system11.org/viewtopic.php?f=2&t=65836 Shmups Forum Hi-Score Topic]
 </nowiki></pre>
 
@@ -7280,6 +7854,8 @@ layout:
 === Ryu Jin ===
 <pre><nowiki>
 name: "Ryu Jin"
+name-jp:
+name-kana:
 company: "Taito"
 needs-work: true
 
@@ -7305,6 +7881,8 @@ layout:
 === Salamander ===
 <pre><nowiki>
 name: "Salamander"
+name-jp:
+name-kana:
 company: "Konami"
 needs-work: true
 
@@ -7330,6 +7908,8 @@ layout:
 === Salamander 2 ===
 <pre><nowiki>
 name: "Salamander 2"
+name-jp:
+name-kana:
 company: "Konami"
 needs-work: true
 
@@ -7353,6 +7933,8 @@ layout:
 === Same! Same! Same! / Fire Shark ===
 <pre><nowiki>
 name: "Same! Same! Same! / Fire Shark"
+name-jp:
+name-kana:
 company: "Toaplan"
 needs-work: true
 
@@ -7400,6 +7982,8 @@ layout:
 === Sand Scorpion ===
 <pre><nowiki>
 name: "Sand Scorpion"
+name-jp:
+name-kana:
 company: "Face"
 needs-work: true
 
@@ -7423,6 +8007,8 @@ layout:
 === Scramble Formation / Tokio ===
 <pre><nowiki>
 name: "Scramble Formation / Tokio"
+name-jp:
+name-kana:
 company: "Taito"
 needs-work: true
 
@@ -7446,6 +8032,8 @@ layout:
 === Scramble Spirits ===
 <pre><nowiki>
 name: "Scramble Spirits"
+name-jp:
+name-kana:
 company: "Sega"
 needs-work: true
 
@@ -7474,6 +8062,8 @@ layout:
 === Sengeki Striker ===
 <pre><nowiki>
 name: "Sengeki Striker"
+name-jp:
+name-kana:
 company: "Warashi"
 needs-work: true
 
@@ -7499,6 +8089,8 @@ layout:
 === Sengoku Ace ===
 <pre><nowiki>
 name: "Sengoku Ace"
+name-jp:
+name-kana:
 company: "Psikyo"
 needs-work: true
 
@@ -7533,6 +8125,8 @@ layout:
 === Sengoku Blade ===
 <pre><nowiki>
 name: "Sengoku Blade"
+name-jp:
+name-kana:
 company: "Psikyo"
 needs-work: true
 
@@ -7567,6 +8161,8 @@ layout:
 === Sexy Parodius ===
 <pre><nowiki>
 name: "Sexy Parodius"
+name-jp:
+name-kana:
 company: "Konami"
 needs-work: true
 
@@ -7604,6 +8200,8 @@ layout:
 === Shienryu ===
 <pre><nowiki>
 name: "Shienryu"
+name-jp:
+name-kana:
 company: "Warashi"
 needs-work: true
 
@@ -7629,6 +8227,8 @@ layout:
 === Shikigami no Shiro ===
 <pre><nowiki>
 name: "Shikigami no Shiro"
+name-jp:
+name-kana:
 company: "Alfa System"
 needs-work: true
 
@@ -7642,7 +8242,7 @@ layout:
             |-
             ! Character !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
-            | ??? || {{v|a1|5,999,970,630}} || 二番の男 || Arcadia May 2014 || || [http://www.nicovideo.jp/watch/sm22779253 Niconico]
+            | ??? || {{v|a1|5,999,970,630}} || 二番の男 || January 27th, 2014 (Arcadia May 2014) / [https://twitter.com/cb235/status/427819988586483712 Twitter] || || [http://www.nicovideo.jp/watch/sm22779253 Niconico]
             |-
             | Fumiko O.V. || {{v|b1|5,612,215,820}} || 二番の男 || Arcadia July 2005 || || [http://www.nicovideo.jp/watch/sm9204136 Niconico]
             |-
@@ -7663,6 +8263,8 @@ layout:
 === Shikigami no Shiro II ===
 <pre><nowiki>
 name: "Shikigami no Shiro II"
+name-jp:
+name-kana:
 company: "Alfa System"
 needs-work: true
 
@@ -7706,6 +8308,8 @@ layout:
 === Shikigami no Shiro III ===
 <pre><nowiki>
 name: "Shikigami no Shiro III"
+name-jp:
+name-kana:
 company: "Alfa System"
 needs-work: true
 
@@ -7756,6 +8360,8 @@ layout:
 === Shippu Mahou Daisakusen ===
 <pre><nowiki>
 name: "Shippu Mahou Daisakusen"
+name-jp:
+name-kana:
 company: "Raizing / 8ing"
 needs-work: true
 
@@ -7797,6 +8403,8 @@ layout:
 === Shooting Love 2007 ===
 <pre><nowiki>
 name: "Shooting Love 2007"
+name-jp:
+name-kana:
 company: "Triangle Service / Oriental Soft"
 needs-work: true
 
@@ -7835,6 +8443,8 @@ layout:
 === Skull Fang ===
 <pre><nowiki>
 name: "Skull Fang"
+name-jp:
+name-kana:
 company: "Data East"
 needs-work: true
 
@@ -7846,12 +8456,14 @@ layout:
             |-
             ! colspan="6" | [[Skull Fang]] (Data East)
             |-
-            ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
+            ! Mode !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
-            | Auto || {{v|a1|20,222,600}} || S.N || Arcadia July 1999 || Sif ||
+            | style="background: #B9D9B9 | Auto || style="background: #B9D9B9 | 20,222,600 || style="background: #B9D9B9 | S.N || style="background: #B9D9B9 | Arcadia July 1999 || style="background: #B9D9B9 | Sif || style="background: #B9D9B9 |
             |-
-            | Chase || {{v|b1|31,425,400}} || KDK-Takeyuki || Arcadia February 2009 || ||
+            | Chase || 31,425,400 || KDK-Takeyuki || Arcadia February 2009 || ||
             |}
+            
+            Note: Japanese scoreboard for Auto Mode closed September 2019 due to the detection of an infinite pattern.
             
             * [https://shmups.system11.org/viewtopic.php?t=56869 Shmups Forum Hi-Score Topic]
 </nowiki></pre>
@@ -7860,6 +8472,8 @@ layout:
 === Sky Adventure ===
 <pre><nowiki>
 name: "Sky Adventure"
+name-jp:
+name-kana:
 company: "SNK"
 needs-work: true
 
@@ -7883,6 +8497,8 @@ layout:
 === Sky Kid ===
 <pre><nowiki>
 name: "Sky Kid"
+name-jp:
+name-kana:
 company: "Namco"
 needs-work: true
 
@@ -7906,6 +8522,8 @@ layout:
 === Sky Kid Deluxe ===
 <pre><nowiki>
 name: "Sky Kid Deluxe"
+name-jp:
+name-kana:
 company: "Namco"
 needs-work: true
 
@@ -7927,6 +8545,8 @@ layout:
 === Sky Smasher ===
 <pre><nowiki>
 name: "Sky Smasher"
+name-jp:
+name-kana:
 company: "Nihon System"
 needs-work: true
 
@@ -7955,6 +8575,8 @@ layout:
 === Sky Soldiers ===
 <pre><nowiki>
 name: "Sky Soldiers"
+name-jp:
+name-kana:
 company: "ADK"
 needs-work: true
 
@@ -7979,6 +8601,8 @@ layout:
 === Slap Fight ===
 <pre><nowiki>
 name: "Slap Fight"
+name-jp:
+name-kana:
 company: "Toaplan"
 needs-work: true
 
@@ -8008,6 +8632,8 @@ layout:
 === Sol Divide ===
 <pre><nowiki>
 name: "Sol Divide"
+name-jp:
+name-kana:
 company: "Psikyo"
 needs-work: true
 
@@ -8035,6 +8661,8 @@ layout:
 === Sonic Boom ===
 <pre><nowiki>
 name: "Sonic Boom"
+name-jp:
+name-kana:
 company: "Sega"
 needs-work: true
 
@@ -8060,6 +8688,8 @@ layout:
 === Sonic Wings ===
 <pre><nowiki>
 name: "Sonic Wings"
+name-jp:
+name-kana:
 company: "Video System"
 needs-work: true
 
@@ -8077,7 +8707,7 @@ layout:
             |-
             | AV-8 / Villiam || {{v|b1|1,715,900}} || D.I || JHA January 2020 || missed steel towers x2 ||
             |-
-            | F-14 / Keith || {{v|c1|1,765,100}} || AXIOM-ZZZ || JHA August 2020 || autofire ||
+            | F-14 / Keith || {{v|c1|1,770,200}} || AXIOM-ZZZ || JHA September 2020 || autofire ||
             |-
             | F-15 / Mao || {{v|d1|1,589,700}} || みっしー || JHA April 2017 || ||
             |-
@@ -8098,6 +8728,8 @@ layout:
 === Sonic Wings 2 ===
 <pre><nowiki>
 name: "Sonic Wings 2"
+name-jp:
+name-kana:
 company: "Video System"
 needs-work: true
 
@@ -8138,6 +8770,8 @@ layout:
 === Sonic Wings 3 ===
 <pre><nowiki>
 name: "Sonic Wings 3"
+name-jp:
+name-kana:
 company: "Video System"
 needs-work: true
 
@@ -8179,6 +8813,8 @@ layout:
 === Sonic Wings Limited ===
 <pre><nowiki>
 name: "Sonic Wings Limited"
+name-jp:
+name-kana:
 company: "Video System"
 needs-work: true
 
@@ -8202,6 +8838,8 @@ layout:
 === Soukyugurentai ===
 <pre><nowiki>
 name: "Soukyugurentai"
+name-jp:
+name-kana:
 company: "Raizing / 8ing"
 needs-work: true
 
@@ -8230,6 +8868,8 @@ layout:
 === Space Bomber ===
 <pre><nowiki>
 name: "Space Bomber"
+name-jp:
+name-kana:
 company: "Psikyo"
 needs-work: true
 
@@ -8258,6 +8898,8 @@ layout:
 === Space Invaders Anniversary ===
 <pre><nowiki>
 name: "Space Invaders Anniversary"
+name-jp:
+name-kana:
 company: "Taito"
 needs-work: true
 
@@ -8283,6 +8925,8 @@ layout:
 === SRD: Super Real Darwin ===
 <pre><nowiki>
 name: "SRD: Super Real Darwin"
+name-jp:
+name-kana:
 company: "Data East"
 needs-work: true
 
@@ -8312,6 +8956,8 @@ layout:
 === Stagger 1 ===
 <pre><nowiki>
 name: "Stagger 1"
+name-jp:
+name-kana:
 company: "Afega"
 needs-work: true
 
@@ -8333,6 +8979,8 @@ layout:
 === Star Force ===
 <pre><nowiki>
 name: "Star Force"
+name-jp:
+name-kana:
 company: "Tehkan"
 needs-work: true
 
@@ -8358,6 +9006,8 @@ layout:
 === Storm Blade ===
 <pre><nowiki>
 name: "Storm Blade"
+name-jp:
+name-kana:
 company: "Visco"
 needs-work: true
 
@@ -8381,6 +9031,8 @@ layout:
 === Strania: The Stella Machina ===
 <pre><nowiki>
 name: "Strania: The Stella Machina"
+name-jp:
+name-kana:
 company: "G.Rev"
 needs-work: true
 
@@ -8394,31 +9046,38 @@ layout:
             |-
             ! Ship !! Mode !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
-            | rowspan="5" | Strania
+            | rowspan="6" | Strania
             | rowspan="2" | Normal
-            | {{v|a1|15,944,630}} || LevelFix || Arcadia January 2013 ||highest score Arcade || 
+            | 15,944,630 || rowspan="2" | LevelFix
+            | Arcadia January 2013 ||highest score Arcade || 
             |-
-            | {{v|b1|15,950,590}} || LevelFix || 2012 / XBL ranking || highest score Xbox 360 || [http://www.nicovideo.jp/watch/sm18982006 Niconico]
+            | 15,950,590 || 2012 / XBL ranking || highest score Xbox 360 || [http://www.nicovideo.jp/watch/sm18982006 Niconico]
             |-
             | rowspan="2" | Hard
-            | {{v|c1|16,762,910}} || LevelFix || Arcadia March 2013 || highest score Arcade ||
+            | 16,762,910 || rowspan="2" | LevelFix
+            | Arcadia March 2013 || highest score Arcade ||
             |-
-            | {{v|d1|16,841,510}} || LevelFix || 2016 / XBL ranking || highest score Xbox 360 || [http://www.nicovideo.jp/watch/sm28383797 Niconico]
+            | 16,841,510 || 2016 / XBL ranking || highest score Xbox 360 || [http://www.nicovideo.jp/watch/sm28383797 Niconico]
             |-
-            | Expert || {{v|e1|16,750,600}} || LevelFix || 2017 / superplay DVD|| ||
+            | rowspan="2" | Expert
+            | 16,750,600 || rowspan="2" | LevelFix
+            | 2017 / superplay DVD|| ||
+            |-
+            | 16,636,410 || Arcadia March 2013 || ||
             |-
             | rowspan="5" | Vower
             | rowspan="2" | Normal
-            | {{v|f1|17,320,780}} || りぶ || Arcadia June 2013 || highest score Arcade ||
+            | 17,320,780 || りぶ || Arcadia June 2013 || highest score Arcade ||
             |-
-            | {{v|g1|17,324,850}} || LevelFix || XBL ranking || highest score Xbox 360 ||
+            | 17,324,850 || LevelFix || XBL ranking || highest score Xbox 360 ||
             |-
             | rowspan="2" | Hard
-            | {{v|h1|18,551,720}} || LevelFix || Arcadia June 2012 || highest score Arcade ||
+            | 18,551,720 || rowspan="2" | LevelFix
+            | Arcadia June 2012 || highest score Arcade ||
             |-
-            | {{v|i1|18,759,480}} || LevelFix || June 14th, 2012 / XBL ranking [https://twitter.com/level_fix/status/213196264693710848 Twitter] || highest score Xbox 360 ||
+            | 18,759,480 || June 14th, 2012 / XBL ranking [https://twitter.com/level_fix/status/213196264693710848 Twitter] || highest score Xbox 360 ||
             |-
-            | Expert || {{v|j1|18,809,670}} || LevelFix || July 6th, 2012 (Arcadia October 2012) / [https://twitter.com/level_fix/status/221191641619369985 Twitter] || ||
+            | Expert || 18,809,670 || LevelFix || July 6th, 2012 (Arcadia October 2012) / [https://twitter.com/level_fix/status/221191641619369985 Twitter] || ||
             |}
             
             * [https://wiki.denfaminicogamer.jp/highscore/2011_014_%E6%98%9F%E9%9C%9C%E9%8B%BC%E6%A9%9F%E3%82%B9%E3%83%88%E3%83%A9%E3%83%8B%E3%82%A2_Ver.1.11 JHA Leaderboard]
@@ -8429,6 +9088,8 @@ layout:
 === Strikers 1945 ===
 <pre><nowiki>
 name: "Strikers 1945"
+name-jp:
+name-kana:
 company: "Psikyo"
 needs-work: true
 
@@ -8466,6 +9127,8 @@ layout:
 === Strikers 1945 II ===
 <pre><nowiki>
 name: "Strikers 1945 II"
+name-jp:
+name-kana:
 company: "Psikyo"
 needs-work: true
 
@@ -8506,6 +9169,8 @@ layout:
 === Strikers 1945 Plus ===
 <pre><nowiki>
 name: "Strikers 1945 Plus"
+name-jp:
+name-kana:
 company: "Psikyo"
 needs-work: true
 
@@ -8532,6 +9197,8 @@ layout:
 === Strikers 1999 ===
 <pre><nowiki>
 name: "Strikers 1999"
+name-jp:
+name-kana:
 company: "Psikyo"
 needs-work: true
 
@@ -8545,25 +9212,27 @@ layout:
             |-
             ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
-            | AV-8 Harrier || {{v|a1|3,359,000}} || KDK-Takeyuki || Arcadia April 2003 || Double x1 ||
+            | AV-8 Harrier || 3,359,000 || KDK-Takeyuki || Arcadia April 2003 || Double x1 ||
             |-
-            | F-117 Stealth || {{v|b1|3,398,000}} || 近くて遠い340万 || Arcadia October 2002 || ||
+            | F-117 Stealth || 3,398,000 || 近くて遠い340万 || Arcadia October 2002 || ||
             |-
-            | rowspan="2" | F-22 Raptor
-            | {{v|c1|3,511,200}} || DBS || December 7th, 2016 / [https://twitter.com/dbsqawsedrftgyh/status/806545233303334913 Twitter] || ||
+            | rowspan="3" | F-22 Raptor
+            | 3,511,200 || DBS || December 7th, 2016 / [https://twitter.com/dbsqawsedrftgyh/status/806545233303334913 Twitter] || ||
             |-
-            | {{v|d1|3,394,300}} || 両替士 || Arcadia May 2010 || ||
+            | 3,463,000 || Y.C || August 26th, 2010 / [http://cafe.daum.net/shooting/810/17405 OCC Official Cafe] || ||
             |-
-            | F-4 Phantom II || {{v|e1|3,432,200}} || CYS-SAK || October 30th, 2016 (JHA November 2016) / [https://twitter.com/1ka2no394285ki/status/792748345756221440 Twitter] || ||
+            | 3,394,300 || 両替士 || Arcadia May 2010 || ||
             |-
-            | F/A-18 Super Hornet || {{v|f1|3,372,700}} || ZCM-FCM || Arcadia August 2002 || ||
+            | F-4 Phantom II || 3,432,200 || CYS-SAK || October 30th, 2016 (JHA November 2016) / [https://twitter.com/1ka2no394285ki/status/792748345756221440 Twitter] || ||
+            |-
+            | F/A-18 Super Hornet || 3,372,700 || ZCM-FCM || Arcadia August 2002 || ||
             |-
             | rowspan="3" | X-36
-            | {{v|g1|3,601,800}} || CYS-SAK || February 17th, 2018 / [https://twitter.com/1ka2no394285ki/status/964894291767144449 Twitter] || played at home ||
+            | 3,601,800 || CYS-SAK || February 17th, 2018 / [https://twitter.com/1ka2no394285ki/status/964894291767144449 Twitter] || played at home ||
             |-
-            | {{v|h1|3,589,300}} || H.J (PASTA) || January 15th, 2020 / [https://imgur.com/PkZxIbm Image] || ||
+            | 3,589,300 || H.J (PASTA) || January 15th, 2020 / [https://imgur.com/PkZxIbm Image] || ||
             |-
-            | {{v|i1|3,578,200}} || CYS-SAK || October 8th, 2017 (JHA October 2017) / [https://twitter.com/1ka2no394285ki/status/917052533238935552 Twitter] || ||
+            | 3,578,200 || CYS-SAK || October 8th, 2017 (JHA October 2017) / [https://twitter.com/1ka2no394285ki/status/917052533238935552 Twitter] || ||
             |}
             
             * [https://wiki.denfaminicogamer.jp/highscore/1999_016_%E3%82%B9%E3%83%88%E3%83%A9%E3%82%A4%E3%82%AB%E3%83%BC%E3%82%BA1999 JHA Leaderboard]
@@ -8574,6 +9243,8 @@ layout:
 === Super Xevious ===
 <pre><nowiki>
 name: "Super Xevious"
+name-jp:
+name-kana:
 company: "Namco"
 needs-work: true
 
@@ -8603,6 +9274,8 @@ layout:
 === Syvalion ===
 <pre><nowiki>
 name: "Syvalion"
+name-jp:
+name-kana:
 company: "Taito"
 needs-work: true
 
@@ -8626,6 +9299,8 @@ layout:
 === Task Force Harrier ===
 <pre><nowiki>
 name: "Task Force Harrier"
+name-jp:
+name-kana:
 company: "NMK"
 needs-work: true
 
@@ -8691,6 +9366,8 @@ layout:
 === Tatakae! Big Fighter ===
 <pre><nowiki>
 name: "Tatakae! Big Fighter"
+name-jp:
+name-kana:
 company: "Nichibutsu"
 needs-work: true
 
@@ -8716,6 +9393,8 @@ layout:
 === Tatsujin / Truxton ===
 <pre><nowiki>
 name: "Tatsujin / Truxton"
+name-jp:
+name-kana:
 company: "Toaplan"
 needs-work: true
 
@@ -8765,6 +9444,8 @@ layout:
 === Tatsujin Ou / Truxton II ===
 <pre><nowiki>
 name: "Tatsujin Ou / Truxton II"
+name-jp:
+name-kana:
 company: "Toaplan"
 needs-work: true
 
@@ -8790,6 +9471,8 @@ layout:
 === Tenkomori Shooting ===
 <pre><nowiki>
 name: "Tenkomori Shooting"
+name-jp:
+name-kana:
 company: "Namco"
 needs-work: true
 
@@ -8817,6 +9500,8 @@ layout:
 === Tenseiryu / Saint Dragon ===
 <pre><nowiki>
 name: "Tenseiryu / Saint Dragon"
+name-jp:
+name-kana:
 company: "NMK"
 needs-work: true
 
@@ -8842,6 +9527,8 @@ layout:
 === Terra Cresta ===
 <pre><nowiki>
 name: "Terra Cresta"
+name-jp:
+name-kana:
 company: "Nichibutsu"
 needs-work: true
 
@@ -8877,6 +9564,8 @@ layout:
 === Terra Force ===
 <pre><nowiki>
 name: "Terra Force"
+name-jp:
+name-kana:
 company: "Nichibutsu"
 needs-work: true
 
@@ -8900,6 +9589,8 @@ layout:
 === The Great Ragtime Show / Boogie Wings ===
 <pre><nowiki>
 name: "The Great Ragtime Show / Boogie Wings"
+name-jp:
+name-kana:
 company: "Data East"
 needs-work: true
 
@@ -8921,6 +9612,8 @@ layout:
 === Thunder Blaster / Lethal Thunder ===
 <pre><nowiki>
 name: "Thunder Blaster / Lethal Thunder"
+name-jp:
+name-kana:
 company: "Irem"
 needs-work: true
 
@@ -8948,6 +9641,8 @@ layout:
 === Thunder Cross ===
 <pre><nowiki>
 name: "Thunder Cross"
+name-jp:
+name-kana:
 company: "Konami"
 needs-work: true
 
@@ -9033,6 +9728,8 @@ layout:
 === Thunder Cross II ===
 <pre><nowiki>
 name: "Thunder Cross II"
+name-jp:
+name-kana:
 company: "Konami"
 needs-work: true
 
@@ -9060,6 +9757,8 @@ layout:
 === Thunder Dragon ===
 <pre><nowiki>
 name: "Thunder Dragon"
+name-jp:
+name-kana:
 company: "NMK"
 needs-work: true
 
@@ -9100,6 +9799,8 @@ layout:
 === Thunder Dragon 2 ===
 <pre><nowiki>
 name: "Thunder Dragon 2"
+name-jp:
+name-kana:
 company: "NMK"
 needs-work: true
 
@@ -9125,6 +9826,8 @@ layout:
 === Thunder Force AC ===
 <pre><nowiki>
 name: "Thunder Force AC"
+name-jp:
+name-kana:
 company: "Tecnosoft"
 needs-work: true
 
@@ -9153,6 +9856,8 @@ layout:
 === Tiger Heli ===
 <pre><nowiki>
 name: "Tiger Heli"
+name-jp:
+name-kana:
 company: "Toaplan"
 needs-work: true
 
@@ -9178,6 +9883,8 @@ layout:
 === Tokushu Butai U.A.G. ===
 <pre><nowiki>
 name: "Tokushu Butai U.A.G."
+name-jp:
+name-kana:
 company: "Seta"
 needs-work: true
 
@@ -9203,6 +9910,8 @@ layout:
 === Triggerheart Exelica ===
 <pre><nowiki>
 name: "Triggerheart Exelica"
+name-jp:
+name-kana:
 company: "Warashi"
 needs-work: true
 
@@ -9229,6 +9938,8 @@ layout:
 === Trigon ===
 <pre><nowiki>
 name: "Trigon"
+name-jp:
+name-kana:
 company: "Konami"
 needs-work: true
 
@@ -9244,7 +9955,10 @@ layout:
             |-
             | OFF || 2,986,500 || WSM-ツィ～まる。 || September 26th, 2019 (JHA October 2019) / [https://twitter.com/wsm_tuii3/status/1177227588365778944 Twitter] || ||
             |-
-            | ON || 3,032,180 || WSM-ツィ～まる。 || August 2nd, 2020 (JHA August 2020) / [https://twitter.com/wsm_tuii3/status/1289912647253520384 Twitter] || ||
+            | rowspan="2" | ON
+            | 3,035,050 || WSM-ツィ～まる。 || October 4th, 2020 / [https://twitter.com/wsm_tuii3/status/1312743713630646273 Twitter] || ||
+            |-
+            | 3,032,180 || WSM-ツィ～まる。 || August 2nd, 2020 (JHA August 2020) / [https://twitter.com/wsm_tuii3/status/1289912647253520384 Twitter] || ||
             |}
             
             * [https://wiki.denfaminicogamer.jp/highscore/1990_009_%E3%83%88%E3%83%A9%E3%82%A4%E3%82%B4%E3%83%B3 JHA Leaderboard]
@@ -9255,6 +9969,8 @@ layout:
 === Trizeal ===
 <pre><nowiki>
 name: "Trizeal"
+name-jp:
+name-kana:
 company: "Triangle Service / Oriental Soft"
 needs-work: true
 
@@ -9279,6 +9995,8 @@ layout:
 === Trouble ☆ Witches AC ===
 <pre><nowiki>
 name: "Trouble ☆ Witches AC"
+name-jp:
+name-kana:
 company: "Studio Siesta"
 needs-work: true
 
@@ -9334,6 +10052,8 @@ layout:
 === Turbo Force ===
 <pre><nowiki>
 name: "Turbo Force"
+name-jp:
+name-kana:
 company: "Video System"
 needs-work: true
 
@@ -9361,6 +10081,8 @@ layout:
 === Twin Eagle ===
 <pre><nowiki>
 name: "Twin Eagle"
+name-jp:
+name-kana:
 company: "Seta"
 needs-work: true
 
@@ -9384,6 +10106,8 @@ layout:
 === Twin Eagle II ===
 <pre><nowiki>
 name: "Twin Eagle II"
+name-jp:
+name-kana:
 company: "Seta"
 needs-work: true
 
@@ -9407,6 +10131,8 @@ layout:
 === TwinBee Yahhoo! ===
 <pre><nowiki>
 name: "TwinBee Yahhoo!"
+name-jp:
+name-kana:
 company: "Konami"
 needs-work: true
 
@@ -9440,6 +10166,8 @@ layout:
 === Twinkle Star Sprites ===
 <pre><nowiki>
 name: "Twinkle Star Sprites"
+name-jp:
+name-kana:
 company: "ADK"
 needs-work: true
 
@@ -9463,6 +10191,8 @@ layout:
 === U.S. Navy ===
 <pre><nowiki>
 name: "U.S. Navy"
+name-jp:
+name-kana:
 company: "Capcom"
 needs-work: true
 
@@ -9489,6 +10219,8 @@ layout:
 === Uchuu Senkan Gomora / Bio-Ship Paladin ===
 <pre><nowiki>
 name: "Uchuu Senkan Gomora / Bio-Ship Paladin"
+name-jp:
+name-kana:
 company: "UPL"
 needs-work: true
 
@@ -9514,6 +10246,8 @@ layout:
 === Ultimate Ecology ===
 <pre><nowiki>
 name: "Ultimate Ecology"
+name-jp:
+name-kana:
 company: "Capcom"
 needs-work: true
 
@@ -9539,6 +10273,8 @@ layout:
 === Ultra Keibitai / Ultra X Weapons ===
 <pre><nowiki>
 name: "Ultra Keibitai / Ultra X Weapons"
+name-jp:
+name-kana:
 company: "Seta"
 needs-work: true
 
@@ -9564,6 +10300,8 @@ layout:
 === Under Defeat ===
 <pre><nowiki>
 name: "Under Defeat"
+name-jp:
+name-kana:
 company: "G.Rev"
 needs-work: true
 
@@ -9588,6 +10326,8 @@ layout:
 === USAAF Mustang ===
 <pre><nowiki>
 name: "USAAF Mustang"
+name-jp:
+name-kana:
 company: "NMK"
 needs-work: true
 
@@ -9629,6 +10369,8 @@ layout:
 === V-V / Grind Stormer ===
 <pre><nowiki>
 name: "V-V / Grind Stormer"
+name-jp:
+name-kana:
 company: "Toaplan"
 needs-work: true
 
@@ -9655,6 +10397,8 @@ layout:
 === Valtric ===
 <pre><nowiki>
 name: "Valtric"
+name-jp:
+name-kana:
 company: "NMK"
 needs-work: true
 
@@ -9668,10 +10412,12 @@ layout:
             |-
             ! Score !! Player !! Date / Source !! Comment !! Replay
             |-
-            | {{v|a1|1,049,520}} || ACU-EPS || Micom Basic April 1987 || stage 7 ||
+            | {{v|a1|1,049,520}} || ACU-EPS || Micom Basic April 1987 || stage 2-3 ||
             |-
-            | {{v|b1|1,487,190}} || GMC.えるす || Micom Basic April 1987 || stage 5 ||
+            | {{v|b1|1,487,190}} || GMC.えるす || Micom Basic April 1987 || stage 2-1 ||
             |}
+            
+            Note: It has been reported that the furthest a player has ever gotten is actually stage 3-1 ([https://igcc.jp/kenjo-03-01/ Source]).
             
             * [https://shmups.system11.org/viewtopic.php?t=59663 Shmups Forum Hi-Score Topic]
 </nowiki></pre>
@@ -9680,6 +10426,8 @@ layout:
 === Varth ===
 <pre><nowiki>
 name: "Varth"
+name-jp:
+name-kana:
 company: "Capcom"
 needs-work: true
 
@@ -9698,6 +10446,8 @@ layout:
             | ON || {{v|b1|15,345,000}} || よどさん || October 28, 2018 (JHA November 2018) || ||
             |}
             
+            Note: Higher scores have been posted in various places but these were all played on non-default extend settings, e.g. 1st 600,000 and then Every 1,400,000, which is the extend setting when both DIP 4 and 5 are set to OFF. However, the [https://imgur.com/fNf7qch PCB manual] states that the default extend setting is 1st 600,000, 2nd 2,000,000, and 3rd 4,500,000 with DIP switches 4 ON and 5 OFF.
+            
             * [https://wiki.denfaminicogamer.jp/highscore/1992_001_%E3%83%90%E3%83%BC%E3%82%B9 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=52339 Shmups Forum Hi-Score Topic]
 </nowiki></pre>
@@ -9706,6 +10456,8 @@ layout:
 === Vasara ===
 <pre><nowiki>
 name: "Vasara"
+name-jp:
+name-kana:
 company: "Visco"
 needs-work: true
 
@@ -9735,6 +10487,8 @@ layout:
 === Vasara 2 ===
 <pre><nowiki>
 name: "Vasara 2"
+name-jp:
+name-kana:
 company: "Visco"
 needs-work: true
 
@@ -9765,6 +10519,8 @@ layout:
 === Viewpoint ===
 <pre><nowiki>
 name: "Viewpoint"
+name-jp:
+name-kana:
 company: "Aicom / Yumekobo"
 needs-work: true
 
@@ -9794,6 +10550,8 @@ layout:
 === Vimana ===
 <pre><nowiki>
 name: "Vimana"
+name-jp:
+name-kana:
 company: "Toaplan"
 needs-work: true
 
@@ -9925,6 +10683,8 @@ layout:
 === Viper Phase 1 ===
 <pre><nowiki>
 name: "Viper Phase 1"
+name-jp:
+name-kana:
 company: "Seibu Kaihatsu / Moss"
 needs-work: true
 
@@ -9955,6 +10715,8 @@ layout:
 === Wangan Sensou / Desert War ===
 <pre><nowiki>
 name: "Wangan Sensou / Desert War"
+name-jp:
+name-kana:
 company: "NMK"
 needs-work: true
 
@@ -9983,6 +10745,8 @@ layout:
 === War of Aero ===
 <pre><nowiki>
 name: "War of Aero"
+name-jp:
+name-kana:
 company: "Yang Chen"
 needs-work: true
 
@@ -10007,6 +10771,8 @@ layout:
 === Wonder Planet ===
 <pre><nowiki>
 name: "Wonder Planet"
+name-jp:
+name-kana:
 company: "Data East"
 needs-work: true
 
@@ -10028,6 +10794,8 @@ layout:
 === X-Multiply ===
 <pre><nowiki>
 name: "X-Multiply"
+name-jp:
+name-kana:
 company: "Irem"
 needs-work: true
 
@@ -10052,6 +10820,8 @@ layout:
 === Xevious ===
 <pre><nowiki>
 name: "Xevious"
+name-jp:
+name-kana:
 company: "Namco"
 needs-work: true
 
@@ -10099,6 +10869,8 @@ layout:
 === Xevious 3D/G ===
 <pre><nowiki>
 name: "Xevious 3D/G"
+name-jp:
+name-kana:
 company: "Namco"
 needs-work: true
 
@@ -10122,6 +10894,8 @@ layout:
 === Xexex ===
 <pre><nowiki>
 name: "Xexex"
+name-jp:
+name-kana:
 company: "Konami"
 needs-work: true
 
@@ -10150,6 +10924,8 @@ layout:
 === XII Stag ===
 <pre><nowiki>
 name: "XII Stag"
+name-jp:
+name-kana:
 company: "Triangle Service / Oriental Soft"
 needs-work: true
 
@@ -10173,6 +10949,8 @@ layout:
 === XX Mission ===
 <pre><nowiki>
 name: "XX Mission"
+name-jp:
+name-kana:
 company: "UPL"
 needs-work: true
 
@@ -10196,6 +10974,8 @@ layout:
 === Yokushin: Giga Wing Generations ===
 <pre><nowiki>
 name: "Yokushin: Giga Wing Generations"
+name-jp:
+name-kana:
 company: "Takumi"
 needs-work: true
 
@@ -10228,6 +11008,8 @@ layout:
 === Zero Gunner ===
 <pre><nowiki>
 name: "Zero Gunner"
+name-jp:
+name-kana:
 company: "Psikyo"
 needs-work: true
 
@@ -10249,6 +11031,8 @@ layout:
 === Zero Gunner 2 ===
 <pre><nowiki>
 name: "Zero Gunner 2"
+name-jp:
+name-kana:
 company: "Psikyo"
 needs-work: true
 
@@ -10277,6 +11061,8 @@ layout:
 === Zero Wing ===
 <pre><nowiki>
 name: "Zero Wing"
+name-jp:
+name-kana:
 company: "Toaplan"
 needs-work: true
 
@@ -10302,6 +11088,8 @@ layout:
 === Zing Zing Zip ===
 <pre><nowiki>
 name: "Zing Zing Zip"
+name-jp:
+name-kana:
 company: "Allumer"
 needs-work: true
 
