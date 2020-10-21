@@ -199,6 +199,8 @@ function convertToDatabase(
 === {{ game-name }} ===
 <pre><nowiki>
 name: "{{ game-name }}"
+name-jp:
+name-kana:
 company: "{{ company-name }}"
 needs-work: true
 
@@ -358,6 +360,57 @@ layout:
           - weapon
           - version
 
+    # Default order for the columns (see next property). For each game, only columns that have been set
+    # will be displayed.
+    column-order:
+      - player
+      - ship
+      - mode
+      - weapon
+      - score
+      - scored-date
+      - source
+      - comments
+
+    # Available columns. Columns specified here can be used for all games.
+    columns:
+        player:
+            label: Player
+            label-jp: プレイヤー
+            template: "{{ player }}"
+
+        score:
+            label: Score
+            label-jp: スコア
+            template: "{{ score }}"
+
+        ship:
+            label: Ship
+            label-jp: 自機
+            template: "{{ ship }}"
+
+        mode:
+            label: Mode
+            template: "{{ mode }}"
+
+        weapon:
+            label: Style
+            template: "{{ weapon }}"
+
+        scored-date:
+            label: Scored date
+            template: "{{ scored-date }}"
+
+        source:
+            label: Source
+            label-jp: 情報元
+            template: "{{ source }}"
+
+        comments:
+            label: Comment
+            label-jp: 備考
+            template: "{{ comments|join('; ') }}"
+
     # Wiki templates. The one named `main` is the entry point, everything else gets included from there.
     templates:
         main: |
@@ -386,11 +439,9 @@ layout:
             __NOTOC__
         games: |
             {% for game in games.all %}
-            {% if game.template %}
-            {{ game.template|raw }}
-            {% else %}
-            {{ include('game') }}
-            {% endif %}
+            {# Use custom game template where available. #}
+            {% set customTemplate = "game-#{game.properties.id}" %}
+            {{ include([customTemplate, 'game']) }}
 
             {% endfor %}
         game: |
@@ -444,13 +495,12 @@ The contents of this page serve as a database and are meant to be put into a [ht
 === Structure ===
 Every section of data is enclosed in &lt;nowiki&gt;&lt;/nowiki&gt; tags. Everything outside outside of these tags will be ignored by the parser. The first section is named ''global'' and contains settings for the whole page, all the remaining sections each contain data about a single game.
 
-For every property, another one with the same name and a locale suffix can be specified. Its value will be used on the page in the corresponding language instead of the value of the original property. Currently only ''-jp'' for Japanese is used but this can be extended to support more languages.
-
 ==== Global settings ====
 Values defined in this section apply to all the games in the database or the whole page in general (e.g. description, sorting of games, common translations, ...). For further information, please refer to the [[#Global settings-value|actual value]], most of the settings are documented.
 
 ==== Game ====
-For each game the following properties are available:
+'''WIP'''
+Each game is defined by the following properties:
 
 <pre>
 name: Name of the game
@@ -458,7 +508,7 @@ name-jp: 日本語のタイトル / Japanese title in kanji
 name-kana: にほんごのたいとる / Japanese title in hiragana
 company: Developer / Publisher
 
-scores: Score entries (see section below)
+scores: Score entries (see below)
 
 links:
   - url: https://example.org/the-link
@@ -470,17 +520,9 @@ description: "Description containing notes about counterstops and other notewort
 
 layout: Layout information (see below)
 
-# Game specific translations, applicable to all scores within the game.
-translations:
-  - property: mode
-    value: Original
-    value-jp: オリジナルモード
-  - property: mode
-    value: Maniac
-    value-jp: マニアックモード
+translations: Game-specific translations (see below)
 </pre>
 
-===== Score =====
 For each score the properties listed below are available. They are heavily game-dependent and usually not all of them are useful. Unnecessary properties can (and should) be omitted.
 
 <pre>
@@ -501,6 +543,8 @@ image-url: URL pointing to a screenshot of the score
 </pre>
 
 Additional properties may be specified. In this case the generator will treat their values verbatim.
+
+For every property a property with the same name and a locale suffix can be specified. Its value will be used on the page in the corresponding language instead of the value of the original property. Currently only '-jp' for Japanese is used but this can be extended to support more languages.
 
 ===== Example =====
 <pre>
@@ -555,7 +599,7 @@ scores:
     ship: Type A
     mode: Ura
     scored-date: "2014-05-27"
-    source: Arcadia September 2014 / [https:// Twitter]
+    source: Arcadia September 2014 / [https://example.org Twitter]
     added-date: "2020-06-23"
     comments:
       - 6L 0B remaining
@@ -568,6 +612,29 @@ links:
   - url: https://example.org/farm/ketsui
     title: Shmups Forum Hi-Score Topic
 
+layout:
+    column-order:
+      - ship
+      - mode
+      - score
+      - player
+      - scored-date
+      - source
+      - comments
+
+    columns:
+        mode:
+            label: Loop
+            label-jp: 2周種
+        scored-date:
+            label: Scored date
+            label-jp: 年月日
+
+    sort:
+        scores:
+            ship: [ Type A, Type B ]
+            mode: asc
+
 translations:
   - property: ship
     value: Type A
@@ -579,43 +646,10 @@ translations:
     value-jp: TYPE-B パンツァーイェーガー
   - property: mode
     value: Omote
-    value-jp: 表2週
+    value-jp: 表
   - property: mode
     value: Ura
-    value-jp: 裏2週
-
-layout:
-    columns:
-      - label: Ship
-        label-jp: 自機
-        template: "{{ ship }}"
-        groupSameValues: true
-
-      - label: Loop
-        label-jp: 2週種
-        template: "{{ mode }}"
-
-      - label: Score
-        label-jp: スコア
-        template: "{{ score }}"
-
-      - label: Player
-        label-jp: プレイヤー
-        template: "{{ player }}"
-        groupSameValues: true
-
-      - label: Date / Source
-        label-jp: 年月日 / 情報元
-        template: "{{ scored-date }} / {{ source }}"
-
-      - label: Comment
-        label-jp: 備考
-        template: "{{ comments|join('; ') }}"
-
-    sort:
-        scores:
-            ship: [ Type A, Type B ]
-            mode: asc
+    value-jp: 裏
 &lt;/nowiki&gt;&lt;/pre&gt;
 </pre>
 
