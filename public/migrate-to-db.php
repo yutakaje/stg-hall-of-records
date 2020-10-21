@@ -207,8 +207,10 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|{{ game-name }}}}
             {{ game-content }}
+            {% endverbatim %}
 </nowiki></pre>
 
 

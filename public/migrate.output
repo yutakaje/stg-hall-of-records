@@ -403,6 +403,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|1941 Counter Attack}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -416,6 +417,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=11606 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -430,6 +432,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|1942}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -445,6 +448,7 @@ layout:
             Note: Micom Basic magazine (August 1985) lists an unverified score of 89,706,000 by ガッツマン.
             
             * [https://shmups.system11.org/viewtopic.php?t=177 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -459,6 +463,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|1943}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -475,6 +480,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=177 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -489,6 +495,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|1943 kai}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -502,6 +509,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=177 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -516,6 +524,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|1944: The Loop Master}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -528,6 +537,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2000_037_1944_%E3%82%B6%E3%83%BB%E3%83%AB%E3%83%BC%E3%83%97%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=37237 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -542,6 +552,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|19XX: The War Against Destiny}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -558,6 +569,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1996_005_19XX JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=62431 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -572,6 +584,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|A-Jax}}
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
@@ -585,6 +598,7 @@ layout:
             Note: Japanese scoreboard closed May 1988 due to the detection of an infinite pattern.
             
             * [https://shmups.system11.org/viewtopic.php?t=58238 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -599,6 +613,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Acrobat Mission}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -614,6 +629,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=52718 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -628,6 +644,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Air Buster}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -639,6 +656,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=54749 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -653,6 +671,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Air Duel}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -667,6 +686,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1990_010_%E3%82%A8%E3%82%A2%E3%83%87%E3%83%A5%E3%82%A8%E3%83%AB JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=42877 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -681,6 +701,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Air Gallet / Akuu Gallet}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -692,6 +713,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?f=2&t=66146 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -706,6 +728,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Aka to Blue Type-R}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -723,6 +746,7 @@ layout:
             |}
             
             * [https://wiki.denfaminicogamer.jp/highscore/2019_005_%E3%82%A2%E3%82%AB%E3%81%A8%E3%83%96%E3%83%AB%E3%83%BC_TYPE-R JHA Leaderboard]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -737,6 +761,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Akai Katana}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -752,6 +777,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?f=2&t=45652 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -766,6 +792,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Akai Katana Shin}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -782,6 +809,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2012_008_%E8%B5%A4%E3%81%84%E5%88%80_%E7%9C%9F%EF%BC%88%E3%83%8D%E3%82%B7%E3%82%AB%E7%89%88%EF%BC%89 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?f=2&t=45652 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -796,6 +824,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Akkanvader / Space Invaders '95}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -808,6 +837,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1995_013_%E3%81%82%E3%81%A3%E3%81%8B%E3%82%93%E3%81%B9%E3%81%87%E3%81%A0%E3%81%81%E3%80%9C JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=33065 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -822,6 +852,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Andro Dunos}}
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
@@ -846,6 +877,7 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=19702 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -860,6 +892,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Arbalester}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -869,6 +902,7 @@ layout:
             |-
             | {{v|a1|3,348,000}} || Comb-Sniper-NOM || Gamest August 1989 || ||
             |}
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -883,6 +917,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Area 88 / U.N. Squadron}}
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
@@ -896,6 +931,7 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 9,999,990.
             
             * [https://shmups.system11.org/viewtopic.php?t=11308 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -910,6 +946,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Argus}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -921,6 +958,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=61657 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -935,6 +973,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Argus no Senshi / Rygar}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -950,6 +989,7 @@ layout:
             Note: Japanese scoreboard closed November 2018 due to the detection of an infinite pattern.
             
             * [https://wiki.denfaminicogamer.jp/highscore/1986_005_%E3%82%A2%E3%83%AB%E3%82%B4%E3%82%B9%E3%81%AE%E6%88%A6%E5%A3%AB JHA Leaderboard]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -964,6 +1004,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Armed Police Batrider}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -1002,6 +1043,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=35079 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -1016,6 +1058,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Ashura Blaster}}
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
@@ -1029,6 +1072,7 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 9,999,900.
             
             * [https://shmups.system11.org/viewtopic.php?t=49692 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -1043,6 +1087,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|ASO II / Alpha Mission II}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -1058,6 +1103,7 @@ layout:
             Note: No official score keeping tradition due to the detection of an infinite pattern right after the release of the game.
             
             * [https://shmups.system11.org/viewtopic.php?t=62179 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -1072,6 +1118,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|ASO: Armored Scrum Object / Alpha Mission}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -1087,6 +1134,7 @@ layout:
             Note: Japanese scoreboard closed September 1986 due to the detection of an infinite pattern. Shmups Wiki scoreboard closed after the achievement of the counterstop at 9,999,900.
             
             * [https://shmups.system11.org/viewtopic.php?t=62179 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -1101,6 +1149,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Assault}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -1116,6 +1165,7 @@ layout:
             Note: Control panel dedicated.
             
             * [https://shmups.system11.org/viewtopic.php?t=63722 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -1130,6 +1180,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Assault Plus}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -1145,6 +1196,7 @@ layout:
             Note: Control panel dedicated.
             
             * [https://shmups.system11.org/viewtopic.php?t=63722 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -1159,6 +1211,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Asuka & Asuka}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -1168,6 +1221,7 @@ layout:
             |-
             | {{v|a1|924,700}} || BAD-北大和のILM || Gamest June 1989 || ||
             |}
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -1182,6 +1236,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Atomic Robo-Kid}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -1197,6 +1252,7 @@ layout:
             Note: Japanese scoreboard closed due to the detection of an infinite pattern.
             
             * [https://shmups.system11.org/viewtopic.php?t=59890 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -1211,6 +1267,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|B-Wings}}
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
@@ -1242,6 +1299,7 @@ layout:
             |}
             
             Note: Scoreboard closed after the achievement of the counterstop at 9,999,999.
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -1256,6 +1314,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Bakuretsu Breaker / Explosive Breaker}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -1270,6 +1329,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1992_011_%E7%88%86%E7%83%88%E3%83%96%E3%83%AC%E3%82%A4%E3%82%AB%E3%83%BC JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=61632 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -1284,6 +1344,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Batsugun}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -1307,6 +1368,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=49323 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -1321,6 +1383,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Batsugun Special}}
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
@@ -1340,6 +1403,7 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 99,999,990.
             
             * [https://shmups.system11.org/viewtopic.php?t=49323 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -1354,6 +1418,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Battlantis}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -1365,6 +1430,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=59610 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -1379,6 +1445,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Battle Bakraid}}
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
@@ -1400,6 +1467,7 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 63,999,990. Competition moved over to Battle Bakraid (Unlimited Ver.).
             
             * [https://shmups.system11.org/viewtopic.php?t=16137 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -1414,6 +1482,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Battle Bakraid (Unlimited Ver.)}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -1439,6 +1508,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1999_026_%E3%83%90%E3%83%88%E3%83%AB%E3%83%90%E3%82%AF%E3%83%AC%E3%82%A4%E3%83%89_%E3%82%A2%E3%83%B3%E3%83%AA%E3%83%9F%E3%83%86%E3%83%83%E3%83%89Ver. JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=16137 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -1453,6 +1523,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Battle Garegga}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -1512,6 +1583,7 @@ layout:
             * [[STG_Hall_of_Records/World_Record_Progression_Battle_Garegga|World Record Progression]]
             * [https://wiki.denfaminicogamer.jp/highscore/1996_001_%E3%83%90%E3%83%88%E3%83%AB%E3%82%AC%E3%83%AC%E3%83%83%E3%82%AC JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=28714 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -1526,6 +1598,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Black Heart}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -1539,6 +1612,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=42548 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -1553,6 +1627,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|BlaZeon}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -1564,6 +1639,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=53219 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -1578,6 +1654,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Blazing Star}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -1600,6 +1677,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1998_022_%E3%83%96%E3%83%AC%E3%82%A4%E3%82%B8%E3%83%B3%E3%82%B0%E3%82%B9%E3%82%BF%E3%83%BC JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=34730 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -1614,6 +1692,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Border Down}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -1632,6 +1711,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2003_025_%E3%83%9C%E3%83%BC%E3%83%80%E3%83%BC%E3%83%80%E3%82%A6%E3%83%B3 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=22953 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -1646,6 +1726,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Bosconian}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -1655,6 +1736,7 @@ layout:
             |-
             | Old || {{v|a1|6,202,090}} || フジマサ || July 18th, 2020 / [https://twitter.com/f8qiHibT5S1FZTf/status/1284420414110744576 Twitter] || round 237 ||
             |}
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -1669,6 +1751,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Brave Blade}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -1684,6 +1767,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2000_066_%E3%83%96%E3%83%AC%E3%82%A4%E3%83%96%E3%83%96%E3%83%AC%E3%82%A4%E3%83%89 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=3664 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -1698,6 +1782,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Caladrius Blaze AC}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -1770,6 +1855,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2013_002_%E3%82%AB%E3%83%A9%E3%83%89%E3%83%AA%E3%82%A6%E3%82%B9AC JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=45659 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -1784,6 +1870,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Captain Tomaday}}
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
@@ -1797,6 +1884,7 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 99,999.99.
             
             * [https://shmups.system11.org/viewtopic.php?t=42666 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -1811,6 +1899,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Change Air Blade}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -1823,6 +1912,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1999_042_%E3%83%81%E3%82%A7%E3%83%B3%E3%82%B8%E3%82%A8%E3%82%A2%E3%83%96%E3%83%AC%E3%83%BC%E3%83%89 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=28896 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -1837,6 +1927,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Chaos Field}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -1853,6 +1944,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2004_011_%E3%82%AB%E3%82%AA%E3%82%B9%E3%83%95%E3%82%A3%E3%83%BC%E3%83%AB%E3%83%89 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=42140 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -1867,6 +1959,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Chariot (Wonder 3)}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -1881,6 +1974,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1991_052_%E3%83%81%E3%83%A3%E3%83%AA%E3%82%AA%E3%83%83%E3%83%88%EF%BC%88%E3%83%AF%E3%83%B3%E3%83%80%E3%83%BC3%EF%BC%89 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=17553 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -1895,6 +1989,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Choujikuu Yousai Macross}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -1908,6 +2003,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?f=2&t=65803 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -1922,6 +2018,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Choujikuu Yousai Macross II}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -1946,6 +2043,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?f=2&t=65803 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -1960,6 +2058,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Chuka Taisen}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -1971,6 +2070,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=57818 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -1985,6 +2085,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Cosmo Gang: The Video}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -1998,6 +2099,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=58080 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -2012,6 +2114,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Cotton}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -2031,6 +2134,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=51321 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -2045,6 +2149,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Cotton 2}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -2056,6 +2161,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=53296 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -2070,6 +2176,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Cotton Boomerang}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -2083,6 +2190,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=54167 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -2097,6 +2205,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Crimzon Clover}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -2178,6 +2287,7 @@ layout:
             
             
             <big>'''Template (Please copy this to create a new entry)'''</big>
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -2192,6 +2302,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Cybattler}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -2205,6 +2316,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=37705 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -2219,6 +2331,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Cyvern Plus}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -2228,6 +2341,7 @@ layout:
             |-
             | {{v|a1|41,104,500}} || CFK-NRK ||2000|| Altair (1p side) || [https://youtu.be/ZyQlTFSJ1qY Youtube]
             |}
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -2242,6 +2356,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Cyvern: The Dragon Weapons}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -2253,6 +2368,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=45820 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -2267,6 +2383,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Daioh}}
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
@@ -2281,6 +2398,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1993_001_%E5%A4%A7%E7%8E%8B JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=35513 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -2295,6 +2413,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Daisenpuu}}
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
@@ -2308,6 +2427,7 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=35471 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -2322,6 +2442,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Dangerous Seed}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -2335,6 +2456,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=42760 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -2349,6 +2471,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Dangun Feveron}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -2377,6 +2500,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1998_019_%E5%BC%BE%E9%8A%83%E3%83%95%E3%82%A3%E3%83%BC%E3%83%90%E3%83%AD%E3%83%B3 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=37015 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -2391,6 +2515,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Darius}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -2411,6 +2536,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1987_007_%E3%83%80%E3%83%A9%E3%82%A4%E3%82%A2%E3%82%B9 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=37042 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -2425,6 +2551,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Darius Extra}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -2445,6 +2572,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=37042 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -2459,6 +2587,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Darius Gaiden}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -2506,6 +2635,7 @@ layout:
             Note: Japanese scoreboard closed May 1995 due to the detection of an invincibility glitch. For details, see [https://youtu.be/CR-k61OP-Ag this video].
             
             * [https://shmups.system11.org/viewtopic.php?t=173 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -2520,6 +2650,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Darius Gaiden Extra}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -2531,6 +2662,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=37052 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -2545,6 +2677,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Darius II}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -2586,6 +2719,7 @@ layout:
             Note: Japanese scoreboard for all routes except lower V' closed January 1991 due to the detection of an infinite pattern in zones K, M, and N.
             
             * [https://shmups.system11.org/viewtopic.php?t=52848 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -2600,6 +2734,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Darwin 4078}}
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
@@ -2611,6 +2746,7 @@ layout:
             |}
             
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -2625,6 +2761,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Deathsmiles}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -2661,6 +2798,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2007_012_%E3%83%87%E3%82%B9%E3%82%B9%E3%83%9E%E3%82%A4%E3%83%AB%E3%82%BA JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=58071 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -2675,6 +2813,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Deathsmiles II}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -2696,6 +2835,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2009_010_%E3%83%87%E3%82%B9%E3%82%B9%E3%83%9E%E3%82%A4%E3%83%AB%E3%82%BAII_Ver.4.00 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=32044 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -2710,6 +2850,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Deathsmiles Mega Black Label}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -2735,6 +2876,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2008_012_%E3%83%87%E3%82%B9%E3%82%B9%E3%83%9E%E3%82%A4%E3%83%AB%E3%82%BA_%E3%83%A1%E3%82%AC%E3%83%96%E3%83%A9%E3%83%83%E3%82%AF%E3%83%AC%E3%83%BC%E3%83%99%E3%83%AB JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=58071 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -2749,6 +2891,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Detana! TwinBee}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -2763,6 +2906,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1991_055_%E5%87%BA%E3%81%9F%E3%81%AA!!%E3%83%84%E3%82%A4%E3%83%B3%E3%83%93%E3%83%BC JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=58416 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -2777,6 +2921,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Dodonpachi}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -2822,6 +2967,7 @@ layout:
             * [[STG_Hall_of_Records/World_Record_Progression_Dodonpachi|World Record Progression]]
             * [https://wiki.denfaminicogamer.jp/highscore/1997_007_%E6%80%92%E9%A6%96%E9%A0%98%E8%9C%82 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=56826 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -2836,6 +2982,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Dodonpachi Campaign Version}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -2845,6 +2992,7 @@ layout:
             |-
             | {{v|a1|5,448,702,440}} || SOF-WTN || 2003 / superplay VHS || A-Laser, 2L remaining, max hit 4754, 1st loop 1.836b || [https://youtu.be/rv1JK2Ezk9U Youtube]
             |}
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -2859,6 +3007,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Dodonpachi Daifukkatsu}}
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
@@ -2875,6 +3024,7 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 99,999,999,999. Competition moved over to Dodonpachi Daifukkatsu 1.5.
             
             * [https://wiki.denfaminicogamer.jp/highscore/2008_009_%E6%80%92%E9%A6%96%E9%A0%98%E8%9C%82%E5%A4%A7%E5%BE%A9%E6%B4%BB JHA Leaderboard]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -2889,6 +3039,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Dodonpachi Daifukkatsu 1.5}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -2948,6 +3099,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2008_010_%E6%80%92%E9%A6%96%E9%A0%98%E8%9C%82%E5%A4%A7%E5%BE%A9%E6%B4%BB_ver1.5 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=45588 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -2962,6 +3114,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Dodonpachi Daifukkatsu Black Label}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -2997,6 +3150,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2010_012_%E6%80%92%E9%A6%96%E9%A0%98%E8%9C%82%E5%A4%A7%E5%BE%A9%E6%B4%BB%E3%83%96%E3%83%A9%E3%83%83%E3%82%AF%E3%83%AC%E3%83%BC%E3%83%99%E3%83%AB JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=45588 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -3011,6 +3165,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Dodonpachi Daioujou}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -3062,6 +3217,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2002_007_%E6%80%92%E9%A6%96%E9%A0%98%E8%9C%82%E5%A4%A7%E5%BE%80%E7%94%9F JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=10147 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -3076,6 +3232,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Dodonpachi Daioujou Black Label}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -3121,6 +3278,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2002_006_%E6%80%92%E9%A6%96%E9%A0%98%E8%9C%82%E5%A4%A7%E5%BE%80%E7%94%9F%E3%83%96%E3%83%A9%E3%83%83%E3%82%AF%E3%83%AC%E3%83%BC%E3%83%99%E3%83%AB JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=17432 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -3135,6 +3293,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Dodonpachi II: Bee Storm}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -3151,6 +3310,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=56704 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -3165,6 +3325,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Dodonpachi Saidaioujou}}
             {{Anchor|Saidaioujou}}
             {{Anchor|SDOJ}}
@@ -3232,6 +3393,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2012_012_%E6%80%92%E9%A6%96%E9%A0%98%E8%9C%82%E6%9C%80%E5%A4%A7%E5%BE%80%E7%94%9F JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=47668 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -3246,6 +3408,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Dogyuun!}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -3261,6 +3424,7 @@ layout:
             Note: Japanese scoreboard closed May 1994 due to the detection of an infinite pattern. Shmups Wiki scoreboard closed after the achievement of the counterstop at 99,999,990.
             
             * [https://shmups.system11.org/viewtopic.php?t=58959 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -3275,6 +3439,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Donpachi}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -3292,6 +3457,7 @@ layout:
             * [[STG_Hall_of_Records/World_Record_Progression_Donpachi|World Record Progression]]
             * [https://wiki.denfaminicogamer.jp/highscore/1995_008_%E9%A6%96%E9%A0%98%E8%9C%82 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?f=2&t=60135 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -3306,6 +3472,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Double Wings}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -3315,6 +3482,7 @@ layout:
             |-
             | {{v|a1|4,204,500}} || hamami || Arcadia August 2014 || ||
             |}
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -3329,6 +3497,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Dragon Blaze}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -3347,6 +3516,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2000_031_%E3%83%89%E3%83%A9%E3%82%B4%E3%83%B3%E3%83%96%E3%83%AC%E3%82%A4%E3%82%BA JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=51579 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -3361,6 +3531,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Dragon Breed}}
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
@@ -3375,6 +3546,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1989_004_%E3%83%89%E3%83%A9%E3%82%B4%E3%83%B3%E3%83%96%E3%83%AA%E3%83%BC%E3%83%89 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=38613 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -3389,6 +3561,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Dragon Saber}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -3402,6 +3575,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=43455 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -3416,6 +3590,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Dragon Spirit}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -3432,6 +3607,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1987_001_%E3%83%89%E3%83%A9%E3%82%B4%E3%83%B3%E3%82%B9%E3%83%94%E3%83%AA%E3%83%83%E3%83%88 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=43455 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -3446,6 +3622,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|E.D.F. Earth Defense Force}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -3457,6 +3634,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=52717 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -3471,6 +3649,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Earth Joker: UN Defense Force}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -3480,6 +3659,7 @@ layout:
             |-
             | {{v|a1|2,264,300}} || hamami || Arcadia December 2013 || ||
             |}
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -3494,6 +3674,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Eight Forces}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -3507,6 +3688,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=24116 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -3521,6 +3703,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|ESP Galuda}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -3535,6 +3718,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2003_012_%E3%82%A8%E3%82%B9%E3%83%97%E3%82%AC%E3%83%AB%E3%83%BC%E3%83%80 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=151 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -3549,6 +3733,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|ESP Galuda II}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -3566,6 +3751,7 @@ layout:
             * [[STG_Hall_of_Records/World_Record_Progression_Espgaluda_II|World Record Progression]]
             * [https://wiki.denfaminicogamer.jp/highscore/2005_012_%E3%82%A8%E3%82%B9%E3%83%97%E3%82%AC%E3%83%AB%E3%83%BC%E3%83%80II JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=6270 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -3580,6 +3766,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|ESP Ra.De.}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -3596,6 +3783,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1998_032_%E3%82%A8%E3%82%B9%E3%83%97%E3%83%AC%E3%82%A4%E3%83%89 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=50469 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -3610,6 +3798,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Exed Exes}}
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
@@ -3623,6 +3812,7 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=42461 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -3637,6 +3827,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Exzisus}}
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
@@ -3662,6 +3853,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1987_006_%E3%82%A4%E3%82%B0%E3%82%B8%E3%83%BC%E3%82%B6%E3%82%B9 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=31706 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -3676,6 +3868,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|F/A / Fighter & Attacker}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -3713,6 +3906,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1992_004_F_A JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=59867 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -3727,6 +3921,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Fantasy Zone}}
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
@@ -3742,6 +3937,7 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 99,999,990.
             
             * [https://shmups.system11.org/viewtopic.php?t=55601 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -3756,6 +3952,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Fighting Hawk}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -3768,6 +3965,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1989_010_%E3%83%95%E3%82%A1%E3%82%A4%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E3%83%9B%E3%83%BC%E3%82%AF JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=30307 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -3782,6 +3980,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Fire Barrel / Air Assault}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -3795,6 +3994,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=58401 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -3809,6 +4009,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Fixeight}}
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
@@ -3861,6 +4062,7 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=35180 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -3875,6 +4077,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Flak Attack}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -3886,6 +4089,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=59585 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -3900,6 +4104,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|G Stream 2020}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -3914,6 +4119,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=44717 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -3928,6 +4134,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|G-Darius}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -3948,6 +4155,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1997_004_G%E3%83%80%E3%83%A9%E3%82%A4%E3%82%A2%E3%82%B9 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=178 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -3962,6 +4170,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Galaga}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -3977,6 +4186,7 @@ layout:
             Note: Due to a display issue of scores with 7+ digits, scores can only be tracked on 2p side.
             
             * [https://shmups.system11.org/viewtopic.php?t=39648 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -3991,6 +4201,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Galaga '88}}
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
@@ -4004,6 +4215,7 @@ layout:
             Note: Japanese scoreboard closed June 1988 due to the detection of an infinite pattern.
             
             * [https://shmups.system11.org/viewtopic.php?t=39648 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -4018,6 +4230,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Gallop: Armed Police Unit / Cosmic Cop}}
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
@@ -4055,6 +4268,7 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 999,999.
             
             * [https://shmups.system11.org/viewtopic.php?t=59563 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -4069,6 +4283,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Game Tengoku / The Game Paradise}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -4103,6 +4318,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1995_012_%E3%82%B2%E3%83%BC%E3%83%A0%E5%A4%A9%E5%9B%BD JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?f=2&t=65720 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -4117,6 +4333,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Game Title}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -4129,6 +4346,7 @@ layout:
             
             * [ JHA Leaderboard]
             * [ Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -4143,6 +4361,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Gaplus}}
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
@@ -4156,6 +4375,7 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 100,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=39648 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -4170,6 +4390,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Gekirindan}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -4185,6 +4406,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=39915 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -4199,6 +4421,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Gemini Wing}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -4210,6 +4433,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=37797 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -4224,6 +4448,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Ghost Pilots}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -4235,6 +4460,7 @@ layout:
             |}
             
             Note: No official score keeping tradition due to the detection of an infinite pattern right after the release of the game.
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -4249,6 +4475,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Giga Wing}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -4267,6 +4494,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1999_030_%E3%82%AE%E3%82%AC%E3%82%A6%E3%82%A4%E3%83%B3%E3%82%B0 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=36587 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -4281,6 +4509,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Giga Wing 2}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -4303,6 +4532,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2001_048_%E3%82%AE%E3%82%AC%E3%82%A6%E3%82%A4%E3%83%B3%E3%82%B02 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=61898 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -4317,6 +4547,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Gokujyou Parodius}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -4366,6 +4597,7 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=58157 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -4380,6 +4612,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Gradius II}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -4410,6 +4643,7 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=58157 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -4424,6 +4658,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Gradius III}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -4475,6 +4710,7 @@ layout:
             Note: Japanese scoreboard for Normal Mode only kept track of the highest stage reached, not highest score. The board was closed July 1990 due to the detection of an invincibility glitch (for details, see [https://youtu.be/ppOJkFtCD2M this video]). Therefore, only the ranking for Beginner Mode stayed open. Even though the glitch was fixed in the New Version, this did not spark a re-opening of the scoreboard for Normal Mode.
             
             * [https://shmups.system11.org/viewtopic.php?t=58160 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -4489,6 +4725,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Gradius IV}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -4516,6 +4753,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1999_058_%E3%82%B0%E3%83%A9%E3%83%87%E3%82%A3%E3%82%A6%E3%82%B9IV JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=9078 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -4530,6 +4768,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Great Mahou Daisakusen}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -4571,6 +4810,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2000_053_%E3%82%B0%E3%83%AC%E3%83%BC%E3%83%88%E9%AD%94%E6%B3%95%E5%A4%A7%E4%BD%9C%E6%88%A6 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=38055 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -4585,6 +4825,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Grid Seeker}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -4600,6 +4841,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1992_010_%E3%82%B0%E3%83%AA%E3%83%83%E3%83%89%E3%82%B7%E3%83%BC%E3%82%AB%E3%83%BC JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=44183 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -4614,6 +4856,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Guardian Force}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -4625,6 +4868,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=58573 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -4639,6 +4883,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Gun Frontier}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -4652,6 +4897,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=43693 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -4666,6 +4912,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Gunbird}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -4686,6 +4933,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1994_004_%E3%82%AC%E3%83%B3%E3%83%90%E3%83%BC%E3%83%89 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=51577 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -4700,6 +4948,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Gunbird 2}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -4725,6 +4974,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1998_016_%E3%82%AC%E3%83%B3%E3%83%90%E3%83%BC%E3%83%892 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=37146 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -4739,6 +4989,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Gunnail}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -4753,6 +5004,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1993_005_%E3%82%AC%E3%83%B3%E3%83%8D%E3%82%A4%E3%83%AB JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=49747 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -4767,6 +5019,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Guwange}}
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
@@ -4786,6 +5039,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1999_003_%E3%81%90%E3%82%8F%E3%82%93%E3%81%92 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=34853 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -4800,6 +5054,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Gyrodine}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -4811,6 +5066,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=35792 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -4825,6 +5081,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Hacha Mecha Fighter}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -4840,6 +5097,7 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 99,999,999.
             
             * [https://shmups.system11.org/viewtopic.php?t=48933 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -4854,6 +5112,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Halley's Comet}}
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
@@ -4871,6 +5130,7 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 9,999,990.
             
             * [https://shmups.system11.org/viewtopic.php?t=34729 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -4885,6 +5145,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Heavy Unit}}
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
@@ -4898,6 +5159,7 @@ layout:
             Note: Japanese scoreboard closed due to the achievment of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=52541 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -4912,6 +5174,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Hellfire}}
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
@@ -4928,6 +5191,7 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=17247 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -4942,6 +5206,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Hishouzame / Flying Shark}}
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
@@ -4977,6 +5242,7 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=43885 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -4991,6 +5257,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Homura}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -5003,6 +5270,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2005_007_%E3%83%9B%E3%83%A0%E3%83%A9 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=11378 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -5017,6 +5285,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Hyper Duel}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -5028,6 +5297,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=36797 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -5042,6 +5312,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Ibara}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -5059,7 +5330,8 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2005_029_%E9%8B%B3%E8%96%94%E8%96%87 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=18254 Shmups Forum Hi-Score Topic]
- </nowiki></pre>
+            {% endverbatim %}
+</nowiki></pre>
 
 
 === Ibara Black Label ===
@@ -5073,6 +5345,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Ibara Black Label}}
             {{Anchor|Ibara Kuro}}
             {{Anchor|Ibara Kuro: Black Label}}
@@ -5087,6 +5360,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2006_030_%E9%8B%B3%E8%96%94%E8%96%87%E9%BB%92_%E3%83%96%E3%83%A9%E3%83%83%E3%82%AF%E3%83%AC%E3%83%BC%E3%83%99%E3%83%AB JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=41469 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -5101,6 +5375,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Ikaruga}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -5131,6 +5406,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2001_005_%E6%96%91%E9%B3%A9 JHA Leaderboard (Naomi)] [https://wiki.denfaminicogamer.jp/highscore/2013_006_%E6%96%91%E9%B3%A9%EF%BC%88%E3%83%8D%E3%82%B7%E3%82%AB%E7%89%88%EF%BC%89 (Nesica)]
             * [https://shmups.system11.org/viewtopic.php?t=48471 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -5145,6 +5421,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Illvelo}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -5159,6 +5436,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2008_023_%E3%82%A4%E3%83%AB%E3%83%99%E3%83%AD JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=32456 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -5173,6 +5451,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Image Fight}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -5184,6 +5463,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=51576 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -5198,6 +5478,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Insector X}}
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
@@ -5211,6 +5492,7 @@ layout:
             Note: Scoreboard closed after the achievement of the theoretical max score 867,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=37328 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -5225,6 +5507,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Kaitei Daisensou / In the Hunt}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -5236,6 +5519,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=38612 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -5250,6 +5534,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Karous}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -5262,6 +5547,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2006_006_%E3%82%AB%E3%83%A9%E3%82%B9 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=13085 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -5276,6 +5562,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Ketsui}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -5296,6 +5583,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2003_034_%E3%82%B1%E3%83%84%E3%82%A4 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=65086 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -5310,6 +5598,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Kiki Kaikai}}
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
@@ -5327,6 +5616,7 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 9,999,990.
             
             * [https://shmups.system11.org/viewtopic.php?t=53292 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -5341,6 +5631,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|KOF Sky Stage}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -5362,6 +5653,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=46724 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -5376,6 +5668,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Koutetsu Yousai Strahl}}
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
@@ -5389,6 +5682,7 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 999,999.
             
             * [https://shmups.system11.org/viewtopic.php?t=36260 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -5403,6 +5697,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Kuuga - Operation Code Vapor Trail}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -5427,6 +5722,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1990_001_%E7%A9%BA%E7%89%99 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=49918 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -5441,6 +5737,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Kyuukyoku Tiger / Twin Cobra}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -5462,6 +5759,7 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=34664 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -5476,6 +5774,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Kyuukyoku Tiger II}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -5492,6 +5791,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=34762 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -5506,6 +5806,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Last Duel}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -5517,6 +5818,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=29454 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -5531,6 +5833,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Last Resort}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -5545,6 +5848,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1992_014_%E3%83%A9%E3%82%B9%E3%83%88%E3%83%AA%E3%82%BE%E3%83%BC%E3%83%88 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=59541 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -5559,6 +5863,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Life Force}}
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
@@ -5597,6 +5902,7 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=5877 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -5611,6 +5917,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Lost Worlds / Forgotten Worlds}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -5630,6 +5937,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=21630 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -5644,6 +5952,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Mad Shark}}
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
@@ -5663,6 +5972,7 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=57570 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -5677,6 +5987,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Mahou Daisakusen}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -5698,6 +6009,7 @@ layout:
             
             
             <span id="Shippu_Mahou_Daisakusen"></span><section begin=shippumd/>
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -5712,6 +6024,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Mahou Keibitai Gun Hohki / Mystic Riders}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -5725,6 +6038,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=56908 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -5739,6 +6053,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Mamoru-kun wa Norowarete Shimatta / Mamorukun Curse!}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -5763,6 +6078,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2008_008_%E3%81%BE%E3%82%82%E3%82%8B%E3%82%AF%E3%83%B3%E3%81%AF%E5%91%AA%E3%82%8F%E3%82%8C%E3%81%A6%E3%81%97%E3%81%BE%E3%81%A3%E3%81%9F%EF%BC%81 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=33257 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -5777,6 +6093,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Mars Matrix}}
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
@@ -5831,6 +6148,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2000_083_%E3%83%9E%E3%83%BC%E3%82%BA%E3%83%9E%E3%83%88%E3%83%AA%E3%83%83%E3%82%AF%E3%82%B9 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=61629 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -5845,6 +6163,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Master of Weapon}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -5856,6 +6175,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=53291 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -5870,6 +6190,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Mazinger Z}}
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
@@ -5919,6 +6240,7 @@ layout:
             |}
             
             Note: Scoreboard closed after the achievement of the counterstop at 9,999,999.
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -5933,6 +6255,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Mega Blast}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -5942,6 +6265,7 @@ layout:
             |-
             | {{v|a1|822,900}} || ねこりぃ || Arcadia September 2002 || ||
             |}
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -5956,6 +6280,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Meta Fox}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -5969,6 +6294,7 @@ layout:
             |}
             
             * [https://wiki.denfaminicogamer.jp/highscore/1989_114_%E3%83%A1%E3%82%BF%E3%83%95%E3%82%A9%E3%83%83%E3%82%AF%E3%82%B9 JHA Leaderboard]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -5983,6 +6309,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Metal Black}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -5996,6 +6323,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=48626 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -6010,6 +6338,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Metal Hawk}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -6023,6 +6352,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=58076 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -6037,6 +6367,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Mr. Heli no Daibouken / Battle Chopper}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -6050,6 +6381,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=53359 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -6064,6 +6396,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Muchi Muchi Pork}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -6095,6 +6428,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2007_021_%E3%82%80%E3%81%A1%E3%82%80%E3%81%A1%E3%83%9D%E3%83%BC%E3%82%AF JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?f=2&t=54254 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -6109,6 +6443,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Mushihimesama}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -6136,6 +6471,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2004_003_%E8%99%AB%E5%A7%AB%E3%81%95%E3%81%BE JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=38179 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -6150,6 +6486,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Mushihimesama Futari}}
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
@@ -6228,6 +6565,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2006_002_%E8%99%AB%E5%A7%AB%E3%81%95%E3%81%BE%E3%81%B5%E3%81%9F%E3%82%8A_Ver1.5 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=60592 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -6242,6 +6580,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Mushihimesama Futari Black Label}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -6270,6 +6609,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2007_010_%E8%99%AB%E5%A7%AB%E3%81%95%E3%81%BE%E3%81%B5%E3%81%9F%E3%82%8A%E3%83%96%E3%83%A9%E3%83%83%E3%82%AF%E3%83%AC%E3%83%BC%E3%83%99%E3%83%AB JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=60592 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -6284,6 +6624,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Namco Classic Collection Vol. 1}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -6309,6 +6650,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1995_014_%E3%83%8A%E3%83%A0%E3%82%B3%E3%82%AF%E3%83%A9%E3%82%B7%E3%83%83%E3%82%AF%E3%82%B3%E3%83%AC%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%B3Vol.1 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=39648 Shmups Forum Hi-Score Topic (Galaga)] [https://shmups.system11.org/viewtopic.php?t=39729 (Xevious)]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -6323,6 +6665,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Nebulas Ray}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -6337,6 +6680,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1994_005_%E3%83%8D%E3%83%93%E3%83%A5%E3%83%A9%E3%82%B9%E3%83%AC%E3%82%A4 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=42761 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -6351,6 +6695,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Night Raid}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -6363,6 +6708,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2001_034_%E3%83%8A%E3%82%A4%E3%83%88%E3%83%AC%E3%82%A4%E3%83%89 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=22165 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -6377,6 +6723,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Ninja Commando}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -6401,6 +6748,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=33806 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -6415,6 +6763,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Nostradamus}}
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
@@ -6432,6 +6781,7 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 9,999,990.
             
             * [https://shmups.system11.org/viewtopic.php?t=57781 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -6446,6 +6796,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Omega Fighter}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -6457,6 +6808,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=43829 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -6471,6 +6823,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Operation Ragnarok / Zed Blade}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -6484,6 +6837,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=29484 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -6498,6 +6852,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Ordyne}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -6512,6 +6867,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1988_002_%E3%82%AA%E3%83%BC%E3%83%80%E3%82%A4%E3%83%B3 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=32980 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -6526,6 +6882,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Out Zone}}
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
@@ -6559,6 +6916,7 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 9,999,999.
             
             * [https://shmups.system11.org/viewtopic.php?t=34506 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -6573,6 +6931,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|P-47 Aces}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -6607,6 +6966,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1995_018_P-47ACES JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?f=2&t=65906 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -6621,6 +6981,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|P-47: The Freedom Fighter}}
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
@@ -6642,6 +7003,7 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 99,999,999.
             
             * [https://shmups.system11.org/viewtopic.php?t=57594 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -6656,6 +7018,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Parodius Da!}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -6684,6 +7047,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1990_006_%E3%83%91%E3%83%AD%E3%83%87%E3%82%A3%E3%82%A6%E3%82%B9%E3%81%A0%EF%BC%81 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=36785 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -6698,6 +7062,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Phelios}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -6712,6 +7077,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1989_008_%E3%83%95%E3%82%A7%E3%83%AA%E3%82%AA%E3%82%B9 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=57981 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -6726,6 +7092,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Pilot Kids}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -6737,6 +7104,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=14815 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -6751,6 +7119,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Pink Sweets: Ibara Sorekara}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -6782,6 +7151,7 @@ layout:
             
             * [[STG_Hall_of_Records/World_Record_Progression_Pink_Sweets|World Record Progression]]
             * [https://shmups.system11.org/viewtopic.php?t=54091 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -6796,6 +7166,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Pistol Daimyou no Bouken}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -6809,6 +7180,7 @@ layout:
             |}
             
             Note: Japanese scoreboard for Old Version closed due to the detection of an infinite pattern.
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -6823,6 +7195,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Plus Alpha}}
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
@@ -6852,6 +7225,7 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 99,999,990.
             
             * [https://shmups.system11.org/viewtopic.php?t=8363 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -6866,6 +7240,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Prehistoric Isle 2}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -6880,6 +7255,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1999_048_%E5%8E%9F%E5%A7%8B%E5%B3%B62 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=34777 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -6894,6 +7270,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Prehistoric Isle in 1930}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -6903,6 +7280,7 @@ layout:
             |-
             | {{v|a1|1,663,000}} || G.M.C.Z. || Arcadia June 2008 || ||
             |}
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -6917,6 +7295,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Progear no Arashi}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -6955,6 +7334,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2001_029_%E3%83%97%E3%83%AD%E3%82%AE%E3%82%A2%E3%81%AE%E5%B5%90 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=18674 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -6969,6 +7349,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Psyvariar}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -6981,6 +7362,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2000_073_%E3%82%B5%E3%82%A4%E3%83%B4%E3%82%A1%E3%83%AA%E3%82%A2 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?f=2&t=66695 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -6995,6 +7377,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Psyvariar 2}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -7009,6 +7392,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2003_011_%E3%82%B5%E3%82%A4%E3%83%B4%E3%82%A1%E3%83%AA%E3%82%A22 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=21612 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -7023,6 +7407,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Psyvariar Revision}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -7035,6 +7420,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2000_062_%E3%82%B5%E3%82%A4%E3%83%B4%E3%82%A1%E3%83%AA%E3%82%A2%E3%83%AA%E3%83%93%E3%82%B8%E3%83%A7%E3%83%B3 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?f=2&t=66695 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -7049,6 +7435,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Pulstar}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -7060,6 +7447,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=38384 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -7074,6 +7462,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Purikura Daisakusen}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -7087,6 +7476,7 @@ layout:
             |-
             | Kurara || {{v|c1|63,146,100}} || LKR || Arcadia January 2008 || 1L remaining, 1-Up x2, Box Clown x23 ||
             |}
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -7101,6 +7491,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|R-Type}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -7112,6 +7503,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=2047 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -7126,6 +7518,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|R-Type II}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -7138,6 +7531,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1989_003_R%E3%83%BB%E3%82%BF%E3%82%A4%E3%83%97II JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=39202 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -7152,6 +7546,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|R-Type Leo}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -7166,6 +7561,7 @@ layout:
             
             * [https://shmups.system11.org/viewtopic.php?t=39150 Shmups Forum Hi-Score Topic]
             * [https://wiki.denfaminicogamer.jp/highscore/1991_007_R%E3%83%BB%E3%82%BF%E3%82%A4%E3%83%97_%E3%83%AC%E3%82%AA JHA Leaderboard]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -7180,6 +7576,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Rabio Lepus}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -7193,6 +7590,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=33288 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -7207,6 +7605,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Radiant Silvergun}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -7221,6 +7620,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1998_024_%E3%83%AC%E3%82%A4%E3%83%87%E3%82%A3%E3%82%A2%E3%83%B3%E3%83%88%E3%82%B7%E3%83%AB%E3%83%90%E3%83%BC%E3%82%AC%E3%83%B3 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=45677 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -7235,6 +7635,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Radirgy}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -7249,6 +7650,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2005_008_%E3%83%A9%E3%82%B8%E3%83%AB%E3%82%AE JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=15847 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -7263,6 +7665,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Radirgy Noa}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -7275,6 +7678,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2009_007_%E3%83%A9%E3%82%B8%E3%83%AB%E3%82%AE%E3%83%8E%E3%82%A2 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=35098 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -7289,6 +7693,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Rafflesia}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -7298,6 +7703,7 @@ layout:
             |-
             | {{v|a1|4,495,700}} || Retro-B || ? || played on Mame32 0.60 || [https://youtu.be/s8ZpPWMKssg Youtube]
             |}
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -7312,6 +7718,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Raiden}}
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
@@ -7332,6 +7739,7 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=42751 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -7346,6 +7754,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Raiden DX}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -7393,6 +7802,7 @@ layout:
             Note: Japanese scoreboard for Expert Course closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=15936 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -7407,6 +7817,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Raiden Fighters}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -7432,6 +7843,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=34720 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -7446,6 +7858,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Raiden Fighters 2}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -7482,6 +7895,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1997_010_%E3%83%A9%E3%82%A4%E3%83%87%E3%83%B3%E3%83%95%E3%82%A1%E3%82%A4%E3%82%BF%E3%83%BC%E3%82%BA2 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=34721 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -7496,6 +7910,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Raiden Fighters Jet}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -7508,6 +7923,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1998_005_%E3%83%A9%E3%82%A4%E3%83%87%E3%83%B3%E3%83%95%E3%82%A1%E3%82%A4%E3%82%BF%E3%83%BC%E3%82%BAJET JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=10150 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -7522,6 +7938,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Raiden II}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -7548,6 +7965,7 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=38782 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -7562,6 +7980,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Raiden III}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -7576,6 +7995,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2005_035_%E9%9B%B7%E9%9B%BBIII JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=56616 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -7590,6 +8010,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Raiden IV}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -7614,6 +8035,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2007_020_%E9%9B%B7%E9%9B%BBIV JHA Leaderboard (Taito Type X)] [https://wiki.denfaminicogamer.jp/highscore/2012_006_%E9%9B%B7%E9%9B%BBIV%EF%BC%88%E3%83%8D%E3%82%B7%E3%82%AB%E7%89%88%EF%BC%89 (Nesica)]
             * [https://shmups.system11.org/viewtopic.php?t=56617 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -7628,6 +8050,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Raiga: Strato Fighter}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -7642,6 +8065,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1991_001_%E9%9B%B7%E7%89%99 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=61667 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -7656,6 +8080,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Rapid Hero}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -7669,6 +8094,7 @@ layout:
             Note: No official score keeping tradition due to the detection of an infinite pattern right after the release of the game.
             
             * [https://shmups.system11.org/viewtopic.php?t=61684 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -7683,6 +8109,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Raycrisis}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -7699,6 +8126,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1998_007_%E3%83%AC%E3%82%A4%E3%82%AF%E3%83%A9%E3%82%A4%E3%82%B7%E3%82%B9 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=9079 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -7713,6 +8141,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Rayforce / Layer Section}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -7727,6 +8156,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1994_008_%E3%83%AC%E3%82%A4%E3%83%95%E3%82%A9%E3%83%BC%E3%82%B9 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=35037 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -7741,6 +8171,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Raystorm}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -7754,6 +8185,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=45782 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -7768,6 +8200,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Rezon}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -7779,6 +8212,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=29021 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -7793,6 +8227,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Rolling Gunner}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -7848,6 +8283,7 @@ layout:
             
             * [https://rollinggunner.am-all.net/players/ranking Official Ranking]
             * [https://shmups.system11.org/viewtopic.php?f=2&t=65836 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -7862,6 +8298,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Ryu Jin}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -7875,6 +8312,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=39867 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -7889,6 +8327,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Salamander}}
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
@@ -7902,6 +8341,7 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=5877 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -7916,6 +8356,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Salamander 2}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -7927,6 +8368,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=5877 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -7941,6 +8383,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Same! Same! Same! / Fire Shark}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -7976,6 +8419,7 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 100,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=35418 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -7990,6 +8434,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Sand Scorpion}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -8001,6 +8446,7 @@ layout:
             |-
             | ON || {{v|b1|6,338,800}} || HKR || Gamest December 1992 || 1st loop 2.11m, no miss ||
             |}
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -8015,6 +8461,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Scramble Formation / Tokio}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -8026,6 +8473,7 @@ layout:
             |}
             
             Note: Micom Basic magazine (October 1986) lists an unverified score of 422,028,000 by 中村優 (loop 28).
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -8040,6 +8488,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Scramble Spirits}}
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
@@ -8056,6 +8505,7 @@ layout:
             |}
             
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -8070,6 +8520,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Sengeki Striker}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -8083,6 +8534,7 @@ layout:
             Note: Japanese scoreboard closed due to the detection of an infinite pattern.
             
             * [https://shmups.system11.org/viewtopic.php?t=34188 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -8097,6 +8549,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Sengoku Ace}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -8119,6 +8572,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1993_012_%E6%88%A6%E5%9B%BD%E3%82%A8%E3%83%BC%E3%82%B9 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=56034 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -8133,6 +8587,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Sengoku Blade}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -8155,6 +8610,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1996_014_%E6%88%A6%E5%9B%BD%E3%83%96%E3%83%AC%E3%83%BC%E3%83%89 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=56034 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -8169,6 +8625,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Sexy Parodius}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -8194,6 +8651,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=36785 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -8208,6 +8666,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Shienryu}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -8221,6 +8680,7 @@ layout:
             Note: Japanese scoreboard closed February 2019 due to the detection of an infinite pattern.
             
             * [https://shmups.system11.org/viewtopic.php?t=176 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -8235,6 +8695,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Shikigami no Shiro}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -8257,6 +8718,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2001_017_%E5%BC%8F%E7%A5%9E%E3%81%AE%E5%9F%8E JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=17924 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -8271,6 +8733,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Shikigami no Shiro II}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -8302,6 +8765,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2003_026_%E5%BC%8F%E7%A5%9E%E3%81%AE%E5%9F%8EII JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=135 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -8316,6 +8780,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Shikigami no Shiro III}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -8354,6 +8819,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2006_032_%E5%BC%8F%E7%A5%9E%E3%81%AE%E5%9F%8EIII JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=18288 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -8368,6 +8834,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Shippu Mahou Daisakusen}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -8397,6 +8864,7 @@ layout:
             
             * [https://shmups.system11.org/viewtopic.php?t=56902 Shmups Forum Hi-Score Topic]
             <section end=shippumd/>
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -8411,6 +8879,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Shooting Love 2007}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -8437,6 +8906,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2007_002_%E3%82%B7%E3%83%A5%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E3%83%A9%E3%83%96%E3%80%822007 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=50137 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -8451,6 +8921,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Skull Fang}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -8466,6 +8937,7 @@ layout:
             Note: Japanese scoreboard for Auto Mode closed September 2019 due to the detection of an infinite pattern.
             
             * [https://shmups.system11.org/viewtopic.php?t=56869 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -8480,6 +8952,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Sky Adventure}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -8491,6 +8964,7 @@ layout:
             |-
             | {{v|b1|11,471}} || KDK-Takeyuki || Arcadia March 2003 || ||
             |}
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -8505,6 +8979,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Sky Kid}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -8516,6 +8991,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=45255 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -8530,6 +9006,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Sky Kid Deluxe}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -8539,6 +9016,7 @@ layout:
             |-
             | {{v|a1|1,276,830}} || 西利明&少女隊 || Micom Basic July 1986 || bomb attack x24 ||
             |}
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -8553,6 +9031,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Sky Smasher}}
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
@@ -8569,6 +9048,7 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=55501 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -8583,6 +9063,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Sky Soldiers}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -8595,6 +9076,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1988_008_%E3%82%B9%E3%82%AB%E3%82%A4%E3%82%BD%E3%83%AB%E3%82%B8%E3%83%A3%E3%83%BC JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=49328 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -8609,6 +9091,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Slap Fight}}
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
@@ -8626,6 +9109,7 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 9,999,990.
             
             * [https://shmups.system11.org/viewtopic.php?t=38634 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -8640,6 +9124,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Sol Divide}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -8655,6 +9140,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=30862 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -8669,6 +9155,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Sonic Boom}}
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
@@ -8682,6 +9169,7 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=59020 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -8696,6 +9184,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Sonic Wings}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -8722,6 +9211,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1992_005_%E3%82%BD%E3%83%8B%E3%83%83%E3%82%AF%E3%82%A6%E3%82%A3%E3%83%B3%E3%82%B0%E3%82%B9 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=31802 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -8736,6 +9226,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Sonic Wings 2}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -8764,6 +9255,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=33163 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -8778,6 +9270,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Sonic Wings 3}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -8807,6 +9300,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=33163 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -8821,6 +9315,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Sonic Wings Limited}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -8832,6 +9327,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=55924 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -8846,6 +9342,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Soukyugurentai}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -8862,6 +9359,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1996_007_%E8%92%BC%E7%A9%B9%E7%B4%85%E8%93%AE%E9%9A%8A JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?p=1207408 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -8876,6 +9374,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Space Bomber}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -8892,6 +9391,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=55934 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -8906,6 +9406,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Space Invaders Anniversary}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -8919,6 +9420,7 @@ layout:
             |-
             | Extra Version || {{v|b1|22,090}} || SG-ELF || Arcadia July 2004 || ||
             |}
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -8933,6 +9435,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|SRD: Super Real Darwin}}
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
@@ -8950,6 +9453,7 @@ layout:
             |}
             
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -8964,6 +9468,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Stagger 1}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -8973,6 +9478,7 @@ layout:
             |-
             | {{v|a1|9,007,800}} || ほむＢ || Arcadia January 2013 || 1L remaining, Oliver, autofire ||
             |}
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -8987,6 +9493,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Star Force}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -9000,6 +9507,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=64492 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -9014,6 +9522,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Storm Blade}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -9025,6 +9534,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=12039 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -9039,6 +9549,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Strania: The Stella Machina}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -9082,6 +9593,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2011_014_%E6%98%9F%E9%9C%9C%E9%8B%BC%E6%A9%9F%E3%82%B9%E3%83%88%E3%83%A9%E3%83%8B%E3%82%A2_Ver.1.11 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=36135 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -9096,6 +9608,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Strikers 1945}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -9121,6 +9634,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1995_009_%E3%82%B9%E3%83%88%E3%83%A9%E3%82%A4%E3%82%AB%E3%83%BC%E3%82%BA1945 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=51578 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -9135,6 +9649,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Strikers 1945 II}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -9163,6 +9678,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1997_008_%E3%82%B9%E3%83%88%E3%83%A9%E3%82%A4%E3%82%AB%E3%83%BC%E3%82%BA1945II JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=182 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -9177,6 +9693,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Strikers 1945 Plus}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -9191,6 +9708,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1999_036_%E3%82%B9%E3%83%88%E3%83%A9%E3%82%A4%E3%82%AB%E3%83%BC%E3%82%BA1945_%E3%83%97%E3%83%A9%E3%82%B9 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=11995 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -9205,6 +9723,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Strikers 1999}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -9237,6 +9756,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1999_016_%E3%82%B9%E3%83%88%E3%83%A9%E3%82%A4%E3%82%AB%E3%83%BC%E3%82%BA1999 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=56620 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -9251,6 +9771,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Super Xevious}}
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
@@ -9268,6 +9789,7 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 9,999,990.
             
             * [https://shmups.system11.org/viewtopic.php?t=39729 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -9282,6 +9804,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Syvalion}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -9293,6 +9816,7 @@ layout:
             |-
             | Real Combat || {{v|b1|24,433,640}} || G.M.C.INI || Gamest August 1991 || ||
             |}
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -9307,6 +9831,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Task Force Harrier}}
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
@@ -9360,6 +9885,7 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=39000 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -9374,6 +9900,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Tatakae! Big Fighter}}
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
@@ -9387,6 +9914,7 @@ layout:
             Note: Japanese scoreboard closed due to the detection of an infinite pattern.
             
             * [https://wiki.denfaminicogamer.jp/highscore/1989_001_%E6%88%A6%E3%81%88%EF%BC%81%E3%83%93%E3%83%83%E3%82%B0%E3%83%95%E3%82%A1%E3%82%A4%E3%82%BF%E3%83%BC JHA Leaderboard]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -9401,6 +9929,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Tatsujin / Truxton}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -9438,6 +9967,7 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=53008 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -9452,6 +9982,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Tatsujin Ou / Truxton II}}
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
@@ -9465,6 +9996,7 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=34858 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -9479,6 +10011,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Tenkomori Shooting}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -9494,6 +10027,7 @@ layout:
             |}
             
             * [https://wiki.denfaminicogamer.jp/highscore/1998_014_%E3%81%A6%E3%82%93%E3%81%93%E3%82%82%E3%82%8A%E3%82%B7%E3%83%A5%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0 JHA Leaderboard]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -9508,6 +10042,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Tenseiryu / Saint Dragon}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -9521,6 +10056,7 @@ layout:
             Note: Gamest magazine (September 1989) lists a score of 25,764,100 by FACILITY-ARIS. This score was deemed impossible in JHA issue July 2020 and subsequently removed from the database. [https://twitter.com/JHA_information/status/1294983587700174849 Read the official statement here].
             
             * [https://shmups.system11.org/viewtopic.php?t=15717 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -9535,6 +10071,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Terra Cresta}}
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
@@ -9558,6 +10095,7 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=28531 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -9572,6 +10110,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Terra Force}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -9583,6 +10122,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=9817 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -9597,6 +10137,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|The Great Ragtime Show / Boogie Wings}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -9606,6 +10147,7 @@ layout:
             |-
             | {{v|a1|4,354,850}} || ザ・YMN || Gamest August 1998 (Micom Basic September 1998) || 2L remaining, autofire ||
             |}
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -9620,6 +10162,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Thunder Blaster / Lethal Thunder}}
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
@@ -9635,6 +10178,7 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 9,999,990.
             
             * [https://shmups.system11.org/viewtopic.php?t=59562 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -9649,6 +10193,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Thunder Cross}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -9722,6 +10267,7 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=60060 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -9736,6 +10282,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Thunder Cross II}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -9751,6 +10298,7 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=60060 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -9765,6 +10313,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Thunder Dragon}}
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
@@ -9793,6 +10342,7 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=49739 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -9807,6 +10357,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Thunder Dragon 2}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -9820,6 +10371,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=47008 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -9834,6 +10386,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Thunder Force AC}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -9850,6 +10403,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=27396 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -9864,6 +10418,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Tiger Heli}}
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
@@ -9877,6 +10432,7 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 9,999,990.
             
             * [https://shmups.system11.org/viewtopic.php?t=34665 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -9891,6 +10447,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Tokushu Butai U.A.G.}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -9904,6 +10461,7 @@ layout:
             |}
             
             Note: Japanese scoreboard closed March 1988 due to the detection of an infinite pattern.
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -9918,6 +10476,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Triggerheart Exelica}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -9932,6 +10491,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2006_020_%E3%83%88%E3%83%AA%E3%82%AC%E3%83%BC%E3%83%8F%E3%83%BC%E3%83%88_%E3%82%A8%E3%82%B0%E3%82%BC%E3%83%AA%E3%82%AB JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=19754 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -9946,6 +10506,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Trigon}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -9963,6 +10524,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1990_009_%E3%83%88%E3%83%A9%E3%82%A4%E3%82%B4%E3%83%B3 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=60057 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -9977,6 +10539,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Trizeal}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -9989,6 +10552,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2004_025_%E3%83%88%E3%83%A9%E3%82%A4%E3%82%B8%E3%83%BC%E3%83%AB JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=21196 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -10003,6 +10567,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Trouble ☆ Witches AC}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -10046,6 +10611,7 @@ layout:
             |}
             
             * [https://wiki.denfaminicogamer.jp/highscore/2009_002_%E3%83%88%E3%83%A9%E3%83%96%E3%83%AB%E2%98%86%E3%82%A6%E3%82%A3%E3%83%83%E3%83%81%E3%83%BC%E3%82%BAAC JHA Leaderboard]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -10060,6 +10626,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Turbo Force}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -10075,6 +10642,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1991_003_%E3%82%BF%E3%83%BC%E3%83%9C%E3%83%95%E3%82%A9%E3%83%BC%E3%82%B9 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=61518 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -10089,6 +10657,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Twin Eagle}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -10100,6 +10669,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=28525 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -10114,6 +10684,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Twin Eagle II}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -10125,6 +10696,7 @@ layout:
             |-
             | ON || {{v|b1|7,899,140}} || MRU-キビシー || Gamest November 1994 (Micom Basic November 1994) || ||
             |}
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -10139,6 +10711,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|TwinBee Yahhoo!}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -10160,6 +10733,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1995_003_%E3%83%84%E3%82%A4%E3%83%B3%E3%83%93%E3%83%BC%E3%83%A4%E3%83%83%E3%83%9B%E3%83%BC%EF%BC%81 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=51575 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -10174,6 +10748,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Twinkle Star Sprites}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -10185,6 +10760,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=34876 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -10199,6 +10775,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|U.S. Navy}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -10213,6 +10790,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1990_005_U.S.%E3%83%8D%E3%82%A4%E3%83%93%E3%83%BC JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=11308 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -10227,6 +10805,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Uchuu Senkan Gomora / Bio-Ship Paladin}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -10240,6 +10819,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=53189 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -10254,6 +10834,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Ultimate Ecology}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -10267,6 +10848,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=59293 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -10281,6 +10863,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Ultra Keibitai / Ultra X Weapons}}
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
@@ -10294,6 +10877,7 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 9,999,999.
             
             * [https://wiki.denfaminicogamer.jp/highscore/1995_005_%E3%82%A6%E3%83%AB%E3%83%88%E3%83%A9%E8%AD%A6%E5%82%99%E9%9A%8A JHA Leaderboard]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -10308,6 +10892,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Under Defeat}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -10320,6 +10905,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2005_009_%E3%82%A2%E3%83%B3%E3%83%80%E3%83%BC%E3%83%87%E3%82%A3%E3%83%95%E3%82%A3%E3%83%BC%E3%83%88 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=41470 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -10334,6 +10920,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|USAAF Mustang}}
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
@@ -10363,6 +10950,7 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=39000 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -10377,6 +10965,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|V-V / Grind Stormer}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -10391,6 +10980,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1993_002_V%E3%83%BB%E3%83%95%E3%82%A1%E3%82%A4%E3%83%96 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=35012 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -10405,6 +10995,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Valtric}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -10420,6 +11011,7 @@ layout:
             Note: It has been reported that the furthest a player has ever gotten is actually stage 3-1 ([https://igcc.jp/kenjo-03-01/ Source]).
             
             * [https://shmups.system11.org/viewtopic.php?t=59663 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -10434,6 +11026,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Varth}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -10450,6 +11043,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1992_001_%E3%83%90%E3%83%BC%E3%82%B9 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=52339 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -10464,6 +11058,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Vasara}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -10481,6 +11076,7 @@ layout:
             Note: Japanese scoreboard closed due to the detection of an infinite pattern.
             
             * [https://shmups.system11.org/viewtopic.php?t=1549 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -10495,6 +11091,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Vasara 2}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -10513,6 +11110,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2001_022_%E5%A9%86%E8%A3%9F%E7%BE%852 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=1549 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -10527,6 +11125,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Viewpoint}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -10544,6 +11143,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=36319 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -10558,6 +11158,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Vimana}}
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
@@ -10677,6 +11278,7 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 100,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=24628 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -10691,6 +11293,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Viper Phase 1}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -10709,6 +11312,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2005_035_%E9%9B%B7%E9%9B%BBIII JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=56616 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -10723,6 +11327,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Wangan Sensou / Desert War}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -10739,6 +11344,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1995_007_%E6%B9%BE%E5%B2%B8%E6%88%A6%E4%BA%89 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=63981 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -10753,6 +11359,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|War of Aero}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -10765,6 +11372,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1993_013_%E3%82%A6%E3%82%A9%E3%83%BC%E3%82%AA%E3%83%96%E3%82%A8%E3%82%A2%E3%83%AD JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=44924 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -10779,6 +11387,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Wonder Planet}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -10788,6 +11397,7 @@ layout:
             |-
             | {{v|a1|10,285,830}} || FUL || Micom Basic December 1987 || ||
             |}
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -10802,6 +11412,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|X-Multiply}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -10814,6 +11425,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1989_023_X%E3%83%9E%E3%83%AB%E3%83%81%E3%83%97%E3%83%A9%E3%82%A4 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=37703 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -10828,6 +11440,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Xevious}}
             {| class="wikitable" style="background: #DFDFDF; text-align: center"
             |-
@@ -10863,6 +11476,7 @@ layout:
             Note: Scoreboard closed after the achievement of the counterstop at 9,999,990.
             
             * [https://shmups.system11.org/viewtopic.php?t=39729 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -10877,6 +11491,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Xevious 3D/G}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -10888,6 +11503,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=39729 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -10902,6 +11518,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Xexex}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -10918,6 +11535,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/1991_004_%E3%82%BC%E3%82%AF%E3%82%BB%E3%82%AF%E3%82%B9 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=3389 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -10932,6 +11550,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|XII Stag}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -10943,6 +11562,7 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?t=46230 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -10957,6 +11577,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|XX Mission}}
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
@@ -10968,6 +11589,7 @@ layout:
             |}
             
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -10982,6 +11604,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Yokushin: Giga Wing Generations}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -11002,6 +11625,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2004_009_%E7%BF%BC%E7%A5%9E JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=1412 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -11016,6 +11640,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Zero Gunner}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -11025,6 +11650,7 @@ layout:
             |-
             | {{v|a1|1,703,300}} || JKP-RDX-寛千代 || Arcadia November 2000 || used AH1-SX, no miss / no bomb ||
             |}
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -11039,6 +11665,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Zero Gunner 2}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -11055,6 +11682,7 @@ layout:
             
             * [https://wiki.denfaminicogamer.jp/highscore/2001_030_%E3%82%BC%E3%83%AD%E3%82%AC%E3%83%B3%E3%83%8A%E3%83%BC2 JHA Leaderboard]
             * [https://shmups.system11.org/viewtopic.php?t=28463 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -11069,6 +11697,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Zero Wing}}
             {| class="wikitable" style="background: #B9D9B9; text-align: center"
             |-
@@ -11082,6 +11711,7 @@ layout:
             Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
             
             * [https://shmups.system11.org/viewtopic.php?t=38614 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
 
@@ -11096,6 +11726,7 @@ needs-work: true
 layout:
     templates:
         game: |
+            {% verbatim %}
             {{Anchor|Zing Zing Zip}}
             {| class="wikitable" style="text-align: center"
             |-
@@ -11107,5 +11738,6 @@ layout:
             |}
             
             * [https://shmups.system11.org/viewtopic.php?f=2&t=66050 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
 </nowiki></pre>
 
