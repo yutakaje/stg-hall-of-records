@@ -22,8 +22,16 @@ final class Formatter
         $this->locale = $locale;
     }
 
-    public function formatDate(string $date): string
+    /**
+     * @param mixed $date
+     * @return mixed
+     */
+    public function formatDate($date)
     {
+        if (!is_string($date)) {
+            return $date;
+        }
+
         $pattern = '/'
             . '(?<year>[1-9][0-9]{3})'
             . '(?:-(?<month>[0-1][0-9])'

@@ -66,7 +66,7 @@ final class Twig
     {
         $twig->addFilter(new TwigFilter(
             'formatDate',
-            fn (string $date) => $this->formatter->formatDate($date)
+            fn ($date) => $this->formatter->formatDate($date)
         ));
     }
 }
