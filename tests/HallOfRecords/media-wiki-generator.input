@@ -85,39 +85,39 @@ layout:
         player:
             label: Player
             label-jp: プレイヤー
-            template: "{{ player }}"
+            template: "{{ score.player }}"
 
         score:
             label: Score
             label-jp: スコア
-            template: "{{ score }}"
+            template: "{{ score.score }}"
 
         ship:
             label: Ship
             label-jp: 自機
-            template: "{{ ship }}"
+            template: "{{ score.ship }}"
 
         mode:
             label: Mode
-            template: "{{ mode }}"
+            template: "{{ score.mode }}"
 
         weapon:
             label: Style
-            template: "{{ weapon }}"
+            template: "{{ score.weapon }}"
 
         scored-date:
             label: Scored date
-            template: "{{ scored-date }}"
+            template: "{{ attribute(score, 'scored-date')|formatDate }}"
 
         source:
             label: Source
             label-jp: 情報元
-            template: "{{ source }}"
+            template: "{{ score.source }}"
 
         comments:
             label: Comment
             label-jp: 備考
-            template: "{{ comments|join('; ') }}"
+            template: "{{ score.comments|join('; ') }}"
 
     templates:
         main: |

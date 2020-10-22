@@ -43,7 +43,7 @@ final class ScoreVariable extends \stdClass
     private function createColumn(array $column, Score $score): \stdClass
     {
         $this->twig->addTemplates([
-            'current-column' => $this->preparePlaceholders($column['template'] ?? ''),
+            'current-column' => $column['template'] ?? '',
         ]);
 
         $variable = new \stdClass();
@@ -66,41 +66,5 @@ final class ScoreVariable extends \stdClass
         }
 
         return $score->attribute('layout')['columns'][$columnName] ?? '';
-    }
-
-    private function preparePlaceholders(string $template): string
-    {
-        return $this->replacePattern(
-            $template,
-            '/((?:{{)|(?:{%)).? ([\w-]+)/u',
-            fn (array $match) => "{$match[1]} {$this->preparePlaceholder($match[2])}"
-        );
-    }
-
-    private function preparePlaceholder(string $name): string
-    {
-        $placeholder = "attribute(score, '{$name}')";
-
-        if (substr($name, -5) === '-date') {
-            $placeholder .= '|formatDate';
-        }
-
-        return $placeholder;
-    }
-
-    private function replacePattern(
-        string $haystack,
-        string $pattern,
-        \Closure $callback
-    ): string {
-        $replaced = preg_replace_callback($pattern, $callback, $haystack);
-
-        if ($replaced === null) {
-            throw new \UnexpectedValueException(
-                "Error replacing pattern `{$pattern}`"
-            );
-        }
-
-        return $replaced;
     }
 }

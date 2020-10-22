@@ -76,31 +76,31 @@ TEXT,
                         'columns' => [
                             'player' => [
                                 'label' => 'Player',
-                                'template' => '{{ player }}',
+                                'template' => '{{ score.player }}',
                             ],
                             'score' => [
                                 'label' => 'Score',
-                                'template' => '{{ score }}',
+                                'template' => '{{ score.score }}',
                             ],
                             'ship' => [
                                 'label' => 'Ship',
-                                'template' => '{{ ship }}',
+                                'template' => '{{ score.ship }}',
                             ],
                             'mode' => [
                                 'label' => 'Mode',
-                                'template' => '{{ mode }}',
+                                'template' => '{{ score.mode }}',
                             ],
                             'weapon' => [
                                 'label' => 'Weapon',
-                                'template' => '{{ weapon }}',
+                                'template' => '{{ score.weapon }}',
                             ],
                             'scored-date+source' => [
                                 'label' => 'Date / Source',
-                                'template' => '{{ scored-date }} / {{ source }}',
+                                'template' => "{{ attribute(score, 'scored-date') }} / {{ score.source }}",
                             ],
                             'comments' => [
                                 'label' => 'Comments',
-                                'template' => "{{ comments|join('; ') }}",
+                                'template' => "{{ score.comments|join('; ') }}",
                             ],
                         ],
                         'templates' => $this->templates(),
