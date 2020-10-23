@@ -14,6 +14,7 @@ declare(strict_types=1);
 use DI\ContainerBuilder;
 use Psr\Log\LoggerInterface;
 use Stg\HallOfRecords\Error\ErrorHandler;
+use Stg\HallOfRecords\Error\StgException;
 use Stg\HallOfRecords\MediaWikiDatabaseFetcher;
 use Stg\HallOfRecords\MediaWikiGenerator;
 use Twig\Environment;
@@ -61,11 +62,7 @@ try {
         } elseif (isset($_POST['load-from-database'])) {
             $input = $container->get(MediaWikiDatabaseFetcher::class)->fetch();
         }
-    } catch (\InvalidArgumentException $exception) {
-        // @TODO: Should be a GeneratorException or something.
-        $errorMessage = $exception->getMessage();
-    } catch (\UnexpectedValueException $exception) {
-        // @TODO: Should be a FetchException or something.
+    } catch (StgException $exception) {
         $errorMessage = $exception->getMessage();
     }
 

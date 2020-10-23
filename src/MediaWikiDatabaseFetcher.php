@@ -14,6 +14,8 @@ declare(strict_types=1);
 namespace Stg\HallOfRecords;
 
 use GuzzleHttp\Client as HttpClient;
+use GuzzleHttp\Exception\ClientException;
+use Stg\HallOfRecords\Error\StgException;
 
 final class MediaWikiDatabaseFetcher
 {
@@ -27,10 +29,14 @@ final class MediaWikiDatabaseFetcher
     public function fetch(): string
     {
         $httpClient = new HttpClient();
-        $response = $httpClient->request('GET', $this->url);
+        try {
+            $response = $httpClient->request('GET', $this->url);
+        } catch (ClientException $exception) {
+            throw $this->createException($exception->getMessage());
+        }
 
         if ($response->getStatusCode() !== 200) {
-            throw new \UnexpectedValueException(
+            throw $this->createException(
                 'Error retrieving database contents from URL'
             );
         }
@@ -39,7 +45,7 @@ final class MediaWikiDatabaseFetcher
 
         $startPos = strpos($body, 'name="wpTextbox1">');
         if ($startPos === false) {
-            throw new \UnexpectedValueException(
+            throw $this->createException(
                 'Error calculating start position within wiki contents'
             );
         }
@@ -47,11 +53,16 @@ final class MediaWikiDatabaseFetcher
 
         $endPos = strpos($body, '</textarea>', $startPos);
         if ($endPos === false) {
-            throw new \UnexpectedValueException(
+            throw $this->createException(
                 'Error calculating end position within wiki contents'
             );
         }
 
         return html_entity_decode(substr($body, $startPos, $endPos - $startPos));
+    }
+
+    private function createException(string $message): StgException
+    {
+        return new StgException("Error fetching input: {$message}");
     }
 }

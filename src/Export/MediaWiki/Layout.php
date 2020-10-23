@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Export\MediaWiki;
 
+use Stg\HallOfRecords\Error\StgException;
+
 final class Layout
 {
     /** @var array<string,string> */
@@ -108,9 +110,7 @@ final class Layout
     public function column(string $name): array
     {
         if (!isset($this->columns[$name])) {
-            throw new \InvalidArgumentException(
-                "Column named `{$name}` does not exist"
-            );
+            throw new StgException("Column named `{$name}` does not exist");
         }
         return $this->columns[$name];
     }

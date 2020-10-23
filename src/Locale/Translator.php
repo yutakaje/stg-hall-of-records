@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Locale;
 
+use Stg\HallOfRecords\Error\StgException;
+
 final class Translator
 {
     /**
@@ -43,9 +45,9 @@ final class Translator
             return $this;
         }
 
-        throw new \InvalidArgumentException(
-            'Value and its translation must both have the same data type,'
-            . ' which is either a string or an array of strings.'
+        throw new StgException(
+            'Error translating value: Value and its translation must both have the'
+            . ' same data type, which is either a string or an array of strings.'
         );
     }
 
@@ -73,8 +75,8 @@ final class Translator
     {
         $json = json_encode($value);
         if ($json === false) {
-            throw new \InvalidArgumentException(
-                'Value could not be converted into JSON'
+            throw new StgException(
+                'Error translating value: Value could not be converted into JSON'
             );
         }
 

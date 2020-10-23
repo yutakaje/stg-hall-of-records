@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Import\MediaWiki;
 
+use Stg\HallOfRecords\Error\StgException;
+
 final class YamlParser
 {
     /**
@@ -124,9 +126,9 @@ final class YamlParser
             || !isset($sections[0]['name'])
             || $sections[0]['name'] !== 'global'
         ) {
-            throw new \InvalidArgumentException(
-                'First section must contain the global properties.'
-                . ' Its property `name` must be set to `global`.'
+            throw new StgException(
+                'Error analysing data: First section must contain the global'
+                . ' properties. Its property `name` must be set to `global`.'
             );
         }
 

@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Tests\HallOfRecords\Import\MediaWiki;
 
+use Stg\HallOfRecords\Error\StgException;
 use Stg\HallOfRecords\Import\MediaWiki\YamlExtractor;
 use Symfony\Component\Yaml\Yaml;
 
@@ -84,5 +85,25 @@ TPL,
         $extractor = new YamlExtractor();
 
         self::assertSame([$expected], $extractor->extract($input));
+    }
+
+    public function testWithInvalidInput(): void
+    {
+        $input = <<<'INPUT'
+<nowiki>
+some: bad: o
+    syntax:
+ example
+</nowiki>
+INPUT;
+
+        $extractor = new YamlExtractor();
+
+        try {
+            print_r($extractor->extract($input));
+            self::fail('Call to `extract` should throw an exception.');
+        } catch (StgException $exception) {
+            self::succeed();
+        }
     }
 }

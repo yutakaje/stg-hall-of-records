@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Import\MediaWiki;
 
+use Stg\HallOfRecords\Error\StgException;
+use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
 
 final class YamlExtractor
@@ -24,9 +26,15 @@ final class YamlExtractor
     {
         preg_match_all('@<nowiki>(.*?)</nowiki>@us', $input, $matches);
 
-        return array_map(
-            fn (string $yaml) => Yaml::parse($yaml),
-            $matches[1]
-        );
+        try {
+            return array_map(
+                fn (string $yaml) => Yaml::parse($yaml),
+                $matches[1]
+            );
+        } catch (ParseException $exception) {
+            throw new StgException(
+                "Error parsing yaml: {$exception->getMessage()}"
+            );
+        }
     }
 }

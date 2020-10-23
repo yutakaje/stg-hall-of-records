@@ -115,4 +115,9 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 
         return $contents;
     }
+
+    protected static function succeed(): void
+    {
+        self::assertTrue(true);
+    }
 }
