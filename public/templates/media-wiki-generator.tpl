@@ -5,7 +5,12 @@
     <title>STG Hall of Records - MediaWiki Page Generator</title>
     <style>
       textarea {
-          width: 800px;
+          width: 99%;
+      }
+      textarea.input {
+          height: 500px;
+      }
+      textarea.output {
           height: 200px;
       }
     </style>
@@ -22,7 +27,7 @@
         <input type="text" id="locales" name="locales" value="{{ locales }}" />
       </div>
       <div>
-        <textarea
+        <textarea class="input"
           name="input"
           placeholder="Input from database page"
           >{{ input }}</textarea>
@@ -33,13 +38,16 @@
       </div>
     </form>
 
+    <br/>
+    <hr/>
+
     <h2>Output</h2>
     {{ error }}
     {% for page in output %}
-    <h3>Output for locale {{ page.locale }}</h3>
+    <h3>Output for locale `{{ page.locale }}`</h3>
     <div>
       <p>Copy the contents of this textbox into the wiki page located at /Database/{{ page.locale }}</p>
-      <textarea>{{ page.output }}</textarea>
+      <textarea class="output">{{ page.output }}</textarea>
     </div>
     {% endfor %}
 
