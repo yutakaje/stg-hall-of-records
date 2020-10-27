@@ -20,6 +20,7 @@ use Stg\HallOfRecords\Data\Score\ScoreRepositoryInterface;
 use Stg\HallOfRecords\Data\Setting\GameSetting;
 use Stg\HallOfRecords\Data\Setting\GlobalSetting;
 use Stg\HallOfRecords\Data\Setting\SettingRepositoryInterface;
+use Stg\HallOfRecords\Error\StgException;
 use Stg\HallOfRecords\Import\MediaWiki\ParsedProperties;
 use Stg\HallOfRecords\Import\MediaWiki\YamlExtractor;
 use Stg\HallOfRecords\Import\MediaWiki\YamlParser;
@@ -286,11 +287,30 @@ final class MediaWikiImporter
                     && isset($entry['value'])
                     && isset($entry["value-{$locale}"])
             ),
-            fn (Translator $translator, array $entry) => $translator->add(
-                $entry['property'],
-                $entry['value'],
-                $entry["value-{$locale}"]
-            ),
+            function (Translator $translator, array $entry) use ($locale): Translator {
+                if (isset($entry['fuzzy-match']) && $entry['fuzzy-match']) {
+                    if (
+                        !is_string($entry['value'])
+                        || !is_string($entry["value-{$locale}"])
+                    ) {
+                        throw new StgException(
+                            'Fuzzy matching is only available for strings'
+                        );
+                    }
+
+                    return $translator->addFuzzy(
+                        $entry['property'],
+                        $entry['value'],
+                        $entry["value-{$locale}"]
+                    );
+                } else {
+                    return $translator->add(
+                        $entry['property'],
+                        $entry['value'],
+                        $entry["value-{$locale}"]
+                    );
+                }
+            },
             new Translator($fallbackTranslator)
         );
     }

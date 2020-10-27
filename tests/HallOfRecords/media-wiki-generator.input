@@ -154,7 +154,7 @@ layout:
         game: |
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="{{ game.headers|length }}" | {{ game.properties.name }}
+            ! colspan="{{ game.headers|length }}" | {{ game.properties.name }} ({{ game.properties.company }})
             |-
             ! {{ game.headers|join(' !! ') }}
             {% for score in game.scores %}
@@ -182,13 +182,24 @@ translations:
   - property: company
     value: Raizing / 8ing
     value-jp: ライジング / エイティング
+  - property: source
+    value: Arcadia July 2011
+    value-jp: Arcadia 2011年07月号 No．114
+  - property: source
+    value: Arcadia
+    value-jp: アルカディア
+    fuzzy-match: true
+  - property: source
+    value: "August (?<year>[1-9][0-9]{3})"
+    value-jp: "{{year}}年08月号"
+    fuzzy-match: true
 
 </nowiki></pre>
 
 == Akai Katana ==
 <pre><nowiki>
 name: "Akai Katana"
-company: "CAVE"
+company: "Cave"
 
 scores:
   - player: 太菱
@@ -543,7 +554,7 @@ layout:
         game : |
             {| class="wikitable" style="text-align: center"
             |-
-            ! colspan="6" | [[{{ game.properties.name }}]]
+            ! colspan="6" | [[{{ game.properties.name }}]] ({{ game.properties.company }})
             |-
             ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-

@@ -59,4 +59,29 @@ class TranslatorTest extends \Tests\TestCase
             ['first loop', 'second loop']
         ));
     }
+
+    public function testWithFuzzyMatch(): void
+    {
+        $globalTranslator = new Translator();
+        $globalTranslator->add('source', 'Gamest', 'ゲーメスト');
+
+        $translator = new Translator($globalTranslator);
+        $translator->add('source', 'Arcadia July 2011', 'Arcadia 2011年07月号 No．114');
+        $translator->addFuzzy('source', 'Arcadia', 'アルカディア');
+        $translator->addFuzzy('source', 'August (?<year>[1-9][0-9]{3})', '{{year}}年08月号{{suffix}}');
+
+        self::assertSame(
+            'Arcadia 2011年07月号 No．114',
+            $translator->translate('source', 'Arcadia July 2011')
+        );
+        self::assertSame(
+            'アルカディア May 2015',
+            $translator->translate('source', 'Arcadia May 2015')
+        );
+        self::assertSame(
+            'アルカディア 2012年08月号',
+            $translator->translate('source', 'Arcadia August 2012')
+        );
+        self::assertSame('ゲーメスト', $translator->translate('source', 'Gamest'));
+    }
 }
