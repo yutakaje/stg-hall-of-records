@@ -310,8 +310,8 @@ scores:
       - 0L 0B remaining
       - "After stage 4: 2.205b"
     links:
-      - url: https://
-        name: Youtube
+      - url: https://example.org/youtube
+        title: Youtube
 
   - player: Clover-TAC
     score: 1,047,258,714
@@ -334,8 +334,8 @@ scores:
     comments:
       - Highest score Xbox360
     links:
-      - url: https://
-        name: Youtube
+      - url: https://example.org/niconico
+        title: Replay (niconico)
 
   - player: Dame K.K
     score: 3,999,999,999
@@ -364,8 +364,8 @@ scores:
     comments:
         - Highest score Xbox360
     links:
-      - url: https://
-        name: Youtube
+      - url: https://example.org/youtube
+        title: Youtube
     attributes:
         layout:
             columns:
@@ -379,8 +379,8 @@ scores:
     weapon: Abnormal
     scored-date: "2014?"
     links:
-      - url: https://
-        name: Youtube
+      - url: https://example.org/youtube
+        title: Youtube
 
 links:
   - url: https://example.org/jha/futari
@@ -403,6 +403,7 @@ layout:
       - scored-date
       - source
       - comments
+      - links
       
     columns:
         ship:
@@ -410,6 +411,12 @@ layout:
 
         weapon:
             label: Style
+
+        links:
+            label: Links
+            label-jp: リンク
+            template: |
+                {% if score.links %}{% for link in score.links %}[{{ link.url}} {{link.title}}] {% endfor %}{% endif %}
 
     sort:
         scores:
@@ -490,7 +497,7 @@ scores:
     ship: Type A
     mode: Ura
     scored-date: "2014-05-27"
-    source: Arcadia September 2014 / [https:// Twitter]
+    source: Arcadia September 2014 / [https://example.org/twitter Twitter]
     comments:
       - 6L 0B remaining
       - 1st loop 285m
@@ -559,34 +566,34 @@ layout:
             ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
             |-
             | rowspan="2" | Birthday
-            | 83,743,680 || rowspan="2" | Miku || August 2nd, 2020 / [https:// Twitter] || 107 items ||
+            | 83,743,680 || rowspan="2" | Miku || August 2nd, 2020 / [https://example.org/twitter Twitter] || 107 items ||
             |-
             | 66,693,110 || JHA November 2019 || 107 items ||
             |-
             | rowspan="2" | Chitta
             | 93,664,750 || rowspan="2" | SOF-WTN
-            | August 8th, 2020 / [https:// Twitter] || 108 items ||
+            | August 8th, 2020 / [https://example.org/twitter Twitter] || 108 items ||
             |-
             | 83,195,810 || JHA June 2020 || || 
             |-
             | rowspan="2" | Gain
-            | 80,528,610 || Boredom || July 1st, 2020 / [https:// Twitter] || 108 items || [https:// Youtube]
+            | 80,528,610 || Boredom || July 1st, 2020 / [https://example.org/twitter Twitter] || 108 items || [https://example.org/youtube Youtube]
             |-
             | 31,653,130 || HTL-蕨ガイン見参 || JHA June 2020 || ||
             |-
             | rowspan="2" | Golden
-            | style="background: #DFDFDF;" | 99,999,999 [101,033,460] || style="background: #DFDFDF;" | Boredom || style="background: #DFDFDF;" | February 13th, 2020 / [https:// Twitter] || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | 
+            | style="background: #DFDFDF;" | 99,999,999 [101,033,460] || style="background: #DFDFDF;" | Boredom || style="background: #DFDFDF;" | February 13th, 2020 / [https://example.org/twitter Twitter] || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | 
             |-
             | 14,925,200 || 磨弓 || JHA July 2020 || ||
             |-
             | Grimlen || style="background: #DFDFDF;" | 99,999,999 || style="background: #DFDFDF;" | KDK-Takeyuki || style="background: #DFDFDF;" | Arcadia July 2002 || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | 
             |-
-            | Karte || style="background: #DFDFDF;" | 99,999,999 [100,571,630] || style="background: #DFDFDF;" | ACR Archer || style="background: #DFDFDF;" | November 17th, 2014 (Arcadia February 2015) / [https:// Twitter] || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | [https:// Youtube]
+            | Karte || style="background: #DFDFDF;" | 99,999,999 [100,571,630] || style="background: #DFDFDF;" | ACR Archer || style="background: #DFDFDF;" | November 17th, 2014 (Arcadia February 2015) / [https://example.org/twitter Twitter] || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | [https://example.org/youtube Youtube]
             |-
             | rowspan="2" | Miyamoto
             | style="background: #DFDFDF;" | 99,999,999 || style="background: #DFDFDF;" | Clover-TAC || style="background: #DFDFDF;" | JHA March 2016 || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | 
             |-
-            | style="background: #DFDFDF;" | 99,999,999 [102,596,210] || style="background: #DFDFDF;" | SOF-WTN || style="background: #DFDFDF;" | February 3rd 2016 (JHA March 2016) / [https:// Twitter] || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | 
+            | style="background: #DFDFDF;" | 99,999,999 [102,596,210] || style="background: #DFDFDF;" | SOF-WTN || style="background: #DFDFDF;" | February 3rd 2016 (JHA March 2016) / [https://example.org/twitter Twitter] || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | 
             |-
             | Solo Bang || style="background: #DFDFDF;" | 99,999,999 || style="background: #DFDFDF;" | Clover-TAC || style="background: #DFDFDF;" | JHA July 2020 || style="background: #DFDFDF;" | 108 items, 2p side || style="background: #DFDFDF;" |
             |}
