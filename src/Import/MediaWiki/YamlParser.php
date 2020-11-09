@@ -74,7 +74,7 @@ final class YamlParser
 
         if (isset($properties['scores'])) {
             $properties['scores'] = array_map(
-                fn (array $score) => new ParsedProperties($score),
+                fn (array $score) => $this->parseScore($score),
                 $properties['scores']
             );
         }
@@ -89,6 +89,23 @@ final class YamlParser
                 $properties['links']
             );
         }
+
+        return new ParsedProperties($properties);
+    }
+
+    /**
+     * @param array<string,mixed> $properties
+     */
+    private function parseScore(array $properties): ParsedProperties
+    {
+        // Use original score value for sorting if nothing else is specified.
+        // A different value is usually only necessary if the score can be
+        // tracked beyond the counterstop. Remove separators as well for
+        // sorting, otherwise scores will be interpreted as strings.
+        if (!isset($properties['score-sort'])) {
+            $properties['score-sort'] = $properties['score'] ?? '';
+        }
+        $properties['score-sort'] = str_replace(',', '', $properties['score-sort']);
 
         return new ParsedProperties($properties);
     }

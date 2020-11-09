@@ -356,6 +356,7 @@ scores:
 
   - player: KGM
     score: 3,999,999,999 [4,263,416,356]
+    score-sort: 4,263,416,356
     ship: Palm
     mode: Ultra
     weapon: Abnormal
@@ -476,7 +477,7 @@ scores:
       - 1st loop 276m
 
   - player: SPS
-    score: 489,893,348
+    score: 89,893,348
     ship: Type A
     mode: Omote
     scored-date: "2010-04"

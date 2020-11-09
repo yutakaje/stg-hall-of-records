@@ -71,6 +71,7 @@ class YamlParserTest extends \Tests\TestCase
                         new ParsedProperties([
                             'player' => 'ABI',
                             'score' => '530,358,660',
+                            'score-sort' => '530358660',
                             'ship' => 'Palm',
                             'mode' => 'Original',
                             'weapon' => 'Normal',
@@ -80,6 +81,7 @@ class YamlParserTest extends \Tests\TestCase
                         new ParsedProperties([
                             'player' => 'ISO / Niboshi',
                             'score' => '518,902,716',
+                            'score-sort' => '518902716',
                             'ship' => 'Palm',
                             'mode' => 'Original',
                             'weapon' => 'Abnormal',
@@ -100,6 +102,7 @@ class YamlParserTest extends \Tests\TestCase
                         new ParsedProperties([
                             'player' => 'SPS',
                             'score' => '507,780,433',
+                            'score-sort' => '507780433',
                             'ship' => 'Type A',
                             'mode' => 'Omote',
                             'scored-date' => '2014-08',
@@ -109,6 +112,7 @@ class YamlParserTest extends \Tests\TestCase
                         new ParsedProperties([
                             'player' => 'GAN',
                             'score' => '569,741,232',
+                            'score-sort' => '569741232',
                             'ship' => 'Type B',
                             'mode' => 'Ura',
                             'scored-date' => '2016-03',
