@@ -44,9 +44,9 @@ final class Formatter
                 $date = $match['year'];
                 if (isset($match['month'])) {
                     if (isset($match['day'])) {
-                        $date = "{$match['day']}/{$date}";
+                        $date = $this->dayNameEn($match['day']) . ", {$date}";
                     }
-                    $date = "{$match['month']}/{$date}";
+                    $date = $this->monthNameEn($match['month']) . " {$date}";
                 }
                 return $date;
             };
@@ -77,5 +77,51 @@ final class Formatter
         $formatted = preg_replace_callback($pattern, $callback, $date);
 
         return $formatted ?? $date;
+    }
+
+    private function monthNameEn(string $month): string
+    {
+        switch ($month) {
+            case '01':
+                return 'January';
+            case '02':
+                return 'February';
+            case '03':
+                return 'March';
+            case '04':
+                return 'April';
+            case '05':
+                return 'May';
+            case '06':
+                return 'June';
+            case '07':
+                return 'July';
+            case '08':
+                return 'August';
+            case '09':
+                return 'September';
+            case '10':
+                return 'October';
+            case '11':
+                return 'November';
+            case '12':
+                return 'December';
+            default:
+                return '';
+        }
+    }
+
+    private function dayNameEn(string $day): string
+    {
+        switch ($day) {
+            case '01':
+                return '1st';
+            case '02':
+                return '2nd';
+            case '03':
+                return '3rd';
+            default:
+                return ltrim($day, '0') . 'th';
+        }
     }
 }

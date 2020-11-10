@@ -33,12 +33,25 @@ class FormatterTest extends \Tests\TestCase
     {
         $formatter = new Formatter('en');
 
-        self::assertSame('09/03/2020', $formatter->formatDate('2020-09-03'));
-        self::assertSame('09/2020', $formatter->formatDate('2020-09'));
+        self::assertSame('September 3rd, 2020', $formatter->formatDate('2020-09-03'));
+        self::assertSame('September 2020', $formatter->formatDate('2020-09'));
         self::assertSame('2020', $formatter->formatDate('2020'));
-        self::assertSame('unknown, 09/03/2020?', $formatter->formatDate('unknown, 2020-09-03?'));
-        self::assertSame('unknown, 09/2020?', $formatter->formatDate('unknown, 2020-09?'));
+        self::assertSame('unknown, September 3rd, 2020?', $formatter->formatDate('unknown, 2020-09-03?'));
+        self::assertSame('unknown, September 2020?', $formatter->formatDate('unknown, 2020-09?'));
         self::assertSame('unknown, 2020?', $formatter->formatDate('unknown, 2020?'));
+
+        self::assertSame('January 1st, 2020', $formatter->formatDate('2020-01-01'));
+        self::assertSame('February 2nd, 2020', $formatter->formatDate('2020-02-02'));
+        self::assertSame('March 3rd, 2020', $formatter->formatDate('2020-03-03'));
+        self::assertSame('April 4th, 2020', $formatter->formatDate('2020-04-04'));
+        self::assertSame('May 5th, 2020', $formatter->formatDate('2020-05-05'));
+        self::assertSame('June 6th, 2020', $formatter->formatDate('2020-06-06'));
+        self::assertSame('July 7th, 2020', $formatter->formatDate('2020-07-07'));
+        self::assertSame('August 8th, 2020', $formatter->formatDate('2020-08-08'));
+        self::assertSame('September 9th, 2020', $formatter->formatDate('2020-09-09'));
+        self::assertSame('October 10th, 2020', $formatter->formatDate('2020-10-10'));
+        self::assertSame('November 11th, 2020', $formatter->formatDate('2020-11-11'));
+        self::assertSame('December 12th, 2020', $formatter->formatDate('2020-12-12'));
     }
 
     public function testFormatDateWithJpLocale(): void
