@@ -26,6 +26,7 @@ use Stg\HallOfRecords\Import\MediaWikiImporter;
 use Stg\HallOfRecords\Import\MediaWiki\YamlExtractor;
 use Stg\HallOfRecords\Import\MediaWiki\YamlParser;
 use Stg\HallOfRecords\MediaWikiDatabaseFetcher;
+use Stg\HallOfRecords\MediaWikiDatabaseFilter;
 use Stg\HallOfRecords\MediaWikiGenerator;
 
 return [
@@ -42,6 +43,7 @@ return [
     MediaWikiDatabaseFetcher::class => DI\create()->constructor(
         'https://shmups.wiki/index.php?title=STG_Hall_of_Records/Database&action=edit'
     ),
+    MediaWikiDatabaseFilter::class => DI\autowire(),
     MediaWikiGenerator::class => DI\autowire(),
 
     LoggerInterface::class => static function (): Logger {

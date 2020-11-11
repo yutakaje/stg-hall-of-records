@@ -4,14 +4,17 @@
     <meta charset="utf-8">
     <title>STG Hall of Records - MediaWiki Page Generator</title>
     <style>
+      body {
+          background-color: #EEEEEE;
+      }
       textarea {
           width: 99%;
       }
       textarea.input {
-          height: 500px;
+          height: 300px;
       }
       textarea.output {
-          height: 200px;
+          height: 300px;
       }
     </style>
   </head>
@@ -35,6 +38,14 @@
       <div>
         <input type="submit" name="generate" value="Generate" />
         <input type="submit" name="load-from-database" value="Load input from database" />
+        {% if allGames %}
+        <select name="game-filter">
+        {% for game in allGames %}
+          <option>{{ game }}</option>
+        {% endfor %}
+        </select>
+        <input type="submit" name="filter-input" value="Filter input" />
+        {% endif %}
       </div>
     </form>
 
