@@ -20,7 +20,7 @@ final class Translator
     /**
      * Translations are grouped by property for faster access.
      *
-     * @var array<string,array<string,string|string[]>>
+     * @var array<string,array<string,mixed>>
      */
     private array $translations;
     /**
@@ -39,8 +39,8 @@ final class Translator
     }
 
     /**
-     * @param string|string[] $value
-     * @param string|string[] $translated
+     * @param mixed $value
+     * @param mixed $translated
      */
     public function add(string $property, $value, $translated): self
     {
@@ -66,8 +66,8 @@ final class Translator
     }
 
     /**
-     * @param string|string[] $value
-     * @return string|string[]
+     * @param mixed $value
+     * @return mixed
      */
     public function translate(string $property, $value)
     {
@@ -75,7 +75,7 @@ final class Translator
 
         if (isset($this->translations[$property][$index])) {
             return $this->translations[$property][$index];
-        } elseif (is_string($value) && $this->hasFuzzyMatch($property, $value)) {
+        } elseif ($this->hasFuzzyMatch($property, $value)) {
             return $this->translateFuzzy($property, $value);
         } elseif ($this->fallbackTranslator !== null) {
             return $this->fallbackTranslator->translate($property, $value);
@@ -84,10 +84,36 @@ final class Translator
         }
     }
 
-    private function hasFuzzyMatch(string $property, string $value): bool
+    /**
+     * @param mixed $value
+     */
+    private function hasFuzzyMatch(string $property, $value): bool
     {
         $candidates = $this->fuzzyTranslations[$property] ?? [];
 
+        if ($candidates == null) {
+            return false;
+        }
+
+
+        if (is_string($value)) {
+            return $this->isFuzzyMatched($value, $candidates);
+        } else {
+            foreach ($value as $entry) {
+                if ($this->hasFuzzyMatch($property, $entry)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param array<string,string> $candidates
+     */
+    private function isFuzzyMatched(string $value, array $candidates): bool
+    {
         foreach ($candidates as $pattern => $replace) {
             if (preg_match($pattern, $value) === 1) {
                 return true;
@@ -97,7 +123,23 @@ final class Translator
         return false;
     }
 
-    private function translateFuzzy(string $property, string $value): string
+    /**
+     * @param mixed $value
+     * @return mixed
+     */
+    private function translateFuzzy(string $property, $value)
+    {
+        if (is_string($value)) {
+            return $this->translateFuzzyString($property, $value);
+        } else {
+            return array_map(
+                fn ($entry) => $this->translateFuzzy($property, $entry),
+                $value
+            );
+        }
+    }
+
+    private function translateFuzzyString(string $property, string $value): string
     {
         $candidates = $this->fuzzyTranslations[$property] ?? [];
 
@@ -138,7 +180,7 @@ final class Translator
     }
 
     /**
-     * @param string|string[] $value
+     * @param mixed $value
      */
     private function indexFor($value): string
     {

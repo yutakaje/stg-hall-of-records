@@ -84,4 +84,53 @@ class TranslatorTest extends \Tests\TestCase
         );
         self::assertSame('ゲーメスト', $translator->translate('source', 'Gamest'));
     }
+
+    public function testWithFuzzyMatchInArray(): void
+    {
+        $globalTranslator = new Translator();
+        $globalTranslator->addFuzzy('links', 'Replay \(niconico\)', '動画（ニコニコ）');
+        $globalTranslator->addFuzzy('links', 'Screenshot', '写真');
+
+        $translator = new Translator($globalTranslator);
+
+        $links = [
+            [
+                'url' => 'https://www.example.org/replay',
+                'title' => 'Replay (niconico)',
+            ],
+            [
+                'url' => 'https://www.example.org/screenshot',
+                'title' => 'Screenshot (Twitter)',
+            ],
+        ];
+
+        self::assertSame(
+            [
+                [
+                    'url' => 'https://www.example.org/replay',
+                    'title' => '動画（ニコニコ）',
+                ],
+                [
+                    'url' => 'https://www.example.org/screenshot',
+                    'title' => '写真 (Twitter)',
+                ],
+            ],
+            $translator->translate('links', $links)
+        );
+
+        $translatedLinks = [
+            [
+                'url' => 'https://www.example.org/nico',
+                'title' => 'ニコニコ',
+            ],
+            [
+                'url' => 'https://www.example.org/twitter',
+                'title' => 'ツイッター',
+            ],
+        ];
+
+        $translator->add('links', $links, $translatedLinks);
+
+        self::assertSame($translatedLinks, $translator->translate('links', $links));
+    }
 }

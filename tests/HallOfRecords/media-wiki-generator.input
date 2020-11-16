@@ -193,6 +193,10 @@ translations:
     value: "August (?<year>[1-9][0-9]{3})"
     value-jp: "{{year}}年08月号"
     fuzzy-match: true
+  - property: links
+    value: Replay \(niconico\)
+    value-jp: 動画（ニコニコ）
+    fuzzy-match: true
 
 </nowiki></pre>
 
@@ -269,6 +273,7 @@ scores:
       - "After stage 4: 273.7m"
 
   - player: ISO / Niboshi
+    player-jp: にぼおじ
     score: 538,378,364
     ship: Reco
     mode: Original
