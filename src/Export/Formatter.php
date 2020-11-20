@@ -120,6 +120,14 @@ final class Formatter
                 return '2nd';
             case '03':
                 return '3rd';
+            case '21':
+                return '21st';
+            case '22':
+                return '22nd';
+            case '23':
+                return '23rd';
+            case '31':
+                return '31st';
             default:
                 return ltrim($day, '0') . 'th';
         }

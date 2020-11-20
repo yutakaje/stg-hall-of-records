@@ -52,6 +52,16 @@ class FormatterTest extends \Tests\TestCase
         self::assertSame('October 10th, 2020', $formatter->formatDate('2020-10-10'));
         self::assertSame('November 11th, 2020', $formatter->formatDate('2020-11-11'));
         self::assertSame('December 12th, 2020', $formatter->formatDate('2020-12-12'));
+        for ($day = 13; $day <= 20; ++$day) {
+            self::assertSame("January {$day}th, 2020", $formatter->formatDate("2020-01-{$day}"));
+        }
+        self::assertSame('January 21st, 2020', $formatter->formatDate('2020-01-21'));
+        self::assertSame('January 22nd, 2020', $formatter->formatDate('2020-01-22'));
+        self::assertSame('January 23rd, 2020', $formatter->formatDate('2020-01-23'));
+        for ($day = 24; $day <= 30; ++$day) {
+            self::assertSame("January {$day}th, 2020", $formatter->formatDate("2020-01-{$day}"));
+        }
+        self::assertSame('January 31st, 2020', $formatter->formatDate('2020-01-31'));
     }
 
     public function testFormatDateWithJpLocale(): void
