@@ -77,6 +77,12 @@ class YamlParserTest extends \Tests\TestCase
                             'weapon' => 'Normal',
                             'scored-date' => '2008-01',
                             'source' => 'Arcadia January 2008',
+                            'links' => [
+                                new ParsedProperties([
+                                    'url' => 'https://www.example.org/url',
+                                    'title' => 'some title',
+                                ]),
+                            ],
                         ]),
                         new ParsedProperties([
                             'player' => 'ISO / Niboshi',
@@ -288,6 +294,12 @@ TPL,
                         'weapon' => 'Normal',
                         'scored-date' => '2008-01',
                         'source' => 'Arcadia January 2008',
+                        'links' => [
+                            [
+                                'url' => 'https://www.example.org/url',
+                                'title' => 'some title',
+                            ],
+                        ],
                     ],
                     [
                         'player' => 'ISO / Niboshi',

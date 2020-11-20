@@ -120,13 +120,6 @@ class MediaWikiImporterTest extends \Tests\TestCase
                     $value['columns']
                 );
             }
-
-            if ($setting->name() === 'links') {
-                $value = array_map(
-                    fn (array $link) => $this->removeLocalizedProperties($link),
-                    $value
-                );
-            }
         }
 
         return [
@@ -167,6 +160,10 @@ class MediaWikiImporterTest extends \Tests\TestCase
             'id' => $game->id(),
             'name' => $game->property('name'),
             'company' => $game->property('company'),
+            'links' => array_map(
+                fn (array $link) => $this->removeLocalizedProperties($link),
+                $game->property('links')
+            ),
         ];
     }
 
@@ -340,17 +337,7 @@ class MediaWikiImporterTest extends \Tests\TestCase
                     ],
                 ],
             ]),
-            4 => $this->gameSetting($gameIds[0], 'links', [
-                [
-                    'url' => 'https://example.org/jha/futari',
-                    'title' => 'JHA Leaderboard',
-                ],
-                [
-                    'url' => 'https://example.org/farm/futari',
-                    'title' => 'Shmups Forum Hi-Score Topic',
-                ],
-            ]),
-            5 => $this->gameSetting($gameIds[1], 'layout', [
+            4 => $this->gameSetting($gameIds[1], 'layout', [
                 'column-order' => [
                     'ship',
                     'mode',
@@ -379,17 +366,7 @@ class MediaWikiImporterTest extends \Tests\TestCase
                     ],
                 ],
             ]),
-            6 => $this->gameSetting($gameIds[1], 'links', [
-                [
-                    'url' => 'https://example.org/jha/ketsui',
-                    'title' => 'JHA Leaderboard',
-                ],
-                [
-                    'url' => 'https://example.org/farm/ketsui',
-                    'title' => 'Shmups Forum Hi-Score Topic',
-                ],
-            ]),
-            7 => $this->gameSetting($gameIds[2], 'layout', [
+            5 => $this->gameSetting($gameIds[2], 'layout', [
                 'templates' => [
                     'game' => $this->fixedGameTemplate(),
                 ],
@@ -397,7 +374,7 @@ class MediaWikiImporterTest extends \Tests\TestCase
         ];
 
         if ($locale === 'en') {
-            $settings[5]['value']['sort']['scores']['ship'] = [
+            $settings[4]['value']['sort']['scores']['ship'] = [
                 'Tiger Schwert',
                 'Panzer Jäger',
             ];
@@ -422,17 +399,12 @@ class MediaWikiImporterTest extends \Tests\TestCase
                 'アブノーマル',
             ];
 
-            $settings[4]['value'][0]['title'] = '日本ハイスコア協会';
-            $settings[4]['value'][1]['title'] = 'ザ・ファーム';
-
-            $settings[5]['value']['columns']['mode']['label'] = '2周種';
-            $settings[5]['value']['columns']['scored-date']['label'] = '年月日';
-            $settings[5]['value']['sort']['scores']['ship'] = [
+            $settings[4]['value']['columns']['mode']['label'] = '2周種';
+            $settings[4]['value']['columns']['scored-date']['label'] = '年月日';
+            $settings[4]['value']['sort']['scores']['ship'] = [
                 'TYPE-A ティーゲルシュベルト',
                 'TYPE-B パンツァーイェーガー',
             ];
-
-            $settings[6]['value'][0]['title'] = '日本ハイスコア協会';
         }
 
         return $settings;
@@ -478,26 +450,51 @@ class MediaWikiImporterTest extends \Tests\TestCase
                 'id' => $this->nextId($idGenerator),
                 'name' => 'Mushihimesama Futari 1.5',
                 'company' => 'Cave',
+                'links' => [
+                    [
+                        'url' => 'https://example.org/jha/futari',
+                        'title' => 'JHA Leaderboard',
+                    ],
+                    [
+                        'url' => 'https://example.org/farm/futari',
+                        'title' => 'Shmups Forum Hi-Score Topic',
+                    ],
+                ],
             ],
             1 => [
                 'id' => $this->nextId($idGenerator),
                 'name' => 'Ketsui: Kizuna Jigoku Tachi',
                 'company' => 'Cave',
+                'links' => [
+                    [
+                        'url' => 'https://example.org/jha/ketsui',
+                        'title' => 'JHA Leaderboard',
+                    ],
+                    [
+                        'url' => 'https://example.org/farm/ketsui',
+                        'title' => 'Shmups Forum Hi-Score Topic',
+                    ],
+                ],
             ],
             2 => [
                 'id' => $this->nextId($idGenerator),
                 'name' => 'Great Mahou Daisakusen',
                 'company' => 'Raizing / 8ing',
+                'links' => [],
             ],
         ];
 
         if ($locale === 'en') {
             // Nothing atm
         } elseif ($locale === 'jp') {
+            $games[0]['links'][0]['title'] = '日本ハイスコア協会';
+            $games[0]['links'][1]['title'] = 'ザ・ファーム';
             $games[0] = array_merge($games[0], [
                 'name' => '虫姫さまふたりVer 1.5',
                 'company' => 'ケイブ',
             ]);
+
+            $games[1]['links'][0]['title'] = '日本ハイスコア協会';
             $games[1] = array_merge($games[1], [
                 'name' => 'ケツイ ～絆地獄たち～',
                 'company' => 'ケイブ',

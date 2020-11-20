@@ -133,7 +133,7 @@ final class MediaWikiImporter
 
         $this->games->add(new Game(
             $gameId,
-            $this->translateProperties($translator, $game)
+            $this->getGameProperties($game, $locale, $translator)
         ));
 
         foreach ($game->get('scores', []) as $score) {
@@ -153,17 +153,27 @@ final class MediaWikiImporter
                 $this->translateLayout($layout, $locale, $translator)
             ));
         }
+    }
 
-        $links = $game->get('links');
-        if ($links !== null) {
-            $this->settings->add(new GameSetting($gameId, 'links', array_map(
-                fn (ParsedProperties $link) => $this->translateProperties(
-                    $this->createTranslator($link, $locale, $translator),
-                    $link
+    /**
+     * @return array<string,mixed>
+     */
+    private function getGameProperties(
+        ParsedProperties $game,
+        string $locale,
+        Translator $translator
+    ): array {
+        return $this->translateProperties($translator, new ParsedProperties(
+            array_merge($game->all(), [
+                'links' => array_map(
+                    fn (ParsedProperties $link) => $this->translateProperties(
+                        $this->createTranslator($link, $locale, $translator),
+                        $link
+                    ),
+                    $game->get('links', [])
                 ),
-                $links
-            )));
-        }
+            ])
+        ));
     }
 
     private function addScoreToRepository(
@@ -178,7 +188,28 @@ final class MediaWikiImporter
         $this->scores->add(new Score(
             $scoreId,
             $gameId,
-            $this->translateProperties($translator, $score)
+            $this->getScoreProperties($score, $locale, $translator)
+        ));
+    }
+
+    /**
+     * @return array<string,mixed>
+     */
+    private function getScoreProperties(
+        ParsedProperties $score,
+        string $locale,
+        Translator $translator
+    ): array {
+        return $this->translateProperties($translator, new ParsedProperties(
+            array_merge($score->all(), [
+                'links' => array_map(
+                    fn (ParsedProperties $link) => $this->translateProperties(
+                        $this->createTranslator($link, $locale, $translator),
+                        $link
+                    ),
+                    $score->get('links', [])
+                )
+            ])
         ));
     }
 

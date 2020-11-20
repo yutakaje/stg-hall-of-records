@@ -166,8 +166,8 @@ layout:
             {{ game.properties.description }}
 
             {% endif %}
-            {% if game.links %}
-            {% for link in game.links %}
+            {% if game.properties.links %}
+            {% for link in game.properties.links %}
             * [{{ link.url}} {{link.title}}]
             {% endfor %}
             {% endif %}
@@ -196,6 +196,10 @@ translations:
   - property: links
     value: Replay \(niconico\)
     value-jp: 動画（ニコニコ）
+    fuzzy-match: true
+  - property: links
+    value: JHA Leaderboard
+    value-jp: 日本ハイスコア協会
     fuzzy-match: true
 
 </nowiki></pre>
@@ -317,6 +321,7 @@ scores:
     links:
       - url: https://example.org/youtube
         title: Youtube
+        title-jp: YoutubeJP
 
   - player: Clover-TAC
     score: 1,047,258,714
@@ -391,7 +396,6 @@ scores:
 links:
   - url: https://example.org/jha/futari
     title: JHA Leaderboard
-    title-jp: 日本ハイスコア協会
   - url: https://example.org/farm/futari
     title: Shmups Forum Hi-Score Topic
     title-jp: ザ・ファーム
@@ -511,7 +515,7 @@ scores:
 links:
   - url: https://example.org/jha/ketsui
     title: JHA Leaderboard
-    title-jp: 日本ハイスコア協会
+    title-jp: 日本ハイスコア協会・ケツイ
   - url: https://example.org/farm/ketsui
     title: Shmups Forum Hi-Score Topic
 

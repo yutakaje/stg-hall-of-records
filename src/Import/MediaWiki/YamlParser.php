@@ -107,6 +107,13 @@ final class YamlParser
         }
         $properties['score-sort'] = str_replace(',', '', $properties['score-sort']);
 
+        if (isset($properties['links'])) {
+            $properties['links'] = array_map(
+                fn (array $link) => new ParsedProperties($link),
+                $properties['links']
+            );
+        }
+
         return new ParsedProperties($properties);
     }
 
