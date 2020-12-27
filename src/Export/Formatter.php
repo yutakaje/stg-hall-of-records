@@ -15,11 +15,21 @@ namespace Stg\HallOfRecords\Export;
 
 final class Formatter
 {
-    private string $locale;
+    public const DATE_FORMAT_SHORT = 'short';
+    public const DATE_FORMAT_LONG = 'long';
 
-    public function __construct(string $locale = '')
+    private string $locale;
+    /**
+     * @see DATE_FORMAT_*
+     */
+    private string $dateFormat;
+
+    public function __construct(string $locale = '', string $dateFormat = '')
     {
         $this->locale = $locale;
+        $this->dateFormat = $dateFormat === self::DATE_FORMAT_SHORT
+            ? self::DATE_FORMAT_SHORT
+            : self::DATE_FORMAT_LONG;
     }
 
     /**
@@ -81,6 +91,15 @@ final class Formatter
 
     private function monthNameEn(string $month): string
     {
+        if ($this->dateFormat === self::DATE_FORMAT_SHORT) {
+            return $this->monthNameEnShort($month);
+        } else {
+            return $this->monthNameEnLong($month);
+        };
+    }
+
+    private function monthNameEnLong(string $month): string
+    {
         switch ($month) {
             case '01':
                 return 'January';
@@ -111,14 +130,30 @@ final class Formatter
         }
     }
 
+    private function monthNameEnShort(string $month): string
+    {
+        return substr($this->monthNameEnLong($month), 0, 3);
+    }
+
     private function dayNameEn(string $day): string
     {
+        if ($this->dateFormat === self::DATE_FORMAT_SHORT) {
+            return $this->dayNameEnShort($day);
+        } else {
+            return $this->dayNameEnLong($day);
+        };
+    }
+
+    private function dayNameEnLong(string $day): string
+    {
+        $day = $this->dayNameEnShort($day);
+
         switch ($day) {
-            case '01':
+            case '1':
                 return '1st';
-            case '02':
+            case '2':
                 return '2nd';
-            case '03':
+            case '3':
                 return '3rd';
             case '21':
                 return '21st';
@@ -129,7 +164,12 @@ final class Formatter
             case '31':
                 return '31st';
             default:
-                return ltrim($day, '0') . 'th';
+                return "{$day}th";
         }
+    }
+
+    private function dayNameEnShort(string $day): string
+    {
+        return ltrim($day, '0');
     }
 }

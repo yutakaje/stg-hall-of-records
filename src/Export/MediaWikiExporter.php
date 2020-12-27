@@ -49,7 +49,9 @@ final class MediaWikiExporter
             $globalSettings->get('layout', [])
         );
 
-        $this->twig->registerFormatter(new Formatter($locale));
+        $this->twig->registerFormatter(
+            new Formatter($locale, Formatter::DATE_FORMAT_SHORT)
+        );
         $this->twig->addTemplates($globalLayout->templates());
 
         return $this->createMainTemplate($globalLayout)->render([

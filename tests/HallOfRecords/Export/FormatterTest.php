@@ -75,4 +75,44 @@ class FormatterTest extends \Tests\TestCase
         self::assertSame('unknown, 2020年09月?', $formatter->formatDate('unknown, 2020-09?'));
         self::assertSame('unknown, 2020年?', $formatter->formatDate('unknown, 2020?'));
     }
+
+    public function testFormatDateWithEnLocaleAndShortFormat(): void
+    {
+        $formatter = new Formatter('en', Formatter::DATE_FORMAT_SHORT);
+
+        self::assertSame('Sep 3, 2020', $formatter->formatDate('2020-09-03'));
+        self::assertSame('Sep 2020', $formatter->formatDate('2020-09'));
+        self::assertSame('2020', $formatter->formatDate('2020'));
+        self::assertSame('unknown, Sep 3, 2020?', $formatter->formatDate('unknown, 2020-09-03?'));
+        self::assertSame('unknown, Sep 2020?', $formatter->formatDate('unknown, 2020-09?'));
+        self::assertSame('unknown, 2020?', $formatter->formatDate('unknown, 2020?'));
+
+        self::assertSame('Jan 1, 2020', $formatter->formatDate('2020-01-01'));
+        self::assertSame('Feb 2, 2020', $formatter->formatDate('2020-02-02'));
+        self::assertSame('Mar 3, 2020', $formatter->formatDate('2020-03-03'));
+        self::assertSame('Apr 4, 2020', $formatter->formatDate('2020-04-04'));
+        self::assertSame('May 5, 2020', $formatter->formatDate('2020-05-05'));
+        self::assertSame('Jun 6, 2020', $formatter->formatDate('2020-06-06'));
+        self::assertSame('Jul 7, 2020', $formatter->formatDate('2020-07-07'));
+        self::assertSame('Aug 8, 2020', $formatter->formatDate('2020-08-08'));
+        self::assertSame('Sep 9, 2020', $formatter->formatDate('2020-09-09'));
+        self::assertSame('Oct 10, 2020', $formatter->formatDate('2020-10-10'));
+        self::assertSame('Nov 11, 2020', $formatter->formatDate('2020-11-11'));
+        self::assertSame('Dec 12, 2020', $formatter->formatDate('2020-12-12'));
+        for ($day = 13; $day <= 31; ++$day) {
+            self::assertSame("Jan {$day}, 2020", $formatter->formatDate("2020-01-{$day}"));
+        }
+    }
+
+    public function testFormatDateWithJpLocaleAndShortFormat(): void
+    {
+        $formatter = new Formatter('jp', Formatter::DATE_FORMAT_SHORT);
+
+        self::assertSame('2020年09月03日', $formatter->formatDate('2020-09-03'));
+        self::assertSame('2020年09月', $formatter->formatDate('2020-09'));
+        self::assertSame('2020年', $formatter->formatDate('2020'));
+        self::assertSame('unknown, 2020年09月03日?', $formatter->formatDate('unknown, 2020-09-03?'));
+        self::assertSame('unknown, 2020年09月?', $formatter->formatDate('unknown, 2020-09?'));
+        self::assertSame('unknown, 2020年?', $formatter->formatDate('unknown, 2020?'));
+    }
 }
