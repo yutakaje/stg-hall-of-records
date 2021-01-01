@@ -614,6 +614,9 @@ name: Tatsujin Ou
 name-jp: "達人王"
 name-kana: "たつじんおう"
 company: Toaplan
+counterstop:
+    score: 10,000,000
+    type: soft
 
 scores:
   - player: SPK(お)
@@ -644,53 +647,210 @@ scores:
 
 == Great Mahou Daisakusen ==
 <pre><nowiki>
-name: Great Mahou Daisakusen
-company: Raizing / 8ing
+name: "Great Mahou Daisakusen"
+name-jp: グレート魔法大作戦
+name-kana: ぐれーとまほうだいさくせん
+company: "Raizing / 8ing"
+counterstop:
+    score: 99,999,999
+    type: hard
+
+scores:
+  - player: Miku
+    score: 87,818,460
+    ship: Birthday
+    sources:
+      - name: Twitter
+        date: "2020-09-07"
+        url: https://example.org/twitter
+      - name: JHA
+        date: "2020-09"
+    comments:
+      - "108 items"
+      - "missed 3 secret items"
+    attributes:
+        is-current-record: true
+
+  - player: Miku
+    score: 89,074,210
+    ship: Birthday
+    sources:
+      - name: Twitter
+        date: "2020-11-29"
+        url: https://example.org/twitter
+    comments:
+      - "108 items"
+
+  - player: SOF-WTN
+    score: 94,447,870
+    ship: Chitta
+    sources:
+      - name: Twitter
+        date: "2020-08-23"
+        url: https://example.org/twitter
+      - name: JHA
+        date: "2020-09"
+    comments:
+      - "108 items"
+
+  - player: SOF-WTN
+    score: 95,592,960
+    ship: Chitta
+    sources:
+      - name: Twitter
+        date: "2020-10-04"
+        url: https://example.org/twitter
+      - name: JHA
+        date: "2020-10"
+    comments:
+      - "107 items"
+
+  - player: JMB-りゅう
+    score: 45,812,150
+    ship: Gain
+    sources:
+      - name: JHA
+        date: "2020-09"
+
+  - player: JMB-りゅう
+    score: 50,326,410
+    ship: Gain
+    sources:
+      - name: Twitter
+        date: "2020-10"
+        url: https://example.org/twitter
+      - name: JHA
+        date: "2020-10"
+    comments:
+      - "104 items"
+    attributes:
+        is-current-record: true
+
+  - player: Boredom
+    score: 80,528,610
+    ship: Gain
+    sources:
+      - name: Twitter
+        date: "2020-07-01"
+        url: https://example.org/twitter
+      - name: Youtube
+        date: "2020-07"
+        url: https://example.org/youtube
+    comments:
+      - "108 items"
+
+  - player: JAP
+    score: 28,881,820
+    ship: Golden
+    sources:
+      - name: Twitter
+        date: "2020-09-14"
+        url: https://example.org/twitter
+      - name: JHA
+        date: "2020-09"
+    comments:
+      - "100 items"
+    attributes:
+        is-current-record: true
+
+  - player: Boredom
+    score: 99,999,999 [101,033,460]
+    ship: Golden
+    sources:
+      - name: Twitter
+        date: "2020-02-13"
+        url: https://example.org/twitter
+    comments:
+      - "108 items"
+
+  - player: KDK-Takeyuki
+    score: 99,999,999
+    ship: Grimlen
+    sources:
+      - name: Arcadia
+        date: "2002-07"
+    comments:
+      - "108 items"
+
+  - player: ACR Archer
+    score: 99,999,999 [100,571,630]
+    ship: Karte
+    sources:
+      - name: Twitter
+        date: "2014-11-17"
+        url: https://example.org/twitter
+      - name: Arcadia
+        date: "2015-02"
+      - name: Youtube
+        date: "2014-11"
+        url: https://example.org/youtube
+    comments:
+      - "108 items"
+
+  - player: SOF-WTN
+    score: 99,643,050
+    ship: Miyamoto
+    sources:
+      - name: Arcadia
+        date: "2014-04"
+
+  - player: Clover-TAC
+    score: 99,999,999
+    ship: Miyamoto
+    sources:
+      - name: JHA
+        date: "2016-03"
+    comments:
+      - "108 items"
+    attributes:
+        is-current-record: true
+
+  - player: SOF-WTN
+    score: 99,999,999 [102,596,210]
+    ship: Miyamoto
+    sources:
+      - name: Twitter
+        date: "2016-02-03"
+        url: https://example.org/twitter
+      - name: JHA
+        date: "2016-03"
+    comments:
+      - "108 items"
+
+  - player: Clover-TAC
+    score: 98,088,360
+    ship: Solo Bang
+    sources:
+      - name: Arcadia
+        date: "2014-01"
+
+  - player: Clover-TAC
+    score: 99,999,999
+    ship: Solo Bang
+    sources:
+      - name: JHA
+        date: "2016-03"
+    comments:
+      - "108 items"
+      - "2p side"
+
+description: "Note: Scoreboard closed after the achievement of the counterstop at 99,999,999."
+
+links:
+  - url: https://example.org/jha/grema
+    title: JHA Leaderboard
+  - url: https://example.org/farm/grema
+    title: Shmups Forum Hi-Score Topic
 
 layout:
-    templates:
-        game : |
-            {| class="wikitable" style="text-align: center"
-            |-
-            ! colspan="6" | [[{{ game.properties.name }}]] ({{ game.properties.company }})
-            |-
-            ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
-            |-
-            | rowspan="2" | Birthday
-            | 83,743,680 || rowspan="2" | Miku || August 2nd, 2020 / [https://example.org/twitter Twitter] || 107 items ||
-            |-
-            | 66,693,110 || JHA November 2019 || 107 items ||
-            |-
-            | rowspan="2" | Chitta
-            | 93,664,750 || rowspan="2" | SOF-WTN
-            | August 8th, 2020 / [https://example.org/twitter Twitter] || 108 items ||
-            |-
-            | 83,195,810 || JHA June 2020 || || 
-            |-
-            | rowspan="2" | Gain
-            | 80,528,610 || Boredom || July 1st, 2020 / [https://example.org/twitter Twitter] || 108 items || [https://example.org/youtube Youtube]
-            |-
-            | 31,653,130 || HTL-蕨ガイン見参 || JHA June 2020 || ||
-            |-
-            | rowspan="2" | Golden
-            | style="background: #DFDFDF;" | 99,999,999 [101,033,460] || style="background: #DFDFDF;" | Boredom || style="background: #DFDFDF;" | February 13th, 2020 / [https://example.org/twitter Twitter] || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | 
-            |-
-            | 14,925,200 || 磨弓 || JHA July 2020 || ||
-            |-
-            | Grimlen || style="background: #DFDFDF;" | 99,999,999 || style="background: #DFDFDF;" | KDK-Takeyuki || style="background: #DFDFDF;" | Arcadia July 2002 || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | 
-            |-
-            | Karte || style="background: #DFDFDF;" | 99,999,999 [100,571,630] || style="background: #DFDFDF;" | ACR Archer || style="background: #DFDFDF;" | November 17th, 2014 (Arcadia February 2015) / [https://example.org/twitter Twitter] || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | [https://example.org/youtube Youtube]
-            |-
-            | rowspan="2" | Miyamoto
-            | style="background: #DFDFDF;" | 99,999,999 || style="background: #DFDFDF;" | Clover-TAC || style="background: #DFDFDF;" | JHA March 2016 || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | 
-            |-
-            | style="background: #DFDFDF;" | 99,999,999 [102,596,210] || style="background: #DFDFDF;" | SOF-WTN || style="background: #DFDFDF;" | February 3rd 2016 (JHA March 2016) / [https://example.org/twitter Twitter] || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | 
-            |-
-            | Solo Bang || style="background: #DFDFDF;" | 99,999,999 || style="background: #DFDFDF;" | Clover-TAC || style="background: #DFDFDF;" | JHA July 2020 || style="background: #DFDFDF;" | 108 items, 2p side || style="background: #DFDFDF;" |
-            |}
-
-            Note: Scoreboard closed after the achievement of the counterstop at 99,999,999.
-
-            * [https://example.org/some_link_id JHA Leaderboard]
-            * [https://example.org/some_other_link Shmups Forum Hi-Score Topic]
+    column-order:
+      - ship
+      - score
+      - player
+      - sources
+      - comments
+    sort:
+        scores:
+            ship: [ Birthday, Chitta, Gain, Golden, Grimlen, Karte, Miyamoto, Solo Bang ]
+            mode: asc
 </nowiki></pre>

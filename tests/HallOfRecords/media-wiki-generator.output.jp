@@ -10,10 +10,13 @@ Mostly limited to a number of older games, Japanese scorekeeping sometimes sets 
 
 <table class="wikitable">
   <tr>
-    <th class="mw-customtoggle-3 " style="padding-left:10px;padding-right:10px;">か行</th>
+    <th class="mw-customtoggle-6 mw-customtoggle-3 " style="padding-left:10px;padding-right:10px;">か行</th>
     <th class="mw-customtoggle-5 " style="padding-left:10px;padding-right:10px;">た行</th>
     <th class="mw-customtoggle-2 " style="padding-left:10px;padding-right:10px;">ま行</th>
-    <th class="mw-customtoggle-1 mw-customtoggle-6 mw-customtoggle-4 " style="padding-left:10px;padding-right:10px;">#</th>
+    <th class="mw-customtoggle-1 mw-customtoggle-4 " style="padding-left:10px;padding-right:10px;">#</th>
+  </tr>
+  <tr id="mw-customcollapsible-6" class="mw-collapsible mw-collapsed">
+    <td colspan="4">[[#グレート魔法大作戦|グレート魔法大作戦]]</td>
   </tr>
   <tr id="mw-customcollapsible-3" class="mw-collapsible mw-collapsed">
     <td colspan="4">[[#ケツイ ～絆地獄たち～|ケツイ ～絆地獄たち～]]</td>
@@ -26,9 +29,6 @@ Mostly limited to a number of older games, Japanese scorekeeping sometimes sets 
   </tr>
   <tr id="mw-customcollapsible-1" class="mw-collapsible mw-collapsed">
     <td colspan="4">[[#Akai Katana|Akai Katana]]</td>
-  </tr>
-  <tr id="mw-customcollapsible-6" class="mw-collapsible mw-collapsed">
-    <td colspan="4">[[#Great Mahou Daisakusen|Great Mahou Daisakusen]]</td>
   </tr>
   <tr id="mw-customcollapsible-4" class="mw-collapsible mw-collapsed">
     <td colspan="4">[[#Salamander 2|Salamander 2]]</td>
@@ -51,51 +51,6 @@ __NOTOC__
 
 
 
-{| class="wikitable" style="text-align: center"
-|-
-! colspan="6" | [[Great Mahou Daisakusen]] (ライジング / エイティング)
-|-
-! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
-|-
-| rowspan="2" | Birthday
-| 83,743,680 || rowspan="2" | Miku || August 2nd, 2020 / [https://example.org/twitter Twitter] || 107 items ||
-|-
-| 66,693,110 || JHA November 2019 || 107 items ||
-|-
-| rowspan="2" | Chitta
-| 93,664,750 || rowspan="2" | SOF-WTN
-| August 8th, 2020 / [https://example.org/twitter Twitter] || 108 items ||
-|-
-| 83,195,810 || JHA June 2020 || || 
-|-
-| rowspan="2" | Gain
-| 80,528,610 || Boredom || July 1st, 2020 / [https://example.org/twitter Twitter] || 108 items || [https://example.org/youtube Youtube]
-|-
-| 31,653,130 || HTL-蕨ガイン見参 || JHA June 2020 || ||
-|-
-| rowspan="2" | Golden
-| style="background: #DFDFDF;" | 99,999,999 [101,033,460] || style="background: #DFDFDF;" | Boredom || style="background: #DFDFDF;" | February 13th, 2020 / [https://example.org/twitter Twitter] || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | 
-|-
-| 14,925,200 || 磨弓 || JHA July 2020 || ||
-|-
-| Grimlen || style="background: #DFDFDF;" | 99,999,999 || style="background: #DFDFDF;" | KDK-Takeyuki || style="background: #DFDFDF;" | Arcadia July 2002 || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | 
-|-
-| Karte || style="background: #DFDFDF;" | 99,999,999 [100,571,630] || style="background: #DFDFDF;" | ACR Archer || style="background: #DFDFDF;" | November 17th, 2014 (Arcadia February 2015) / [https://example.org/twitter Twitter] || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | [https://example.org/youtube Youtube]
-|-
-| rowspan="2" | Miyamoto
-| style="background: #DFDFDF;" | 99,999,999 || style="background: #DFDFDF;" | Clover-TAC || style="background: #DFDFDF;" | JHA March 2016 || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | 
-|-
-| style="background: #DFDFDF;" | 99,999,999 [102,596,210] || style="background: #DFDFDF;" | SOF-WTN || style="background: #DFDFDF;" | February 3rd 2016 (JHA March 2016) / [https://example.org/twitter Twitter] || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | 
-|-
-| Solo Bang || style="background: #DFDFDF;" | 99,999,999 || style="background: #DFDFDF;" | Clover-TAC || style="background: #DFDFDF;" | JHA July 2020 || style="background: #DFDFDF;" | 108 items, 2p side || style="background: #DFDFDF;" |
-|}
-
-Note: Scoreboard closed after the achievement of the counterstop at 99,999,999.
-
-* [https://example.org/some_link_id JHA Leaderboard]
-* [https://example.org/some_other_link Shmups Forum Hi-Score Topic]
-
-
 
 {{Anchor|Salamander 2}}
 {| class="wikitable" style="text-align: center"
@@ -109,6 +64,43 @@ Note: Scoreboard closed after the achievement of the counterstop at 99,999,999.
 
 * [https://example.org/farm/salamander2 Shmups Forum Hi-Score Topic]
 
+
+
+{| class="wikitable" style="text-align: center"
+|-
+! colspan="5" | グレート魔法大作戦 (ライジング / エイティング)
+|-
+! 自機 !! スコア !! プレイヤー !! 情報元 !! 備考
+|-
+| Birthday || 89,074,210 || Miku || [https://example.org/twitter Twitter] (2020年11月29日) || 108 items
+|-
+| Birthday || 87,818,460 || Miku || [https://example.org/twitter Twitter] (2020年09月07日)<br>JHA (2020年09月) || 108 items; missed 3 secret items
+|-
+| Chitta || 95,592,960 || SOF-WTN || [https://example.org/twitter Twitter] (2020年10月04日)<br>JHA (2020年10月) || 107 items
+|-
+| Gain || 80,528,610 || Boredom || [https://example.org/twitter Twitter] (2020年07月01日)<br>[https://example.org/youtube Youtube] (2020年07月) || 108 items
+|-
+| Gain || 50,326,410 || JMB-りゅう || [https://example.org/twitter Twitter] (2020年10月)<br>JHA (2020年10月) || 104 items
+|-
+| Golden || 99,999,999 [101,033,460] || Boredom || [https://example.org/twitter Twitter] (2020年02月13日) || 108 items
+|-
+| Golden || 28,881,820 || JAP || [https://example.org/twitter Twitter] (2020年09月14日)<br>JHA (2020年09月) || 100 items
+|-
+| Grimlen || 99,999,999 || KDK-Takeyuki || Arcadia (2002年07月) || 108 items
+|-
+| Karte || 99,999,999 [100,571,630] || ACR Archer || [https://example.org/twitter Twitter] (2014年11月17日)<br>Arcadia (2015年02月)<br>[https://example.org/youtube Youtube] (2014年11月) || 108 items
+|-
+| Miyamoto || 99,999,999 [102,596,210] || SOF-WTN || [https://example.org/twitter Twitter] (2016年02月03日)<br>JHA (2016年03月) || 108 items
+|-
+| Miyamoto || 99,999,999 || Clover-TAC || JHA (2016年03月) || 108 items
+|-
+| Solo Bang || 99,999,999 || Clover-TAC || JHA (2016年03月) || 108 items; 2p side
+|}
+
+Note: Scoreboard closed after the achievement of the counterstop at 99,999,999.
+
+* [https://example.org/jha/grema 日本ハイスコア協会]
+* [https://example.org/farm/grema Shmups Forum Hi-Score Topic]
 
 
 {| class="wikitable" style="text-align: center"
