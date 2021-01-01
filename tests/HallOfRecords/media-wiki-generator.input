@@ -385,7 +385,7 @@ scores:
 
   - player: KGM
     score: 3,999,999,999 [4,263,416,356]
-    score-sort: 4,263,416,356
+    score-real: 4,263,416,356
     ship: Palm
     mode: Ultra
     weapon: Abnormal
@@ -631,7 +631,7 @@ scores:
 
   - player: SOF-WTN
     score: 10,000,000+α [13,973,830]
-    score-sort: 13,973,830
+    score-real: 13,973,830
     sources:
       - name: Twitter
         date: "2008-10-04"

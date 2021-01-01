@@ -98,14 +98,23 @@ final class YamlParser
      */
     private function parseScore(array $properties): ParsedProperties
     {
-        // Use original score value for sorting if nothing else is specified.
-        // A different value is usually only necessary if the score can be
-        // tracked beyond the counterstop. Remove separators as well for
-        // sorting, otherwise scores will be interpreted as strings.
-        if (!isset($properties['score-sort'])) {
-            $properties['score-sort'] = $properties['score'] ?? '';
+        // If the achieved score is different from the one displayed within the game,
+        // the former can be specified in a separate property named `score-real`.
+        // The two score values usually only differ for games where the score can be
+        // tracked beyond a counterstop.
+
+        if (!isset($properties['score'])) {
+            $properties['score'] = '';
         }
-        $properties['score-sort'] = str_replace(',', '', $properties['score-sort']);
+        if (!isset($properties['score-real'])) {
+            $properties['score-real'] = $properties['score'];
+        }
+
+        // Remove separators from score values for sorting, otherwise they will be
+        // interpreted as strings.
+        $properties['score-sort'] = $this->convertScoreToNumber(
+            $properties['score-real']
+        );
 
         if (isset($properties['links'])) {
             $properties['links'] = array_map(
@@ -166,5 +175,10 @@ final class YamlParser
     private function extractGames(array $sections): array
     {
         return array_slice($sections, 1);
+    }
+
+    private function convertScoreToNumber(string $score): string
+    {
+        return str_replace(',', '', $score);
     }
 }
