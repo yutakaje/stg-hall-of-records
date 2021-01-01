@@ -59,7 +59,7 @@ config:
 layout:
     sort:
         games:
-            company: asc
+#            company: asc
             name: asc
         scores:
             score: desc
@@ -79,6 +79,7 @@ layout:
       - score
       - scored-date
       - source
+      - sources
       - comments
 
     columns:
@@ -113,6 +114,12 @@ layout:
             label: Source
             label-jp: 情報元
             template: "{{ score.source }}"
+
+        sources:
+            label: Source
+            label-jp: 情報元
+            template: |
+                {% for source in score.sources %}{% if source.url %}[{{ source.url }} {{ source.name}}]{% else %}{{ source.name}}{% endif %} ({{ source.date|formatDate }}){% if not loop.last %}<br>{% endif %}{% endfor %}
 
         comments:
             label: Comment
@@ -173,7 +180,10 @@ layout:
             {% endif %}
         score: |
             |-
-            | {% for column in score.columns %}{% if column.attrs %}{{ column.attrs|raw }} | {% endif %}{{ column.value }}{% if not loop.last %} || {% endif %}{% endfor %}
+            | {% for column in score.columns %}
+            {% if column.attrs %}{{ column.attrs|raw }} | {% endif %}
+            {{ column.value|raw }}{% if not loop.last %} || {% endif %}
+            {% endfor %}
       
 translations:
   - property: company
@@ -182,6 +192,9 @@ translations:
   - property: company
     value: Raizing / 8ing
     value-jp: ライジング / エイティング
+  - property: company
+    value: Toaplan
+    value-jp: 東亜プラン
   - property: source
     value: Arcadia July 2011
     value-jp: Arcadia 2011年07月号 No．114
@@ -201,8 +214,13 @@ translations:
     value: JHA Leaderboard
     value-jp: 日本ハイスコア協会
     fuzzy-match: true
+  - property: sources
+    value: Gamest
+    value-jp: ゲーメスト
+    fuzzy-match: true
 
 </nowiki></pre>
+
 
 == Akai Katana ==
 <pre><nowiki>
@@ -229,6 +247,7 @@ scores:
     source: Arcadia July 2012
 
 </nowiki></pre>
+
 
 == Mushihimesama Futari v1.5 ==
 <pre><nowiki>
@@ -459,6 +478,7 @@ translations:
     value-jp: アブノーマル
 </nowiki></pre>
 
+
 == Ketsui ==
 <pre><nowiki>
 name: "Ketsui: Kizuna Jigoku Tachi"
@@ -557,6 +577,67 @@ layout:
         scores:
             ship: [ Type A, Type B ]
             mode: asc
+
+</nowiki></pre>
+
+
+== Salamander 2 ==
+<pre><nowiki>
+name: "Salamander 2"
+name-jp:
+name-kana:
+company: "Konami"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Salamander 2}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="5" | [[Salamander 2]] (Konami)
+            |-
+            ! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | {{v|a1|2,243,000}} || KTL-NAL || Arcadia July 2008 || ||
+            |}
+            
+            * [https://example.org/farm/salamander2 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+== Tatsujin Ou ==
+<pre><nowiki>
+name: Tatsujin Ou
+name-jp: "達人王"
+name-kana: "たつじんおう"
+company: Toaplan
+
+scores:
+  - player: SPK(お)
+    score: 10,000,000+α
+    sources:
+      - name: Gamest
+        date: "1999-03"
+    comments:
+      - stage 8-2
+    attributes:
+        is-current-record: true
+
+  - player: SOF-WTN
+    score: 10,000,000+α [13,973,830]
+    score-sort: 13,973,830
+    sources:
+      - name: Twitter
+        date: "2008-10-04"
+        url: https://example.org/twitter
+      - name: JHA
+        date: "2008-10"
+      - name: Youtube
+        date: "2009-01-07"
+        url: https://example.org/youtube
 
 </nowiki></pre>
 

@@ -11,21 +11,29 @@ Mostly limited to a number of older games, Japanese scorekeeping sometimes sets 
 <table class="wikitable">
   <tr>
     <th class="mw-customtoggle-1 " style="padding-left:10px;padding-right:10px;">A</th>
-    <th class="mw-customtoggle-4 " style="padding-left:10px;padding-right:10px;">G</th>
+    <th class="mw-customtoggle-6 " style="padding-left:10px;padding-right:10px;">G</th>
     <th class="mw-customtoggle-3 " style="padding-left:10px;padding-right:10px;">K</th>
     <th class="mw-customtoggle-2 " style="padding-left:10px;padding-right:10px;">M</th>
+    <th class="mw-customtoggle-4 " style="padding-left:10px;padding-right:10px;">S</th>
+    <th class="mw-customtoggle-5 " style="padding-left:10px;padding-right:10px;">T</th>
   </tr>
   <tr id="mw-customcollapsible-1" class="mw-collapsible mw-collapsed">
-    <td colspan="4">[[#Akai Katana|Akai Katana]]</td>
+    <td colspan="6">[[#Akai Katana|Akai Katana]]</td>
   </tr>
-  <tr id="mw-customcollapsible-4" class="mw-collapsible mw-collapsed">
-    <td colspan="4">[[#Great Mahou Daisakusen|Great Mahou Daisakusen]]</td>
+  <tr id="mw-customcollapsible-6" class="mw-collapsible mw-collapsed">
+    <td colspan="6">[[#Great Mahou Daisakusen|Great Mahou Daisakusen]]</td>
   </tr>
   <tr id="mw-customcollapsible-3" class="mw-collapsible mw-collapsed">
-    <td colspan="4">[[#Ketsui: Kizuna Jigoku Tachi|Ketsui: Kizuna Jigoku Tachi]]</td>
+    <td colspan="6">[[#Ketsui: Kizuna Jigoku Tachi|Ketsui: Kizuna Jigoku Tachi]]</td>
   </tr>
   <tr id="mw-customcollapsible-2" class="mw-collapsible mw-collapsed">
-    <td colspan="4">[[#Mushihimesama Futari 1.5|Mushihimesama Futari 1.5]]</td>
+    <td colspan="6">[[#Mushihimesama Futari 1.5|Mushihimesama Futari 1.5]]</td>
+  </tr>
+  <tr id="mw-customcollapsible-4" class="mw-collapsible mw-collapsed">
+    <td colspan="6">[[#Salamander 2|Salamander 2]]</td>
+  </tr>
+  <tr id="mw-customcollapsible-5" class="mw-collapsible mw-collapsed">
+    <td colspan="6">[[#Tatsujin Ou|Tatsujin Ou]]</td>
   </tr>
 </table>
 __NOTOC__
@@ -36,13 +44,58 @@ __NOTOC__
 |-
 ! Player !! Ship !! Score !! Scored date !! Source
 |-
-| AKF || Type 3 / Suzuran &amp;amp; Shion || 540,176,130 || Jul 2012 || Arcadia July 2012
+| AKF || Type 3 / Suzuran &amp; Shion || 540,176,130 || Jul 2012 || Arcadia July 2012
 |-
-| 太菱 || Type 1 / Sumire &amp;amp; Tsubaki || 472,554,090 || Jul 2011 || Arcadia July 2011
+| 太菱 || Type 1 / Sumire &amp; Tsubaki || 472,554,090 || Jul 2011 || Arcadia July 2011
 |-
-| LON || Type 2 / Kikyou &amp;amp; Botan || 454,324,700 || Feb 2012 || Arcadia February 2012
+| LON || Type 2 / Kikyou &amp; Botan || 454,324,700 || Feb 2012 || Arcadia February 2012
 |}
 
+
+
+{| class="wikitable" style="text-align: center"
+|-
+! colspan="6" | [[Great Mahou Daisakusen]] (Raizing / 8ing)
+|-
+! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
+|-
+| rowspan="2" | Birthday
+| 83,743,680 || rowspan="2" | Miku || August 2nd, 2020 / [https://example.org/twitter Twitter] || 107 items ||
+|-
+| 66,693,110 || JHA November 2019 || 107 items ||
+|-
+| rowspan="2" | Chitta
+| 93,664,750 || rowspan="2" | SOF-WTN
+| August 8th, 2020 / [https://example.org/twitter Twitter] || 108 items ||
+|-
+| 83,195,810 || JHA June 2020 || || 
+|-
+| rowspan="2" | Gain
+| 80,528,610 || Boredom || July 1st, 2020 / [https://example.org/twitter Twitter] || 108 items || [https://example.org/youtube Youtube]
+|-
+| 31,653,130 || HTL-蕨ガイン見参 || JHA June 2020 || ||
+|-
+| rowspan="2" | Golden
+| style="background: #DFDFDF;" | 99,999,999 [101,033,460] || style="background: #DFDFDF;" | Boredom || style="background: #DFDFDF;" | February 13th, 2020 / [https://example.org/twitter Twitter] || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | 
+|-
+| 14,925,200 || 磨弓 || JHA July 2020 || ||
+|-
+| Grimlen || style="background: #DFDFDF;" | 99,999,999 || style="background: #DFDFDF;" | KDK-Takeyuki || style="background: #DFDFDF;" | Arcadia July 2002 || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | 
+|-
+| Karte || style="background: #DFDFDF;" | 99,999,999 [100,571,630] || style="background: #DFDFDF;" | ACR Archer || style="background: #DFDFDF;" | November 17th, 2014 (Arcadia February 2015) / [https://example.org/twitter Twitter] || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | [https://example.org/youtube Youtube]
+|-
+| rowspan="2" | Miyamoto
+| style="background: #DFDFDF;" | 99,999,999 || style="background: #DFDFDF;" | Clover-TAC || style="background: #DFDFDF;" | JHA March 2016 || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | 
+|-
+| style="background: #DFDFDF;" | 99,999,999 [102,596,210] || style="background: #DFDFDF;" | SOF-WTN || style="background: #DFDFDF;" | February 3rd 2016 (JHA March 2016) / [https://example.org/twitter Twitter] || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | 
+|-
+| Solo Bang || style="background: #DFDFDF;" | 99,999,999 || style="background: #DFDFDF;" | Clover-TAC || style="background: #DFDFDF;" | JHA July 2020 || style="background: #DFDFDF;" | 108 items, 2p side || style="background: #DFDFDF;" |
+|}
+
+Note: Scoreboard closed after the achievement of the counterstop at 99,999,999.
+
+* [https://example.org/some_link_id JHA Leaderboard]
+* [https://example.org/some_other_link Shmups Forum Hi-Score Topic]
 
 
 {| class="wikitable" style="text-align: center"
@@ -103,49 +156,32 @@ Note: Scoreboard for Ultra closed after the achievement of the counterstop at 3,
 * [https://example.org/farm/futari Shmups Forum Hi-Score Topic]
 
 
+
+{{Anchor|Salamander 2}}
 {| class="wikitable" style="text-align: center"
 |-
-! colspan="6" | [[Great Mahou Daisakusen]] (Raizing / 8ing)
+! colspan="5" | [[Salamander 2]] (Konami)
 |-
-! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
+! Score !! Player !! Date / Source !! Comment !! Replay
 |-
-| rowspan="2" | Birthday
-| 83,743,680 || rowspan="2" | Miku || August 2nd, 2020 / [https://example.org/twitter Twitter] || 107 items ||
-|-
-| 66,693,110 || JHA November 2019 || 107 items ||
-|-
-| rowspan="2" | Chitta
-| 93,664,750 || rowspan="2" | SOF-WTN
-| August 8th, 2020 / [https://example.org/twitter Twitter] || 108 items ||
-|-
-| 83,195,810 || JHA June 2020 || || 
-|-
-| rowspan="2" | Gain
-| 80,528,610 || Boredom || July 1st, 2020 / [https://example.org/twitter Twitter] || 108 items || [https://example.org/youtube Youtube]
-|-
-| 31,653,130 || HTL-蕨ガイン見参 || JHA June 2020 || ||
-|-
-| rowspan="2" | Golden
-| style="background: #DFDFDF;" | 99,999,999 [101,033,460] || style="background: #DFDFDF;" | Boredom || style="background: #DFDFDF;" | February 13th, 2020 / [https://example.org/twitter Twitter] || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | 
-|-
-| 14,925,200 || 磨弓 || JHA July 2020 || ||
-|-
-| Grimlen || style="background: #DFDFDF;" | 99,999,999 || style="background: #DFDFDF;" | KDK-Takeyuki || style="background: #DFDFDF;" | Arcadia July 2002 || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | 
-|-
-| Karte || style="background: #DFDFDF;" | 99,999,999 [100,571,630] || style="background: #DFDFDF;" | ACR Archer || style="background: #DFDFDF;" | November 17th, 2014 (Arcadia February 2015) / [https://example.org/twitter Twitter] || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | [https://example.org/youtube Youtube]
-|-
-| rowspan="2" | Miyamoto
-| style="background: #DFDFDF;" | 99,999,999 || style="background: #DFDFDF;" | Clover-TAC || style="background: #DFDFDF;" | JHA March 2016 || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | 
-|-
-| style="background: #DFDFDF;" | 99,999,999 [102,596,210] || style="background: #DFDFDF;" | SOF-WTN || style="background: #DFDFDF;" | February 3rd 2016 (JHA March 2016) / [https://example.org/twitter Twitter] || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | 
-|-
-| Solo Bang || style="background: #DFDFDF;" | 99,999,999 || style="background: #DFDFDF;" | Clover-TAC || style="background: #DFDFDF;" | JHA July 2020 || style="background: #DFDFDF;" | 108 items, 2p side || style="background: #DFDFDF;" |
+| {{v|a1|2,243,000}} || KTL-NAL || Arcadia July 2008 || ||
 |}
 
-Note: Scoreboard closed after the achievement of the counterstop at 99,999,999.
+* [https://example.org/farm/salamander2 Shmups Forum Hi-Score Topic]
 
-* [https://example.org/some_link_id JHA Leaderboard]
-* [https://example.org/some_other_link Shmups Forum Hi-Score Topic]
+
+
+{| class="wikitable" style="text-align: center"
+|-
+! colspan="4" | Tatsujin Ou (Toaplan)
+|-
+! Player !! Score !! Source !! Comment
+|-
+| SOF-WTN || 10,000,000+α [13,973,830] || [https://example.org/twitter Twitter] (Oct 4, 2008)<br>JHA (Oct 2008)<br>[https://example.org/youtube Youtube] (Jan 7, 2009) || 
+|-
+| SPK(お) || 10,000,000+α || Gamest (Mar 1999) || stage 8-2
+|}
+
 
 
 
