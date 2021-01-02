@@ -44,11 +44,11 @@ __NOTOC__
 |-
 ! Player !! Ship !! Score !! Scored date !! Source
 |-  
-| AKF || Type 3 / Suzuran &amp; Shion || 540,176,130 || Jul 2012 || Arcadia July 2012
+| AKF || class="" | Type 3 / Suzuran &amp; Shion || 540,176,130 || Jul 2012 || Arcadia July 2012
 |-  
-| 太菱 || Type 1 / Sumire &amp; Tsubaki || 472,554,090 || Jul 2011 || Arcadia July 2011
+| 太菱 || class="" | Type 1 / Sumire &amp; Tsubaki || 472,554,090 || Jul 2011 || Arcadia July 2011
 |-  
-| LON || Type 2 / Kikyou &amp; Botan || 454,324,700 || Feb 2012 || Arcadia February 2012
+| LON || class="" | Type 2 / Kikyou &amp; Botan || 454,324,700 || Feb 2012 || Arcadia February 2012
 |}
 
 
@@ -59,29 +59,31 @@ __NOTOC__
 |-
 ! Ship !! Score !! Player !! Source !! Comment
 |-  
-| Birthday || 89,074,210 || Miku || [https://example.org/twitter Twitter] (Nov 29, 2020) || 108 items
+| class="hor-merged-cell-first" | Birthday || 89,074,210 || Miku || [https://example.org/twitter Twitter] (Nov 29, 2020) || 108 items
 |-  
-| Birthday || 87,818,460 || Miku || [https://example.org/twitter Twitter] (Sep 7, 2020)<br>JHA (Sep 2020) || 108 items; missed 3 secret items
+| class="hor-merged-cell" | Birthday || 88,203,775 || Miku || [https://example.org/twitter Twitter] (Oct 4, 2020) || 
 |-  
-| Chitta || 95,592,960 || SOF-WTN || [https://example.org/twitter Twitter] (Oct 4, 2020)<br>JHA (Oct 2020) || 107 items
+| class="hor-merged-cell-last" | Birthday || 87,818,460 || Miku || [https://example.org/twitter Twitter] (Sep 7, 2020)<br>JHA (Sep 2020) || 108 items; missed 3 secret items
 |-  
-| Gain || 80,528,610 || Boredom || [https://example.org/twitter Twitter] (Jul 1, 2020)<br>[https://example.org/youtube Youtube] (Jul 2020) || 108 items
+| class="" | Chitta || 95,592,960 || SOF-WTN || [https://example.org/twitter Twitter] (Oct 4, 2020)<br>JHA (Oct 2020) || 107 items
 |-  
-| Gain || 50,326,410 || JMB-りゅう || [https://example.org/twitter Twitter] (Oct 2020)<br>JHA (Oct 2020) || 104 items
-|- class="hor-counterstop-hard" 
-| Golden || 99,999,999 [101,033,460] || Boredom || [https://example.org/twitter Twitter] (Feb 13, 2020) || 108 items
+| class="hor-merged-cell-first" | Gain || 80,528,610 || Boredom || [https://example.org/twitter Twitter] (Jul 1, 2020)<br>[https://example.org/youtube Youtube] (Jul 2020) || 108 items
 |-  
-| Golden || 28,881,820 || JAP || [https://example.org/twitter Twitter] (Sep 14, 2020)<br>JHA (Sep 2020) || 100 items
+| class="hor-merged-cell-last" | Gain || 50,326,410 || JMB-りゅう || [https://example.org/twitter Twitter] (Oct 2020)<br>JHA (Oct 2020) || 104 items
 |- class="hor-counterstop-hard" 
-| Grimlen || 99,999,999 || KDK-Takeyuki || Arcadia (Jul 2002) || 108 items
+| class="hor-merged-cell-first" | Golden || 99,999,999 [101,033,460] || Boredom || [https://example.org/twitter Twitter] (Feb 13, 2020) || 108 items
+|-  
+| class="hor-merged-cell-last" | Golden || 28,881,820 || JAP || [https://example.org/twitter Twitter] (Sep 14, 2020)<br>JHA (Sep 2020) || 100 items
 |- class="hor-counterstop-hard" 
-| Karte || 99,999,999 [100,571,630] || ACR Archer || [https://example.org/twitter Twitter] (Nov 17, 2014)<br>Arcadia (Feb 2015)<br>[https://example.org/youtube Youtube] (Nov 2014) || 108 items
+| class="" | Grimlen || 99,999,999 || KDK-Takeyuki || Arcadia (Jul 2002) || 108 items
 |- class="hor-counterstop-hard" 
-| Miyamoto || 99,999,999 [102,596,210] || SOF-WTN || [https://example.org/twitter Twitter] (Feb 3, 2016)<br>JHA (Mar 2016) || 108 items
+| class="" | Karte || 99,999,999 [100,571,630] || ACR Archer || [https://example.org/twitter Twitter] (Nov 17, 2014)<br>Arcadia (Feb 2015)<br>[https://example.org/youtube Youtube] (Nov 2014) || 108 items
 |- class="hor-counterstop-hard" 
-| Miyamoto || 99,999,999 || Clover-TAC || JHA (Mar 2016) || 108 items
+| class="hor-merged-cell-first" | Miyamoto || 99,999,999 [102,596,210] || SOF-WTN || [https://example.org/twitter Twitter] (Feb 3, 2016)<br>JHA (Mar 2016) || 108 items
 |- class="hor-counterstop-hard" 
-| Solo Bang || 99,999,999 || Clover-TAC || JHA (Mar 2016) || 108 items; 2p side
+| class="hor-merged-cell-last" | Miyamoto || 99,999,999 || Clover-TAC || JHA (Mar 2016) || 108 items
+|- class="hor-counterstop-hard" 
+| class="" | Solo Bang || 99,999,999 || Clover-TAC || JHA (Mar 2016) || 108 items; 2p side
 |}
 
 Note: Scoreboard closed after the achievement of the counterstop at 99,999,999.
@@ -96,13 +98,13 @@ Note: Scoreboard closed after the achievement of the counterstop at 99,999,999.
 |-
 ! Ship !! Loop !! Score !! Player !! Scored date !! Source !! Comment
 |-  
-| Tiger Schwert || Omote || 507,780,433 || SPS || Aug 2014 || Arcadia August 2014 || 
+| class="hor-merged-cell-first" | Tiger Schwert || Omote || 507,780,433 || SPS || Aug 2014 || Arcadia August 2014 || 
 |-  
-| Tiger Schwert || Ura || 583,614,753 || SPS || May 27, 2014 || Arcadia September 2014 / [https://example.org/twitter Twitter] || 6L 0B remaining; 1st loop 285m
+| class="hor-merged-cell-last" | Tiger Schwert || Ura || 583,614,753 || SPS || May 27, 2014 || Arcadia September 2014 / [https://example.org/twitter Twitter] || 6L 0B remaining; 1st loop 285m
 |-  
-| Panzer Jäger || Omote || 481,402,383 || SPS || Nov 2014 || Arcadia November 2014 || 6L 0B remaining; 1st loop 276m
+| class="hor-merged-cell-first" | Panzer Jäger || Omote || 481,402,383 || SPS || Nov 2014 || Arcadia November 2014 || 6L 0B remaining; 1st loop 276m
 |-  
-| Panzer Jäger || Ura || 569,741,232 || GAN || Mar 2016 || JHA March 2016 || 6L remaining
+| class="hor-merged-cell-last" | Panzer Jäger || Ura || 569,741,232 || GAN || Mar 2016 || JHA March 2016 || 6L remaining
 |}
 
 * [https://example.org/jha/ketsui JHA Leaderboard]

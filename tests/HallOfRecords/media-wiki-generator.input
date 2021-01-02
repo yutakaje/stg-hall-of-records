@@ -98,6 +98,8 @@ layout:
             label: Ship
             label-jp: 自機
             template: "{{ score.ship }}"
+            attributes:
+                is-mergeable: true
 
         mode:
             label: Mode
@@ -165,7 +167,7 @@ layout:
             ! colspan="{{ game.headers|length }}" | {{ game.properties.name }} ({{ game.properties.company }})
             |-
             ! {{ game.headers|join(' !! ') }}
-            {% for score in game.scores %}
+            {% for scoreIndex,score in game.scores %}
             {{ include('score') }}
             {% endfor %}
             |}
@@ -181,7 +183,11 @@ layout:
             {% endif %}
         score: |
             |- {% if game.properties.counterstop and score.properties.score == game.properties.counterstop.score %}class="hor-counterstop-{{ game.properties.counterstop.type }}"{% endif %} 
-            | {% for column in score.columns %}
+            | {% for columnIndex,column in score.columns %}
+            {% if attribute(column.attributes, 'is-mergeable') %}
+            {% set mergeWithTopCell = game.scores[scoreIndex - 1].columns[columnIndex].value == column.value %}
+            {% set mergeWithBottomCell = game.scores[scoreIndex + 1].columns[columnIndex].value == column.value %}
+            class="{% if mergeWithTopCell and mergeWithBottomCell %}hor-merged-cell{% elseif mergeWithTopCell %}hor-merged-cell-last{% elseif mergeWithBottomCell %}hor-merged-cell-first{% endif %}" | {% endif %}
             {{ column.value|raw }}{% if not loop.last %} || {% endif %}
             {% endfor %}
       
@@ -428,6 +434,8 @@ layout:
     columns:
         ship:
             label: Character
+            attributes:
+                is-mergeable: false
 
         weapon:
             label: Style
@@ -659,6 +667,16 @@ scores:
     comments:
       - "108 items"
       - "missed 3 secret items"
+    attributes:
+        is-current-record: true
+
+  - player: Miku
+    score: 88,203,775
+    ship: Birthday
+    sources:
+      - name: Twitter
+        date: "2020-10-04"
+        url: https://example.org/twitter
     attributes:
         is-current-record: true
 
