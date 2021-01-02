@@ -182,7 +182,6 @@ layout:
         score: |
             |- {% if game.properties.counterstop and score.properties.score == game.properties.counterstop.score %}class="hor-counterstop-{{ game.properties.counterstop.type }}"{% endif %} 
             | {% for column in score.columns %}
-            {% if column.attrs %}{{ column.attrs|raw }} | {% endif %}
             {{ column.value|raw }}{% if not loop.last %} || {% endif %}
             {% endfor %}
       
@@ -379,10 +378,6 @@ scores:
       - Highest score Arcade
     attributes:
         is-current-record: true
-        layout:
-            columns:
-                player: 'style="background: #DFDFDF;"'
-                score: 'style="background: #DFDFDF;"'
 
   - player: KGM
     score: 3,999,999,999
@@ -397,11 +392,6 @@ scores:
     links:
       - url: https://example.org/youtube
         title: Youtube
-    attributes:
-        layout:
-            columns:
-                player: 'style="background: #DFDFDF;"'
-                score: 'style="background: #DFDFDF;"'
 
   - player: lstze
     score: 3,266,405,598
