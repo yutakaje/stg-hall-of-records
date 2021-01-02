@@ -31,6 +31,7 @@ final class ScoreVariable extends \stdClass
     ) {
         $this->twig = $twig;
 
+        $this->properties = $score->properties();
         $this->columns = array_map(
             fn (array $column) => $this->createColumn($column, $score),
             $columns
