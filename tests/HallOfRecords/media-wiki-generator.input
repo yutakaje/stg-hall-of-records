@@ -180,7 +180,7 @@ layout:
             {% endfor %}
             {% endif %}
         score: |
-            |-
+            |- {% if game.properties.counterstop and score.properties.score == game.properties.counterstop.score %}class="hor-counterstop-{{ game.properties.counterstop.type }}"{% endif %} 
             | {% for column in score.columns %}
             {% if column.attrs %}{{ column.attrs|raw }} | {% endif %}
             {{ column.value|raw }}{% if not loop.last %} || {% endif %}
