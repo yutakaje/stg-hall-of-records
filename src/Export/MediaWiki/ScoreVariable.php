@@ -52,6 +52,7 @@ final class ScoreVariable extends \stdClass
         $variable->value = $this->twig->render('current-column', [
             'score' => $score->properties(),
         ]);
+        $variable->attributes = $column['attributes'] ?? [];
         return $variable;
     }
 
