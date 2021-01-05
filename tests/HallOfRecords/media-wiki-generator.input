@@ -662,6 +662,22 @@ scores:
     attributes:
         is-current-record: true
 
+  - player: Dare-Ka
+    score: 10,000,000+α
+    sources:
+      - name: Fake News
+        date: "2021-01-05"
+    attributes:
+        is-current-record: true
+
+  - player: Doraemon
+    score: 10,000,000+α
+    sources:
+      - name: Uso Station
+        date: "2021-01-05"
+    attributes:
+        is-current-record: true
+
   - player: SOF-WTN
     score: 10,000,000+α
     score-real: 13,973,830
@@ -674,6 +690,13 @@ scores:
       - name: Youtube
         date: "2009-01-07"
         url: https://example.org/youtube
+
+layout:
+    column-order:
+      - score
+      - player
+      - sources
+      - comments
 
 </nowiki></pre>
 
