@@ -191,16 +191,20 @@ layout:
         score: |
             {% set prevScore = game.scores[scoreIndex - 1] %}
             {% set nextScore = game.scores[scoreIndex + 1] %}
+            {% set isCounterstop = game.properties.counterstop
+               and score.properties.score == game.properties.counterstop.score %}
             |-
             | {% for columnIndex,column in score.columns %}
             {% set cellValue = column.value %}
             {% set classes = '' %}
-            {% if game.properties.counterstop
-               and score.properties.score == game.properties.counterstop.score
-               and not column.attributes['is-category'] %}
+            {% if isCounterstop and not column.attributes['is-category'] %}
             {% set classes = "hor-counterstop-#{game.properties.counterstop.type} #{classes}" %}
             {% endif %}
-            {% if column.attributes['is-mergeable'] %}
+            {# Merge counterstop score values as well #}
+            {% if column.attributes['is-mergeable']
+               or column.name == 'score'
+               and isCounterstop
+               and score.properties.score == score.properties['score-real'] %}
             {% set mergeWithTopCell = true %}
             {% set mergeWithBottomCell = true %}
             {% for i in 0..columnIndex %}
@@ -648,12 +652,13 @@ name-jp: "達人王"
 name-kana: "たつじんおう"
 company: Toaplan
 counterstop:
-    score: 10,000,000
+    score: 10,000,000+α
     type: soft
 
 scores:
   - player: SPK(お)
     score: 10,000,000+α
+    ship: Red
     sources:
       - name: Gamest
         date: "1999-03"
@@ -664,6 +669,7 @@ scores:
 
   - player: Dare-Ka
     score: 10,000,000+α
+    ship: Blue
     sources:
       - name: Fake News
         date: "2021-01-05"
@@ -672,6 +678,7 @@ scores:
 
   - player: Doraemon
     score: 10,000,000+α
+    ship: Blue
     sources:
       - name: Uso Station
         date: "2021-01-05"
@@ -681,6 +688,7 @@ scores:
   - player: SOF-WTN
     score: 10,000,000+α
     score-real: 13,973,830
+    ship: Red
     sources:
       - name: Twitter
         date: "2008-10-04"
@@ -693,10 +701,14 @@ scores:
 
 layout:
     column-order:
+      - ship
       - score
       - player
       - sources
       - comments
+    sort:
+        scores:
+            ship: [ Red, Blue ]
 
 </nowiki></pre>
 
