@@ -41,12 +41,12 @@ __NOTOC__
 ! colspan="5" | Akai Katana (ケイブ)
 |-
 ! プレイヤー !! 自機 !! スコア !! Scored date !! 情報元
-|-  
-| AKF || class="" | Type 3 / Suzuran &amp; Shion || 540,176,130 || 2012年07月 || アルカディア July 2012
-|-  
-| 太菱 || class="" | Type 1 / Sumire &amp; Tsubaki || 472,554,090 || 2011年07月 || Arcadia 2011年07月号 No．114
-|-  
-| LON || class="" | Type 2 / Kikyou &amp; Botan || 454,324,700 || 2012年02月 || アルカディア February 2012
+|-
+| AKF || Type 3 / Suzuran &amp; Shion || 540,176,130 || 2012年07月 || アルカディア July 2012
+|-
+| 太菱 || Type 1 / Sumire &amp; Tsubaki || 472,554,090 || 2011年07月 || Arcadia 2011年07月号 No．114
+|-
+| LON || Type 2 / Kikyou &amp; Botan || 454,324,700 || 2012年02月 || アルカディア February 2012
 |}
 
 
@@ -71,32 +71,32 @@ __NOTOC__
 ! colspan="5" | グレート魔法大作戦 (ライジング / エイティング)
 |-
 ! 自機 !! スコア !! プレイヤー !! 情報元 !! 備考
-|-  
-| class="hor-merged-cell-first" | Birthday || 89,074,210 || Miku || [https://example.org/twitter Twitter] (2020年11月29日) || 108 items
-|-  
-| class="hor-merged-cell" | Birthday || 88,203,775 || Miku || [https://example.org/twitter Twitter] (2020年10月04日) || 
-|-  
-| class="hor-merged-cell-last" | Birthday || 87,818,460 || Miku || [https://example.org/twitter Twitter] (2020年09月07日)<br>JHA (2020年09月) || 108 items; missed 3 secret items
-|-  
-| class="" | Chitta || 95,592,960 || SOF-WTN || [https://example.org/twitter Twitter] (2020年10月04日)<br>JHA (2020年10月) || 107 items
-|-  
-| class="hor-merged-cell-first" | Gain || 80,528,610 || Boredom || [https://example.org/twitter Twitter] (2020年07月01日)<br>[https://example.org/youtube Youtube] (2020年07月) || 108 items
-|-  
-| class="hor-merged-cell-last" | Gain || 50,326,410 || JMB-りゅう || [https://example.org/twitter Twitter] (2020年10月)<br>JHA (2020年10月) || 104 items
-|- class="hor-counterstop-hard" 
-| class="hor-merged-cell-first" | Golden || 99,999,999 [101,033,460] || Boredom || [https://example.org/twitter Twitter] (2020年02月13日) || 108 items
-|-  
-| class="hor-merged-cell-last" | Golden || 28,881,820 || JAP || [https://example.org/twitter Twitter] (2020年09月14日)<br>JHA (2020年09月) || 100 items
-|- class="hor-counterstop-hard" 
-| class="" | Grimlen || 99,999,999 || KDK-Takeyuki || Arcadia (2002年07月) || 108 items
-|- class="hor-counterstop-hard" 
-| class="" | Karte || 99,999,999 [100,571,630] || ACR Archer || [https://example.org/twitter Twitter] (2014年11月17日)<br>Arcadia (2015年02月)<br>[https://example.org/youtube Youtube] (2014年11月) || 108 items
-|- class="hor-counterstop-hard" 
-| class="hor-merged-cell-first" | Miyamoto || 99,999,999 [102,596,210] || SOF-WTN || [https://example.org/twitter Twitter] (2016年02月03日)<br>JHA (2016年03月) || 108 items
-|- class="hor-counterstop-hard" 
-| class="hor-merged-cell-last" | Miyamoto || 99,999,999 || Clover-TAC || JHA (2016年03月) || 108 items
-|- class="hor-counterstop-hard" 
-| class="" | Solo Bang || 99,999,999 || Clover-TAC || JHA (2016年03月) || 108 items; 2p side
+|-
+| class="hor-merged-cell-first " | Birthday || 89,074,210 || Miku || [https://example.org/twitter Twitter] (2020年11月29日) || 108 items
+|-
+| class="hor-merged-cell " |  || 88,203,775 || Miku || [https://example.org/twitter Twitter] (2020年10月04日) || 
+|-
+| class="hor-merged-cell-last " |  || 87,818,460 || Miku || [https://example.org/twitter Twitter] (2020年09月07日)<br>JHA (2020年09月) || 108 items; missed 3 secret items
+|-
+| Chitta || 95,592,960 || SOF-WTN || [https://example.org/twitter Twitter] (2020年10月04日)<br>JHA (2020年10月) || 107 items
+|-
+| class="hor-merged-cell-first " | Gain || 80,528,610 || Boredom || [https://example.org/twitter Twitter] (2020年07月01日)<br>[https://example.org/youtube Youtube] (2020年07月) || 108 items
+|-
+| class="hor-merged-cell-last " |  || 50,326,410 || JMB-りゅう || [https://example.org/twitter Twitter] (2020年10月)<br>JHA (2020年10月) || 104 items
+|-
+| class="hor-merged-cell-first " | Golden || class="hor-counterstop-hard " | 99,999,999 [101,033,460] || class="hor-counterstop-hard " | Boredom || class="hor-counterstop-hard " | [https://example.org/twitter Twitter] (2020年02月13日) || class="hor-counterstop-hard " | 108 items
+|-
+| class="hor-merged-cell-last " |  || 28,881,820 || JAP || [https://example.org/twitter Twitter] (2020年09月14日)<br>JHA (2020年09月) || 100 items
+|-
+| Grimlen || class="hor-counterstop-hard " | 99,999,999 || class="hor-counterstop-hard " | KDK-Takeyuki || class="hor-counterstop-hard " | Arcadia (2002年07月) || class="hor-counterstop-hard " | 108 items
+|-
+| Karte || class="hor-counterstop-hard " | 99,999,999 [100,571,630] || class="hor-counterstop-hard " | ACR Archer || class="hor-counterstop-hard " | [https://example.org/twitter Twitter] (2014年11月17日)<br>Arcadia (2015年02月)<br>[https://example.org/youtube Youtube] (2014年11月) || class="hor-counterstop-hard " | 108 items
+|-
+| class="hor-merged-cell-first " | Miyamoto || class="hor-counterstop-hard " | 99,999,999 [102,596,210] || class="hor-counterstop-hard " | SOF-WTN || class="hor-counterstop-hard " | [https://example.org/twitter Twitter] (2016年02月03日)<br>JHA (2016年03月) || class="hor-counterstop-hard " | 108 items
+|-
+| class="hor-merged-cell-last " |  || class="hor-counterstop-hard " | 99,999,999 || class="hor-counterstop-hard " | Clover-TAC || class="hor-counterstop-hard " | JHA (2016年03月) || class="hor-counterstop-hard " | 108 items
+|-
+| Solo Bang || class="hor-counterstop-hard " | 99,999,999 || class="hor-counterstop-hard " | Clover-TAC || class="hor-counterstop-hard " | JHA (2016年03月) || class="hor-counterstop-hard " | 108 items; 2p side
 |}
 
 Note: Scoreboard closed after the achievement of the counterstop at 99,999,999.
@@ -110,14 +110,14 @@ Note: Scoreboard closed after the achievement of the counterstop at 99,999,999.
 ! colspan="7" | ケツイ ～絆地獄たち～ (ケイブ)
 |-
 ! 自機 !! 2周種 !! スコア !! プレイヤー !! 年月日 !! 情報元 !! 備考
-|-  
-| class="hor-merged-cell-first" | TYPE-A ティーゲルシュベルト || 表2周 || 507,780,433 || SPS || 2014年08月 || アルカディア 2014年08月号 || 
-|-  
-| class="hor-merged-cell-last" | TYPE-A ティーゲルシュベルト || 裏2周 || 583,614,753 || SPS || 2014年05月27日 || アルカディア September 2014 / [https://example.org/twitter Twitter] || 6L 0B remaining; 1st loop 285m
-|-  
-| class="hor-merged-cell-first" | TYPE-B パンツァーイェーガー || 表2周 || 481,402,383 || SPS || 2014年11月 || アルカディア November 2014 || 6L 0B remaining; 1st loop 276m
-|-  
-| class="hor-merged-cell-last" | TYPE-B パンツァーイェーガー || 裏2周 || 569,741,232 || GAN || 2016年03月 || JHA March 2016 || 6L remaining
+|-
+| class="hor-merged-cell-first " | TYPE-A ティーゲルシュベルト || 表2周 || 507,780,433 || SPS || 2014年08月 || アルカディア 2014年08月号 || 
+|-
+| class="hor-merged-cell-last " |  || 裏2周 || 583,614,753 || SPS || 2014年05月27日 || アルカディア September 2014 / [https://example.org/twitter Twitter] || 6L 0B remaining; 1st loop 285m
+|-
+| class="hor-merged-cell-first " | TYPE-B パンツァーイェーガー || 表2周 || 481,402,383 || SPS || 2014年11月 || アルカディア November 2014 || 6L 0B remaining; 1st loop 276m
+|-
+| class="hor-merged-cell-last " |  || 裏2周 || 569,741,232 || GAN || 2016年03月 || JHA March 2016 || 6L remaining
 |}
 
 * [https://example.org/jha/ketsui 日本ハイスコア協会・ケツイ]
@@ -129,9 +129,9 @@ Note: Scoreboard closed after the achievement of the counterstop at 99,999,999.
 ! colspan="4" | 達人王 (東亜プラン)
 |-
 ! プレイヤー !! スコア !! 情報元 !! 備考
-|-  
+|-
 | SOF-WTN || 10,000,000+α [13,973,830] || [https://example.org/twitter Twitter] (2008年10月04日)<br>JHA (2008年10月)<br>[https://example.org/youtube Youtube] (2009年01月07日) || 
-|-  
+|-
 | SPK(お) || 10,000,000+α || ゲーメスト (1999年03月) || stage 8-2
 |}
 
@@ -142,32 +142,32 @@ Note: Scoreboard closed after the achievement of the counterstop at 99,999,999.
 ! colspan="9" | 虫姫さまふたりVer 1.5 (ケイブ)
 |-
 ! Mode !! Character !! Style !! スコア !! プレイヤー !! Scored date !! 情報元 !! 備考 !! リンク
-|-  
-| オリジナルモード || パルム || ノーマル || 530,358,660 || ABI || 2008年01月 || アルカディア January 2008 ||  || 
-|-  
-| オリジナルモード || パルム || アブノーマル || 518,902,716 || にぼし || 2007年 || Superplay DVD ||  || 
-|-  
-| オリジナルモード || レコ || ノーマル || 550,705,999 || ABI || 2010年02月 || Blog || 5L 0B remaining; After stage 4: 273.7m || 
-|-  
-| オリジナルモード || レコ || ノーマル || 538,378,364 || にぼおじ || 2007年10月 || アルカディア October 2007 ||  || 
-|-  
-| オリジナルモード || レコ || アブノーマル || 454,386,226 || yasu0219 || 2009年12月12日 || Xbox rankings || Highest score Xbox360 || 
-|-  
-| マニアックモード || パルム || アブノーマル || 981,872,827 || KTL-NAL || 2007年09月 || Superplay DVD || 5L 2B remaining; After stage 4: 693.8m || 
-|-  
-| マニアックモード || パルム || アブノーマル || 973,020,065 || KTL-NAL || 2007年11月 || アルカディア November 2007 ||  || 
-|-  
-| マニアックモード || レコ || ノーマル || 1,047,258,714 || Clover-TAC || 2015年03月 || アルカディア March 2015 || 5L 2B remaining; After stage 4: 745.1m || 
-|-  
-| ウルトラモード || パルム || ノーマル || 2,956,728,306 || rescue_STG || 2017年04月08日 || Xbox rankings || Highest score Xbox360 || [https://example.org/niconico 動画（ニコニコ）] 
-|-  
-| ウルトラモード || パルム || アブノーマル || 3,999,999,999 [4,263,416,356] || KGM || 2013年07月24日 || Xbox rankings || Highest score Xbox360 || [https://example.org/youtube Youtube] 
-|-  
-| ウルトラモード || パルム || アブノーマル || 3,999,999,999 || Dame K.K || 2008年03月 || アルカディア March 2008 || 1L 0B remaining; Highest score Arcade || 
-|-  
-| ウルトラモード || レコ || ノーマル || 3,999,999,999 || fufufu || 2009年05月27日 || アルカディア 2009年08月号 || 0L 0B remaining; After stage 4: 2.205b || [https://example.org/youtube YoutubeJP] 
-|-  
-| ウルトラモード || レコ || アブノーマル || 3,266,405,598 || lstze || 2014年? ||  ||  || [https://example.org/youtube Youtube] 
+|-
+| class="hor-merged-cell-first " | オリジナルモード || パルム || ノーマル || 530,358,660 || ABI || 2008年01月 || アルカディア January 2008 ||  || 
+|-
+| class="hor-merged-cell " |  || パルム || アブノーマル || 518,902,716 || にぼし || 2007年 || Superplay DVD ||  || 
+|-
+| class="hor-merged-cell " |  || レコ || class="hor-merged-cell-first " | ノーマル || 550,705,999 || ABI || 2010年02月 || Blog || 5L 0B remaining; After stage 4: 273.7m || 
+|-
+| class="hor-merged-cell " |  || レコ || class="hor-merged-cell-last " |  || 538,378,364 || にぼおじ || 2007年10月 || アルカディア October 2007 ||  || 
+|-
+| class="hor-merged-cell-last " |  || レコ || アブノーマル || 454,386,226 || yasu0219 || 2009年12月12日 || Xbox rankings || Highest score Xbox360 || 
+|-
+| class="hor-merged-cell-first " | マニアックモード || パルム || class="hor-merged-cell-first " | アブノーマル || 981,872,827 || KTL-NAL || 2007年09月 || Superplay DVD || 5L 2B remaining; After stage 4: 693.8m || 
+|-
+| class="hor-merged-cell " |  || パルム || class="hor-merged-cell-last " |  || 973,020,065 || KTL-NAL || 2007年11月 || アルカディア November 2007 ||  || 
+|-
+| class="hor-merged-cell-last " |  || レコ || ノーマル || 1,047,258,714 || Clover-TAC || 2015年03月 || アルカディア March 2015 || 5L 2B remaining; After stage 4: 745.1m || 
+|-
+| class="hor-merged-cell-first " | ウルトラモード || パルム || ノーマル || 2,956,728,306 || rescue_STG || 2017年04月08日 || Xbox rankings || Highest score Xbox360 || [https://example.org/niconico 動画（ニコニコ）] 
+|-
+| class="hor-merged-cell " |  || パルム || class="hor-merged-cell-first " | アブノーマル || 3,999,999,999 [4,263,416,356] || KGM || 2013年07月24日 || Xbox rankings || Highest score Xbox360 || [https://example.org/youtube Youtube] 
+|-
+| class="hor-merged-cell " |  || パルム || class="hor-merged-cell-last " |  || 3,999,999,999 || Dame K.K || 2008年03月 || アルカディア March 2008 || 1L 0B remaining; Highest score Arcade || 
+|-
+| class="hor-merged-cell " |  || レコ || ノーマル || 3,999,999,999 || fufufu || 2009年05月27日 || アルカディア 2009年08月号 || 0L 0B remaining; After stage 4: 2.205b || [https://example.org/youtube YoutubeJP] 
+|-
+| class="hor-merged-cell-last " |  || レコ || アブノーマル || 3,266,405,598 || lstze || 2014年? ||  ||  || [https://example.org/youtube Youtube] 
 |}
 
 申請受付終了

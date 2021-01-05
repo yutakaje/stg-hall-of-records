@@ -99,15 +99,22 @@ layout:
             label-jp: 自機
             template: "{{ score.ship }}"
             attributes:
+                is-category: true
                 is-mergeable: true
 
         mode:
             label: Mode
             template: "{{ score.mode }}"
+            attributes:
+                is-category: true
+                is-mergeable: true
 
         weapon:
             label: Style
             template: "{{ score.weapon }}"
+            attributes:
+                is-category: true
+                is-mergeable: true
 
         scored-date:
             label: Scored date
@@ -182,13 +189,40 @@ layout:
             {% endfor %}
             {% endif %}
         score: |
-            |- {% if game.properties.counterstop and score.properties.score == game.properties.counterstop.score %}class="hor-counterstop-{{ game.properties.counterstop.type }}"{% endif %} 
+            {% set prevScore = game.scores[scoreIndex - 1] %}
+            {% set nextScore = game.scores[scoreIndex + 1] %}
+            |-
             | {% for columnIndex,column in score.columns %}
-            {% if attribute(column.attributes, 'is-mergeable') %}
-            {% set mergeWithTopCell = game.scores[scoreIndex - 1].columns[columnIndex].value == column.value %}
-            {% set mergeWithBottomCell = game.scores[scoreIndex + 1].columns[columnIndex].value == column.value %}
-            class="{% if mergeWithTopCell and mergeWithBottomCell %}hor-merged-cell{% elseif mergeWithTopCell %}hor-merged-cell-last{% elseif mergeWithBottomCell %}hor-merged-cell-first{% endif %}" | {% endif %}
-            {{ column.value|raw }}{% if not loop.last %} || {% endif %}
+            {% set cellValue = column.value %}
+            {% set classes = '' %}
+            {% if game.properties.counterstop
+               and score.properties.score == game.properties.counterstop.score
+               and not column.attributes['is-category'] %}
+            {% set classes = "hor-counterstop-#{game.properties.counterstop.type} #{classes}" %}
+            {% endif %}
+            {% if column.attributes['is-mergeable'] %}
+            {% set mergeWithTopCell = true %}
+            {% set mergeWithBottomCell = true %}
+            {% for i in 0..columnIndex %}
+            {% if not prevScore or prevScore.columns[i].value != score.columns[i].value %}
+            {% set mergeWithTopCell = false %}
+            {% endif %}
+            {% if not nextScore or nextScore.columns[i].value != score.columns[i].value %}
+            {% set mergeWithBottomCell = false %}
+            {% endif %}
+            {% endfor %}
+            {% if mergeWithTopCell and mergeWithBottomCell %}
+            {% set cellValue = '' %}
+            {% set classes = "hor-merged-cell #{classes}" %}
+            {% elseif mergeWithTopCell %}
+            {% set cellValue = '' %}
+            {% set classes = "hor-merged-cell-last #{classes}" %}
+            {% elseif mergeWithBottomCell %}
+            {% set classes = "hor-merged-cell-first #{classes}" %}
+            {% endif %}
+            {% endif %}
+            {% if classes %}class="{{ classes }}" | {% endif %}
+            {{ cellValue|raw }}{% if not loop.last %} || {% endif %}
             {% endfor %}
       
 translations:

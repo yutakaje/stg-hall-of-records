@@ -43,12 +43,12 @@ __NOTOC__
 ! colspan="5" | Akai Katana (Cave)
 |-
 ! Player !! Ship !! Score !! Scored date !! Source
-|-  
-| AKF || class="" | Type 3 / Suzuran &amp; Shion || 540,176,130 || Jul 2012 || Arcadia July 2012
-|-  
-| 太菱 || class="" | Type 1 / Sumire &amp; Tsubaki || 472,554,090 || Jul 2011 || Arcadia July 2011
-|-  
-| LON || class="" | Type 2 / Kikyou &amp; Botan || 454,324,700 || Feb 2012 || Arcadia February 2012
+|-
+| AKF || Type 3 / Suzuran &amp; Shion || 540,176,130 || Jul 2012 || Arcadia July 2012
+|-
+| 太菱 || Type 1 / Sumire &amp; Tsubaki || 472,554,090 || Jul 2011 || Arcadia July 2011
+|-
+| LON || Type 2 / Kikyou &amp; Botan || 454,324,700 || Feb 2012 || Arcadia February 2012
 |}
 
 
@@ -58,32 +58,32 @@ __NOTOC__
 ! colspan="5" | Great Mahou Daisakusen (Raizing / 8ing)
 |-
 ! Ship !! Score !! Player !! Source !! Comment
-|-  
-| class="hor-merged-cell-first" | Birthday || 89,074,210 || Miku || [https://example.org/twitter Twitter] (Nov 29, 2020) || 108 items
-|-  
-| class="hor-merged-cell" | Birthday || 88,203,775 || Miku || [https://example.org/twitter Twitter] (Oct 4, 2020) || 
-|-  
-| class="hor-merged-cell-last" | Birthday || 87,818,460 || Miku || [https://example.org/twitter Twitter] (Sep 7, 2020)<br>JHA (Sep 2020) || 108 items; missed 3 secret items
-|-  
-| class="" | Chitta || 95,592,960 || SOF-WTN || [https://example.org/twitter Twitter] (Oct 4, 2020)<br>JHA (Oct 2020) || 107 items
-|-  
-| class="hor-merged-cell-first" | Gain || 80,528,610 || Boredom || [https://example.org/twitter Twitter] (Jul 1, 2020)<br>[https://example.org/youtube Youtube] (Jul 2020) || 108 items
-|-  
-| class="hor-merged-cell-last" | Gain || 50,326,410 || JMB-りゅう || [https://example.org/twitter Twitter] (Oct 2020)<br>JHA (Oct 2020) || 104 items
-|- class="hor-counterstop-hard" 
-| class="hor-merged-cell-first" | Golden || 99,999,999 [101,033,460] || Boredom || [https://example.org/twitter Twitter] (Feb 13, 2020) || 108 items
-|-  
-| class="hor-merged-cell-last" | Golden || 28,881,820 || JAP || [https://example.org/twitter Twitter] (Sep 14, 2020)<br>JHA (Sep 2020) || 100 items
-|- class="hor-counterstop-hard" 
-| class="" | Grimlen || 99,999,999 || KDK-Takeyuki || Arcadia (Jul 2002) || 108 items
-|- class="hor-counterstop-hard" 
-| class="" | Karte || 99,999,999 [100,571,630] || ACR Archer || [https://example.org/twitter Twitter] (Nov 17, 2014)<br>Arcadia (Feb 2015)<br>[https://example.org/youtube Youtube] (Nov 2014) || 108 items
-|- class="hor-counterstop-hard" 
-| class="hor-merged-cell-first" | Miyamoto || 99,999,999 [102,596,210] || SOF-WTN || [https://example.org/twitter Twitter] (Feb 3, 2016)<br>JHA (Mar 2016) || 108 items
-|- class="hor-counterstop-hard" 
-| class="hor-merged-cell-last" | Miyamoto || 99,999,999 || Clover-TAC || JHA (Mar 2016) || 108 items
-|- class="hor-counterstop-hard" 
-| class="" | Solo Bang || 99,999,999 || Clover-TAC || JHA (Mar 2016) || 108 items; 2p side
+|-
+| class="hor-merged-cell-first " | Birthday || 89,074,210 || Miku || [https://example.org/twitter Twitter] (Nov 29, 2020) || 108 items
+|-
+| class="hor-merged-cell " |  || 88,203,775 || Miku || [https://example.org/twitter Twitter] (Oct 4, 2020) || 
+|-
+| class="hor-merged-cell-last " |  || 87,818,460 || Miku || [https://example.org/twitter Twitter] (Sep 7, 2020)<br>JHA (Sep 2020) || 108 items; missed 3 secret items
+|-
+| Chitta || 95,592,960 || SOF-WTN || [https://example.org/twitter Twitter] (Oct 4, 2020)<br>JHA (Oct 2020) || 107 items
+|-
+| class="hor-merged-cell-first " | Gain || 80,528,610 || Boredom || [https://example.org/twitter Twitter] (Jul 1, 2020)<br>[https://example.org/youtube Youtube] (Jul 2020) || 108 items
+|-
+| class="hor-merged-cell-last " |  || 50,326,410 || JMB-りゅう || [https://example.org/twitter Twitter] (Oct 2020)<br>JHA (Oct 2020) || 104 items
+|-
+| class="hor-merged-cell-first " | Golden || class="hor-counterstop-hard " | 99,999,999 [101,033,460] || class="hor-counterstop-hard " | Boredom || class="hor-counterstop-hard " | [https://example.org/twitter Twitter] (Feb 13, 2020) || class="hor-counterstop-hard " | 108 items
+|-
+| class="hor-merged-cell-last " |  || 28,881,820 || JAP || [https://example.org/twitter Twitter] (Sep 14, 2020)<br>JHA (Sep 2020) || 100 items
+|-
+| Grimlen || class="hor-counterstop-hard " | 99,999,999 || class="hor-counterstop-hard " | KDK-Takeyuki || class="hor-counterstop-hard " | Arcadia (Jul 2002) || class="hor-counterstop-hard " | 108 items
+|-
+| Karte || class="hor-counterstop-hard " | 99,999,999 [100,571,630] || class="hor-counterstop-hard " | ACR Archer || class="hor-counterstop-hard " | [https://example.org/twitter Twitter] (Nov 17, 2014)<br>Arcadia (Feb 2015)<br>[https://example.org/youtube Youtube] (Nov 2014) || class="hor-counterstop-hard " | 108 items
+|-
+| class="hor-merged-cell-first " | Miyamoto || class="hor-counterstop-hard " | 99,999,999 [102,596,210] || class="hor-counterstop-hard " | SOF-WTN || class="hor-counterstop-hard " | [https://example.org/twitter Twitter] (Feb 3, 2016)<br>JHA (Mar 2016) || class="hor-counterstop-hard " | 108 items
+|-
+| class="hor-merged-cell-last " |  || class="hor-counterstop-hard " | 99,999,999 || class="hor-counterstop-hard " | Clover-TAC || class="hor-counterstop-hard " | JHA (Mar 2016) || class="hor-counterstop-hard " | 108 items
+|-
+| Solo Bang || class="hor-counterstop-hard " | 99,999,999 || class="hor-counterstop-hard " | Clover-TAC || class="hor-counterstop-hard " | JHA (Mar 2016) || class="hor-counterstop-hard " | 108 items; 2p side
 |}
 
 Note: Scoreboard closed after the achievement of the counterstop at 99,999,999.
@@ -97,14 +97,14 @@ Note: Scoreboard closed after the achievement of the counterstop at 99,999,999.
 ! colspan="7" | Ketsui: Kizuna Jigoku Tachi (Cave)
 |-
 ! Ship !! Loop !! Score !! Player !! Scored date !! Source !! Comment
-|-  
-| class="hor-merged-cell-first" | Tiger Schwert || Omote || 507,780,433 || SPS || Aug 2014 || Arcadia August 2014 || 
-|-  
-| class="hor-merged-cell-last" | Tiger Schwert || Ura || 583,614,753 || SPS || May 27, 2014 || Arcadia September 2014 / [https://example.org/twitter Twitter] || 6L 0B remaining; 1st loop 285m
-|-  
-| class="hor-merged-cell-first" | Panzer Jäger || Omote || 481,402,383 || SPS || Nov 2014 || Arcadia November 2014 || 6L 0B remaining; 1st loop 276m
-|-  
-| class="hor-merged-cell-last" | Panzer Jäger || Ura || 569,741,232 || GAN || Mar 2016 || JHA March 2016 || 6L remaining
+|-
+| class="hor-merged-cell-first " | Tiger Schwert || Omote || 507,780,433 || SPS || Aug 2014 || Arcadia August 2014 || 
+|-
+| class="hor-merged-cell-last " |  || Ura || 583,614,753 || SPS || May 27, 2014 || Arcadia September 2014 / [https://example.org/twitter Twitter] || 6L 0B remaining; 1st loop 285m
+|-
+| class="hor-merged-cell-first " | Panzer Jäger || Omote || 481,402,383 || SPS || Nov 2014 || Arcadia November 2014 || 6L 0B remaining; 1st loop 276m
+|-
+| class="hor-merged-cell-last " |  || Ura || 569,741,232 || GAN || Mar 2016 || JHA March 2016 || 6L remaining
 |}
 
 * [https://example.org/jha/ketsui JHA Leaderboard]
@@ -116,32 +116,32 @@ Note: Scoreboard closed after the achievement of the counterstop at 99,999,999.
 ! colspan="9" | Mushihimesama Futari 1.5 (Cave)
 |-
 ! Mode !! Character !! Style !! Score !! Player !! Scored date !! Source !! Comment !! Links
-|-  
-| Original || Palm || Normal || 530,358,660 || ABI || Jan 2008 || Arcadia January 2008 ||  || 
-|-  
-| Original || Palm || Abnormal || 518,902,716 || ISO / Niboshi || 2007 || Superplay DVD ||  || 
-|-  
-| Original || Reco || Normal || 550,705,999 || ABI || Feb 2010 || Blog || 5L 0B remaining; After stage 4: 273.7m || 
-|-  
-| Original || Reco || Normal || 538,378,364 || ISO / Niboshi || Oct 2007 || Arcadia October 2007 ||  || 
-|-  
-| Original || Reco || Abnormal || 454,386,226 || yasu0219 || Dec 12, 2009 || Xbox rankings || Highest score Xbox360 || 
-|-  
-| Maniac || Palm || Abnormal || 981,872,827 || KTL-NAL || Sep 2007 || Superplay DVD || 5L 2B remaining; After stage 4: 693.8m || 
-|-  
-| Maniac || Palm || Abnormal || 973,020,065 || KTL-NAL || Nov 2007 || Arcadia November 2007 ||  || 
-|-  
-| Maniac || Reco || Normal || 1,047,258,714 || Clover-TAC || Mar 2015 || Arcadia March 2015 || 5L 2B remaining; After stage 4: 745.1m || 
-|-  
-| Ultra || Palm || Normal || 2,956,728,306 || rescue_STG || Apr 8, 2017 || Xbox rankings || Highest score Xbox360 || [https://example.org/niconico Replay (niconico)] 
-|-  
-| Ultra || Palm || Abnormal || 3,999,999,999 [4,263,416,356] || KGM || Jul 24, 2013 || Xbox rankings || Highest score Xbox360 || [https://example.org/youtube Youtube] 
-|-  
-| Ultra || Palm || Abnormal || 3,999,999,999 || Dame K.K || Mar 2008 || Arcadia March 2008 || 1L 0B remaining; Highest score Arcade || 
-|-  
-| Ultra || Reco || Normal || 3,999,999,999 || fufufu || May 27, 2009 || Arcadia August 2009 || 0L 0B remaining; After stage 4: 2.205b || [https://example.org/youtube Youtube] 
-|-  
-| Ultra || Reco || Abnormal || 3,266,405,598 || lstze || 2014? ||  ||  || [https://example.org/youtube Youtube] 
+|-
+| class="hor-merged-cell-first " | Original || Palm || Normal || 530,358,660 || ABI || Jan 2008 || Arcadia January 2008 ||  || 
+|-
+| class="hor-merged-cell " |  || Palm || Abnormal || 518,902,716 || ISO / Niboshi || 2007 || Superplay DVD ||  || 
+|-
+| class="hor-merged-cell " |  || Reco || class="hor-merged-cell-first " | Normal || 550,705,999 || ABI || Feb 2010 || Blog || 5L 0B remaining; After stage 4: 273.7m || 
+|-
+| class="hor-merged-cell " |  || Reco || class="hor-merged-cell-last " |  || 538,378,364 || ISO / Niboshi || Oct 2007 || Arcadia October 2007 ||  || 
+|-
+| class="hor-merged-cell-last " |  || Reco || Abnormal || 454,386,226 || yasu0219 || Dec 12, 2009 || Xbox rankings || Highest score Xbox360 || 
+|-
+| class="hor-merged-cell-first " | Maniac || Palm || class="hor-merged-cell-first " | Abnormal || 981,872,827 || KTL-NAL || Sep 2007 || Superplay DVD || 5L 2B remaining; After stage 4: 693.8m || 
+|-
+| class="hor-merged-cell " |  || Palm || class="hor-merged-cell-last " |  || 973,020,065 || KTL-NAL || Nov 2007 || Arcadia November 2007 ||  || 
+|-
+| class="hor-merged-cell-last " |  || Reco || Normal || 1,047,258,714 || Clover-TAC || Mar 2015 || Arcadia March 2015 || 5L 2B remaining; After stage 4: 745.1m || 
+|-
+| class="hor-merged-cell-first " | Ultra || Palm || Normal || 2,956,728,306 || rescue_STG || Apr 8, 2017 || Xbox rankings || Highest score Xbox360 || [https://example.org/niconico Replay (niconico)] 
+|-
+| class="hor-merged-cell " |  || Palm || class="hor-merged-cell-first " | Abnormal || 3,999,999,999 [4,263,416,356] || KGM || Jul 24, 2013 || Xbox rankings || Highest score Xbox360 || [https://example.org/youtube Youtube] 
+|-
+| class="hor-merged-cell " |  || Palm || class="hor-merged-cell-last " |  || 3,999,999,999 || Dame K.K || Mar 2008 || Arcadia March 2008 || 1L 0B remaining; Highest score Arcade || 
+|-
+| class="hor-merged-cell " |  || Reco || Normal || 3,999,999,999 || fufufu || May 27, 2009 || Arcadia August 2009 || 0L 0B remaining; After stage 4: 2.205b || [https://example.org/youtube Youtube] 
+|-
+| class="hor-merged-cell-last " |  || Reco || Abnormal || 3,266,405,598 || lstze || 2014? ||  ||  || [https://example.org/youtube Youtube] 
 |}
 
 Note: Scoreboard for Ultra closed after the achievement of the counterstop at 3,999,999,999. After this, only scores done on the Xbox 360 port are accepted because they can be tracked beyond the counterstop. For details see [https://youtu.be/XqhtJQm9brI this video].
@@ -170,9 +170,9 @@ Note: Scoreboard for Ultra closed after the achievement of the counterstop at 3,
 ! colspan="4" | Tatsujin Ou (Toaplan)
 |-
 ! Player !! Score !! Source !! Comment
-|-  
+|-
 | SOF-WTN || 10,000,000+α [13,973,830] || [https://example.org/twitter Twitter] (Oct 4, 2008)<br>JHA (Oct 2008)<br>[https://example.org/youtube Youtube] (Jan 7, 2009) || 
-|-  
+|-
 | SPK(お) || 10,000,000+α || Gamest (Mar 1999) || stage 8-2
 |}
 
