@@ -172,11 +172,33 @@ layout:
             {| class="wikitable" style="text-align: center"
             |-
             ! colspan="{{ game.headers|length }}" | {{ game.properties.name }} ({{ game.properties.company }})
+            {# Current records #}
+            {% set scores = [] %}
+            {% for score in game.scores %}
+            {% if score.properties['is-current-record'] %}
+            {% set scores = scores|merge([score]) %}
+            {% endif %}
+            {% endfor %}
             |-
             ! {{ game.headers|join(' !! ') }}
-            {% for scoreIndex,score in game.scores %}
+            {% for scoreIndex,score in scores %}
             {{ include('score') }}
             {% endfor %}
+            {# Previous records #}
+            {# Remove guard when it's ready. #}
+            {% if false %}{# Begin guard #}
+            {% set scores = [] %}
+            {% for score in game.scores %}
+            {% if not score.properties['is-current-record'] %}
+            {% set scores = scores|merge([score]) %}
+            {% endif %}
+            {% endfor %}
+            |-
+            ! {{ game.headers|join(' !! ') }}
+            {% for scoreIndex,score in scores %}
+            {{ include('score') }}
+            {% endfor %}
+            {% endif %}{# End guard #}
             |}
 
             {% if game.properties.description %}
@@ -189,8 +211,8 @@ layout:
             {% endfor %}
             {% endif %}
         score: |
-            {% set prevScore = game.scores[scoreIndex - 1] %}
-            {% set nextScore = game.scores[scoreIndex + 1] %}
+            {% set prevScore = scores[scoreIndex - 1] %}
+            {% set nextScore = scores[scoreIndex + 1] %}
             {% set isCounterstop = game.properties.counterstop
                and score.properties.score == game.properties.counterstop.score %}
             |-

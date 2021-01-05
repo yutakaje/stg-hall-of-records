@@ -23,18 +23,26 @@ final class Scores extends Collection
     /**
      * @param string[] $group
      */
-    public function top(array $group, int $numScores = 1): self
+    public function markCurrentRecords(array $group, int $numRecords = 1): self
     {
         return array_reduce(
             $this->sort(['score' => 'desc'])
                 ->group($group),
             fn (Scores $merged, Scores $grouped) => $merged->merge(
-                $grouped->filter(
-                    fn (Score $score, int $index) => $index < $numScores
-                        || $score->attribute('is-current-record') === true
-                )
+                $this->markCurrentRecordScores($grouped, $numRecords)
             ),
             new Scores()
         );
+    }
+
+    private function markCurrentRecordScores(Scores $scores, int $numRecords): Scores
+    {
+        foreach ($scores->asArray() as $index => $score) {
+            if ($index < $numRecords) {
+                $score->markAsCurrentRecord();
+            }
+        }
+
+        return $scores;
     }
 }

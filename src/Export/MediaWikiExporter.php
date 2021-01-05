@@ -117,10 +117,10 @@ final class MediaWikiExporter
             $layout->columnOrder()
         );
 
-        // Group scores by distinct features and take the top X
-        // entries out of each group.
+        // Group scores by distinct features and mark the top X
+        // entries out of each group as current records.
         return $this->scores->filterByGame($game->id())
-            ->top($layout->group('scores'))
+            ->markCurrentRecords($layout->group('scores'))
             ->sort($layout->sort('scores'))
             ->map(fn (Score $score) => $this->createScoreVariable(
                 $score,

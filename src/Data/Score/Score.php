@@ -19,6 +19,7 @@ final class Score extends AbstractItem
 {
     private int $id;
     private int $gameId;
+    private bool $isCurrentRecord;
 
     /**
      * @param array<string,mixed> $properties
@@ -31,6 +32,7 @@ final class Score extends AbstractItem
         parent::__construct($properties);
         $this->id = $id;
         $this->gameId = $gameId;
+        $this->isCurrentRecord = ($properties['attributes']['is-current-record'] ?? false) === true;
     }
 
     public function id(): int
@@ -43,6 +45,11 @@ final class Score extends AbstractItem
         return $this->gameId;
     }
 
+    public function markAsCurrentRecord(): void
+    {
+        $this->isCurrentRecord = true;
+    }
+
     /**
      * @return array<string,mixed>
      */
@@ -51,6 +58,7 @@ final class Score extends AbstractItem
         return array_merge(parent::properties(), [
             'id' => $this->id,
             'game-id' => $this->gameId,
+            'is-current-record' => $this->isCurrentRecord,
         ]);
     }
 }

@@ -531,7 +531,13 @@ TPL,
 ! colspan="{{ game.headers|length }}" | {{ game.properties.name }}
 |-
 ! {{ game.headers|join(' !! ') }}
+{% set scores = [] %}
 {% for score in game.scores %}
+{% if score.properties['is-current-record'] %}
+{% set scores = scores|merge([score]) %}
+{% endif %}
+{% endfor %}
+{% for scoreIndex,score in scores %}
 {{ include('score') }}
 {% endfor %}
 |}
