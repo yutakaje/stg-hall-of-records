@@ -15,9 +15,9 @@ use DI\ContainerBuilder;
 use Psr\Log\LoggerInterface;
 use Stg\HallOfRecords\Error\ErrorHandler;
 use Stg\HallOfRecords\Error\StgException;
-use Stg\HallOfRecords\MediaWikiDatabaseFetcher;
 use Stg\HallOfRecords\MediaWikiDatabaseFilter;
 use Stg\HallOfRecords\MediaWikiGenerator;
+use Stg\HallOfRecords\MediaWikiPageFetcher;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
@@ -66,7 +66,7 @@ try {
                 ];
             }
         } elseif (isset($_POST['load-from-database'])) {
-            $input = $container->get(MediaWikiDatabaseFetcher::class)->fetch();
+            $input = $container->get(MediaWikiPageFetcher::class)->fetch('database');
             $allGames = $container->get(MediaWikiDatabaseFilter::class)
               ->extractAllGames($input);
         } elseif (isset($_POST['filter-input']) && $gameFilter != null) {

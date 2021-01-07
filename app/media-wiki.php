@@ -25,9 +25,9 @@ use Stg\HallOfRecords\Export\MediaWikiExporter;
 use Stg\HallOfRecords\Import\MediaWikiImporter;
 use Stg\HallOfRecords\Import\MediaWiki\YamlExtractor;
 use Stg\HallOfRecords\Import\MediaWiki\YamlParser;
-use Stg\HallOfRecords\MediaWikiDatabaseFetcher;
 use Stg\HallOfRecords\MediaWikiDatabaseFilter;
 use Stg\HallOfRecords\MediaWikiGenerator;
+use Stg\HallOfRecords\MediaWikiPageFetcher;
 
 return [
     SettingRepositoryInterface::class => DI\create(SettingRepository::class),
@@ -40,8 +40,12 @@ return [
 
     MediaWikiExporter::class => DI\autowire(),
 
-    MediaWikiDatabaseFetcher::class => DI\create()->constructor(
-        'https://shmups.wiki/index.php?title=STG_Hall_of_Records/Database&action=edit'
+    MediaWikiPageFetcher::class => DI\create()->constructor(
+        'https://shmups.wiki/index.php',
+        [
+            'database' => 'STG_Hall_of_Records/Database',
+            'page-en' => 'STG_Hall_of_Records',
+        ]
     ),
     MediaWikiDatabaseFilter::class => DI\autowire(),
     MediaWikiGenerator::class => DI\autowire(),
