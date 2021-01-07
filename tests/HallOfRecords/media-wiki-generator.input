@@ -722,6 +722,15 @@ scores:
         date: "2009-01-07"
         url: https://example.org/youtube
 
+  - player: Chi-Ta-
+    score: 10,000,000+α
+    ship: Green
+    sources:
+      - name: Confirmed as cheated
+        date: "1978-04-18"
+    attributes:
+        is-current-record: false
+
 layout:
     column-order:
       - ship
