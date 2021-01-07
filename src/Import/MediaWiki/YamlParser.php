@@ -37,8 +37,12 @@ final class YamlParser
      */
     private function parseGlobalProperties(array $properties): ParsedProperties
     {
-        if (isset($properties['layout'])) {
-            $properties['layout'] = $this->parseLayout($properties['layout'] ?? []);
+        foreach ($properties as $name => $value) {
+            if ($name === 'layout') {
+                $properties[$name] = $this->parseLayout($value);
+            } else {
+                $properties[$name] = $this->parseProperty($value);
+            }
         }
 
         return new ParsedProperties($properties);
@@ -72,25 +76,29 @@ final class YamlParser
             $properties['name-sort'] = $properties['name'] ?? '';
         }
 
-        if (isset($properties['scores'])) {
-            $properties['scores'] = array_map(
-                fn (array $score) => $this->parseScore($score),
-                $properties['scores']
-            );
-        }
-
-        if (isset($properties['layout'])) {
-            $properties['layout'] = $this->parseLayout($properties['layout']);
-        }
-
-        if (isset($properties['links'])) {
-            $properties['links'] = array_map(
-                fn (array $link) => new ParsedProperties($link),
-                $properties['links']
-            );
+        foreach ($properties as $name => $value) {
+            if ($name === 'scores') {
+                $properties[$name] = $this->parseScores($value);
+            } elseif ($name === 'layout') {
+                $properties[$name] = $this->parseLayout($value);
+            } else {
+                $properties[$name] = $this->parseProperty($value);
+            }
         }
 
         return new ParsedProperties($properties);
+    }
+
+    /**
+     * @param array<string,mixed>[] $scores
+     * @return ParsedProperties[]
+     */
+    private function parseScores(array $scores): array
+    {
+        return array_map(
+            fn (array $properties) => $this->parseScore($properties),
+            $scores
+        );
     }
 
     /**
@@ -116,11 +124,8 @@ final class YamlParser
             $properties['score-real']
         );
 
-        if (isset($properties['links'])) {
-            $properties['links'] = array_map(
-                fn (array $link) => new ParsedProperties($link),
-                $properties['links']
-            );
+        foreach ($properties as $name => $value) {
+            $properties[$name] = $this->parseProperty($value);
         }
 
         return new ParsedProperties($properties);
@@ -142,6 +147,26 @@ final class YamlParser
         }
 
         return new ParsedProperties($properties);
+    }
+
+    /**
+     * @param mixed $value
+     * @return mixed
+     */
+    private function parseProperty($value)
+    {
+        if (!is_array($value) || $value == null) {
+            return $value;
+        }
+
+        if (is_string(array_keys($value)[0])) {
+            return new ParsedProperties($value);
+        } else {
+            return array_map(
+                fn ($entry) => $this->parseProperty($entry),
+                $value
+            );
+        }
     }
 
     /**

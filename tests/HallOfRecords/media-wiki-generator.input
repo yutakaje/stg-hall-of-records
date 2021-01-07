@@ -713,6 +713,7 @@ scores:
     ship: Red
     sources:
       - name: Twitter
+        name-jp: ツイッター
         date: "2008-10-04"
         url: https://example.org/twitter
       - name: JHA

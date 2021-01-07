@@ -20,7 +20,6 @@ use Stg\HallOfRecords\Data\Score\ScoreRepositoryInterface;
 use Stg\HallOfRecords\Data\Setting\Setting;
 use Stg\HallOfRecords\Data\Setting\SettingRepositoryInterface;
 use Stg\HallOfRecords\Import\MediaWikiImporter;
-use Stg\HallOfRecords\Import\MediaWiki\ParsedProperties;
 use Stg\HallOfRecords\Import\MediaWiki\YamlExtractor;
 use Stg\HallOfRecords\Import\MediaWiki\YamlParser;
 
@@ -110,31 +109,55 @@ class MediaWikiImporterTest extends \Tests\TestCase
      */
     private function exportSetting(Setting $setting): array
     {
-        $value = $setting->value();
-
-        // Ignore properties for other locales when comparing values.
-        if (isset($setting->additionalProperties()['gameId'])) {
-            if ($setting->name() === 'layout' && isset($value['columns'])) {
-                $value['columns'] = array_map(
-                    fn (array $column) => $this->removeLocalizedProperties($column),
-                    $value['columns']
-                );
-            }
-        }
-
-        return [
+        return $this->removeLocalizedProperties([
             'name' => $setting->name(),
-            'value' => $value,
+            'value' => $setting->value(),
             'properties' => $setting->additionalProperties(),
-        ];
+        ]);
     }
 
     /**
-     * @param array<string,mixed> $properties
      * @return array<string,mixed>
      */
-    private function removeLocalizedProperties(array $properties): array
+    private function exportGame(Game $game): array
     {
+        return $this->removeLocalizedProperties([
+            'id' => $game->id(),
+            'name' => $game->property('name'),
+            'company' => $game->property('company'),
+            'links' => $game->property('links') ?? [],
+        ]);
+    }
+
+    /**
+     * @return array<string,mixed>
+     */
+    private function exportScore(Score $score): array
+    {
+        return $this->removeLocalizedProperties([
+            'id' => $score->id(),
+            'gameId' => $score->gameId(),
+            'player' => $score->property('player'),
+            'score' => $score->property('score'),
+            'ship' => $score->property('ship'),
+            'mode' => $score->property('mode'),
+            'weapon' => $score->property('weapon'),
+            'scored-date' => $score->property('scored-date'),
+            'source' => $score->property('source'),
+            'comments' => $score->property('comments'),
+        ]);
+    }
+
+    /**
+     * @param mixed $properties
+     * @return mixed
+     */
+    private function removeLocalizedProperties($properties)
+    {
+        if (!is_array($properties)) {
+            return $properties;
+        }
+
         $keys = array_filter(
             array_keys($properties),
             fn (string $name) => !in_array(
@@ -146,44 +169,9 @@ class MediaWikiImporterTest extends \Tests\TestCase
 
         /** @var array<string,mixed> */
         return array_combine($keys, array_map(
-            fn (string $key) => $properties[$key],
+            fn (string $key) => $this->removeLocalizedProperties($properties[$key]),
             $keys
         ));
-    }
-
-    /**
-     * @return array<string,mixed>
-     */
-    private function exportGame(Game $game): array
-    {
-        return [
-            'id' => $game->id(),
-            'name' => $game->property('name'),
-            'company' => $game->property('company'),
-            'links' => array_map(
-                fn (array $link) => $this->removeLocalizedProperties($link),
-                $game->property('links')
-            ),
-        ];
-    }
-
-    /**
-     * @return array<string,mixed>
-     */
-    private function exportScore(Score $score): array
-    {
-        return [
-            'id' => $score->id(),
-            'gameId' => $score->gameId(),
-            'player' => $score->property('player'),
-            'score' => $score->property('score'),
-            'ship' => $score->property('ship'),
-            'mode' => $score->property('mode'),
-            'weapon' => $score->property('weapon'),
-            'scored-date' => $score->property('scored-date'),
-            'source' => $score->property('source'),
-            'comments' => $score->property('comments'),
-        ];
     }
 
     private function createImporter(\stdClass $storage): MediaWikiImporter
@@ -251,12 +239,10 @@ class MediaWikiImporterTest extends \Tests\TestCase
                 'columns' => [
                     'player' => [
                         'label' => 'Player',
-                        'label-jp' => 'プレイヤー',
                         'template' => '{{ player }}',
                     ],
                     'ship' => [
                         'label' => 'Ship',
-                        'label-jp' => '自機',
                         'template' => '{{ ship }}',
                     ],
                     'mode' => [
@@ -269,7 +255,6 @@ class MediaWikiImporterTest extends \Tests\TestCase
                     ],
                     'score' => [
                         'label' => 'Score',
-                        'label-jp' => 'スコア',
                         'template' => '{{ score }}',
                     ],
                     'scored-date' => [
@@ -278,12 +263,10 @@ class MediaWikiImporterTest extends \Tests\TestCase
                     ],
                     'source' => [
                         'label' => 'Source',
-                        'label-jp' => '情報元',
                         'template' => '{{ source }}',
                     ],
                     'comments' => [
                         'label' => 'Comment',
-                        'label-jp' => '備考',
                         'template' => "{{ comments|join('; ') }}",
                     ],
                 ],
@@ -292,7 +275,6 @@ class MediaWikiImporterTest extends \Tests\TestCase
                 [
                     'property' => 'company',
                     'value' => 'Cave',
-                    'value-jp' => 'ケイブ',
                 ],
             ]),
             3 => $this->gameSetting($gameIds[0], 'layout', [
@@ -384,6 +366,8 @@ class MediaWikiImporterTest extends \Tests\TestCase
             $settings[1]['value']['columns']['score']['label'] = 'スコア';
             $settings[1]['value']['columns']['source']['label'] = '情報元';
             $settings[1]['value']['columns']['comments']['label'] = '備考';
+
+            $settings[2]['value'][0]['value'] = 'ケイブ';
 
             $settings[3]['value']['sort']['scores']['mode'] = [
                 'オリジナルモード',

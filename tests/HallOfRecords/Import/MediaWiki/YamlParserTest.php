@@ -40,7 +40,13 @@ class YamlParserTest extends \Tests\TestCase
         ]);
 
         self::assertEquals(
-            new ParsedProperties($global),
+            new ParsedProperties(array_merge($global, [
+                'translations' => array_map(
+                    fn (array $entry) => new ParsedProperties($entry),
+                    $global['translations']
+                ),
+                'layout' => new ParsedProperties($global['layout']),
+            ])),
             $parsedData->get('global-properties')
         );
         self::assertEquals([], $parsedData->get('games'));
@@ -58,7 +64,13 @@ class YamlParserTest extends \Tests\TestCase
         ));
 
         self::assertEquals(
-            new ParsedProperties($global),
+            new ParsedProperties(array_merge($global, [
+                'translations' => array_map(
+                    fn (array $entry) => new ParsedProperties($entry),
+                    $global['translations']
+                ),
+                'layout' => new ParsedProperties($global['layout']),
+            ])),
             $parsedData->get('global-properties')
         );
         self::assertEquals(
@@ -148,28 +160,28 @@ class YamlParserTest extends \Tests\TestCase
                         ]),
                     ],
                     'translations' => [
-                        [
+                        new ParsedProperties([
                             'property' => 'ship',
                             'value' => 'Type A',
                             'value-en' => 'Tiger Schwert',
                             'value-jp' => 'TYPE-A ティーゲルシュベルト',
-                        ],
-                        [
+                        ]),
+                        new ParsedProperties([
                             'property' => 'ship',
                             'value' => 'Type B',
                             'value-en' => 'Panzer Jäger',
                             'value-jp' => 'TYPE-B パンツァーイェーガー',
-                        ],
-                        [
+                        ]),
+                        new ParsedProperties([
                             'property' => 'mode',
                             'value' => 'Omote',
                             'value-jp' => '表2週',
-                        ],
-                        [
+                        ]),
+                        new ParsedProperties([
                             'property' => 'mode',
                             'value' => 'Ura',
                             'value-jp' => '裏2週',
-                        ],
+                        ]),
                     ],
                     'layout' => new ParsedProperties([
                         'column-order' => [
@@ -215,9 +227,11 @@ class YamlParserTest extends \Tests\TestCase
                             ]),
                         ],
                         'sort' => [
-                            'ship' => 'asc',
-                            'mode' => 'asc',
-                            'score' => 'desc',
+                            'scores' => [
+                                'ship' => 'asc',
+                                'mode' => ['Ura', 'Omote'],
+                                'score' => 'desc',
+                            ],
                         ],
                     ]),
                 ]),
@@ -253,14 +267,15 @@ class YamlParserTest extends \Tests\TestCase
                     'value-jp' => 'ケイブ',
                 ],
             ],
-            'templates' => [
-                'games' => <<<'TPL'
+            'layout' => [
+                'templates' => [
+                    'games' => <<<'TPL'
 {% for game in games %}
 {{ include('game') }}
 {% endfor %}
 
 TPL,
-                'game' => <<<'TPL'
+                    'game' => <<<'TPL'
 {| class="wikitable" style="text-align: center
 |-
 ! colspan="{{ game.headers|length }}" | {{ game.properties.name }}
@@ -273,6 +288,7 @@ TPL,
 |}
 
 TPL,
+                ],
             ],
         ];
     }
@@ -426,9 +442,11 @@ TPL,
                         ],
                     ],
                     'sort' => [
-                        'ship' => 'asc',
-                        'mode' => 'asc',
-                        'score' => 'desc',
+                        'scores' => [
+                            'ship' => 'asc',
+                            'mode' => ['Ura', 'Omote'],
+                            'score' => 'desc',
+                        ],
                     ],
                 ],
             ],

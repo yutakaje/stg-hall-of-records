@@ -112,6 +112,8 @@ final class MediaWikiImporter
         foreach ($settings->all() as $name => $value) {
             if ($name === 'layout') {
                 $value = $this->translateLayout($value, $locale, $translator);
+            } else {
+                $value = $this->translateProperties($value, $locale, $translator);
             }
 
             $this->settings->add(new GlobalSetting(
@@ -163,17 +165,19 @@ final class MediaWikiImporter
         string $locale,
         Translator $translator
     ): array {
-        return $this->translateProperties($translator, new ParsedProperties(
-            array_merge($game->all(), [
-                'links' => array_map(
-                    fn (ParsedProperties $link) => $this->translateProperties(
-                        $this->createTranslator($link, $locale, $translator),
-                        $link
-                    ),
-                    $game->get('links', [])
-                ),
-            ])
-        ));
+        $properties = $game->all();
+
+        // Scores and layout are parsed separately.
+        unset(
+            $properties['scores'],
+            $properties['layout']
+        );
+
+        return $this->translateProperties(
+            new ParsedProperties($properties),
+            $locale,
+            $translator
+        );
     }
 
     private function addScoreToRepository(
@@ -200,17 +204,7 @@ final class MediaWikiImporter
         string $locale,
         Translator $translator
     ): array {
-        return $this->translateProperties($translator, new ParsedProperties(
-            array_merge($score->all(), [
-                'links' => array_map(
-                    fn (ParsedProperties $link) => $this->translateProperties(
-                        $this->createTranslator($link, $locale, $translator),
-                        $link
-                    ),
-                    $score->get('links', [])
-                )
-            ])
-        ));
+        return $this->translateProperties($score, $locale, $translator);
     }
 
     private function clearRepositories(): void
@@ -230,29 +224,44 @@ final class MediaWikiImporter
     ): array {
         $properties = $layout->all();
 
-        if (isset($properties['columns'])) {
-            $properties['columns'] = array_map(
+        $columns = $properties['columns'] ?? null;
+        $sort = $properties['sort'] ?? null;
+
+        unset(
+            $properties['columns'],
+            $properties['sort']
+        );
+
+        $translated = $this->translateProperties(
+            new ParsedProperties($properties),
+            $locale,
+            $translator
+        );
+
+
+        if ($columns !== null) {
+            $translated['columns'] = array_map(
                 fn (ParsedProperties $column) => $this->translateLayoutColumn(
                     $column,
                     $locale,
                     $translator
                 ),
-                $properties['columns']
+                $columns
             );
         }
 
-        if (isset($properties['sort'])) {
-            $properties['sort'] = array_map(
-                fn (array $sort) => $this->translateLayoutSort(
-                    $sort,
+        if ($sort !== null) {
+            $translated['sort'] = array_map(
+                fn (array $entry) => $this->translateLayoutSort(
+                    $entry,
                     $locale,
                     $translator
                 ),
-                $properties['sort']
+                $sort
             );
         }
 
-        return $properties;
+        return $translated;
     }
 
     /**
@@ -263,9 +272,7 @@ final class MediaWikiImporter
         string $locale,
         Translator $translator
     ): array {
-        $translator = $this->createTranslator($column, $locale, $translator);
-
-        return $this->translateProperties($translator, $column);
+        return $this->translateProperties($column, $locale, $translator);
     }
 
     /**
@@ -313,16 +320,16 @@ final class MediaWikiImporter
         return array_reduce(
             array_filter(
                 $properties->get('translations', []),
-                fn ($entry) => is_array($entry)
-                    && isset($entry['property'])
-                    && isset($entry['value'])
-                    && isset($entry["value-{$locale}"])
+                fn ($entry) => $entry instanceof ParsedProperties
+                    && $entry->get('property') !== null
+                    && $entry->get('value') !== null
+                    && $entry->get("value-{$locale}") !== null
             ),
-            function (Translator $translator, array $entry) use ($locale): Translator {
-                if (isset($entry['fuzzy-match']) && $entry['fuzzy-match']) {
+            function (Translator $translator, ParsedProperties $entry) use ($locale): Translator {
+                if ($entry->get('fuzzy-match') === true) {
                     if (
-                        !is_string($entry['value'])
-                        || !is_string($entry["value-{$locale}"])
+                        !is_string($entry->get('value'))
+                        || !is_string($entry->get("value-{$locale}"))
                     ) {
                         throw new StgException(
                             'Fuzzy matching is only available for strings'
@@ -330,15 +337,15 @@ final class MediaWikiImporter
                     }
 
                     return $translator->addFuzzy(
-                        $entry['property'],
-                        $entry['value'],
-                        $entry["value-{$locale}"]
+                        $entry->get('property'),
+                        $entry->get('value'),
+                        $entry->get("value-{$locale}")
                     );
                 } else {
                     return $translator->add(
-                        $entry['property'],
-                        $entry['value'],
-                        $entry["value-{$locale}"]
+                        $entry->get('property'),
+                        $entry->get('value'),
+                        $entry->get("value-{$locale}")
                     );
                 }
             },
@@ -367,24 +374,78 @@ final class MediaWikiImporter
     }
 
     /**
-     * @return array<string,mixed>
+     * @param mixed $properties
+     * @return mixed
      */
     private function translateProperties(
-        Translator $translator,
-        ParsedProperties $properties
-    ): array {
-        return array_reduce(
-            array_keys($properties->all()),
-            fn (array $translated, string $name) => array_merge(
-                $translated,
-                [
-                    $name => $translator->translate(
-                        $name,
-                        $properties->get($name)
-                    ),
-                ]
-            ),
-            []
+        $properties,
+        string $locale,
+        Translator $translator
+    ) {
+        if ($properties instanceof ParsedProperties) {
+            $translator = $this->createTranslator($properties, $locale, $translator);
+
+            return array_reduce(
+                array_keys($properties->all()),
+                fn (array $translated, string $name) => array_merge(
+                    $translated,
+                    [
+                        $name => $translator->translate(
+                            $name,
+                            //
+                            $this->translateProperties(
+                                $properties->get($name),
+                                $locale,
+                                $translator
+                            ),
+                        ),
+                    ]
+                ),
+                []
+            );
+        } elseif (is_array($properties)) {
+            return array_map(
+                fn ($entry) => $this->translateProperties($entry, $locale, $translator),
+                $properties
+            );
+        } else {
+            return $properties;
+        }
+    }
+
+    /**
+     * @param mixed $property
+     * @return mixed
+     */
+    private function translateProperty(
+        $property,
+        string $locale,
+        Translator $fallbackTranslator
+    ) {
+        if ($property instanceof ParsedProperties) {
+            $translator = $this->createTranslator($column, $locale, $fallbackTranslator);
+            $properties = array_reduce(
+                array_keys($properties->all()),
+                fn (array $translated, string $name) => array_merge(
+                    $translated,
+                    [
+                        $name => $translator->translate(
+                            $name,
+                            $properties->get($name)
+                        ),
+                    ]
+                ),
+                []
+            );
+        }
+
+        if (!is_array($properties) || $properties == null) {
+            return $properties;
+        }
+
+        return array_map(
+            fn ($entry) => $this->translateProperties($entry),
+            $properties
         );
     }
 }
