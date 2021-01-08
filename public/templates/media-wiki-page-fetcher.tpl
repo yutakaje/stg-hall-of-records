@@ -6,6 +6,7 @@
     <style>
       body {
           background-color: #EEEEEE;
+          margin: 20px;
       }
       li {
           margin-bottom: 5px;
