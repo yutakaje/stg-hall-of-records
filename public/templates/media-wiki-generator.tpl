@@ -16,11 +16,16 @@
       textarea.output {
           height: 300px;
       }
+      .error {
+          color: #c81717;
+      }
     </style>
   </head>
 
   <body>
     <h1>STG Hall of Records - MediaWiki Page Generator</h1>
+
+    <div class="error">{{ error }}</div>
 
     <h2>Input</h2>
     <form method="post">
@@ -53,7 +58,7 @@
     <hr/>
 
     <h2>Output</h2>
-    {{ error }}
+
     {% for page in output %}
     <h3>Output for locale `{{ page.locale }}`</h3>
     <div>
