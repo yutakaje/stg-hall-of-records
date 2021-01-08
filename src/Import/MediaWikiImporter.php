@@ -412,40 +412,4 @@ final class MediaWikiImporter
             return $properties;
         }
     }
-
-    /**
-     * @param mixed $property
-     * @return mixed
-     */
-    private function translateProperty(
-        $property,
-        string $locale,
-        Translator $fallbackTranslator
-    ) {
-        if ($property instanceof ParsedProperties) {
-            $translator = $this->createTranslator($column, $locale, $fallbackTranslator);
-            $properties = array_reduce(
-                array_keys($properties->all()),
-                fn (array $translated, string $name) => array_merge(
-                    $translated,
-                    [
-                        $name => $translator->translate(
-                            $name,
-                            $properties->get($name)
-                        ),
-                    ]
-                ),
-                []
-            );
-        }
-
-        if (!is_array($properties) || $properties == null) {
-            return $properties;
-        }
-
-        return array_map(
-            fn ($entry) => $this->translateProperties($entry),
-            $properties
-        );
-    }
 }
