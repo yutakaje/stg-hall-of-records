@@ -41,7 +41,7 @@ return [
     MediaWikiExporter::class => DI\autowire(),
 
     MediaWikiPageFetcher::class => DI\create()->constructor(
-        'https://shmups.wiki/index.php',
+        'https://shmups.wiki',
         [
             'database' => 'STG_Hall_of_Records/Database',
             'page-en' => 'STG_Hall_of_Records',

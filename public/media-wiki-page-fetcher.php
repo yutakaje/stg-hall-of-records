@@ -35,8 +35,11 @@ try {
 
     try {
         $page = $_GET['page'] ?? null;
+        $includeFiles = ($_GET['includeFiles'] ?? 'false') === 'true';
+
         if ($page !== null) {
-            $container->get(MediaWikiPageFetcher::class)->download($page);
+            $container->get(MediaWikiPageFetcher::class)
+                ->download($page, $includeFiles);
         }
     } catch (StgException $exception) {
         $errorMessage = $exception->getMessage();
