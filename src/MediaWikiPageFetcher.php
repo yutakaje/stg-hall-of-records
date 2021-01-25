@@ -13,12 +13,15 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords;
 
-use GuzzleHttp\Client as HttpClient;
-use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Response;
+use Psr\Http\Client\ClientInterface as HttpClientInterface;
+use Psr\Http\Client\RequestExceptionInterface;
 use Stg\HallOfRecords\Error\StgException;
 
 final class MediaWikiPageFetcher
 {
+    private HttpClientInterface $httpClient;
     private string $url;
     /** @var array<string,string> */
     private array $pageAliases;
@@ -26,8 +29,12 @@ final class MediaWikiPageFetcher
     /**
      * @param array<string,string> $pageAliases
      */
-    public function __construct(string $url, array $pageAliases)
-    {
+    public function __construct(
+        HttpClientInterface $httpClient,
+        string $url,
+        array $pageAliases = []
+    ) {
+        $this->httpClient = $httpClient;
         $this->url = $url;
         $this->pageAliases = $pageAliases;
     }
@@ -39,29 +46,29 @@ final class MediaWikiPageFetcher
         );
     }
 
-    public function download(string $page, bool $includeFiles = false): void
+    public function download(string $page, bool $includeFiles = false): Response
     {
         $page = $this->handleAliases($page);
 
         if ($includeFiles) {
-            $this->downloadAsZipFile($page);
+            return $this->downloadAsZipFile($page);
         } else {
-            $this->downloadAsTextFile($page);
+            return $this->downloadAsTextFile($page);
         }
     }
 
-    private function downloadAsTextFile(string $page): void
+    private function downloadAsTextFile(string $page): Response
     {
         $contents = $this->fetch($page);
-
         $filename = $this->makeFilename($page) . '.txt';
-        header('Content-Type: text/plain; charset=UTF-8');
-        header('Content-disposition: attachment; filename="' . $filename . '"');
-        echo $contents;
-        exit(0);
+
+        return new Response(200, [
+            'Content-Type' => 'text/plain; charset=UTF-8',
+            'Content-Disposition' => 'attachment; filename="' . $filename . '"'
+        ], $contents);
     }
 
-    private function downloadAsZipFile(string $page): void
+    private function downloadAsZipFile(string $page): Response
     {
         $contents = $this->fetch($page);
 
@@ -69,13 +76,13 @@ final class MediaWikiPageFetcher
             $this->extractReferencedFiles($contents)
         );
 
-        $zip = $this->createZipFile($contents, $files);
-
+        $zipContents = $this->createZipFile($contents, $files);
         $filename = $this->makeFilename($page) . '.zip';
-        header('Content-Type: application/zip');
-        header('Content-disposition: attachment; filename="' . $filename . '"');
-        echo file_get_contents($zip);
-        exit(0);
+
+        return new Response(200, [
+            'Content-Type' => 'application/zip',
+            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+        ], $zipContents);
     }
 
     private function fetchContents(string $page): string
@@ -115,10 +122,11 @@ final class MediaWikiPageFetcher
 
     private function fetchUrl(string $url): string
     {
-        $httpClient = new HttpClient();
         try {
-            $response = $httpClient->request('GET', $url);
-        } catch (ClientException $exception) {
+            $response = $this->httpClient->sendRequest(
+                new Request('GET', $url)
+            );
+        } catch (RequestExceptionInterface $exception) {
             throw $this->createException($exception->getMessage());
         }
 
@@ -205,7 +213,12 @@ final class MediaWikiPageFetcher
 
         $zip->close();
 
-        return $name;
+        $zipContents = file_get_contents($name);
+        if ($zipContents === false) {
+            throw $this->createException('Error to open temporary zip file');
+        }
+
+        return $zipContents;
     }
 
     /**
@@ -243,7 +256,7 @@ final class MediaWikiPageFetcher
 
     private function makeFileUrl(string $file): string
     {
-        return "{$this->url}/library/File:{$file}";
+        return "{$this->url}/library/File:" . str_replace(' ', '_', $file);
     }
 
     private function makeFilename(string $page): string

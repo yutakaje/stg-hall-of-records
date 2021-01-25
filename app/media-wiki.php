@@ -11,9 +11,11 @@
 
 declare(strict_types=1);
 
+use GuzzleHttp\Client as HttpClient;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
 use Monolog\Processor\UidProcessor;
+use Psr\Http\Client\ClientInterface as HttpClientInterface;
 use Psr\Log\LoggerInterface;
 use Stg\HallOfRecords\Data\Game\GameRepository;
 use Stg\HallOfRecords\Data\Game\GameRepositoryInterface;
@@ -41,6 +43,7 @@ return [
     MediaWikiExporter::class => DI\autowire(),
 
     MediaWikiPageFetcher::class => DI\create()->constructor(
+        DI\get(HttpClientInterface::class),
         'https://shmups.wiki',
         [
             'database' => 'STG_Hall_of_Records/Database',
@@ -49,6 +52,8 @@ return [
     ),
     MediaWikiDatabaseFilter::class => DI\autowire(),
     MediaWikiGenerator::class => DI\autowire(),
+
+    HttpClientInterface::class => DI\create(HttpClient::class),
 
     LoggerInterface::class => static function (): Logger {
         $logger = new Logger('stg-hall-of-records');

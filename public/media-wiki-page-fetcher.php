@@ -38,8 +38,14 @@ try {
         $includeFiles = ($_GET['includeFiles'] ?? 'false') === 'true';
 
         if ($page !== null) {
-            $container->get(MediaWikiPageFetcher::class)
+            $response = $container->get(MediaWikiPageFetcher::class)
                 ->download($page, $includeFiles);
+
+            foreach ($response->getHeaders() as $name => $value) {
+                header("{$name}: " . implode(', ', $value));
+            }
+            echo (string)$response->getBody();
+            exit(0);
         }
     } catch (StgException $exception) {
         $errorMessage = $exception->getMessage();

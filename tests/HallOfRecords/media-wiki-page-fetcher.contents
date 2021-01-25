@@ -1,0 +1,4054 @@
+'''Attention: This page serves as a database and is not meant to be consumed by end users. If you came here for the STG Hall of Records, follow one of these links:'''
+
+* English version: https://shmups.wiki/library/STG_Hall_of_Records
+* 日本語版: https://shmups.wiki/library/STG記録の殿堂
+
+== Introduction ==
+The contents of this page serve as a database and are meant to be put into a [https://shmups.wiki/records/ generator]. The generator converts the raw data, written in YAML, into actual wiki pages for different languages.
+
+=== Structure ===
+Every section of data is enclosed in &lt;nowiki&gt;&lt;/nowiki&gt; tags. Everything outside outside of these tags will be ignored by the parser. The first section is named ''global'' and contains settings for the whole page, all the remaining sections each contain data about a single game.
+
+==== Global settings ====
+Values defined in this section apply to all the games in the database or the whole page in general (e.g. description, sorting of games, common translations, ...). For further information, please refer to the [[#Global settings_2|actual value]], most of the settings are documented.
+
+==== Game ====
+Each game is defined by the following properties:
+
+<pre>
+name: Name of the game
+name-jp: 日本語のタイトル / Japanese title in kanji
+name-kana: にほんごのたいとる / Japanese title in hiragana
+company: Developer / Publisher
+counterstop: Counterstop (optional, see below)
+
+scores: Score entries (see below)
+
+links:
+  - url: https://example.org/the-link
+    title: Title for the link
+  - url: https://example.org/other-link
+    title: Second link title
+
+description: "Description containing notes about counterstops and other noteworthy stuff."
+
+layout: Layout information (see below)
+
+translations: Game-specific translations (see below)
+</pre>
+
+===== Counterstop =====
+If the game contains a counterstop, its type and value can be specified. Score entries reaching the counterstop will be colored automatically.
+
+The type ''hard'' means the game itself cannot display a higher score.
+<pre>
+counterstop:
+    score: 99,999,999
+    type: hard
+</pre>
+The type ''soft'' represents an artificial counterstop for infinite games, usually imposed by a Japanese leaderboard.
+<pre>
+counterstop:
+    score: 10,000,000
+    type: soft
+</pre>
+
+
+== Global settings ==
+<pre><nowiki>
+name: global
+
+# Main description in wiki syntax, available as variable `description` within the templates.
+description: |
+    [[File:Micomlogo.jpg|800px|center]]
+    
+    
+    Welcome to the STG Hall of Records!
+    
+    In the following page you will find a list of all world record scores for arcade shmups. The list is a major revision of the [https://shmups.system11.org/viewtopic.php?f=2&t=38524 long-standing topic on the Shmups Forum] under the same name, which was maintained by the user NTSC-J from September 2011 to July 2020. This list takes the Japanese score keeping traditions as a basis, primarily the uninterrupted combined tradition of Gamest magazine (1986 to 1999), Arcadia magazine (1999 to 2015) and the [http://www.jha-arcade.com website] of the Japan Highscore Association a.k.a. JHA (2016 to the present). For the current revision of the STG Hall of Records, several more scores have been retrieved from other sources such as Micom Basic magazine (1984 to 1999) but also private Twitter accounts, forums, and other websites. To read more about the tracking of arcade highscores in Japan, please check [http://electricunderground.io/guest-article-introduction-to-scorekeeping-for-japanese-arcade-games/ this short article].
+    [[File:MICB.jpg|400px|right]]
+    The STG Hall of Records in its current form would have been an unthinkable project without the meticulous work carried out by Marco “Gemant” Frattino who has been spreading information about Japanese arcade highscores with tireless enthusiasm within the english-speaking community for over a decade. Gemant’s work culminates in the latest publication of his monumental project ARCA (started in 2007), a document providing information on a selection of 600 arcade games (not only shmups), which can be [https://www.mameretroavengers.com/documenti/arca-general-dei-record-arcade/ accessed here]. However, the STG Hall of Records is not merely a copy of Gemant’s document. Whenever possible, the records have been double checked and verified. Furthermore, you will notice two fundamental departures from the ARCA project. First, while non-shmups have been excluded, the STG Hall of Records aims to cover every arcade shmup and is constantly growing, not limited to a specific number of games. Second, games from the so-called “Golden Era” (pre 1985 and therefore prior to the first issue of Gamest) are also considered.
+    
+    As an additional innovation, the STG Hall of Records also lists scores for various categories that otherwise do not exist within the Japanese tradition, e.g. a more in-depth and specific recordkeeping of subtypes of ships (e.g. including shot and laser types in [[DoDonPachi]]). Scores from particularly accurate ports (e.g. [[Battle Garegga]] on PS4 or [[Crimzon Clover]] on Steam) or scores achieved on emulators (e.g. Mame or GOTVG) can also be found on the list. These scores are not meant to replace the current arcade scores and are but seen as a supplement. Geographically speaking, scores from all over the world are considered.
+    
+    Mostly limited to a number of older games, Japanese scorekeeping sometimes sets a goal score of 10,000,000 points and closes the game for competition once this threshold is achieved regardless of whether the score counter would continue normally or roll over back to 0. These scores are marked by the notation of "+α", e.g. "10,000,000+α" and are then marked in green color to indicate that the ranking is officially closed under JHA rules. The STG Hall of Records likewise lists these +α-scores and indicates the first player(s) to reach this score (players achieving the same goal score later on are not considered). Moreover, the highest score beyond this arbitrary threshold is also listed. Only when a true counterstop is achieved, the game or category will be closed for competition as long as no special rules apply as is the case with Ultra Mode in [[Mushihimesama Futari]] 1.5. In the case of a counterstop, the ranking will be marked in grey color to indicate that it is closed.
+
+    [[File:Image with spaces.png|left]]
+
+    
+
+# Layout information applicable to the whole page or all the games in the database.
+layout:
+
+    # Sort order for the games within the page or the scores within each game respectively.
+    sort:
+        games:
+            name: asc
+        scores:
+            score: desc
+
+    # Properties to group scores by. Every combination of these properties forms a category within a game.
+    # Example: If grouped by ship only, all the scores achieved with the same ship are put into the same
+    # category no matter the mode, weapon or any property.
+    group:
+        scores:
+          - version
+          - autofire
+          - platform
+          - mode
+          - ship
+          - weapon
+          - loop
+
+    # Default order for the columns (see next property). For each game, only columns that have been set
+    # will be displayed.
+    column-order:
+      - version
+      - autofire
+      - mode
+      - ship
+      - weapon
+      - loop
+      - score
+      - player
+      - sources
+      - comments
+
+    # Available columns. Columns specified here can be used for all games.
+    columns:
+        player:
+            label: Player
+            label-jp: プレイヤー
+            template: "{{ score.player }}"
+
+        score:
+            label: Score
+            label-jp: スコア
+            template: |
+                {{ score.score }}{% if attribute(score, 'score-real') and attribute(score, 'score-real') != score.score %} [{{ attribute(score, 'score-real') }}]{% endif %}
+
+        ship:
+            label: Ship
+            label-jp: 自機
+            template: "{{ score.ship }}"
+            attributes:
+                is-category: true
+                is-mergeable: true
+
+        mode:
+            label: Mode
+            label-jp: モード
+            template: "{{ score.mode }}"
+            attributes:
+                is-category: true
+                is-mergeable: true
+
+        loop:
+            label: Loop
+            label-jp: 2周種
+            template: "{{ score.loop }}"
+            attributes:
+                is-category: true
+                is-mergeable: true
+
+        weapon:
+            label: Weapon
+            label-jp: ショット
+            template: "{{ score.weapon }}"
+            attributes:
+                is-category: true
+                is-mergeable: true
+
+        comments:
+            label: Comment
+            label-jp: 備考
+            template: "{{ score.comments|join(', ') }}"
+
+        version:
+            label: Version
+            label-jp: バージョン
+            template: "{{ score.version }}"
+            attributes:
+                is-category: true
+                is-mergeable: true
+
+        autofire:
+            label: Autofire
+            label-jp: オート連射
+            template: "{{ score.autofire }}"
+            attributes:
+                is-category: true
+                is-mergeable: true
+
+        platform:
+            label: Platform
+            label-jp: プラットフォーム
+            template: "{{ score.platform }}"
+
+        sources:
+            label: Source
+            label-jp: 情報元
+            template: |
+                {% for source in score.sources %}{% if source.url %}[{{ source.url }} {{ source.name }}]{% else %}{{ source.name|formatDate }}{% endif %}{% if source.date %} ({{ source.date|formatDate }}){% endif %}{% if not loop.last %}<br>{% endif %}{% endfor %}
+
+    # Wiki templates. The one named `main` is the entry point, everything else gets included from there.
+    templates:
+        main: |
+            {{ description|raw }}
+            {{ include('toc') }}
+            {{ include('games') }}
+        toc: |
+            <table class="wikitable">
+              <tr>
+            {% set numNonEmptyGroups = 0 %}
+            {% for group in games.grouped.byInitials %}
+            {% if group.games %}
+                <th class="{% for game in group.games %}mw-customtoggle-{{ game.properties.id }} {% endfor %}" style="padding-left:10px;padding-right:10px;">{{ group.title }}</th>
+            {% set numNonEmptyGroups = numNonEmptyGroups + 1 %}
+            {% endif %}
+            {% endfor %}
+              </tr>
+            {% for group in games.grouped.byInitials %}
+            {% for game in group.games %}
+              <tr id="mw-customcollapsible-{{ game.properties.id }}" class="mw-collapsible mw-collapsed">
+                <td colspan="{{ numNonEmptyGroups }}">[[#{{ game.properties.name }}|{{ game.properties.name }}]]</td>
+              </tr>
+            {% endfor %}
+            {% endfor %}
+            </table>
+            __NOTOC__
+        games: |
+            {% for game in games.all %}
+            {# Use custom game template where available. #}
+            {% set customTemplate = "game-#{game.properties.id}" %}
+            {{ include([customTemplate, 'game']) }}
+            {% endfor %}
+        game: |
+            {# Always us an array for counterstops #}
+            {% set counterstops = [] %}
+            {% if game.properties.counterstop.score %}{# Single counterstop defined #}
+            {% set counterstops = [game.properties.counterstop] %}
+            {% elseif game.properties.counterstop %}{# Multiple counterstops defined #}
+            {% set counterstops = game.properties.counterstop %}
+            {% endif %}
+            {{ '{{' }}Anchor|{{ game.properties.name }}{{ '}}' }}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="{{ game.headers|length }}" | {{ game.properties.name }} ({{ game.properties.company }})
+            {# Current records #}
+            {% set scores = [] %}
+            {% for score in game.scores %}
+            {% if score.properties['is-current-record'] %}
+            {% set scores = scores|merge([score]) %}
+            {% endif %}
+            {% endfor %}
+            |-
+            ! {{ game.headers|join(' !! ') }}
+            {% for scoreIndex,score in scores %}
+            {{ include('score') }}
+            {% endfor %}
+            {# Previous records #}
+            {% set scores = [] %}
+            {% for score in game.scores %}
+            {% if not score.properties['is-current-record'] %}
+            {% set scores = scores|merge([score]) %}
+            {% endif %}
+            {% endfor %}
+            {# Remove guard when it's ready. #}
+            {% if false and scores %}
+            |-
+            ! {{ game.headers|join(' !! ') }}
+            {% for scoreIndex,score in scores %}
+            {{ include('score') }}
+            {% endfor %}
+            {% endif %}
+            |}
+
+            {% if game.properties.description %}
+            {{ game.properties.description }}
+
+            {% endif %}
+            {% if game.properties.links %}
+            {% for link in game.properties.links %}
+            * [{{ link.url}} {{link.title}}]
+            {% endfor %}
+            {% endif %}
+        score: |
+            {% set prevScore = scores[scoreIndex - 1] %}
+            {% set nextScore = scores[scoreIndex + 1] %}
+            {# Check for counterstops #}
+            {% set isCounterstop = false %}
+            {% set counterstopType = null %}
+            {% for counterstop in counterstops %}
+            {% if counterstop.score and score.properties.score == counterstop.score %}
+            {% set isCounterstop = true %}
+            {% set counterstopType = counterstop.type %}
+            {% endif %}
+            {% endfor %}
+            |-
+            | {% for columnIndex,column in score.columns %}
+            {% set cellValue = column.value %}
+            {% set classes = '' %}
+            {% if isCounterstop and not column.attributes['is-category'] %}
+            {% set classes = "hor-counterstop-#{counterstopType} #{classes}" %}
+            {% endif %}
+            {# Merge counterstop score values as well #}
+            {% if column.attributes['is-mergeable']
+               or column.name == 'score'
+               and isCounterstop
+               and score.properties.score == score.properties['score-real'] %}
+            {% set mergeWithTopCell = true %}
+            {% set mergeWithBottomCell = true %}
+            {% for i in 0..columnIndex %}
+            {% if not prevScore or prevScore.columns[i].value != score.columns[i].value %}
+            {% set mergeWithTopCell = false %}
+            {% endif %}
+            {% if not nextScore or nextScore.columns[i].value != score.columns[i].value %}
+            {% set mergeWithBottomCell = false %}
+            {% endif %}
+            {% endfor %}
+            {% if mergeWithTopCell and mergeWithBottomCell %}
+            {% set cellValue = '' %}
+            {% set classes = "hor-merged-cell #{classes}" %}
+            {% elseif mergeWithTopCell %}
+            {% set cellValue = '' %}
+            {% set classes = "hor-merged-cell-last #{classes}" %}
+            {% elseif mergeWithBottomCell %}
+            {% set classes = "hor-merged-cell-first #{classes}" %}
+            {% endif %}
+            {% endif %}
+            {% if classes %}class="{{ classes }}" | {% endif %}
+            {{ cellValue|raw }}{% if not loop.last %} || {% endif %}
+            {% endfor %}
+
+# Common translations applicable to all games in the database.
+translations:
+  # Translations for companies.
+  - property: company
+    value: ADK
+    value-jp: エーディーケイ
+  - property: company
+    value: Afega
+    value-jp: アフェーガ
+  - property: company
+    value: A.I.
+    value-jp: エーアイ
+  - property: company
+    value: Aicom / Yumekobo
+    value-jp: エイコム / 夢工房
+  - property: company
+    value: Alfa System
+    value-jp: アルファ・システム
+  - property: company
+    value: Yotsubane
+    value-jp: 四ツ羽根
+
+  # Translations for magazines.
+  - property: sources
+    value: Arcadia
+    value-jp: アルカディア
+    fuzzy-match: true
+  - property: sources
+    value: Twitter
+    value-jp: ツイッター
+    fuzzy-match: true
+  - property: sources
+    value: niconico
+    value-jp: ニコニコ
+    fuzzy-match: true
+
+  # Translations for links.
+  - property: links
+    value: JHA Leaderboard
+    value-jp: 日本ハイスコア協会
+    fuzzy-match: true
+
+</nowiki></pre>
+
+== Games ==
+=== 1941 Counter Attack ===
+<pre><nowiki>
+name: "1941 Counter Attack"
+name-jp: "1941 Counter Attack"
+name-kana: "いちきゅうよんいち - かうんたーあたっく"
+company: "Capcom"
+needs-work: true
+
+scores:
+  - score: 14,511,400
+    player: PIA-闘魂HYT
+    mode: 1 Player
+    sources:
+      - name: Gamest
+        date: "1990-09"
+
+  - score: 14,805,800
+    player: キムラルク
+    mode: 1 Player
+    sources:
+      - name: Arcadia
+        date: "2000-12"
+
+  - score: 14,947,800
+    player: K.N
+    mode: 1 Player
+    sources:
+      - name: Arcadia
+        date: "2001-04"
+
+  - score: 15,070,400
+    player: CNT!
+    mode: 1 Player
+    sources:
+      - name: Arcadia
+        date: "2012-09"
+      - name: Niconico
+        date: "2012-06-18"
+        url: http://www.nicovideo.jp/watch/sm18127672
+
+  - score: 16,753,300
+    player: HYT & CNT
+    mode: 2 Player
+    sources:
+      - name: Gamest
+        date: "1990-09"
+
+  - score: 17,518,600
+    player: 超うんこコンビ ミレニアム復活！
+    mode: 2 Player
+    sources:
+      - name: Arcadia
+        date: "2003-04"
+
+  - score: 17,525,000
+    player: 3ヶ月ぶりの再会(2プレイ目)
+    mode: 2 Player
+    sources:
+      - name: Arcadia
+        date: "2003-07"
+
+  - score: 18,418,600
+    player: こいずみ & CNT!
+    mode: 2 Player
+    sources:
+      - name: Arcadia
+        date: "2012-02"
+      - name: Niconico
+        date: "2012-04-01"
+        url: http://www.nicovideo.jp/watch/sm17421548
+
+links:
+  - url: https://shmups.system11.org/viewtopic.php?t=11606
+    title: Shmups Forum Hi-Score Topic
+
+layout:
+    sort:
+        scores:
+            mode: asc
+</nowiki></pre>
+
+=== 1942 ===
+<pre><nowiki>
+name: "1942"
+name-jp: "1942"
+name-kana: いちきゅうよんに
+company: "Capcom"
+needs-work: true
+
+scores:
+  - score: 14,158,180
+    player: Novice
+    sources:
+      - name: "Played date: 2003-10-18"
+      - name: Youtube
+        date: "2012-06-18"
+        url: https://youtu.be/tshRx2ie65E
+    comments:
+      - "played on Mame32 0.56"
+    attributes:
+        is-current-record: true
+
+  - score: 14,171,510
+    player: Berserker
+    sources:
+      - name: Twitter
+        date: "2018-12-16"
+        url: https://twitter.com/Berserkerzoid/status/1074342993719640064
+    comments:
+      - "highest score Capcom Classics"
+
+description: "Note: Micom Basic magazine (August 1985) lists an unverified score of 89,706,000 by ガッツマン."
+
+links:
+  - url: https://shmups.system11.org/viewtopic.php?t=177
+    title: Shmups Forum Hi-Score Topic
+</nowiki></pre>
+
+=== 1943 ===
+<pre><nowiki>
+name: "1943"
+name-jp: "1943"
+name-kana: いちきゅうよんさん
+company: "Capcom"
+needs-work: true
+
+scores:
+  - score: 3,701,310
+    player: SGP-SV-TNK
+    mode: 1 Player
+    sources:
+      - name: Arcadia
+        date: "2002-11"
+
+  - score: 4,402,550
+    player: SGP-SV-TNK
+    mode: 1 Player
+    sources:
+      - name: Arcadia
+        date: "2009-01"
+    comments:
+      - "used Dragonfly bonus"
+
+  - score: 4,115,990
+    player: DBS
+    mode: 1 Player
+    sources:
+      - name: "Played date: 2005-03-30"
+      - name: Twitter
+        date: "2016-02-28"
+        url: https://twitter.com/dbsqawsedrftgyh/status/703966478467399680
+    comments:
+      - "no Dragonfly bonus"
+    attributes:
+        is-current-record: true
+
+  - score: 5,048,820
+    player: SGP-SV-TNK & SGP-UAG
+    mode: 2 Player
+    sources:
+      - name: Arcadia
+        date: "2009-04"
+
+links:
+  - url: https://shmups.system11.org/viewtopic.php?t=177
+    title: Shmups Forum Hi-Score Topic
+
+layout:
+    sort:
+        scores:
+            mode: asc
+</nowiki></pre>
+
+=== 1943 kai ===
+<pre><nowiki>
+name: "1943 kai"
+name-jp: "1943改"
+name-kana: "いちきゅうよんさん・かい"
+company: "Capcom"
+needs-work: true
+
+scores:
+  - score: 5,830,520
+    player: LAOS-長田仙人
+    mode: 1 Player
+    sources:
+      - name: Gamest
+        date: "1994-12"
+    comments:
+      - "Credit x9"
+      - "Mobi x6"
+      - "Daihiryu x16"
+
+  - score: 6,533,910
+    player: ダブル和也
+    mode: 2 Player
+    sources:
+      - name: Gamest
+        date: "1994-11"
+
+links:
+  - url: https://shmups.system11.org/viewtopic.php?t=177
+    title: Shmups Forum Hi-Score Topic
+
+layout:
+    sort:
+        scores:
+            mode: asc
+</nowiki></pre>
+
+=== 1944: The Loop Master ===
+<pre><nowiki>
+name: "1944: The Loop Master"
+name-jp: "1944 ザ・ループマスター"
+name-kana: "いちきゅうよんよん ざ・るーぷますたー"
+company: "Raizing / 8ing"
+needs-work: true
+
+scores:
+  - score: 24,715,920
+    player: LAOS-長田仙人
+    sources:
+      - name: Arcadia
+        date: "2001-01"
+
+  - score: 25,239,240
+    player: フセイン
+    sources:
+      - name: Arcadia
+        date: "2001-02"
+
+  - score: 26,355,790
+    player: LAOS-長田仙人
+    sources:
+      - name: Arcadia
+        date: "2001-03"
+
+  - score: 26,782,720
+    player: LAOS-長田仙人
+    sources:
+      - name: Arcadia
+        date: "2001-04"
+
+  - score: 26,978,080
+    player: LAOS-長田仙人
+    sources:
+      - name: Arcadia
+        date: "2001-05"
+
+  - score: 27,041,540
+    player: LAOS-長田仙人
+    sources:
+      - name: Arcadia
+        date: "2001-06"
+
+  - score: 27,206,880
+    player: 近江からの使者
+    sources:
+      - name: JHA
+        date: "2018-04"
+    comments:
+      - "autofire"
+
+  - score: 27,239,450
+    player: 近江からの使者
+    sources:
+      - name: JHA
+        date: "2018-09"
+    comments:
+      - "autofire"
+
+  - score: 27,262,080
+    player: 近江からの使者
+    sources:
+      - name: JHA
+        date: "2018-10"
+    comments:
+      - "autofire"
+
+  - score: 27,294,600
+    player: 近江からの使者
+    sources:
+      - name: Twitter
+        date: "2018-12-15"
+        url: https://twitter.com/OmiKaranoShisya/status/1073840938789683201
+      - name: JHA
+        date: "2018-12"
+    comments:
+      - "autofire"
+
+links:
+  - url: https://wiki.denfaminicogamer.jp/highscore/2000_037_1944_%E3%82%B6%E3%83%BB%E3%83%AB%E3%83%BC%E3%83%97%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC
+    title: JHA Leaderboard
+  - url: https://shmups.system11.org/viewtopic.php?t=37237
+    title: Shmups Forum Hi-Score Topic
+</nowiki></pre>
+
+=== 19XX: The War Against Destiny ===
+<pre><nowiki>
+name: "19XX: The War Against Destiny"
+name-jp: "19XX: The War Against Destiny"
+name-kana: "ないんてぃーんだぶるえっくす ざ うぉー あげんすと ですてぃにー"
+company: "Capcom"
+needs-work: true
+
+scores:
+  - score: 20,061,400
+    player: RCA-NST
+    ship: Lightning
+    sources:
+      - name: Arcadia
+        date: "2000-11"
+
+  - score: 20,173,700
+    player: 両替士
+    ship: Lightning
+    sources:
+      - name: Arcadia
+        date: "2003-06"
+
+  - score: 20,406,300
+    player: 両替士
+    ship: Lightning
+    sources:
+      - name: Arcadia
+        date: "2003-07"
+
+  - score: 20,631,700
+    player: FCM-K.T
+    ship: Lightning
+    sources:
+      - name: JHA
+        date: "2016-03"
+    comments:
+      - "autofire"
+
+  - score: 19,522,800
+    player: HPW-FCM
+    ship: Mosquito
+    sources:
+      - name: Arcadia
+        date: "2003-12"
+
+  - score: 19,969,600
+    player: ZFC-F°CM
+    ship: Mosquito
+    sources:
+      - name: Arcadia
+        date: "2015-03"
+
+  - score: 20,095,600
+    player: ZFC-F°CM
+    ship: Mosquito
+    sources:
+      - name: Twitter
+        date: "2017-10-07"
+        url: https://twitter.com/fcm_roomchief/status/916616113055719424
+      - name: JHA
+        date: "2017-10"
+    comments:
+      - "autofire"
+
+  - score: 20,358,300
+    player: HPN-恋愛リボンtyu・ten・on
+    ship: Shinden
+    sources:
+      - name: Arcadia
+        date: "2003-07"
+
+  - score: 20,464,200
+    player: HPW-T.N
+    ship: Shinden
+    sources:
+      - name: Arcadia
+        date: "2003-09"
+
+  - score: 20,522,800
+    player: HPW-T.N
+    ship: Shinden
+    sources:
+      - name: Arcadia
+        date: "2004-01"
+
+  - score: 20,564,200
+    player: FCM-K.T
+    ship: Shinden
+    sources:
+      - name: JHA
+        date: "2016-03"
+    comments:
+      - "autofire"
+
+links:
+  - url: https://wiki.denfaminicogamer.jp/highscore/1996_005_19XX
+    title: JHA Leaderboard
+  - url: https://shmups.system11.org/viewtopic.php?t=62431
+    title: Shmups Forum Hi-Score Topic
+
+translations:
+  - property: ship
+    value: Lightning
+    value-jp: ライトニング
+  - property: ship
+    value: Mosquito
+    value-jp: モスキート
+  - property: ship
+    value: Shinden
+    value-jp: 震電
+</nowiki></pre>
+
+
+=== Sonic Wings ===
+<pre><nowiki>
+name: "Sonic Wings"
+name-jp:
+name-kana:
+company: "Video System"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Sonic Wings}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="6" | [[Sonic Wings]] (Video System)
+            |-
+            ! Ship / Character !! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | AJ-37 / Kohful || {{v|a1|1,785,000}} || KDK-Takeyuki || JHA August 2016 || ||
+            |-
+            | AV-8 / Villiam || {{v|b1|1,715,900}} || D.I || JHA January 2020 || missed steel towers x2 ||
+            |-
+            | F-14 / Keith || {{v|c1|1,770,200}} || AXIOM-ZZZ || JHA September 2020 || autofire ||
+            |-
+            | F-15 / Mao || {{v|d1|1,589,700}} || みっしー || JHA April 2017 || ||
+            |-
+            | F-18 / Keaton || {{v|e1|1,706,400}} || D.I || JHA July 2017 || rocket x2 ||
+            |-
+            | FSX / Hien || {{v|f1|1,642,700}} || D.I || JHA May 2017 || rocket x2, missed steel towers x2 ||
+            |-
+            | IDS / Lord River || {{v|g1|1,763,100}} || D.I || JHA September 2017 || rocket x2 ||
+            |-
+            | JAS-39 / Tee-Bee || {{v|h1|1,807,500}} || D.I || JHA February 2020 || ||
+            |}
+            
+            * [https://wiki.denfaminicogamer.jp/highscore/1992_005_%E3%82%BD%E3%83%8B%E3%83%83%E3%82%AF%E3%82%A6%E3%82%A3%E3%83%B3%E3%82%B0%E3%82%B9 JHA Leaderboard]
+            * [https://shmups.system11.org/viewtopic.php?t=31802 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Sonic Wings 2 ===
+<pre><nowiki>
+name: "Sonic Wings 2"
+name-jp:
+name-kana:
+company: "Video System"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Sonic Wings 2}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="6" | [[Sonic Wings 2]] (Video System)
+            |-
+            ! Ship / Character !! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | A-10 / Silver || {{v|a1|3,161,300}} || HKR || Gamest August 1995 (Micom Basic August 1995) || final bosses: Lar, Mambo ||
+            |-
+            | AV-8 / Bobby || {{v|b1|2,973,500}} || D.I || Arcadia May 2009 || final bosses: Tenuki, Lar ||
+            |-
+            | F-117 / Keaton || {{v|c1|2,994,400}} || D.I || Arcadia April 2009 || final bosses: Lar, Tenuki ||
+            |-
+            | F-14 / Cindy&Ellen || {{v|d1|2,994,100}} || D.I || Arcadia July 2009 || final bosses: Lar x2 ||
+            |-
+            | rowspan="2" | F-15 / Mao Mao
+            | {{v|e1|3,339,600}} || Project A-Ko || August 20th, 2015 / [https://shmups.system11.org/viewtopic.php?p=1125856#p1125856 Shmups Forum] ||  final bosses: Lar, Mambo; played on Shmupmame 4.2 || [https://youtu.be/VEtRBybEL48 Youtube]
+            |-
+            | {{v|f1|2,922,200}} || D.I || Arcadia June 2009 || final bosses: Lar, Tenuki ||
+            |-
+            | FSX / Hien || {{v|g1|2,939,600}} || D.I || Arcadia June 2009 || ||
+            |-
+            | YF-23 / Spanky || {{v|h1|2,968,000}} || D.I || Arcadia July 2009 || final bosses: Lar, Tenuki ||
+            |-
+            | Rafale / Angela || {{v|i1|3,185,900}} || HKR || Gamest November 1995 (Micom Basic November 1995) || final bosses: Lar, Mambo ||
+            |}
+            
+            * [https://shmups.system11.org/viewtopic.php?t=33163 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Sonic Wings 3 ===
+<pre><nowiki>
+name: "Sonic Wings 3"
+name-jp:
+name-kana:
+company: "Video System"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Sonic Wings 3}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="6" | [[Sonic Wings 3]] (Video System)
+            |-
+            ! Character !! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | Alex || {{v|a1|3,653,700}} || ☆CAT'S-WXW || Gamest September 1996 || ||
+            |-
+            | The Blazers || {{v|b1|3,693,900}} || ☆CAT'S-WXW || Gamest September 1996 || ||
+            |-
+            | Chaika&Pooshika || {{v|c1|3,496,000}} || ☆CAT'S-WXW || Gamest September 1996 || ||
+            |-
+            | Ellen&Cincia || {{v|d1|3,480,500}} || みここ旧ver || Arcadia July 2010 || ||
+            |-
+            | Hien || {{v|e1|3,952,200}} || みここ旧ver || Arcadia July 2009 || ||
+            |-
+            | Keaton || {{v|f1|3,984,500}} || みここ旧ver || Arcadia September 2009 || ||
+            |-
+            | Kowful&River || {{v|g1|3,517,500}} || みここ旧ver || Arcadia October 2010 || ||
+            |-
+            | Malcolm || {{v|h1|4,058,300}} || みここ旧ver || Arcadia May 2010 || ||
+            |-
+            | Mao Mao || {{v|i1|5,574,800}} || みここ旧ver || Arcadia August 2009 || ||
+            |-
+            | Whity || {{v|j1|3,576,800}} || ☆CAT'S-WXW || Gamest June 1998 || ||
+            |}
+            
+            * [https://shmups.system11.org/viewtopic.php?t=33163 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Sonic Wings Limited ===
+<pre><nowiki>
+name: "Sonic Wings Limited"
+name-jp:
+name-kana:
+company: "Video System"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Sonic Wings Limited}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="6" | [[Sonic Wings Limited]] (Video System)
+            |-
+            ! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | {{v|a1|3,706,800}} || GGE-VXV || Arcadia December 2002 || used Mao Mao, 2p side, 0L remaining ||
+            |}
+            
+            * [https://shmups.system11.org/viewtopic.php?t=55924 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Soukyugurentai ===
+<pre><nowiki>
+name: "Soukyugurentai"
+name-jp:
+name-kana:
+company: "Raizing / 8ing"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Soukyugurentai}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="6" | [[Soukyugurentai]] (Raizing / 8ing)
+            |-
+            ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | Houga || {{v|a1|45,623,061}} || hamami || August 29th, 2016 (JHA September 2016) / [https://twitter.com/hamami999/status/770266022066565120 Twitter] || max bomb x21 ||
+            |-
+            | Shiden || {{v|b1|42,446,213}} || 中野龍三 || Arcadia May 2006 || max bomb x23 ||
+            |-
+            | Toryu || {{v|c1|43,407,875}} || KTL-NAL || July 18th, 2016 (JHA July 2016) / [https://twitter.com/Homestay_Akira/status/755044554244366337 Twitter] || max bomb x25 ||
+            |}
+            
+            * [https://wiki.denfaminicogamer.jp/highscore/1996_007_%E8%92%BC%E7%A9%B9%E7%B4%85%E8%93%AE%E9%9A%8A JHA Leaderboard]
+            * [https://shmups.system11.org/viewtopic.php?p=1207408 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Space Bomber ===
+<pre><nowiki>
+name: "Space Bomber"
+name-jp:
+name-kana:
+company: "Psikyo"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Space Bomber}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="6" | [[Space Bomber]] (Psikyo)
+            |-
+            ! Version !! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | A || {{v|a1|10,740,300}} || 山本 || Arcadia December 2003 || ||
+            |-
+            | rowspan="2" | B
+            | {{v|b1|12,252,000}} || CYR-あきにゃ || February 26th, 2017 / [https://twitter.com/mendokusee1/status/835806771008548866 Twitter] || ||
+            |-
+            | {{v|c1|11,857,900}} || 山本 || Arcadia July 2005 || ||
+            |}
+            
+            * [https://shmups.system11.org/viewtopic.php?t=55934 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Space Invaders Anniversary ===
+<pre><nowiki>
+name: "Space Invaders Anniversary"
+name-jp:
+name-kana:
+company: "Taito"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Space Invaders Anniversary}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="7" | [[Space Invaders Anniversary]] (Taito)
+            |-
+            ! colspan="2" | Mode
+            ! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | rowspan="2" | Space Invaders 3D
+            | Basic Version || {{v|a1|53,820}} || SG-ELF || Arcadia July 2004 || ||
+            |-
+            | Extra Version || {{v|b1|22,090}} || SG-ELF || Arcadia July 2004 || ||
+            |}
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== SRD: Super Real Darwin ===
+<pre><nowiki>
+name: "SRD: Super Real Darwin"
+name-jp:
+name-kana:
+company: "Data East"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|SRD: Super Real Darwin}}
+            {| class="wikitable" style="background: #B9D9B9; text-align: center"
+            |-
+            ! colspan="6" | [[SRD: Super Real Darwin]] (Data East)
+            |-
+            ! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | rowspan="3" | 10,000,000+α
+            | NOVEMBER KELLY || rowspan="3" | Micom Basic February 1988
+            | stage 17-1 ||
+            |-
+            | CBK-(わ) || stage 16-2 ||
+            |-
+            | INFINITE-FLY || stage 17-5 ||
+            |}
+            
+            Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Stagger 1 ===
+<pre><nowiki>
+name: "Stagger 1"
+name-jp:
+name-kana:
+company: "Afega"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Stagger 1}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="6" | [[Stagger 1]] (Afega)
+            |-
+            ! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | {{v|a1|9,007,800}} || ほむＢ || Arcadia January 2013 || 1L remaining, Oliver, autofire ||
+            |}
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Star Force ===
+<pre><nowiki>
+name: "Star Force"
+name-jp:
+name-kana:
+company: "Tehkan"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Star Force}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="6" | [[Star Force]] (Tehkan)
+            |-
+            ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | OFF || {{v|a1|90,000,900}} || SGP-SV-TNK || December 27th, 2009 / [https://sites.google.com/site/starforcemegaforce Blog] || playtime ~17h ||
+            |-
+            | ON || 99,999,900 || MadGiwa || April 7th, 2019 || streamed live on Twitch, highest score Arcade Archives (PS4) || [https://www.twitch.tv/videos/407526188 Twitch 1] [https://www.twitch.tv/videos/407526345 2]
+            |}
+            
+            * [https://shmups.system11.org/viewtopic.php?t=64492 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Storm Blade ===
+<pre><nowiki>
+name: "Storm Blade"
+name-jp:
+name-kana:
+company: "Visco"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Storm Blade}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="5" | [[Storm Blade]] (Visco)
+            |-
+            ! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | {{v|a1|7,045,500}} || 戦国人 || Arcadia May 2007 || ||
+            |}
+            
+            * [https://shmups.system11.org/viewtopic.php?t=12039 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Strania: The Stella Machina ===
+<pre><nowiki>
+name: "Strania: The Stella Machina"
+name-jp:
+name-kana:
+company: "G.Rev"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Strania: The Stella Machina}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="7" | [[Strania: The Stella Machina]] (G.Rev)
+            |-
+            ! Ship !! Mode !! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | rowspan="6" | Strania
+            | rowspan="2" | Normal
+            | 15,944,630 || rowspan="2" | LevelFix
+            | Arcadia January 2013 ||highest score Arcade || 
+            |-
+            | 15,950,590 || 2012 / XBL ranking || highest score Xbox 360 || [http://www.nicovideo.jp/watch/sm18982006 Niconico]
+            |-
+            | rowspan="2" | Hard
+            | 16,762,910 || rowspan="2" | LevelFix
+            | Arcadia March 2013 || highest score Arcade ||
+            |-
+            | 16,841,510 || 2016 / XBL ranking || highest score Xbox 360 || [http://www.nicovideo.jp/watch/sm28383797 Niconico]
+            |-
+            | rowspan="2" | Expert
+            | 16,750,600 || rowspan="2" | LevelFix
+            | 2017 / superplay DVD|| ||
+            |-
+            | 16,636,410 || Arcadia March 2013 || ||
+            |-
+            | rowspan="5" | Vower
+            | rowspan="2" | Normal
+            | 17,320,780 || りぶ || Arcadia June 2013 || highest score Arcade ||
+            |-
+            | 17,324,850 || LevelFix || XBL ranking || highest score Xbox 360 ||
+            |-
+            | rowspan="2" | Hard
+            | 18,551,720 || rowspan="2" | LevelFix
+            | Arcadia June 2012 || highest score Arcade ||
+            |-
+            | 18,759,480 || June 14th, 2012 / XBL ranking [https://twitter.com/level_fix/status/213196264693710848 Twitter] || highest score Xbox 360 ||
+            |-
+            | Expert || 18,809,670 || LevelFix || July 6th, 2012 (Arcadia October 2012) / [https://twitter.com/level_fix/status/221191641619369985 Twitter] || ||
+            |}
+            
+            * [https://wiki.denfaminicogamer.jp/highscore/2011_014_%E6%98%9F%E9%9C%9C%E9%8B%BC%E6%A9%9F%E3%82%B9%E3%83%88%E3%83%A9%E3%83%8B%E3%82%A2_Ver.1.11 JHA Leaderboard]
+            * [https://shmups.system11.org/viewtopic.php?t=36135 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Strikers 1945 ===
+<pre><nowiki>
+name: "Strikers 1945"
+name-jp:
+name-kana:
+company: "Psikyo"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Strikers 1945}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="6" | [[Strikers 1945]] (Psikyo)
+            |-
+            ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | Bf-109 || {{v|a1|2,355,000}} || PPR-KTL-IZK || March 3rd, 2016 (JHA March 2016) / [https://twitter.com/DeepBlueNoiz/status/705305593460822017 Twitter] || ||
+            |-
+            | P-38 Lightning || {{v|b1|2,350,400}} || 戦国人 || Arcadia February 2007 || 1.98m after 2-5 ||
+            |-
+            | P-51 Mustang || {{v|c1|2,318,300}} || KTL-EL2 || Arcadia March 2003 || ||
+            |-
+            | Shinden || {{v|d1|2,324,400}} || KTL-EL2 || Arcadia May 1999 || ||
+            |-
+            | rowspan="2" | Spitfire
+            | {{v|e1|2,326,700}} || WC. || August 7th, 2010 / [http://ranking.niyaozao.com/#/rank/9?_k=87i0xi Chinese Leaderboard] || 1st loop 1.18m ||
+            |-
+            | {{v|f1|2,275,100}} || hamami || February 20th, 2016 (JHA March 2016) / [https://twitter.com/hamami999/status/701041368135630848 Twitter] || ||
+            |-
+            | Zero || {{v|g1|2,301,900}} || J.G.K-ALL (副) || Arcadia January 2007 || ||
+            |}
+            
+            * [https://wiki.denfaminicogamer.jp/highscore/1995_009_%E3%82%B9%E3%83%88%E3%83%A9%E3%82%A4%E3%82%AB%E3%83%BC%E3%82%BA1945 JHA Leaderboard]
+            * [https://shmups.system11.org/viewtopic.php?t=51578 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Strikers 1945 II ===
+<pre><nowiki>
+name: "Strikers 1945 II"
+name-jp:
+name-kana:
+company: "Psikyo"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Strikers 1945 II}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="6" | [[Strikers 1945 II]] (Psikyo)
+            |-
+            ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | Flying Pancake || {{v|a1|3,500,700}} || Y.Saito || November 12th, 2017 (JHA November 2017) / [https://twitter.com/Y_Saito_DX/status/929677455152918528 Twitter] || ||
+            |-
+            | Fockewulf || {{v|b1|3,412,000}} || M.T || Arcadia June 2012 || ||
+            |-
+            | rowspan="2" | Hayate
+            | {{v|c1|3,467,900}} || H.J (PASTA) || June 26th, 2020 / [https://twitter.com/AkatronicsRetro/status/1276504677727657984 Twitter] [http://cafe.daum.net/shooting/810/19190 OCC Official Cafe] || ||
+            |-
+            | {{v|d1|3,434,400}} || M.T || JHA April 2020 || ||
+            |-
+            | Lightning || {{v|e1|3,401,300}} || Y.Saito || Arcadia April 2013 || ||
+            |-
+            | rowspan="2" | Mosquito
+            | {{v|f1|3,482,100}} || DBS || September 7th, 2019 / [https://twitter.com/dbsqawsedrftgyh/status/1170381061684989952 Twitter] || ||
+            |-
+            | {{v|g1|3,339,300}} || alcoholic || December 20th, 2018 (JHA January 2019) / [https://twitter.com/kin_alcoholic/status/1075745519895339008 Twitter] || 1st loop 1.62m, used 4 bombs ||
+            |-
+            | Shinden || {{v|h1|3,304,100}} || M.T || Arcadia November 2007 || 1st loop 1.593m ||
+            |}
+            
+            * [https://wiki.denfaminicogamer.jp/highscore/1997_008_%E3%82%B9%E3%83%88%E3%83%A9%E3%82%A4%E3%82%AB%E3%83%BC%E3%82%BA1945II JHA Leaderboard]
+            * [https://shmups.system11.org/viewtopic.php?t=182 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Strikers 1945 Plus ===
+<pre><nowiki>
+name: "Strikers 1945 Plus"
+name-jp:
+name-kana:
+company: "Psikyo"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Strikers 1945 Plus}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="5" | [[Strikers 1945 Plus]] (Psikyo)
+            |-
+            ! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | {{v|a1|2,837,500}} || WC. || August 10th, 2019 / [https://twitter.com/ps_x91/status/1160509020081278977 Twitter] [http://ranking.niyaozao.com/#/rank/12?_k=gm3a43 Chinese Leaderboard] || Flying Pancake ||
+            |-
+            | {{v|b1|2,778,600}} || 前田愛 || Arcadia October 2001 || ||
+            |}
+            
+            * [https://wiki.denfaminicogamer.jp/highscore/1999_036_%E3%82%B9%E3%83%88%E3%83%A9%E3%82%A4%E3%82%AB%E3%83%BC%E3%82%BA1945_%E3%83%97%E3%83%A9%E3%82%B9 JHA Leaderboard]
+            * [https://shmups.system11.org/viewtopic.php?t=11995 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Strikers 1999 ===
+<pre><nowiki>
+name: "Strikers 1999"
+name-jp:
+name-kana:
+company: "Psikyo"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Strikers 1999}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="6" | [[Strikers 1999]] (Psikyo)
+            |-
+            ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | AV-8 Harrier || 3,359,000 || KDK-Takeyuki || Arcadia April 2003 || Double x1 ||
+            |-
+            | F-117 Stealth || 3,398,000 || 近くて遠い340万 || Arcadia October 2002 || ||
+            |-
+            | rowspan="3" | F-22 Raptor
+            | 3,511,200 || DBS || December 7th, 2016 / [https://twitter.com/dbsqawsedrftgyh/status/806545233303334913 Twitter] || ||
+            |-
+            | 3,463,000 || Y.C || August 26th, 2010 / [http://cafe.daum.net/shooting/810/17405 OCC Official Cafe] || ||
+            |-
+            | 3,394,300 || 両替士 || Arcadia May 2010 || ||
+            |-
+            | F-4 Phantom II || 3,432,200 || CYS-SAK || October 30th, 2016 (JHA November 2016) / [https://twitter.com/1ka2no394285ki/status/792748345756221440 Twitter] || ||
+            |-
+            | F/A-18 Super Hornet || 3,372,700 || ZCM-FCM || Arcadia August 2002 || ||
+            |-
+            | rowspan="3" | X-36
+            | 3,601,800 || CYS-SAK || February 17th, 2018 / [https://twitter.com/1ka2no394285ki/status/964894291767144449 Twitter] || played at home ||
+            |-
+            | 3,589,300 || H.J (PASTA) || January 15th, 2020 / [https://imgur.com/PkZxIbm Image] || ||
+            |-
+            | 3,578,200 || CYS-SAK || October 8th, 2017 (JHA October 2017) / [https://twitter.com/1ka2no394285ki/status/917052533238935552 Twitter] || ||
+            |}
+            
+            * [https://wiki.denfaminicogamer.jp/highscore/1999_016_%E3%82%B9%E3%83%88%E3%83%A9%E3%82%A4%E3%82%AB%E3%83%BC%E3%82%BA1999 JHA Leaderboard]
+            * [https://shmups.system11.org/viewtopic.php?t=56620 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Super Xevious ===
+<pre><nowiki>
+name: "Super Xevious"
+name-jp:
+name-kana:
+company: "Namco"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Super Xevious}}
+            {| class="wikitable" style="background: #DFDFDF; text-align: center"
+            |-
+            ! colspan="5" | [[Super Xevious]] (Namco)
+            |-
+            ! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | rowspan="2" | 9,999,990
+            | AYK・FDL || rowspan="2" | Micom Basic August 1984
+            | ||
+            |-
+            | パオ || ||
+            |}
+            
+            Note: Scoreboard closed after the achievement of the counterstop at 9,999,990.
+            
+            * [https://shmups.system11.org/viewtopic.php?t=39729 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Syvalion ===
+<pre><nowiki>
+name: "Syvalion"
+name-jp:
+name-kana:
+company: "Taito"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Syvalion}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="6" | [[Syvalion]] (Taito)
+            |-
+            ! Mode !! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | Basic || {{v|a1|14,194,420}} || SSC-VAP || Arcadia November 2006 || ||
+            |-
+            | Real Combat || {{v|b1|24,433,640}} || G.M.C.INI || Gamest August 1991 || ||
+            |}
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Task Force Harrier ===
+<pre><nowiki>
+name: "Task Force Harrier"
+name-jp:
+name-kana:
+company: "NMK"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Task Force Harrier}}
+            {| class="wikitable" style="background: #B9D9B9; text-align: center"
+            |-
+            ! colspan="5" | [[Task Force Harrier]] (NMK)
+            |-
+            ! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | rowspan="20" | 10,000,000+α
+            | TYRANT-ひむ || rowspan="20" | Micom Basic January 1990
+            | stage 4-1 ||
+            |-
+            | MIRAGE-MAX (ちょーやり組) || stage 3-2 ||
+            |-
+            | FGD-Sir || stage 3-4 ||
+            |-
+            | EXCEL-RVS-NBG! || stage 3-1 ||
+            |-
+            | EXGANDER || stage 3-5 ||
+            |-
+            | (R)-NBG || stage 3-1 ||
+            |-
+            | VAG-KIA || stage 3-1 ||
+            |-
+            | WOP || stage 3-1 ||
+            |-
+            | 長瀬の使者(松井だますな!) || stage 3-1 ||
+            |-
+            | TRM-LYN(に) || stage 3-1 ||
+            |-
+            | DIVINE || stage 3-1 ||
+            |-
+            | KAIN || stage 3-3 ||
+            |-
+            | さるかっぱOKP || stage 3-2 ||
+            |-
+            | G.M.C.EST || stage 3-2 ||
+            |-
+            | Lum || stage 3-4 ||
+            |-
+            | INDICK-たか || stage 4-2 ||
+            |-
+            | P.O MIU(セ) || ||
+            |-
+            | SURPASSER TSU || stage 4-1 ||
+            |-
+            | からあげ弁当くん || loop 3 ||
+            |-
+            | SUR-Y.T || loop 3 ||
+            |}
+            
+            Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
+            
+            * [https://shmups.system11.org/viewtopic.php?t=39000 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Tatakae! Big Fighter ===
+<pre><nowiki>
+name: "Tatakae! Big Fighter"
+name-jp:
+name-kana:
+company: "Nichibutsu"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Tatakae! Big Fighter}}
+            {| class="wikitable" style="background: #B9D9B9; text-align: center"
+            |-
+            ! colspan="5" | [[Tatakae! Big Fighter]] (Nichibutsu)
+            |-
+            ! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | {{v|a1|9,057,900}} || ビッグファイト倶楽部 || Arcadia October 2012 || ||
+            |}
+            
+            Note: Japanese scoreboard closed due to the detection of an infinite pattern.
+            
+            * [https://wiki.denfaminicogamer.jp/highscore/1989_001_%E6%88%A6%E3%81%88%EF%BC%81%E3%83%93%E3%83%83%E3%82%B0%E3%83%95%E3%82%A1%E3%82%A4%E3%82%BF%E3%83%BC JHA Leaderboard]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Tatsujin / Truxton ===
+<pre><nowiki>
+name: "Tatsujin / Truxton"
+name-jp:
+name-kana:
+company: "Toaplan"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Tatsujin / Truxton}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="5" | [[Tatsujin]] / Truxton (Toaplan)
+            |-
+            ! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | style="background: #B9D9B9;" rowspan="11" | 10,000,000+α
+            | style="background: #B9D9B9;" | SPREAM-I.Z || style="background: #B9D9B9;" rowspan="11" | Gamest January 1989
+            | style="background: #B9D9B9;" | stage 8-1 || style="background: #B9D9B9;" |
+            |-
+            | style="background: #B9D9B9;" | G.M.C.-M.Aその他2名 || style="background: #B9D9B9;" | stage 7-5 || style="background: #B9D9B9;" |
+            |-
+            | style="background: #B9D9B9;" | G.M.C.-ひむ || style="background: #B9D9B9;" | stage 7-5 || style="background: #B9D9B9;" |
+            |-
+            | style="background: #B9D9B9;" | JAG–HRO–AFC-WOP || style="background: #B9D9B9;" | stage 7-5 || style="background: #B9D9B9;" |
+            |-
+            | style="background: #B9D9B9;" | URX-緑の少年 || style="background: #B9D9B9;" | stage 8-1 || style="background: #B9D9B9;" |
+            |-
+            | style="background: #B9D9B9;" | ペットン || style="background: #B9D9B9;" | stage 8-5 || style="background: #B9D9B9;" |
+            |-
+            | style="background: #B9D9B9;" | TEAM 大道芸 (仮) R-I || style="background: #B9D9B9;" | stage 8-5 || style="background: #B9D9B9;" |
+            |-
+            | style="background: #B9D9B9;" | Sniper-MIU || style="background: #B9D9B9;" | stage 7-5 || style="background: #B9D9B9;" |
+            |-
+            | style="background: #B9D9B9;" | G.M.C.-N.K || style="background: #B9D9B9;" | stage 8-1 || style="background: #B9D9B9;" |
+            |-
+            | style="background: #B9D9B9;" | G.M.C.-CROSS || style="background: #B9D9B9;" | stage 7-5 || style="background: #B9D9B9;" |
+            |-
+            | style="background: #B9D9B9;" | G.M.C.-H.S.A || style="background: #B9D9B9;" | stage 7-4 || style="background: #B9D9B9;" |
+            |-
+            | {{v|a1|51,833,690}} || DBS || December 27th, 2009 (Arcadia December 2009) / [https://twitter.com/dbsqawsedrftgyh/status/703975143249305602 Twitter] || stage 32-5, autofire ||
+            |}
+            
+            Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
+            
+            * [https://shmups.system11.org/viewtopic.php?t=53008 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Tatsujin Ou / Truxton II ===
+<pre><nowiki>
+name: "Tatsujin Ou / Truxton II"
+name-jp: "達人王"
+name-kana: "たつじんおう"
+company: "Toaplan"
+counterstop:
+    score: "10,000,000+α"
+    type: soft
+needs-work: true
+
+scores:
+  - score: "10,000,000+α"
+    player: "SPK(お)"
+    sources:
+      - name: Gamest
+        date: "1999-03"
+    comments:
+      - "stage 8-2"
+
+description: "Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000."
+
+links:
+  - url: https://shmups.system11.org/viewtopic.php?t=34858
+    title: Shmups Forum Hi-Score Topic
+</nowiki></pre>
+
+=== Tenkomori Shooting ===
+<pre><nowiki>
+name: "Tenkomori Shooting"
+name-jp:
+name-kana:
+company: "Namco"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Tenkomori Shooting}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="6" | [[Tenkomori Shooting]] (Namco)
+            |-
+            ! Mode !! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | Easy || {{v|a1|985,120}} || ずば || Arcadia December 2010 || ||
+            |-
+            | Medium || {{v|b1|1,989,720}} || HND-ヅバ番 || Arcadia February 2000 || ||
+            |-
+            | Hard || {{v|c1|3,110,990}} || C-PLAY-岩ピン || Gamest June 1999 || ||
+            |}
+            
+            * [https://wiki.denfaminicogamer.jp/highscore/1998_014_%E3%81%A6%E3%82%93%E3%81%93%E3%82%82%E3%82%8A%E3%82%B7%E3%83%A5%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0 JHA Leaderboard]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Tenseiryu / Saint Dragon ===
+<pre><nowiki>
+name: "Tenseiryu / Saint Dragon"
+name-jp:
+name-kana:
+company: "NMK"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Tenseiryu / Saint Dragon}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="6" | [[Tenseiryu]] / Saint Dragon (NMK)
+            |-
+            ! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | {{v|a1|25,727,700}} || TZW-ART? || JHA July 2020 / [https://twitter.com/TZW_guile/status/1295030987441582080 Twitter] || No miss, autofire ||
+            |}
+            
+            Note: Gamest magazine (September 1989) lists a score of 25,764,100 by FACILITY-ARIS. This score was deemed impossible in JHA issue July 2020 and subsequently removed from the database. [https://twitter.com/JHA_information/status/1294983587700174849 Read the official statement here].
+            
+            * [https://shmups.system11.org/viewtopic.php?t=15717 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Terra Cresta ===
+<pre><nowiki>
+name: "Terra Cresta"
+name-jp:
+name-kana:
+company: "Nichibutsu"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Terra Cresta}}
+            {| class="wikitable" style="background: #B9D9B9; text-align: center"
+            |-
+            ! colspan="5" | [[Terra Cresta]] (Nichibutsu)
+            |-
+            ! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | rowspan="5" | 10,000,000+α
+            | EXCALIBUR || rowspan="5" | Micom Basic January 1986
+            | playtime 9h 5m ||
+            |-
+            | FUN || playtime 9h 40m ||
+            |-
+            |両替町BROS || playtime 9h 40m ||
+            |-
+            | LMT.RGB || score 10,016,100 ||
+            |-
+            | CPM闘幻狂NIN || playtime 9h 25m ||
+            |}
+            
+            Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
+            
+            * [https://shmups.system11.org/viewtopic.php?t=28531 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Terra Force ===
+<pre><nowiki>
+name: "Terra Force"
+name-jp:
+name-kana:
+company: "Nichibutsu"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Terra Force}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="5" | [[Terra Force]] (Nichibutsu)
+            |-
+            ! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | {{v|a1|2,585,300}} || SKY || Arcadia July 2003 || ||
+            |}
+            
+            * [https://shmups.system11.org/viewtopic.php?t=9817 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== The Great Ragtime Show / Boogie Wings ===
+<pre><nowiki>
+name: "The Great Ragtime Show / Boogie Wings"
+name-jp:
+name-kana:
+company: "Data East"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|The Great Ragtime Show / Boogie Wings}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="6" | [[The Great Ragtime Show]] / Boogie Wings (Data East)
+            |-
+            ! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | {{v|a1|4,354,850}} || ザ・YMN || Gamest August 1998 (Micom Basic September 1998) || 2L remaining, autofire ||
+            |}
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Thunder Blaster / Lethal Thunder ===
+<pre><nowiki>
+name: "Thunder Blaster / Lethal Thunder"
+name-jp:
+name-kana:
+company: "Irem"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Thunder Blaster / Lethal Thunder}}
+            {| class="wikitable" style="background: #DFDFDF; text-align: center"
+            |-
+            ! colspan="6" | [[Thunder Blaster]] / Lethal Thunder (Irem)
+            |-
+            ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | OFF || {{v|a1|9,999,990}} || DGRS ネッシー君 || Gamest May 1992 || ||
+            |-
+            | ON || {{v|b1|9,999,990}} || HID-CYR || Gamest March 1992 || ||
+            |}
+            
+            Note: Scoreboard closed after the achievement of the counterstop at 9,999,990.
+            
+            * [https://shmups.system11.org/viewtopic.php?t=59562 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Thunder Cross ===
+<pre><nowiki>
+name: "Thunder Cross"
+name-jp:
+name-kana:
+company: "Konami"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Thunder Cross}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="5" | [[Thunder Cross]] (Konami)
+            |-
+            ! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            |  style="background: #B9D9B9;" rowspan="29" | 10,000,000+α
+            | style="background: #B9D9B9;" | EXCEED || style="background: #B9D9B9;" rowspan="29" | Gamest January 1989
+            | style="background: #B9D9B9;" | stage 9-5 || style="background: #B9D9B9;" |
+            |-
+            | style="background: #B9D9B9;" | WHIM-M.A || style="background: #B9D9B9;" | || style="background: #B9D9B9;" |
+            |-
+            | style="background: #B9D9B9;" | E-SWAT'S FIRE BURST C || style="background: #B9D9B9;" | stage 9-5 || style="background: #B9D9B9;" |
+            |-
+            | style="background: #B9D9B9;" | E.C || style="background: #B9D9B9;" | stage 7-7 || style="background: #B9D9B9;" |
+            |-
+            | style="background: #B9D9B9;" | SPREAM-SAKI || style="background: #B9D9B9;" | stage 9-7, 24L remaining || style="background: #B9D9B9;" |
+            |-
+            | style="background: #B9D9B9;" | R.S しょうちゃん || style="background: #B9D9B9;" | stage 9-7 || style="background: #B9D9B9;" |
+            |-
+            | style="background: #B9D9B9;" | FIN || style="background: #B9D9B9;" | stage 11-1 || style="background: #B9D9B9;" |
+            |-
+            | style="background: #B9D9B9;" | H.S || style="background: #B9D9B9;" | stage 9-1 || style="background: #B9D9B9;" |
+            |-
+            | style="background: #B9D9B9;" | OGS || style="background: #B9D9B9;" | || style="background: #B9D9B9;" |
+            |-
+            | style="background: #B9D9B9;" | ILG-K·M || style="background: #B9D9B9;" | stage 8-5, 27L remaining || style="background: #B9D9B9;" |
+            |-
+            | style="background: #B9D9B9;" | URX-TEC || style="background: #B9D9B9;" | stage 8-6, 39L remaining || style="background: #B9D9B9;" |
+            |-
+            | style="background: #B9D9B9;" | PAC || style="background: #B9D9B9;" | stage 8-6, 31L remaining || style="background: #B9D9B9;" |
+            |-
+            | style="background: #B9D9B9;" | URX-緑の少年 || style="background: #B9D9B9;" | stage 8-6, 22L remaining || style="background: #B9D9B9;" |
+            |-
+            | style="background: #B9D9B9;" | ZKS || style="background: #B9D9B9;" | stage 8-7 || style="background: #B9D9B9;" |
+            |-
+            | style="background: #B9D9B9;" | YUJ || style="background: #B9D9B9;" | stage 9-1 || style="background: #B9D9B9;" |
+            |-
+            | style="background: #B9D9B9;" | MAD(た) || style="background: #B9D9B9;" | stage 8-6 || style="background: #B9D9B9;" |
+            |-
+            | style="background: #B9D9B9;" | TURKEY || style="background: #B9D9B9;" | stage 8-3 || style="background: #B9D9B9;" |
+            |-
+            | style="background: #B9D9B9;" | INGS-T·H || style="background: #B9D9B9;" | stage 8-7 || style="background: #B9D9B9;" |
+            |-
+            | style="background: #B9D9B9;" | FREEDOM-南野狂 Y.T || style="background: #B9D9B9;" | stage 9-1 || style="background: #B9D9B9;" |
+            |-
+            | style="background: #B9D9B9;" | HCS KAW || style="background: #B9D9B9;" | stage 8-5 || style="background: #B9D9B9;" |
+            |-
+            | style="background: #B9D9B9;" | HCS ALES || style="background: #B9D9B9;" | stage 8-7, 23L remaining || style="background: #B9D9B9;" |
+            |-
+            | style="background: #B9D9B9;" | G.M.C. HSA || style="background: #B9D9B9;" | stage 8-7 || style="background: #B9D9B9;" |
+            |-
+            | style="background: #B9D9B9;" | GMC.乱鳥.MU || style="background: #B9D9B9;" | stage 8-6 || style="background: #B9D9B9;" |
+            |-
+            | style="background: #B9D9B9;" | BUI. || style="background: #B9D9B9;" | stage 9-6 || style="background: #B9D9B9;" |
+            |-
+            | style="background: #B9D9B9;" | SNIPER MIU || style="background: #B9D9B9;" | stage 9-3 || style="background: #B9D9B9;" |
+            |-
+            | style="background: #B9D9B9;" | SNIPER NOM || style="background: #B9D9B9;" | stage 8-5 || style="background: #B9D9B9;" |
+            |-
+            | style="background: #B9D9B9;" | SNIPER MTR || style="background: #B9D9B9;" | stage 10-1 || style="background: #B9D9B9;" |
+            |-
+            | style="background: #B9D9B9;" | SNIPER APR || style="background: #B9D9B9;" | stage 8-7 || style="background: #B9D9B9;" |
+            |-
+            | style="background: #B9D9B9;" | NJP-MGF-NYA || style="background: #B9D9B9;" | stage 9-5, 26L remaining || style="background: #B9D9B9;" |
+            |-
+            | {{v|a1|100,695,560}} || Y.Y.Y || December 21st, 2018 / [https://twitter.com/yyy830527/status/1076063891669409794 Twitter] || stage 70-7, 54L remaining, playtime 25h 27m, superplay DVD ||
+            |}
+            
+            Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
+            
+            * [https://shmups.system11.org/viewtopic.php?t=60060 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Thunder Cross II ===
+<pre><nowiki>
+name: "Thunder Cross II"
+name-jp:
+name-kana:
+company: "Konami"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Thunder Cross II}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="6" | [[Thunder Cross II]] (Konami)
+            |-
+            ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | OFF || {{v|a1|8,757,450}} || MMZ-BOM(ま) || Gamest May 1992 || stage 9-7 ||
+            |-
+            | style="background: #B9D9B9;" | ON || style="background: #B9D9B9;" | 10.000.000+α || style="background: #B9D9B9;" | MFC-GAUT-NAI || style="background: #B9D9B9;" | Gamest October 1993 || style="background: #B9D9B9;" | || style="background: #B9D9B9;" |
+            |}
+            
+            Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
+            
+            * [https://shmups.system11.org/viewtopic.php?t=60060 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Thunder Dragon ===
+<pre><nowiki>
+name: "Thunder Dragon"
+name-jp:
+name-kana:
+company: "NMK"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Thunder Dragon}}
+            {| class="wikitable" style="background: #B9D9B9; text-align: center"
+            |-
+            ! colspan="6" | [[Thunder Dragon]] (NMK)
+            |-
+            ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | rowspan="3" | OFF
+            | rowspan="6" | 10,000,000+α
+            | DEVICE-PHANTOM || rowspan="3" | Gamest January 1992
+            | ||
+            |-
+            | GOL屋（ま）（真） || stage 24 ||
+            |-
+            | DGRS ネッシー君 || stage 18 ||
+            |-
+            | rowspan="3" | ON
+            |  G.M.C.うた || rowspan="3" | Gamest December 1991
+            | ||
+            |-
+            | G.M.C.DAN || ||
+            |-
+            | 星白金-HIR || stage 18 ||
+            |}
+            
+            Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
+            
+            * [https://shmups.system11.org/viewtopic.php?t=49739 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Thunder Dragon 2 ===
+<pre><nowiki>
+name: "Thunder Dragon 2"
+name-jp:
+name-kana:
+company: "NMK"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Thunder Dragon 2}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="6" | [[Thunder Dragon 2]] (NMK)
+            |-
+            ! Player Side !! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | 1P || {{v|a1|6,447,380}} || DBS || May 4th, 2014 (Arcadia August 2014) / [https://twitter.com/dbsqawsedrftgyh/status/1135879691611459584 Twitter] || ||
+            |-
+            | 2P || {{v|b1|6,247,270}} || 両替士 || Arcadia October 2004 || ||
+            |}
+            
+            * [https://shmups.system11.org/viewtopic.php?t=47008 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Thunder Force AC ===
+<pre><nowiki>
+name: "Thunder Force AC"
+name-jp:
+name-kana:
+company: "Tecnosoft"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Thunder Force AC}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="6" | [[Thunder Force]] AC (Tecnosoft)
+            |-
+            ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | OFF || {{v|a1|2,411,980}} || 中井鯉絵(こ)(ん)(で)(ら) || Gamest May 1991 || 11L remaining ||
+            |-
+            | rowspan="2" | ON
+            | {{v|b1|2,414,620}} || PEG || July 6th, 2016 / [https://shmups.system11.org/viewtopic.php?p=1196746#p1196746 Shmups Forum] || 11L remaining, played on Mame || [https://youtu.be/JTqKvA092pA Youtube]
+            |-
+            | {{v|c1|2,406,570}} || RPM-FKD || Arcadia March 2002 || 11L remaining ||
+            |}
+            
+            * [https://shmups.system11.org/viewtopic.php?t=27396 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Tiger Heli ===
+<pre><nowiki>
+name: "Tiger Heli"
+name-jp:
+name-kana:
+company: "Toaplan"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Tiger Heli}}
+            {| class="wikitable" style="background: #DFDFDF; text-align: center"
+            |-
+            ! colspan="5" | [[Tiger Heli]] (Toaplan)
+            |-
+            ! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | {{v|a1|9,999,990}} || [various players] || || ||
+            |}
+            
+            Note: Scoreboard closed after the achievement of the counterstop at 9,999,990.
+            
+            * [https://shmups.system11.org/viewtopic.php?t=34665 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Tokushu Butai U.A.G. ===
+<pre><nowiki>
+name: "Tokushu Butai U.A.G."
+name-jp:
+name-kana:
+company: "Seta"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Tokushu Butai U.A.G.}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="5" | [[Tokushu Butai U.A.G.]] (Seta)
+            |-
+            ! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | {{v|a1|1,603,800}} || TFG-WIN || Gamest February 1988 || ||
+            |-
+            | {{v|b1|2,004,900}} || P || 2013? || played on MAME32 0.61 || [https://youtu.be/xeT40s7M97s Youtube]
+            |}
+            
+            Note: Japanese scoreboard closed March 1988 due to the detection of an infinite pattern.
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Triggerheart Exelica ===
+<pre><nowiki>
+name: "Triggerheart Exelica"
+name-jp:
+name-kana:
+company: "Warashi"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Triggerheart Exelica}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="6" | [[Triggerheart Exelica]] (Warashi)
+            |-
+            ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | Cruel Tear || {{v|a1|741,052,512}} || PELA || Arcadia November 2007 || ||
+            |-
+            | Exelica || {{v|b1|768,067,269}} || PELA || Arcadia August 2008 / [https://web.archive.org/web/20150521162750/http://www.nakanoryuzo.sakura.ne.jp/GG/exe091227.jpg Image] || ||
+            |}
+            
+            * [https://wiki.denfaminicogamer.jp/highscore/2006_020_%E3%83%88%E3%83%AA%E3%82%AC%E3%83%BC%E3%83%8F%E3%83%BC%E3%83%88_%E3%82%A8%E3%82%B0%E3%82%BC%E3%83%AA%E3%82%AB JHA Leaderboard]
+            * [https://shmups.system11.org/viewtopic.php?t=19754 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Trigon ===
+<pre><nowiki>
+name: "Trigon"
+name-jp: トライゴン
+name-kana: とらいごん
+company: "Konami"
+needs-work: true
+
+scores:
+  - score: 2,724,560
+    player: AION-LSD (SP.)-ALPHA
+    autofire: OFF
+    sources:
+      - name: Gamest
+        date: "1990-11"
+
+  - score: 2,753,920
+    player: WSM-ツィ～まる。
+    autofire: OFF
+    sources:
+      - name: JHA
+        date: "2017-10"
+
+  - score: 2,787,960
+    player: WSM-ツィ～まる。
+    autofire: OFF
+    sources:
+      - name: JHA
+        date: "2018-01"
+
+  - score: 2,801,420
+    player: WSM-ツィ～まる。
+    autofire: OFF
+    sources:
+      - name: JHA
+        date: "2018-02"
+
+  - score: 2,834,630
+    player: WSM-ツィ～まる。
+    autofire: OFF
+    sources:
+      - name: JHA
+        date: "2018-03"
+
+  - score: 2,841,820
+    player: WSM-ツィ～まる。
+    autofire: OFF
+    sources:
+      - name: JHA
+        date: "2018-07"
+
+  - score: 2,865,800
+    player: WSM-ツィ～まる。
+    autofire: OFF
+    sources:
+      - name: JHA
+        date: "2018-08"
+
+  - score: 2,874,590
+    player: WSM-ツィ～まる。
+    autofire: OFF
+    sources:
+      - name: JHA
+        date: "2018-10"
+
+  - score: 2,903,240
+    player: WSM-ツィ～まる。
+    autofire: OFF
+    sources:
+      - name: JHA
+        date: "2018-11"
+
+  - score: 2,904,870
+    player: WSM-ツィ～まる。
+    autofire: OFF
+    sources:
+      - name: JHA
+        date: "2018-12"
+
+  - score: 2,917,960
+    player: WSM-ツィ～まる。
+    autofire: OFF
+    sources:
+      - name: JHA
+        date: "2019-01"
+
+  - score: 2,925,930
+    player: WSM-ツィ～まる。
+    autofire: OFF
+    sources:
+      - name: JHA
+        date: "2019-02"
+
+  - score: 2,930,180
+    player: WSM-ツィ～まる。
+    autofire: OFF
+    sources:
+      - name: JHA
+        date: "2019-03"
+
+  - score: 2,939,450
+    player: WSM-ツィ～まる。
+    autofire: OFF
+    sources:
+      - name: JHA
+        date: "2019-04"
+
+  - score: 2,942,780
+    player: WSM-ツィ～まる。
+    autofire: OFF
+    sources:
+      - name: JHA
+        date: "2019-05"
+
+  - score: 2,972,110
+    player: WSM-ツィ～まる。
+    autofire: OFF
+    sources:
+      - name: JHA
+        date: "2019-06"
+
+  - score: 2,982,380
+    player: WSM-ツィ～まる。
+    autofire: OFF
+    sources:
+      - name: JHA
+        date: "2019-09"
+
+  - score: 2,986,500
+    player: WSM-ツィ～まる。
+    autofire: OFF
+    sources:
+      - name: Twitter
+        date: "2019-09-26"
+        url: https://twitter.com/wsm_tuii3/status/1177227588365778944
+      - name: JHA
+        date: "2019-10"
+
+  - score: 3,002,410
+    player: WSM-ツィ～まる。
+    autofire: OFF
+    sources:
+      - name: Twitter
+        date: "2020-12-18"
+        url: https://twitter.com/wsm_tuii3/status/1339912490835066883
+      - name: JHA
+        date: "2020-12"
+    comments:
+      - "1st loop 1.73m"
+
+  - score: 2,980,200
+    player: 大学院中退記念
+    autofire: ON
+    sources:
+      - name: Arcadia
+        date: "2001-12"
+
+  - score: 2,981,990
+    player: WSM-ツィ～まる。
+    autofire: ON
+    sources:
+      - name: JHA
+        date: "2019-06"
+
+  - score: 2,988,070
+    player: WSM-ツィ～まる。
+    autofire: ON
+    sources:
+      - name: JHA
+        date: "2020-07"
+
+  - score: 3,004,080
+    player: WSM-ツィ～まる。
+    autofire: ON
+    sources:
+      - name: JHA
+        date: "2019-08"
+
+  - score: 3,006,520
+    player: WSM-ツィ～まる。
+    autofire: ON
+    sources:
+      - name: JHA
+        date: "2019-11"
+
+  - score: 3,009,550
+    player: WSM-ツィ～まる。
+    autofire: ON
+    sources:
+      - name: JHA
+        date: "2019-12"
+
+  - score: 3,018,100
+    player: WSM-ツィ～まる。
+    autofire: ON
+    sources:
+      - name: JHA
+        date: "2020-01"
+
+  - score: 3,022,220
+    player: WSM-ツィ～まる。
+    autofire: ON
+    sources:
+      - name: JHA
+        date: "2020-02"
+
+  - score: 3,022,480
+    player: WSM-ツィ～まる。
+    autofire: ON
+    sources:
+      - name: JHA
+        date: "2020-03"
+
+  - score: 3,025,790
+    player: WSM-ツィ～まる。
+    autofire: ON
+    sources:
+      - name: JHA
+        date: "2020-04"
+
+  - score: 3,030,290
+    player: WSM-ツィ～まる。
+    autofire: ON
+    sources:
+      - name: JHA
+        date: "2020-06"
+
+  - score: 3,030,680
+    player: WSM-ツィ～まる。
+    autofire: ON
+    sources:
+      - name: JHA
+        date: "2020-07"
+
+  - score: 3,032,180
+    player: WSM-ツィ～まる。
+    autofire: ON
+    sources:
+      - name: Twitter
+        date: "2020-08-02"
+        url: https://twitter.com/wsm_tuii3/status/1289912647253520384
+      - name: JHA
+        date: "2020-08"
+
+  - score: 3,035,050
+    player: WSM-ツィ～まる。
+    autofire: ON
+    sources:
+      - name: Twitter
+        date: "2020-10-04"
+        url: https://twitter.com/wsm_tuii3/status/1312743713630646273
+      - name: JHA
+        date: "2020-10"
+
+  - score: 3,035,060
+    player: WSM-ツィ～まる。
+    autofire: ON
+    sources:
+      - name: Twitter
+        date: "2020-10-25"
+        url: https://twitter.com/wsm_tuii3/status/1320338489112547334
+
+  - score: 3,037,120
+    player: WSM-ツィ～まる。
+    autofire: ON
+    sources:
+      - name: Twitter
+        date: "2020-12-03"
+        url: https://twitter.com/wsm_tuii3/status/1334459867591892993
+
+  - score: 3,040,180
+    player: WSM-ツィ～まる。
+    autofire: ON
+    sources:
+      - name: Twitter
+        date: "2020-12-10"
+        url: https://twitter.com/wsm_tuii3/status/1337013901527982086
+      - name: JHA
+        date: "2020-12"
+
+links:
+  - url: https://wiki.denfaminicogamer.jp/highscore/1990_009_%E3%83%88%E3%83%A9%E3%82%A4%E3%82%B4%E3%83%B3
+    title: JHA Leaderboard
+  - url: https://shmups.system11.org/viewtopic.php?t=60057
+    title: Shmups Forum Hi-Score Topic
+
+layout:
+    sort:
+        scores:
+            autofire: asc
+</nowiki></pre>
+
+=== Trizeal ===
+<pre><nowiki>
+name: "Trizeal"
+name-jp:
+name-kana:
+company: "Triangle Service / Oriental Soft"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Trizeal}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="5" | [[Trizeal]] (Triangle Service / Oriental Soft)
+            |-
+            ! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | {{v|a1|5,868,470}} || R. || JHA March 2016 || autofire, used XII ship ||
+            |}
+            
+            * [https://wiki.denfaminicogamer.jp/highscore/2004_025_%E3%83%88%E3%83%A9%E3%82%A4%E3%82%B8%E3%83%BC%E3%83%AB JHA Leaderboard]
+            * [https://shmups.system11.org/viewtopic.php?t=21196 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Trouble ☆ Witches AC ===
+<pre><nowiki>
+name: "Trouble ☆ Witches AC"
+name-jp:
+name-kana:
+company: "Studio Siesta"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Trouble ☆ Witches AC}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="7" | [[Trouble ☆ Witches]] AC (Studio Siesta)
+            |-
+            ! Difficulty !! Character !! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | rowspan="8" | Dokidoki
+            | Aqua || {{v|a1|104,109,610}} || れっさ～ || Arcadia September 2012 || ||
+            |-
+            | Conon || {{v|b1|101,889,740}} || れっさ～ || Arcadia November 2012 || ||
+            |-
+            | Louis || {{v|c1|107,533,980}} || れっさ～ || Arcadia September 2012 || ||
+            |-
+            | Lyla || {{v|d1|96,895,380}} || みはる～ん || Arcadia November 2012 || ||
+            |-
+            | Pril || {{v|e1|102,471,360}} || れっさ～ || Arcadia November 2012 || ||
+            |-
+            | Sies || {{v|f1|109,702,480}} || れっさ～ || Arcadia September 2012 || ||
+            |-
+            | Symphy || {{v|g1|103,702,940}} || れっさ～ || Arcadia November 2012 || ||
+            |-
+            | Yuuki || {{v|h1|105,686,610}} || れっさ～ || Arcadia September 2012 || ||
+            |-
+            | rowspan="8" | Gerogero
+            | Aqua || {{v|i1|148,028,920}} || BBA || Arcadia July 2014 || ||
+            |-
+            | Conon || {{v|j1|138,077,060}} || れっさ～ || Arcadia January 2013 || ||
+            |-
+            | Louis || {{v|k1|144,490,170}} || れっさ～ || Arcadia January 2013 || ||
+            |-
+            | Lyla || {{v|l1|135,915,330}} || みはる～ん || Arcadia March 2013 || ||
+            |-
+            | Pril || {{v|m1|161,901,280}} || BBA || Arcadia April 2015 || ||
+            |-
+            | Sies || {{v|n1|165,547,920}} || れっさ～ || Arcadia August 2013 || ||
+            |-
+            | Symphy || {{v|o1|153,914,890}} || BBA || Arcadia April 2015 || ||
+            |-
+            | Yuuki || {{v|p1|145,977,190}} || BBA || Arcadia April 2015 || ||
+            |}
+            
+            * [https://wiki.denfaminicogamer.jp/highscore/2009_002_%E3%83%88%E3%83%A9%E3%83%96%E3%83%AB%E2%98%86%E3%82%A6%E3%82%A3%E3%83%83%E3%83%81%E3%83%BC%E3%82%BAAC JHA Leaderboard]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Turbo Force ===
+<pre><nowiki>
+name: "Turbo Force"
+name-jp:
+name-kana:
+company: "Video System"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Turbo Force}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="6" | [[Turbo Force]] (Video System)
+            |-
+            ! Version !! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | New || 1,856,700 || rowspan="2" | まつお
+            | Arcadia April 2015 || stage 3-4 ||
+            |-
+            | Old || 2,111,200 || Arcadia November 2014 || stage 3-6 ||
+            |}
+            
+            * [https://wiki.denfaminicogamer.jp/highscore/1991_003_%E3%82%BF%E3%83%BC%E3%83%9C%E3%83%95%E3%82%A9%E3%83%BC%E3%82%B9 JHA Leaderboard]
+            * [https://shmups.system11.org/viewtopic.php?t=61518 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Twin Eagle ===
+<pre><nowiki>
+name: "Twin Eagle"
+name-jp:
+name-kana:
+company: "Seta"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Twin Eagle}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="5" | [[Twin Eagle]] (Seta)
+            |-
+            ! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | {{v|a1|3,689,500}} || DAZUNI本田はでしのでし! || Micom Basic July 1988 || 1p side ||
+            |}
+            
+            * [https://shmups.system11.org/viewtopic.php?t=28525 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Twin Eagle II ===
+<pre><nowiki>
+name: "Twin Eagle II"
+name-jp:
+name-kana:
+company: "Seta"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Twin Eagle II}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="6" | [[Twin Eagle II]] (Seta)
+            |-
+            ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | OFF || {{v|a1|7,295,870}} || ぱるとりっ君(ぱ) || Gamest October 1994 || ||
+            |-
+            | ON || {{v|b1|7,899,140}} || MRU-キビシー || Gamest November 1994 (Micom Basic November 1994) || ||
+            |}
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== TwinBee Yahhoo! ===
+<pre><nowiki>
+name: "TwinBee Yahhoo!"
+name-jp:
+name-kana:
+company: "Konami"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|TwinBee Yahhoo!}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="6" | [[TwinBee Yahhoo!]] (Konami)
+            |-
+            ! Mode !! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | Practice || 9,136,200 || HPN-K.N || Arcadia April 2003 || ||
+            |-
+            | Normal || style="background: #B9D9B9;" | 8,043,170 || style="background: #B9D9B9;" | RBN-H.M || style="background: #B9D9B9;" | Micom Basic November 1995 || style="background: #B9D9B9;" | || style="background: #B9D9B9;" | 
+            |-
+            | rowspan="2" | Special
+            | 18,521,420 || みっしー || June 2015? || ||
+            |-
+            | style="background: #B9D9B9;" | 18,203,180 || style="background: #B9D9B9;" | GGE-K.N || style="background: #B9D9B9;" | Micom Basic November 1995 || style="background: #B9D9B9;" | || style="background: #B9D9B9;" | 
+            |}
+            
+            Note: Japanese scoreboard for Normal and Special modes closed due to the detection of an infinite pattern.
+            
+            * [https://wiki.denfaminicogamer.jp/highscore/1995_003_%E3%83%84%E3%82%A4%E3%83%B3%E3%83%93%E3%83%BC%E3%83%A4%E3%83%83%E3%83%9B%E3%83%BC%EF%BC%81 JHA Leaderboard]
+            * [https://shmups.system11.org/viewtopic.php?t=51575 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Twinkle Star Sprites ===
+<pre><nowiki>
+name: "Twinkle Star Sprites"
+name-jp:
+name-kana:
+company: "ADK"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Twinkle Star Sprites}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="6" | [[Twinkle Star Sprites]] (ADK)
+            |-
+            ! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | {{v|a1|4,007,569}} || NMT8.2i || Arcadia August 2001 || 0L remaining, Mevious Max 62 Hits, autofire ||
+            |}
+            
+            * [https://shmups.system11.org/viewtopic.php?t=34876 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== U.S. Navy ===
+<pre><nowiki>
+name: "U.S. Navy"
+name-jp:
+name-kana:
+company: "Capcom"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|U.S. Navy}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="6" | [[U.S. Navy]] (Capcom)
+            |-
+            ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | OFF || {{v|a1|2,623,470}} || 悲しいねSAD (死)(亡) || Gamest June 1991 || Shoplifting x 10 Perfect x 9 ||
+            |-
+            | ON || {{v|b1|2,972,460}} || イマサラT.O || May 17, 2020 (JHA May 2020) / [https://twitter.com/i_ma_sa_RA/status/1262018889631711235 Twitter] || ||
+            |}
+            
+            * [https://wiki.denfaminicogamer.jp/highscore/1990_005_U.S.%E3%83%8D%E3%82%A4%E3%83%93%E3%83%BC JHA Leaderboard]
+            * [https://shmups.system11.org/viewtopic.php?t=11308 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Uchuu Senkan Gomora / Bio-Ship Paladin ===
+<pre><nowiki>
+name: "Uchuu Senkan Gomora / Bio-Ship Paladin"
+name-jp:
+name-kana:
+company: "UPL"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Uchuu Senkan Gomora / Bio-Ship Paladin}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="6" | [[Uchuu Senkan Gomora]] / Bio-Ship Paladin (UPL)
+            |-
+            ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | OFF || {{v|a1|1,460,520}} || G.M.C. R-I || ? || ||
+            |-
+            | ON || {{v|b1|1,474,120}} || WZH || Gamest March 1991 (Micom Basic March 1991) || ||
+            |}
+            
+            * [https://shmups.system11.org/viewtopic.php?t=53189 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Ultimate Ecology ===
+<pre><nowiki>
+name: "Ultimate Ecology"
+name-jp:
+name-kana:
+company: "Capcom"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Ultimate Ecology}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="6" | [[Ultimate Ecology]] (Capcom)
+            |-
+            ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | OFF || {{v|a1|2,513,600}} || ZAC-Rister || Arcadia October 1999 || Biba 0 ||
+            |-
+            | ON || {{v|b1|2,571,400}} || ZAC-Rister || Gamest October 1998 || Biba 20k Rock 1,031,000 ||
+            |}
+            
+            * [https://shmups.system11.org/viewtopic.php?t=59293 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Ultra Keibitai / Ultra X Weapons ===
+<pre><nowiki>
+name: "Ultra Keibitai / Ultra X Weapons"
+name-jp:
+name-kana:
+company: "Seta"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Ultra Keibitai / Ultra X Weapons}}
+            {| class="wikitable" style="background: #DFDFDF; text-align: center"
+            |-
+            ! colspan="5" | [[Ultra Keibitai]] / Ultra X Weapons (Seta)
+            |-
+            ! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | {{v|a1|9,999,999}} || [various players] || || ||
+            |}
+            
+            Note: Scoreboard closed after the achievement of the counterstop at 9,999,999.
+            
+            * [https://wiki.denfaminicogamer.jp/highscore/1995_005_%E3%82%A6%E3%83%AB%E3%83%88%E3%83%A9%E8%AD%A6%E5%82%99%E9%9A%8A JHA Leaderboard]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Under Defeat ===
+<pre><nowiki>
+name: "Under Defeat"
+name-jp:
+name-kana:
+company: "G.Rev"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Under Defeat}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="6" | [[Under Defeat]] (G.Rev)
+            |-
+            ! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | {{v|a1|7,693,060}} || えす☆さま || JHA December 2019 || 0L 5B remaining ||
+            |}
+            
+            * [https://wiki.denfaminicogamer.jp/highscore/2005_009_%E3%82%A2%E3%83%B3%E3%83%80%E3%83%BC%E3%83%87%E3%82%A3%E3%83%95%E3%82%A3%E3%83%BC%E3%83%88 JHA Leaderboard]
+            * [https://shmups.system11.org/viewtopic.php?t=41470 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== USAAF Mustang ===
+<pre><nowiki>
+name: "USAAF Mustang"
+name-jp:
+name-kana:
+company: "NMK"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|USAAF Mustang}}
+            {| class="wikitable" style="background: #B9D9B9; text-align: center"
+            |-
+            ! colspan="5" | [[USAAF Mustang]] (NMK)
+            |-
+            ! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | rowspan="8" | 10,000,000+α
+            | KSY☆吉浦 || rowspan="8" | Gamest September 1990
+            | stage 6-8 ||
+            |-
+            | R-1 || stage 8-7 ||
+            |-
+            | PIA-冬眠中PJM || stage 7-7 ||
+            |-
+            | Disp-..A (人) || stage 7-4 ||
+            |-
+            | LCN修斗 (蹴) || stage 8-4 ||
+            |-
+            | KSGな人 (魔) || stage 7-8 ||
+            |-
+            | IML-YUJ || stage 9-5 ||
+            |-
+            | MIROR || stage 9-3 ||
+            |}
+            
+            Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
+            
+            * [https://shmups.system11.org/viewtopic.php?t=39000 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== V-V / Grind Stormer ===
+<pre><nowiki>
+name: "V-V / Grind Stormer"
+name-jp:
+name-kana:
+company: "Toaplan"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|V-V / Grind Stormer}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="6" | [[V-V]] / Grind Stormer (Toaplan)
+            |-
+            ! Mode !! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | Normal || {{v|a1|37,079,650}} || KizM || Arcadia April 2015 || 1st loop 10.30m ||
+            |-
+            | Bomber || {{v|b1|69,489,820}} || ツィ～まる。 || May 2014? || 1st loop 4.21m ||
+            |}
+            
+            * [https://wiki.denfaminicogamer.jp/highscore/1993_002_V%E3%83%BB%E3%83%95%E3%82%A1%E3%82%A4%E3%83%96 JHA Leaderboard]
+            * [https://shmups.system11.org/viewtopic.php?t=35012 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Valtric ===
+<pre><nowiki>
+name: "Valtric"
+name-jp:
+name-kana:
+company: "NMK"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Valtric}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="5" | [[Valtric]] (NMK)
+            |-
+            ! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | {{v|a1|1,049,520}} || ACU-EPS || Micom Basic April 1987 || stage 2-3 ||
+            |-
+            | {{v|b1|1,487,190}} || GMC.えるす || Micom Basic April 1987 || stage 2-1 ||
+            |}
+            
+            Note: It has been reported that the furthest a player has ever gotten is actually stage 3-1 ([https://igcc.jp/kenjo-03-01/ Source]).
+            
+            * [https://shmups.system11.org/viewtopic.php?t=59663 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Varth ===
+<pre><nowiki>
+name: "Varth"
+name-jp:
+name-kana:
+company: "Capcom"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Varth}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="6" | [[Varth]] (Capcom)
+            |-
+            ! Autofire !! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | OFF || {{v|a1|13,130,800}} || A.BOY || November 13th, 2016 (JHA November 2016) / [https://twitter.com/hiropom_76/status/797727978612396032 Twitter] || 0L remaining Double K.O. x4, Podless x29 ||
+            |-
+            | ON || {{v|b1|15,345,000}} || よどさん || October 28, 2018 (JHA November 2018) || ||
+            |}
+            
+            Note: Higher scores have been posted in various places but these were all played on non-default extend settings, e.g. 1st 600,000 and then Every 1,400,000, which is the extend setting when both DIP 4 and 5 are set to OFF. However, the [https://imgur.com/fNf7qch PCB manual] states that the default extend setting is 1st 600,000, 2nd 2,000,000, and 3rd 4,500,000 with DIP switches 4 ON and 5 OFF.
+            
+            * [https://wiki.denfaminicogamer.jp/highscore/1992_001_%E3%83%90%E3%83%BC%E3%82%B9 JHA Leaderboard]
+            * [https://shmups.system11.org/viewtopic.php?t=52339 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Vasara ===
+<pre><nowiki>
+name: "Vasara"
+name-jp:
+name-kana:
+company: "Visco"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Vasara}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="6" | [[Vasara]] (Visco)
+            |-
+            ! Character !! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | Saika Magoichi || {{v|a1|1,803,400}} || TEN || September 2013 || 170 kills || [https://www.nicovideo.jp/watch/sm21917825 Niconico]
+            |-
+            | Sanada Yukimura || {{v|b1|1,636,050}} || SKY || Arcadia October 2004 || 159 kills ||
+            |-
+            | Shima Sakon || {{v|c1|1,511,800}} || DAB.S || Arcadia September 2004 || 144 kills ||
+            |}
+            
+            Note: Japanese scoreboard closed due to the detection of an infinite pattern.
+            
+            * [https://shmups.system11.org/viewtopic.php?t=1549 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Vasara 2 ===
+<pre><nowiki>
+name: "Vasara 2"
+name-jp:
+name-kana:
+company: "Visco"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Vasara 2}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="6" | [[Vasara 2]] (Visco)
+            |-
+            ! Character !! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | Akechi Mitsuhide || {{v|a1|32,111,920}} || SOF-WTN || September 29th, 2018 (JHA October 2018) / [https://twitter.com/sof_wtn/status/1046022667445272576 Twitter] || ||
+            |-
+            | Momochi Sandayu || {{v|b1|32,150,400}} || ISO / Niboshi || February 15th, 2018 (JHA February 2018) / [https://twitter.com/niboooji/status/964126758910943233 Twitter] || ||
+            |-
+            | Seiryubo Zuifu || {{v|c1|30,735,090}} || hamami || August 12th, 2018 (JHA August 2018) / [https://twitter.com/hamami999/status/1028658691090731009 Twitter] || ||
+            |-
+            | Takeda Nobukatsu || {{v|d1|30,899,620}} || hamami || July 14th, 2018 (JHA July 2018) / [https://twitter.com/hamami999/status/1018151784097853441 Twitter] || ||
+            |}
+            
+            * [https://wiki.denfaminicogamer.jp/highscore/2001_022_%E5%A9%86%E8%A3%9F%E7%BE%852 JHA Leaderboard]
+            * [https://shmups.system11.org/viewtopic.php?t=1549 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Viewpoint ===
+<pre><nowiki>
+name: "Viewpoint"
+name-jp:
+name-kana:
+company: "Aicom / Yumekobo"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Viewpoint}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="6" | [[Viewpoint]] (Aicom / Yumekobo)
+            |-
+            ! Autofire || Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | OFF || 4,661,420 || rowspan="3" | IMU-AT2
+            | Arcadia July 2003 || 1-Up item x2, max bonus star x28, nazo x10, suicide x6 ||
+            |-
+            | rowspan="2" | ON
+            | 5,634,200 || September 11th, 2018 / [https://twitter.com/imu_at2/status/1039369776294846465 Twitter] || before final boss 3.97m ||
+            |-
+            | 5,459,370 || Arcadia September 2013 || 1-Up item x3, max bonus star x32, nazo x14, suicide x7 ||
+            |}
+            
+            * [https://shmups.system11.org/viewtopic.php?t=36319 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Vimana ===
+<pre><nowiki>
+name: "Vimana"
+name-jp:
+name-kana:
+company: "Toaplan"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Vimana}}
+            {| class="wikitable" style="background: #B9D9B9; text-align: center"
+            |-
+            ! colspan="6" | [[Vimana]] (Toaplan)
+            |-
+            ! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | rowspan="52" | 10,000,000+α
+            | SSG || rowspan="52" | Gamest September 1991
+            | stage 8-3 ||
+            |-
+            | あつし || stage 6-6 ||
+            |-
+            | BIN || stage 6-6 ||
+            |-
+            | エルポレナレフ ぷか P || 711% ||
+            |-
+            | GION || stage 8-1 ||
+            |-
+            | STEAL-CYR-MER || stage 7-5, 686% ||
+            |-
+            | D.S 吟 || 682% ||
+            |-
+            | DEUS YAS || 660% ||
+            |-
+            | GACHAPIN || stage 8-3 ||
+            |-
+            | M || stage 8-2 ||
+            |-
+            | MIRAGE-MAX ち || stage 7-5 ||
+            |-
+            | ComPati || ||
+            |-
+            | 東ワキ長所 DON || ||
+            |-
+            | TYR-ひむ || stage 7-5 ||
+            |-
+            | 春太郎 || 736% ||
+            |-
+            | R.K. || 644% ||
+            |-
+            | HST-(お)SPT || ||
+            |-
+            | JAG-道草-AXI || ||
+            |-
+            | KVC々木場 || ||
+            |-
+            | R·G·B-STC || 648% ||
+            |-
+            | SKG 渋 || ||
+            |-
+            | G·M·C MIE || ||
+            |-
+            | N.ARC-IZA T || ||
+            |-
+            | N.ARC-MIT || ||
+            |-
+            | MST || ||
+            |-
+            | SBK 血祭り君 || stage 7-5 ||
+            |-
+            | M·K || ||
+            |-
+            | DES-ILM || ||
+            |-
+            | NOVIE だ || ||
+            |-
+            | 桂鳥 || ||
+            |-
+            | ANP || 663% ||
+            |-
+            | レーザーになった なかちゃん! || ||
+            |-
+            | すさまG-R カモネ(コ) || stage 7-4 ||
+            |-
+            | [龍] の牙総統ーAUT || stage 7-3 ||
+            |-
+            | E.T [龍] || stage 7-6 ||
+            |-
+            | OR-からみ [は] || stage 7-2 ||
+            |-
+            | DEVICE-SEI || stage 7-3, 648% ||
+            |-
+            | NSG-A-BOY [ど] || ||
+            |-
+            | HYAKU-京城屋 || ||
+            |-
+            | K.N [ど] || 650% ||
+            |-
+            | SVR-WIZ (えび) || ||
+            |-
+            | SHC-せっきん || 732% ||
+            |-
+            | 焼肉パワーHSK || 716% ||
+            |-
+            | くまプー, Y.Y || stage 7-2 ||
+            |-
+            | G.M.C.知恵なき子G塔 || ||
+            |-
+            | SUR-文 || ||
+            |-
+            | TSU || ||
+            |-
+            | JDA-RGL || ||
+            |-
+            | ACA-VI || stage 9-2 ||
+            |-
+            | DIO || ||
+            |-
+            | YSD || ||
+            |-
+            | P.O || ||
+            |-
+            | style="background: #DFDFDF;" | 100,000,000 || style="background: #DFDFDF;" | YAE-BRIGHT || style="background: #DFDFDF;" | December 2005? || style="background: #DFDFDF;" | loop 58, 5848%, playtime 26h || style="background: #DFDFDF;" |
+            |}
+            
+            Note: Scoreboard closed after the achievement of the counterstop at 100,000,000.
+            
+            * [https://shmups.system11.org/viewtopic.php?t=24628 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Viper Phase 1 ===
+<pre><nowiki>
+name: "Viper Phase 1"
+name-jp:
+name-kana:
+company: "Seibu Kaihatsu / Moss"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Viper Phase 1}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="6" | Viper Phase 1
+            |-
+            ! Version !! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | rowspan="2" | New
+            | 16,816,397 || rowspan="2" | NER
+            | 2005 / superplay DVD || NMNB, stage 4 99%, 7B remaining ||
+            |-
+            | 16,754,423 || Arcadia February 2004 || NMNB, stage 4 99%, 7B remaining ||
+            |-
+            | Old || 12,334,602 || ZBL-らじあめ拝 || May 9th, 2018 (JHA May 2018) / [https://twitter.com/kuni_kouyama/status/994204042288140288 Twitter] || 100% x7, 1 miss ||
+            |}
+            
+            * [https://wiki.denfaminicogamer.jp/highscore/2005_035_%E9%9B%B7%E9%9B%BBIII JHA Leaderboard]
+            * [https://shmups.system11.org/viewtopic.php?t=56616 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Wangan Sensou / Desert War ===
+<pre><nowiki>
+name: "Wangan Sensou / Desert War"
+name-jp:
+name-kana:
+company: "NMK"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Wangan Sensou / Desert War}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="6" | [[Wangan Sensou]] / Desert War (NMK)
+            |-
+            ! Mode !! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | Beginner || {{v|a1|9,155,600}} || G.M.C.げえむのごんちゃん || Arcadia September 2011 || ||
+            |-
+            | Average || {{v|b1|13,226,700}} || KDK-Takeyuki || JHA May 2018 || ||
+            |-
+            | Expert || {{v|c1|19,917,600}} || KDK-Takeyuki || JHA September 2018 || ||
+            |}
+            
+            * [https://wiki.denfaminicogamer.jp/highscore/1995_007_%E6%B9%BE%E5%B2%B8%E6%88%A6%E4%BA%89 JHA Leaderboard]
+            * [https://shmups.system11.org/viewtopic.php?t=63981 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== War of Aero ===
+<pre><nowiki>
+name: "War of Aero"
+name-jp:
+name-kana:
+company: "Yang Chen"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|War of Aero}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="5" | [[War of Aero]] (Yang Chen)
+            |-
+            ! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | {{v|a1|2,455,200}} || hamami || February 20th, 2018 (JHA March 2018) / [https://twitter.com/hamami999/status/965882618901229568 Twitter] || ||
+            |}
+            
+            * [https://wiki.denfaminicogamer.jp/highscore/1993_013_%E3%82%A6%E3%82%A9%E3%83%BC%E3%82%AA%E3%83%96%E3%82%A8%E3%82%A2%E3%83%AD JHA Leaderboard]
+            * [https://shmups.system11.org/viewtopic.php?t=44924 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Wonder Planet ===
+<pre><nowiki>
+name: "Wonder Planet"
+name-jp:
+name-kana:
+company: "Data East"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Wonder Planet}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="5" | [[Wonder Planet]] (Data East)
+            |-
+            ! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | {{v|a1|10,285,830}} || FUL || Micom Basic December 1987 || ||
+            |}
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== X-Multiply ===
+<pre><nowiki>
+name: "X-Multiply"
+name-jp:
+name-kana:
+company: "Irem"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|X-Multiply}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="5" | [[X-Multiply]] (Irem)
+            |-
+            ! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | {{v|a1|19,024,400}} || KDK-Takeyuki || JHA December 2018 || suicide x6 ||
+            |}
+            
+            * [https://wiki.denfaminicogamer.jp/highscore/1989_023_X%E3%83%9E%E3%83%AB%E3%83%81%E3%83%97%E3%83%A9%E3%82%A4 JHA Leaderboard]
+            * [https://shmups.system11.org/viewtopic.php?t=37703 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Xevious ===
+<pre><nowiki>
+name: "Xevious"
+name-jp:
+name-kana:
+company: "Namco"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Xevious}}
+            {| class="wikitable" style="background: #DFDFDF; text-align: center"
+            |-
+            ! colspan="5" | [[Xevious]] (Namco)
+            |-
+            ! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | rowspan="11" | 9,999,990
+            | 小林覚 || rowspan="11" | Micom Basic January 1984
+            | ||
+            |-
+            | 諸星あたる || ||
+            |-
+            | もぎちゃん || ||
+            |-
+            | 伊達剛 || ||
+            |-
+            | M.SHUNYA || ||
+            |-
+            | 青野 || ||
+            |-
+            | 梅本孝治 || ||
+            |-
+            | 松村健一 || ||
+            |-
+            | 山本新 || ||
+            |-
+            | 田中弘毅 || ||
+            |-
+            | 波田尚之 || ||
+            |}
+            
+            Note: Scoreboard closed after the achievement of the counterstop at 9,999,990.
+            
+            * [https://shmups.system11.org/viewtopic.php?t=39729 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Xevious 3D/G ===
+<pre><nowiki>
+name: "Xevious 3D/G"
+name-jp:
+name-kana:
+company: "Namco"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Xevious 3D/G}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="5" | [[Xevious 3D/G]] (Namco)
+            |-
+            ! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | {{v|a1|7,371,110}} || KDK-Takeyuki || Arcadia July 2013 || ||
+            |}
+            
+            * [https://shmups.system11.org/viewtopic.php?t=39729 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Xexex ===
+<pre><nowiki>
+name: "Xexex"
+name-jp:
+name-kana:
+company: "Konami"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Xexex}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="6" | [[Xexex]] (Konami)
+            |-
+            ! Version !! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | Japan || {{v|a1|10,745,100}} || DBS || Arcadia September 2005 || glitch exploited ||
+            |-
+            | World || {{v|b1|5,192,700}} || DRP || before 2012 / [https://web.archive.org/web/20140407041443/http:/www9.plala.or.jp/nakanoryuzo/HS/RANK/0/1/ZEXEXKAIGAI.html 全国ハイスコア集計+α] || stage 4-2 ||
+            |}
+            
+            Note: Besides various aspects of gameplay, one major difference between the two versions is that the Japan Version only has 2 loops while the World Version loops infinitely.
+            
+            * [https://wiki.denfaminicogamer.jp/highscore/1991_004_%E3%82%BC%E3%82%AF%E3%82%BB%E3%82%AF%E3%82%B9 JHA Leaderboard]
+            * [https://shmups.system11.org/viewtopic.php?t=3389 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== XII Stag ===
+<pre><nowiki>
+name: "XII Stag"
+name-jp:
+name-kana:
+company: "Triangle Service / Oriental Soft"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|XII Stag}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="5" | [[XII Stag]] (Triangle Service / Oriental Soft)
+            |-
+            ! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | {{v|a1|14,327,060}} || R. || Arcadia June 2006 || superplay DVD ||
+            |}
+            
+            * [https://shmups.system11.org/viewtopic.php?t=46230 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== XX Mission ===
+<pre><nowiki>
+name: "XX Mission"
+name-jp:
+name-kana:
+company: "UPL"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|XX Mission}}
+            {| class="wikitable" style="background: #B9D9B9; text-align: center"
+            |-
+            ! colspan="5" | [[XX Mission]] (UPL)
+            |-
+            ! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | 10,000,000+α || ECM-ペルシャ || Micom Basic November 1986 || ||
+            |}
+            
+            Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Yokushin: Giga Wing Generations ===
+<pre><nowiki>
+name: "Yokushin: Giga Wing Generations"
+name-jp:
+name-kana:
+company: "Takumi"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Yokushin: Giga Wing Generations}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="6" | Yokushin: [[Giga Wing Generations]] (Takumi)
+            |-
+            ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | Eagle || {{v|a1|29,620,015,483,358,048,940}} || DBS || October 13th, 2006 (Arcadia January 2007) / [https://twitter.com/dbsqawsedrftgyh/status/703972949821227008 Twitter] || ||
+            |-
+            | Grouse || {{v|b1|33,853,587,664,270,963,200}} || DBS || October 12th, 2006 (Arcadia January 2007) / [https://twitter.com/dbsqawsedrftgyh/status/703972949821227008 Twitter] || ||
+            |-
+            | Hawk || {{v|c1|36,508,703,765,249,195,220}} || DBS || October 15th, 2006 (Arcadia January 2007) / [https://twitter.com/dbsqawsedrftgyh/status/703973285415915520 Twitter] || ||
+            |-
+            | Robin || {{v|d1|37,827,320,237,132,742,960}} || DBS || October 15th, 2006 (Arcadia January 2007) / [https://twitter.com/dbsqawsedrftgyh/status/703973285415915520 Twitter] || ||
+            |-
+            | [Doubleplay] || {{v|e1|12,659,678,051,786,448,360}} || 服部 || Arcadia December 2005 || ||
+            |}
+            
+            * [https://wiki.denfaminicogamer.jp/highscore/2004_009_%E7%BF%BC%E7%A5%9E JHA Leaderboard]
+            * [https://shmups.system11.org/viewtopic.php?t=1412 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Zero Gunner ===
+<pre><nowiki>
+name: "Zero Gunner"
+name-jp:
+name-kana:
+company: "Psikyo"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Zero Gunner}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="5" | [[Zero Gunner]] (Psikyo)
+            |-
+            ! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | {{v|a1|1,703,300}} || JKP-RDX-寛千代 || Arcadia November 2000 || used AH1-SX, no miss / no bomb ||
+            |}
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Zero Gunner 2 ===
+<pre><nowiki>
+name: "Zero Gunner 2"
+name-jp:
+name-kana:
+company: "Psikyo"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Zero Gunner 2}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="6" | [[Zero Gunner 2]] (Psikyo)
+            |-
+            ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | Apache || {{v|a1|3,932,600}} || V.T KAK || Arcadia February 2004 || ||
+            |-
+            | Comanche || {{v|b1|3,918,350}} || MGN-ひろせ || Arcadia June 2004 || ||
+            |-
+            | Hokum || {{v|c1|3,805,000}} || はむはむ || Arcadia April 2002 || ||
+            |}
+            
+            * [https://wiki.denfaminicogamer.jp/highscore/2001_030_%E3%82%BC%E3%83%AD%E3%82%AC%E3%83%B3%E3%83%8A%E3%83%BC2 JHA Leaderboard]
+            * [https://shmups.system11.org/viewtopic.php?t=28463 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Zero Wing ===
+<pre><nowiki>
+name: "Zero Wing"
+name-jp:
+name-kana:
+company: "Toaplan"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Zero Wing}}
+            {| class="wikitable" style="background: #B9D9B9; text-align: center"
+            |-
+            ! colspan="5" | [[Zero Wing]] (Toaplan)
+            |-
+            ! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | 10.000.000+α || HYT || Gamest June 1991 || stage 3-7, 10-Up x1 ||
+            |}
+            
+            Note: Japanese scoreboard closed after the achievement of the target score of 10,000,000.
+            
+            * [https://shmups.system11.org/viewtopic.php?t=38614 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+=== Zing Zing Zip ===
+<pre><nowiki>
+name: "Zing Zing Zip"
+name-jp:
+name-kana:
+company: "Allumer"
+needs-work: true
+
+layout:
+    templates:
+        game: |
+            {% verbatim %}
+            {{Anchor|Zing Zing Zip}}
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="5" | [[Zing Zing Zip]] (Allumer)
+            |-
+            ! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | {{v|a1|4,758,000}} || カミーユビンタ || Arcadia April 2002 || stage 4-3 ||
+            |}
+            
+            * [https://shmups.system11.org/viewtopic.php?f=2&t=66050 Shmups Forum Hi-Score Topic]
+            {% endverbatim %}
+</nowiki></pre>
+
+
+
+== PREVIOUS DATA BELOW, PLEASE IGNORE ==
+
+== Global ==
+Values defined in this section will apply to all the games in the database. Its main purpose is to reduce redundant translations for reocurring values (e.g. company names, common column names, ...).
+
+<div style="display:none"><nowiki-x>
+name: global
+
+config:
+    scores:
+        group-by:
+          - ship
+          - mode
+
+        num-previous: 0
+
+layout:
+    sort:
+        games:
+            company: asc
+            name: asc
+        scores:
+            score: desc
+
+    templates:
+        games: |
+            {% for game in games %}
+            {% if game.template %}
+            {{ game.template|raw }}
+            {% else %}
+            {{ include('game') }}
+            {% endif %}
+            {% endfor %}
+        game: |
+            {| class="wikitable" style="text-align: center
+            |-
+            ! colspan="{{ game.headers|length }}" | {{ game.properties.name }}
+            |-
+            ! {{ game.headers|join(' !! ') }}
+            {% for columns in game.scores %}
+            |-
+            | {{ columns|join(' || ') }}
+            {% endfor %}
+            |}
+      
+translations:
+  - property: company
+    value: Cave
+    value-jp: ケイブ
+  - property: company
+    value: Raizing / 8ing
+    value-jp: ライジング / エイティング
+
+</nowiki></div>
+
+
+== Akai Katana ==
+<div style="display:none"><nowiki-x>
+name: Akai Katana
+name-jp: 赤い刀
+company: CAVE
+
+layout:
+    templates:
+        game : |
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="6" | [[Akai Katana]]
+            |-
+            ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | Type 1 <br>Sumire & Tsubaki || {{v|a1|472,554,090}} || 太菱 || Arcadia July 2011 || ||
+            |-
+            | Type 2 <br>Kikyou & Botan || {{v|b1|454,324,700}} || LON || Arcadia February 2012 || ||
+            |-
+            | Type 3 <br>Suzuran & Shion || {{v|c1|540,176,130}} || AKF  || Arcadia July 2012 || ||
+            |}
+
+            * [https://shmups.system11.org/viewtopic.php?f=2&t=45652 Shmups Forum Hi-Score Topic]
+
+</nowiki></div>
+
+
+== Mushihimesama Futari v1.5 ==
+<div style="display:none"><nowiki-x>
+name: Mushihimesama Futari 1.5
+name-jp: 虫姫さまふたりVer 1.5
+company: CAVE
+
+scores:
+  - player: ABI
+    score: 530,358,660
+    ship: Palm
+    mode: Original
+    weapon: Normal
+    scored-date: "2008-01"
+    source: Arcadia January 2008
+
+  - player: ISO / Niboshi
+    player-jp: にぼし
+    score: 518,902,716
+    ship: Palm
+    mode: Original
+    weapon: Abnormal
+    scored-date: "2007"
+    source: Superplay DVD
+
+  - player: KTL-NAL
+    score: 973,020,065
+    ship: Palm
+    mode: Maniac
+    weapon: Abnormal
+    scored-date: "2007-11"
+    source: Arcadia November 2007
+
+  - player: ABI
+    score: 550,705,999
+    ship: Reco
+    mode: Original
+    weapon: Normal
+    scored-date: "2010-02"
+    source: Blog
+    comments:
+      - 5L 0B remaining
+      - "After stage 4: 273.7m"
+
+  - player: ISO / Niboshi
+    score: 538,378,364
+    ship: Reco
+    mode: Original
+    weapon: Normal
+    scored-date: "2007-10"
+    source: Arcadia October 2007
+
+  - player: yasu0219
+    score: 454,386,226
+    ship: Reco
+    mode: Original
+    weapon: Abnormal
+    scored-date: "2009-12-12"
+    source: Xbox rankings
+    comments:
+      - Highest score Xbox360
+
+  - player: KTL-NAL
+    score: 981,872,827
+    ship: Palm
+    mode: Maniac
+    weapon: Abnormal
+    scored-date: "2007-09"
+    source: Superplay DVD
+    comments:
+      - 5L 2B remaining
+      - "After stage 4: 693.8m"
+
+  - player: fufufu
+    score: 3,999,999,999
+    ship: Reco
+    mode: Ultra
+    weapon: Normal
+    scored-date: "2009-05-27"
+    source: Arcadia August 2009
+    comments:
+      - 0L 0B remaining
+      - "After stage 4: 2.205b"
+    links:
+      - url: https://
+        name: Youtube
+
+  - player: Clover-TAC
+    score: 1,047,258,714
+    ship: Reco
+    mode: Maniac
+    weapon: Normal
+    scored-date: "2015-03"
+    source: Arcadia March 2015
+    comments:
+      - 5L 2B remaining
+      - "After stage 4: 745.1m"
+
+  - player: rescue_STG
+    score: 2,956,728,306
+    ship: Palm
+    mode: Ultra
+    weapon: Normal
+    scored-date: "2017-04-08"
+    source: Xbox rankings
+    comments:
+      - Highest score Xbox360
+    links:
+      - url: https://
+        name: Youtube
+
+  - player: Dame K.K
+    score: 3,999,999,999
+    ship: Palm
+    mode: Ultra
+    weapon: Abnormal
+    scored-date: "2008-03"
+    source: Arcadia March 2008
+    comments:
+      - 1L 0B remaining
+      - Highest score Arcade
+
+  - player: KGM
+    score: 3,999,999,999
+    score-real: 4,263,416,356
+    ship: Palm
+    mode: Ultra
+    weapon: Abnormal
+    scored-date: "2013-07-24"
+    source: Xbox rankings
+    comments:
+        - Highest score Xbox360
+    links:
+      - url: https://
+        name: Youtube
+
+  - player: lstze
+    score: 3,266,405,598
+    ship: Reco
+    mode: Ultra
+    weapon: Abnormal
+    scored-date: "2014?"
+    links:
+      - url: https://
+        name: Youtube
+
+links:
+  - url: https://example.org/some_link_id
+    title: JHA Leaderboard
+    title-jp: 日本ハイスコア協会
+  - url: https://example.org/some_other_link
+    title: Shmups Forum Hi-Score Topic
+
+layout:
+    columns:
+      - label: Mode
+        template: "{{ mode }}"
+        groupSameValues: true
+
+      - label: Character
+        template: "{{ ship }}"
+        groupSameValues: true
+
+      - label: Style
+        template: "{{ weapon }}"
+
+      - label: Score
+        template: "{{ score }}"
+
+      - label: Player
+        template: "{{ player }}"
+        groupSameValues: true
+
+      - label: Date / Source
+        template: "{{ scored-date }} / {{ source }}"
+
+      - label: Comment
+        template: "{{ comments|join('; ') }}"
+
+    sort:
+        scores:
+            mode: [ Original, Maniac, Ultra ]
+            ship: [ Palm, Reco ]
+            weapon: [ Normal, Abnormal ]
+
+# Translations for the whole game (so you do not have to specify the same Japanese term within all the entries)
+translations:
+  - property: mode
+    value: Original
+    value-jp: オリジナルモード
+  - property: mode
+    value: Maniac
+    value-jp: マニアックモード
+  - property: mode
+    value: Ultra
+    value-jp: ウルトラモード
+  - property: ship
+    value: Reco
+    value-jp: レコ
+  - property: ship
+    value: Palm
+    value-jp: パルム
+  - property: weapon
+    value: Normal
+    value-jp: ノーマル
+  - property: weapon
+    value: Abnormal
+    value-jp: アブノーマル
+</nowiki></div>
+
+== Ketsui ==
+<div style="display:none"><nowiki-x>
+name: "Ketsui: Kizuna Jigoku Tachi"
+name-jp: ケツイ ～絆地獄たち～
+company: Cave
+
+scores:
+  - player: SPS
+    score: 507,780,433
+    ship: Type A
+    mode: Omote
+    scored-date: "2014-08"
+    source: Arcadia August 2014
+    comments:
+      
+  - player: SPS
+    score: 481,402,383
+    ship: Type B
+    mode: Omote
+    scored-date: "2014-11"
+    source: Arcadia November 2014
+    comments:
+      - 6L 0B remaining
+      - 1st loop 276m
+
+  - player: GAN
+    score: 569,741,232
+    ship: Type B
+    mode: Ura
+    scored-date: "2016-03"
+    source: JHA March 2016
+    comments:
+      - 6L remaining
+
+  - player: SPS
+    score: 583,614,753
+    ship: Type A
+    mode: Ura
+    scored-date: "2014-05-27"
+    source: Arcadia September 2014 / [https:// Twitter]
+    comments:
+      - 6L 0B remaining
+      - 1st loop 285m
+
+links:
+  - url: https://example.org/some_link_id
+    title: JHA Leaderboard
+    title-jp: 日本ハイスコア協会
+  - url: https://example.org/some_other_link
+    title: Shmups Forum Hi-Score Topic
+
+translations:
+  - property: ship
+    value: Type A
+    value-en: Tiger Schwert
+    value-jp: TYPE-A ティーゲルシュベルト
+  - property: ship
+    value: Type B
+    value-en: Panzer Jäger
+    value-jp: TYPE-B パンツァーイェーガー
+  - property: mode
+    value: Omote
+    value-jp: 表2週
+  - property: mode
+    value: Ura
+    value-jp: 裏2週
+
+layout:
+    columns:
+      - label: Ship
+        label-jp: 自機
+        template: "{{ ship }}"
+        groupSameValues: true
+
+      - label: Loop
+        label-jp: 2週種
+        template: "{{ mode }}"
+
+      - label: Score
+        label-jp: スコア
+        template: "{{ score }}"
+
+      - label: Player
+        label-jp: プレイヤー
+        template: "{{ player }}"
+        groupSameValues: true
+
+      - label: Date / Source
+        label-jp: 年月日 / 情報元
+        template: "{{ scored-date }} / {{ source }}"
+
+      - label: Comment
+        label-jp: 備考
+        template: "{{ comments|join('; ') }}"
+
+    sort:
+        scores:
+            ship: [ Type A, Type B ]
+            mode: asc
+
+</nowiki></div>
+
+
+== Great Mahou Daisakusen ==
+<div style="display:none"><nowiki-x>
+name: Great Mahou Daisakusen
+company: Raizing / 8ing
+
+layout:
+    templates:
+        game : |
+            {| class="wikitable" style="text-align: center"
+            |-
+            ! colspan="6" | [[Great Mahou Daisakusen]]
+            |-
+            ! Ship !! Score !! Player !! Date / Source !! Comment !! Replay
+            |-
+            | rowspan="2" | Birthday
+            | 83,743,680 || rowspan="2" | Miku || August 2nd, 2020 / [https:// Twitter] || 107 items ||
+            |-
+            | 66,693,110 || JHA November 2019 || 107 items ||
+            |-
+            | rowspan="2" | Chitta
+            | 93,664,750 || rowspan="2" | SOF-WTN
+            | August 8th, 2020 / [https:// Twitter] || 108 items ||
+            |-
+            | 83,195,810 || JHA June 2020 || || 
+            |-
+            | rowspan="2" | Gain
+            | 80,528,610 || Boredom || July 1st, 2020 / [https:// Twitter] || 108 items || [https:// Youtube]
+            |-
+            | 31,653,130 || HTL-蕨ガイン見参 || JHA June 2020 || ||
+            |-
+            | rowspan="2" | Golden
+            | style="background: #DFDFDF;" | 99,999,999 [101,033,460] || style="background: #DFDFDF;" | Boredom || style="background: #DFDFDF;" | February 13th, 2020 / [https:// Twitter] || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | 
+            |-
+            | 14,925,200 || 磨弓 || JHA July 2020 || ||
+            |-
+            | Grimlen || style="background: #DFDFDF;" | 99,999,999 || style="background: #DFDFDF;" | KDK-Takeyuki || style="background: #DFDFDF;" | Arcadia July 2002 || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | 
+            |-
+            | Karte || style="background: #DFDFDF;" | 99,999,999 [100,571,630] || style="background: #DFDFDF;" | ACR Archer || style="background: #DFDFDF;" | November 17th, 2014 (Arcadia February 2015) / [https:// Twitter] || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | [https:// Youtube]
+            |-
+            | rowspan="2" | Miyamoto
+            | style="background: #DFDFDF;" | 99,999,999 || style="background: #DFDFDF;" | Clover-TAC || style="background: #DFDFDF;" | JHA March 2016 || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | 
+            |-
+            | style="background: #DFDFDF;" | 99,999,999 [102,596,210] || style="background: #DFDFDF;" | SOF-WTN || style="background: #DFDFDF;" | February 3rd 2016 (JHA March 2016) / [https:// Twitter] || style="background: #DFDFDF;" | 108 items || style="background: #DFDFDF;" | 
+            |-
+            | Solo Bang || style="background: #DFDFDF;" | 99,999,999 || style="background: #DFDFDF;" | Clover-TAC || style="background: #DFDFDF;" | JHA July 2020 || style="background: #DFDFDF;" | 108 items, 2p side || style="background: #DFDFDF;" |
+            |}
+
+            Note: Scoreboard closed after the achievement of the counterstop at 99,999,999.
+
+            * [https://example.org/some_link_id JHA Leaderboard]
+            * [https://example.org/some_other_link Shmups Forum Hi-Score Topic]
+
+</nowiki></div>
