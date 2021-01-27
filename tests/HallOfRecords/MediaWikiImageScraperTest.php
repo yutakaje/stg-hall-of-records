@@ -26,10 +26,10 @@ class MediaWikiImageScraperTest extends \Tests\TestCase
 {
     public function testScrap(): void
     {
-        $backupPath = sys_get_temp_dir() . '/stg-scrap_' . random_int(1, 9999999);
-        mkdir($backupPath);
-        mkdir("{$backupPath}/armed_police_batrider");
-        mkdir("{$backupPath}/armed_police_batrider/13456940_c2f65f5e86cbadded7fdfcc8ddc3d76f");
+        $savePath = sys_get_temp_dir() . '/stg-scrap_' . random_int(1, 9999999);
+        mkdir($savePath);
+        mkdir("{$savePath}/armed_police_batrider");
+        mkdir("{$savePath}/armed_police_batrider/13456940_c2f65f5e86cbadded7fdfcc8ddc3d76f");
 
         $imageResponses = [
             0 => $this->createImageResponse(
@@ -56,29 +56,28 @@ class MediaWikiImageScraperTest extends \Tests\TestCase
 
         $scraper = new MediaWikiImageScraper(
             $this->createPageFetcher(),
-            $this->createImageFetchers($imageResponses),
-            $backupPath
+            $this->createImageFetchers($imageResponses)
         );
 
-        $scraper->scrap();
+        $scraper->scrap($savePath);
 
         $this->assertBackedUpFiles(
-            "{$backupPath}/armed_police_batrider/29449270_39f2dd14ddff797fa4bfd3effac87e43",
+            "{$savePath}/armed_police_batrider/29449270_39f2dd14ddff797fa4bfd3effac87e43",
             '.jpg',
             $imageResponses[0]
         );
         $this->assertBackedUpFiles(
-            "{$backupPath}/armed_police_batrider/23053160_8c2654ade5fea2fcf098a9ddd07370e9",
+            "{$savePath}/armed_police_batrider/23053160_8c2654ade5fea2fcf098a9ddd07370e9",
             '.png',
             $imageResponses[1]
         );
         $this->assertBackedUpFiles(
-            "{$backupPath}/armed_police_batrider/14183520_8b4ad58db47103ddcabe37946228abe4",
+            "{$savePath}/armed_police_batrider/14183520_8b4ad58db47103ddcabe37946228abe4",
             '.jpg',
             $imageResponses[2]
         );
         $this->assertBackedUpFiles(
-            "{$backupPath}/great_mahou_daisakusen/87818460_f72db8782ae3a8ab20ed381c109fa8bb",
+            "{$savePath}/great_mahou_daisakusen/87818460_f72db8782ae3a8ab20ed381c109fa8bb",
             '.png',
             $imageResponses[3]
         );

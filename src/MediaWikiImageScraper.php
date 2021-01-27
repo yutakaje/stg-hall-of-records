@@ -36,21 +36,20 @@ final class MediaWikiImageScraper
     private MediaWikiPageFetcher $pageFetcher;
     /** @var ImageFetcherInterface[] */
     private array $imageFetchers;
-    private string $backupPath;
     private MessageHandler $messageHandler;
+    private string $savePath;
 
     /**
      * @param ImageFetcherInterface[] $imageFetchers
      */
     public function __construct(
         MediaWikiPageFetcher $pageFetcher,
-        array $imageFetchers,
-        string $backupPath
+        array $imageFetchers
     ) {
         $this->pageFetcher = $pageFetcher;
         $this->imageFetchers = $imageFetchers;
-        $this->backupPath = $backupPath;
         $this->messageHandler = new MessageHandler();
+        $this->savePath = '';
     }
 
     /**
@@ -63,8 +62,9 @@ final class MediaWikiImageScraper
         );
     }
 
-    public function scrap(): void
+    public function scrap(string $path): void
     {
+        $this->useSavePath($path);
         $this->messageHandler->reset();
 
         $data = $this->parse(
@@ -211,7 +211,7 @@ final class MediaWikiImageScraper
 
     private function saveImage(\stdClass $image): void
     {
-        $dir = "{$this->backupPath}/{$image->id}";
+        $dir = "{$this->savePath}/{$image->id}";
         mkdir($dir, 0777, true);
 
         file_put_contents(
@@ -250,7 +250,7 @@ final class MediaWikiImageScraper
 
     private function imageExists(string $imageId): bool
     {
-        return file_exists("{$this->backupPath}/{$imageId}");
+        return file_exists("{$this->savePath}/{$imageId}");
     }
 
     private function gameIdentifier(ParsedProperties $game): string
@@ -322,5 +322,10 @@ final class MediaWikiImageScraper
             self::MSG_SCRAP_GAME,
             self::MSG_GAME_SCRAPPED
         );
+    }
+
+    private function useSavePath(string $path): void
+    {
+        $this->savePath = $path;
     }
 }
