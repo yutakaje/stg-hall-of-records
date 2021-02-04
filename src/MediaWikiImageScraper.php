@@ -19,6 +19,7 @@ use Stg\HallOfRecords\Import\MediaWiki\ParsedProperties;
 use Stg\HallOfRecords\Import\MediaWiki\YamlExtractor;
 use Stg\HallOfRecords\Import\MediaWiki\YamlParser;
 use Stg\HallOfRecords\Scrap\ImageFetcherInterface;
+use Stg\HallOfRecords\Scrap\ImageNotFoundException;
 use Stg\HallOfRecords\Scrap\Message;
 use Stg\HallOfRecords\Scrap\MessageHandler;
 
@@ -29,6 +30,7 @@ final class MediaWikiImageScraper
     private const MSG_SCRAP_SCORE = 'Scrapping from score';
     private const MSG_SCORE_SCRAPPED = 'Scrapped from score';
     private const MSG_FETCH_IMAGE = 'Fetching image';
+    private const MSG_IMAGE_NOT_FOUND = 'Image not found';
     private const MSG_IMAGE_FETCHED = 'Image fetched';
     private const MSG_IMAGE_ALREADY_EXISTS = 'Image already exists';
     private const MSG_IMAGE_SAVED = 'Image saved';
@@ -145,6 +147,8 @@ final class MediaWikiImageScraper
                 $this->messageHandler->addContext('url', $url);
 
                 $images[] = $this->scrapImage($game, $score, $url);
+            } catch (ImageNotFoundException $exception) {
+                $this->messageHandler->addMessage(self::MSG_IMAGE_NOT_FOUND);
             } finally {
                 $this->messageHandler->removeContext('url');
             }

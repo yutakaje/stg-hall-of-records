@@ -35,18 +35,23 @@ final class DefaultImageFetcher implements ImageFetcherInterface
 
     public function fetch(string $url): ResponseInterface
     {
-        try {
-            $response = $this->httpClient->sendRequest(
-                new Request('GET', $url)
-            );
-        } catch (RequestExceptionInterface $exception) {
-            throw new StgException("Error fetching image: {$exception->getMessage()}");
-        }
+        $response = $this->sendRequest($url);
 
         if ($response->getStatusCode() !== 200) {
             throw new ImageNotFoundException("Image not found at url `{$url}`");
         }
 
         return $response;
+    }
+
+    private function sendRequest(string $url): ResponseInterface
+    {
+        try {
+            return $this->httpClient->sendRequest(
+                new Request('GET', $url)
+            );
+        } catch (RequestExceptionInterface $exception) {
+            throw new StgException("Error fetching image: {$exception->getMessage()}");
+        }
     }
 }

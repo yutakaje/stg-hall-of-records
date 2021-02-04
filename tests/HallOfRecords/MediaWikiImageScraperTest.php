@@ -20,6 +20,7 @@ use Psr\Http\Message\ResponseInterface;
 use Stg\HallOfRecords\MediaWikiImageScraper;
 use Stg\HallOfRecords\MediaWikiPageFetcher;
 use Stg\HallOfRecords\Scrap\ImageFetcherInterface;
+use Stg\HallOfRecords\Scrap\ImageNotFoundException;
 use Stg\HallOfRecords\Scrap\Message;
 
 class MediaWikiImageScraperTest extends \Tests\TestCase
@@ -37,20 +38,28 @@ class MediaWikiImageScraperTest extends \Tests\TestCase
                 'image/jpeg',
                 $this->randomPayload()
             ),
-            1 => $this->createImageResponse(
+            1 => $this->createErrorResponse(
+                'https://example.org/twitter/9823498.jpg',
+                404
+            ),
+            2 => $this->createImageResponse(
                 'https://example.org/twitpic/53895f',
                 'image/png',
                 $this->randomPayload()
             ),
-            2 => $this->createImageResponse(
+            3 => $this->createImageResponse(
                 'http://example.org/jp/20588_624.v16882.jpg',
                 'image/jpeg',
                 $this->randomPayload()
             ),
-            3 => $this->createImageResponse(
+            4 => $this->createImageResponse(
                 'http://example.org/grema-images/01.png',
                 'image/png',
                 $this->randomPayload()
+            ),
+            5 => $this->createErrorResponse(
+                'http://example.org/grema-images/02.png',
+                403
             ),
         ];
 
@@ -69,21 +78,22 @@ class MediaWikiImageScraperTest extends \Tests\TestCase
         $this->assertBackedUpFiles(
             "{$savePath}/armed_police_batrider/23053160_8c2654ade5fea2fcf098a9ddd07370e9",
             '.png',
-            $imageResponses[1]
+            $imageResponses[2]
         );
         $this->assertBackedUpFiles(
             "{$savePath}/armed_police_batrider/14183520_8b4ad58db47103ddcabe37946228abe4",
             '.jpg',
-            $imageResponses[2]
+            $imageResponses[3]
         );
         $this->assertBackedUpFiles(
             "{$savePath}/great_mahou_daisakusen/87818460_f72db8782ae3a8ab20ed381c109fa8bb",
             '.png',
-            $imageResponses[3]
+            $imageResponses[4]
         );
 
         self::assertEquals([
             $this->createMessage('Scrapping from game', 'armed_police_batrider'),
+
             $this->createMessage('Scrapping from score', 'armed_police_batrider', [
                 'score' => 'armed_police_batrider/29449270',
             ]),
@@ -102,6 +112,22 @@ class MediaWikiImageScraperTest extends \Tests\TestCase
             $this->createMessage('Scrapped from score', 'armed_police_batrider', [
                 'score' => 'armed_police_batrider/29449270',
             ]),
+
+            $this->createMessage('Scrapping from score', 'armed_police_batrider', [
+                'score' => 'armed_police_batrider/29737030',
+            ]),
+            $this->createMessage('Fetching image', 'armed_police_batrider', [
+                'score' => 'armed_police_batrider/29737030',
+                'url' => 'https://example.org/twitter/9823498.jpg',
+            ]),
+            $this->createMessage('Image not found', 'armed_police_batrider', [
+                'score' => 'armed_police_batrider/29737030',
+                'url' => 'https://example.org/twitter/9823498.jpg',
+            ]),
+            $this->createMessage('Scrapped from score', 'armed_police_batrider', [
+                'score' => 'armed_police_batrider/29737030',
+            ]),
+
             $this->createMessage('Scrapping from score', 'armed_police_batrider', [
                 'score' => 'armed_police_batrider/23053160',
             ]),
@@ -120,6 +146,7 @@ class MediaWikiImageScraperTest extends \Tests\TestCase
             $this->createMessage('Scrapped from score', 'armed_police_batrider', [
                 'score' => 'armed_police_batrider/23053160',
             ]),
+
             $this->createMessage('Scrapping from score', 'armed_police_batrider', [
                 'score' => 'armed_police_batrider/14183520',
             ]),
@@ -138,6 +165,7 @@ class MediaWikiImageScraperTest extends \Tests\TestCase
             $this->createMessage('Scrapped from score', 'armed_police_batrider', [
                 'score' => 'armed_police_batrider/14183520',
             ]),
+
             $this->createMessage('Scrapping from score', 'armed_police_batrider', [
                 'score' => 'armed_police_batrider/13456940',
             ]),
@@ -149,8 +177,11 @@ class MediaWikiImageScraperTest extends \Tests\TestCase
             $this->createMessage('Scrapped from score', 'armed_police_batrider', [
                 'score' => 'armed_police_batrider/13456940',
             ]),
+
             $this->createMessage('Scrapped from game', 'armed_police_batrider'),
+
             $this->createMessage('Scrapping from game', 'great_mahou_daisakusen'),
+
             $this->createMessage('Scrapping from score', 'great_mahou_daisakusen', [
                 'score' => 'great_mahou_daisakusen/87818460',
             ]),
@@ -169,6 +200,22 @@ class MediaWikiImageScraperTest extends \Tests\TestCase
             $this->createMessage('Scrapped from score', 'great_mahou_daisakusen', [
                 'score' => 'great_mahou_daisakusen/87818460',
             ]),
+
+            $this->createMessage('Scrapping from score', 'great_mahou_daisakusen', [
+                'score' => 'great_mahou_daisakusen/94447870',
+            ]),
+            $this->createMessage('Fetching image', 'great_mahou_daisakusen', [
+                'score' => 'great_mahou_daisakusen/94447870',
+                'url' => 'http://example.org/grema-images/02.png',
+            ]),
+            $this->createMessage('Image not found', 'great_mahou_daisakusen', [
+                'score' => 'great_mahou_daisakusen/94447870',
+                'url' => 'http://example.org/grema-images/02.png',
+            ]),
+            $this->createMessage('Scrapped from score', 'great_mahou_daisakusen', [
+                'score' => 'great_mahou_daisakusen/94447870',
+            ]),
+
             $this->createMessage('Scrapped from game', 'great_mahou_daisakusen'),
         ], $scraper->getMessages());
     }
@@ -243,7 +290,11 @@ class MediaWikiImageScraperTest extends \Tests\TestCase
             ): ResponseInterface {
                 foreach ($imageResponses as $imageResponse) {
                     if ($imageResponse['url'] === $url) {
-                        return $imageResponse['response'];
+                        $response = $imageResponse['response'];
+                        if ($response->getStatusCode() !== 200) {
+                            throw new ImageNotFoundException();
+                        }
+                        return $response;
                     }
                 }
                 self::fail("Response for `{$url}` does not exist");
@@ -267,6 +318,17 @@ class MediaWikiImageScraperTest extends \Tests\TestCase
                 ['Content-Type' => $contentType],
                 $payload
             ),
+        ];
+    }
+
+    /**
+     * @return array<string,mixed>
+     */
+    private function createErrorResponse(string $url, int $httpStatus): array
+    {
+        return [
+            'url' => $url,
+            'response' => new Response($httpStatus),
         ];
     }
 

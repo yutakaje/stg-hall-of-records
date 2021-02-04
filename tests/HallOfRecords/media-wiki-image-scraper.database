@@ -1471,6 +1471,8 @@ scores:
         date: "2014-07"
     comments:
       - "used Carpet, Flying Baron, Maria"
+    image-urls:
+      - https://example.org/twitter/9823498.jpg
 
   - score: 23,053,160
     player: TTH
@@ -6248,6 +6250,8 @@ scores:
         date: "2020-09"
     comments:
       - "108 items"
+    image-urls:
+      - http://example.org/grema-images/02.png
 
   - score: 95,592,960
     player: SOF-WTN
