@@ -93,80 +93,80 @@ class MediaWikiImageScraperTest extends \Tests\TestCase
 
         self::assertEquals(array_merge(
             $this->addGameContext('armed_police_batrider', [
-                $this->createMessage('Scrapping from game'),
+                $this->createMessage('info', 'Scrapping from game'),
                 $this->addScoreContext('armed_police_batrider/29449270', [
-                    $this->createMessage('Scrapping from score'),
+                    $this->createMessage('info', 'Scrapping from score'),
                     $this->addUrlContext('http://example.com/photozou/1171_624.v1610.jpg', [
-                        $this->createMessage('Fetching image'),
-                        $this->createMessage('Image fetched'),
+                        $this->createMessage('info', 'Fetching image'),
+                        $this->createMessage('info', 'Image fetched'),
                     ]),
-                    $this->createMessage('Image saved', [
+                    $this->createMessage('success', 'Image saved', [
                         'image' => 'armed_police_batrider/29449270_39f2dd14ddff797fa4bfd3effac87e43',
                     ]),
-                    $this->createMessage('Scrapped from score'),
+                    $this->createMessage('info', 'Scrapped from score'),
                 ]),
                 $this->addScoreContext('armed_police_batrider/29737030', [
-                    $this->createMessage('Scrapping from score'),
+                    $this->createMessage('info', 'Scrapping from score'),
                     $this->addUrlContext('https://example.org/twitter/9823498.jpg', [
-                        $this->createMessage('Fetching image'),
-                        $this->createMessage('Image not found'),
+                        $this->createMessage('info', 'Fetching image'),
+                        $this->createMessage('error', 'Image not found'),
                     ]),
-                    $this->createMessage('Scrapped from score'),
+                    $this->createMessage('info', 'Scrapped from score'),
                 ]),
                 $this->addScoreContext('armed_police_batrider/23053160', [
-                    $this->createMessage('Scrapping from score'),
+                    $this->createMessage('info', 'Scrapping from score'),
                     $this->addUrlContext('https://example.org/twitpic/53895f', [
-                        $this->createMessage('Fetching image'),
-                        $this->createMessage('Image fetched'),
+                        $this->createMessage('info', 'Fetching image'),
+                        $this->createMessage('info', 'Image fetched'),
                     ]),
-                    $this->createMessage('Image saved', [
+                    $this->createMessage('success', 'Image saved', [
                         'image' => 'armed_police_batrider/23053160_8c2654ade5fea2fcf098a9ddd07370e9',
                     ]),
-                    $this->createMessage('Scrapped from score'),
+                    $this->createMessage('info', 'Scrapped from score'),
                 ]),
                 $this->addScoreContext('armed_police_batrider/14183520', [
-                    $this->createMessage('Scrapping from score'),
+                    $this->createMessage('info', 'Scrapping from score'),
                     $this->addUrlContext('http://example.org/jp/20588_624.v16882.jpg', [
-                        $this->createMessage('Fetching image'),
-                        $this->createMessage('Image fetched'),
+                        $this->createMessage('info', 'Fetching image'),
+                        $this->createMessage('info', 'Image fetched'),
                     ]),
-                    $this->createMessage('Image saved', [
+                    $this->createMessage('success', 'Image saved', [
                         'image' => 'armed_police_batrider/14183520_8b4ad58db47103ddcabe37946228abe4',
                     ]),
-                    $this->createMessage('Scrapped from score'),
+                    $this->createMessage('info', 'Scrapped from score'),
                 ]),
                 $this->addScoreContext('armed_police_batrider/13456940', [
-                    $this->createMessage('Scrapping from score'),
-                    $this->createMessage('Image already exists', [
+                    $this->createMessage('info', 'Scrapping from score'),
+                    $this->createMessage('info', 'Image already exists', [
                         'image' => 'armed_police_batrider/13456940_c2f65f5e86cbadded7fdfcc8ddc3d76f',
                         'url' => 'https://example.org/twitpic/5q2ocm',
                     ]),
-                    $this->createMessage('Scrapped from score'),
+                    $this->createMessage('info', 'Scrapped from score'),
                 ]),
-                $this->createMessage('Scrapped from game'),
+                $this->createMessage('info', 'Scrapped from game'),
             ]),
             $this->addGameContext('great_mahou_daisakusen', [
-                $this->createMessage('Scrapping from game'),
+                $this->createMessage('info', 'Scrapping from game'),
                 $this->addScoreContext('great_mahou_daisakusen/87818460', [
-                    $this->createMessage('Scrapping from score'),
+                    $this->createMessage('info', 'Scrapping from score'),
                     $this->addUrlContext('http://example.org/grema-images/01.png', [
-                        $this->createMessage('Fetching image'),
-                        $this->createMessage('Image fetched'),
+                        $this->createMessage('info', 'Fetching image'),
+                        $this->createMessage('info', 'Image fetched'),
                     ]),
-                    $this->createMessage('Image saved', [
+                    $this->createMessage('success', 'Image saved', [
                         'image' => 'great_mahou_daisakusen/87818460_f72db8782ae3a8ab20ed381c109fa8bb',
                     ]),
-                    $this->createMessage('Scrapped from score'),
+                    $this->createMessage('info', 'Scrapped from score'),
                 ]),
                 $this->addScoreContext('great_mahou_daisakusen/94447870', [
-                    $this->createMessage('Scrapping from score'),
+                    $this->createMessage('info', 'Scrapping from score'),
                     $this->addUrlContext('http://example.org/grema-images/02.png', [
-                        $this->createMessage('Fetching image'),
-                        $this->createMessage('Image not found'),
+                        $this->createMessage('info', 'Fetching image'),
+                        $this->createMessage('error', 'Image not found'),
                     ]),
-                    $this->createMessage('Scrapped from score'),
+                    $this->createMessage('info', 'Scrapped from score'),
                 ]),
-                $this->createMessage('Scrapped from game'),
+                $this->createMessage('info', 'Scrapped from game'),
             ]),
         ), $scraper->getMessages());
     }
@@ -287,10 +287,11 @@ class MediaWikiImageScraperTest extends \Tests\TestCase
      * @param array<string,mixed> $context
      */
     private function createMessage(
+        string $type,
         string $message,
         array $context = []
     ): Message {
-        return new Message($message, $context);
+        return new Message($message, ['type' => $type] + $context);
     }
 
     /**

@@ -25,6 +25,10 @@ use Stg\HallOfRecords\Scrap\MessageHandler;
 
 final class MediaWikiImageScraper
 {
+    private const MSG_TYPE_INFO = 'info';
+    private const MSG_TYPE_SUCCESS = 'success';
+    private const MSG_TYPE_ERROR = 'error';
+
     private const MSG_SCRAP_GAME = 'Scrapping from game';
     private const MSG_GAME_SCRAPPED = 'Scrapped from game';
     private const MSG_SCRAP_SCORE = 'Scrapping from score';
@@ -86,11 +90,11 @@ final class MediaWikiImageScraper
                 $this->messageHandler->addContext('game', $this->gameIdentifier(
                     $game
                 ));
-                $this->messageHandler->addMessage(self::MSG_SCRAP_GAME);
+                $this->addInfoMessage(self::MSG_SCRAP_GAME);
 
                 $this->scrapImagesFromGame($game);
 
-                $this->messageHandler->addMessage(self::MSG_GAME_SCRAPPED);
+                $this->addInfoMessage(self::MSG_GAME_SCRAPPED);
             } finally {
                 $this->messageHandler->removeContext('game');
             }
@@ -105,11 +109,11 @@ final class MediaWikiImageScraper
                     $game,
                     $score
                 ));
-                $this->messageHandler->addMessage(self::MSG_SCRAP_SCORE);
+                $this->addInfoMessage(self::MSG_SCRAP_SCORE);
 
                 $this->scrapImagesFromScore($game, $score);
 
-                $this->messageHandler->addMessage(self::MSG_SCORE_SCRAPPED);
+                $this->addInfoMessage(self::MSG_SCORE_SCRAPPED);
             } finally {
                 $this->messageHandler->removeContext('score');
             }
@@ -148,7 +152,7 @@ final class MediaWikiImageScraper
 
                 $images[] = $this->scrapImage($game, $score, $url);
             } catch (ImageNotFoundException $exception) {
-                $this->messageHandler->addMessage(self::MSG_IMAGE_NOT_FOUND);
+                $this->addErrorMessage(self::MSG_IMAGE_NOT_FOUND);
             } finally {
                 $this->messageHandler->removeContext('url');
             }
@@ -165,15 +169,15 @@ final class MediaWikiImageScraper
         $imageId = $this->makeImageId($game, $score, $url);
 
         if ($this->imageExists($imageId)) {
-            $this->messageHandler->addMessage(self::MSG_IMAGE_ALREADY_EXISTS, [
+            $this->addInfoMessage(self::MSG_IMAGE_ALREADY_EXISTS, [
                 'image' => $imageId,
             ]);
             return null;
         }
 
-        $this->messageHandler->addMessage(self::MSG_FETCH_IMAGE);
+        $this->addInfoMessage(self::MSG_FETCH_IMAGE);
         $response = $this->fetchImage($url);
-        $this->messageHandler->addMessage(self::MSG_IMAGE_FETCHED);
+        $this->addInfoMessage(self::MSG_IMAGE_FETCHED);
 
         $image = new \stdClass();
         $image->id = $imageId;
@@ -234,7 +238,7 @@ final class MediaWikiImageScraper
             )
         );
 
-        $this->messageHandler->addMessage(self::MSG_IMAGE_SAVED);
+        $this->addSuccessMessage(self::MSG_IMAGE_SAVED);
     }
 
     private function getImageExtension(\stdClass $image): string
@@ -331,5 +335,42 @@ final class MediaWikiImageScraper
     private function useSavePath(string $path): void
     {
         $this->savePath = $path;
+    }
+
+    /**
+     * @param array<string,mixed> $context
+     */
+    private function addInfoMessage(string $message, array $context = []): void
+    {
+        $this->addMessage(self::MSG_TYPE_INFO, $message, $context);
+    }
+
+    /**
+     * @param array<string,mixed> $context
+     */
+    private function addSuccessMessage(string $message, array $context = []): void
+    {
+        $this->addMessage(self::MSG_TYPE_SUCCESS, $message, $context);
+    }
+
+    /**
+     * @param array<string,mixed> $context
+     */
+    private function addErrorMessage(string $message, array $context = []): void
+    {
+        $this->addMessage(self::MSG_TYPE_ERROR, $message, $context);
+    }
+
+    /**
+     * @param array<string,mixed> $context
+     */
+    private function addMessage(
+        string $type,
+        string $message,
+        array $context = []
+    ): void {
+        $this->messageHandler->addMessage($message, [
+            'type' => $type,
+        ] + $context);
     }
 }
