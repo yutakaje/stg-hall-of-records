@@ -133,7 +133,7 @@
         },
         {
             'name': 'info',
-            'title': 'Already existing',
+            'title': 'Skipped',
             'value': messages|split('<score-name class="info"')|length - 1,
         },
     ] %}
