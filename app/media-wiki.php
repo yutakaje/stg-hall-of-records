@@ -15,6 +15,7 @@ use GuzzleHttp\Client as HttpClient;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
 use Monolog\Processor\UidProcessor;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Client\ClientInterface as HttpClientInterface;
 use Psr\Log\LoggerInterface;
 use Stg\HallOfRecords\Data\Game\GameRepository;
@@ -29,9 +30,20 @@ use Stg\HallOfRecords\Import\MediaWiki\YamlExtractor;
 use Stg\HallOfRecords\Import\MediaWiki\YamlParser;
 use Stg\HallOfRecords\MediaWikiDatabaseFilter;
 use Stg\HallOfRecords\MediaWikiGenerator;
+use Stg\HallOfRecords\MediaWikiImageScraper;
 use Stg\HallOfRecords\MediaWikiPageFetcher;
+use Stg\HallOfRecords\Scrap\DefaultImageFetcher;
 
 return [
+    'wiki-url' => 'https://shmups.wiki',
+
+    'save-path' => static function (): string {
+        return dirname(__DIR__) . '/public/image-scraper/save';
+    },
+    'save-url' => static function (ContainerInterface $container): string {
+        return $container->get('wiki-url') . '/records/image-scraper/save';
+    },
+
     SettingRepositoryInterface::class => DI\create(SettingRepository::class),
     GameRepositoryInterface::class => DI\create(GameRepository::class),
     ScoreRepositoryInterface::class => DI\create(ScoreRepository::class),
@@ -44,7 +56,7 @@ return [
 
     MediaWikiPageFetcher::class => DI\create()->constructor(
         DI\get(HttpClientInterface::class),
-        'https://shmups.wiki',
+        DI\get('wiki-url'),
         [
             'database' => 'STG_Hall_of_Records/Database',
             'page-en' => 'STG_Hall_of_Records',
@@ -52,6 +64,14 @@ return [
     ),
     MediaWikiDatabaseFilter::class => DI\autowire(),
     MediaWikiGenerator::class => DI\autowire(),
+    MediaWikiImageScraper::class => DI\autowire()->constructor(
+        DI\get(MediaWikiPageFetcher::class),
+        [
+            DI\get(DefaultImageFetcher::class),
+        ]
+    ),
+
+    DefaultImageFetcher::class => DI\autowire(),
 
     HttpClientInterface::class => DI\create(HttpClient::class),
 
