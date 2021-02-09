@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\HallOfRecords;
+namespace Tests\HallOfRecords\Scrap;
 
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Client\ClientInterface as HttpClientInterface;
