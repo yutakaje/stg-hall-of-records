@@ -19,5 +19,8 @@ interface ImageFetcherInterface
 {
     public function handles(string $url): bool;
 
-    public function fetch(string $url): ResponseInterface;
+    /**
+     * @return ResponseInterface[]
+     */
+    public function fetch(string $url): array;
 }

@@ -33,33 +33,32 @@ class MediaWikiImageScraperTest extends \Tests\TestCase
         mkdir("{$savePath}/armed_police_batrider/13456940_c2f65f5e86cbadded7fdfcc8ddc3d76f");
 
         $imageResponses = [
-            0 => $this->createImageResponse(
+            0 => $this->createImageResponses(
                 'http://example.com/photozou/1171_624.v1610.jpg',
-                'image/jpeg',
-                $this->randomPayload()
+                [$this->createImageResponse('image/jpeg', $this->randomPayload())]
             ),
-            1 => $this->createErrorResponse(
+            1 => $this->createImageResponses(
                 'https://example.org/twitter/9823498.jpg',
-                404
+                [$this->createErrorResponse(404)]
             ),
-            2 => $this->createImageResponse(
+            2 => $this->createImageResponses(
                 'https://example.org/twitpic/53895f',
-                'image/png',
-                $this->randomPayload()
+                [$this->createImageResponse('image/png', $this->randomPayload())]
             ),
-            3 => $this->createImageResponse(
+            3 => $this->createImageResponses(
                 'http://example.org/jp/20588_624.v16882.jpg',
-                'image/jpeg',
-                $this->randomPayload()
+                [
+                    $this->createImageResponse('image/jpeg', $this->randomPayload()),
+                    $this->createImageResponse('image/png', $this->randomPayload()),
+                ]
             ),
-            4 => $this->createImageResponse(
+            4 => $this->createImageResponses(
                 'http://example.org/grema-images/01.png',
-                'image/png',
-                $this->randomPayload()
+                [$this->createImageResponse('image/png', $this->randomPayload())]
             ),
-            5 => $this->createErrorResponse(
+            5 => $this->createImageResponses(
                 'http://example.org/grema-images/02.png',
-                403
+                [$this->createErrorResponse(403)]
             ),
         ];
 
@@ -70,26 +69,35 @@ class MediaWikiImageScraperTest extends \Tests\TestCase
 
         $scraper->scrap($savePath);
 
-        $this->assertBackedUpFiles(
-            "{$savePath}/armed_police_batrider/29449270_39f2dd14ddff797fa4bfd3effac87e43",
-            '.jpg',
-            $imageResponses[0]
-        );
-        $this->assertBackedUpFiles(
-            "{$savePath}/armed_police_batrider/23053160_8c2654ade5fea2fcf098a9ddd07370e9",
-            '.png',
-            $imageResponses[2]
-        );
-        $this->assertBackedUpFiles(
-            "{$savePath}/armed_police_batrider/14183520_8b4ad58db47103ddcabe37946228abe4",
-            '.jpg',
-            $imageResponses[3]
-        );
-        $this->assertBackedUpFiles(
-            "{$savePath}/great_mahou_daisakusen/87818460_f72db8782ae3a8ab20ed381c109fa8bb",
-            '.png',
-            $imageResponses[4]
-        );
+        $this->assertBackedUpFiles($savePath, $this->createExpectedImage(
+            'armed_police_batrider/29449270_39f2dd14ddff797fa4bfd3effac87e43',
+            $imageResponses[0]->url,
+            [
+                $this->createExpectedFile('image.jpg', $imageResponses[0]->httpResponses[0]),
+            ]
+        ));
+        $this->assertBackedUpFiles($savePath, $this->createExpectedImage(
+            'armed_police_batrider/23053160_8c2654ade5fea2fcf098a9ddd07370e9',
+            $imageResponses[2]->url,
+            [
+                $this->createExpectedFile('image.png', $imageResponses[2]->httpResponses[0]),
+            ]
+        ));
+        $this->assertBackedUpFiles($savePath, $this->createExpectedImage(
+            'armed_police_batrider/14183520_8b4ad58db47103ddcabe37946228abe4',
+            $imageResponses[3]->url,
+            [
+                $this->createExpectedFile('image-1.jpg', $imageResponses[3]->httpResponses[0]),
+                $this->createExpectedFile('image-2.png', $imageResponses[3]->httpResponses[1]),
+            ]
+        ));
+        $this->assertBackedUpFiles($savePath, $this->createExpectedImage(
+            'great_mahou_daisakusen/87818460_f72db8782ae3a8ab20ed381c109fa8bb',
+            $imageResponses[4]->url,
+            [
+                $this->createExpectedFile('image.png', $imageResponses[4]->httpResponses[0]),
+            ]
+        ));
 
         self::assertEquals(array_merge(
             $this->addGameContext('armed_police_batrider', [
@@ -171,24 +179,32 @@ class MediaWikiImageScraperTest extends \Tests\TestCase
         ), $scraper->getMessages());
     }
 
-    /**
-     * @param array<string,mixed> $expected
-     */
     private function assertBackedUpFiles(
-        string $directory,
-        string $imageExtension,
-        array $expected
+        string $savePath,
+        \stdClass $expectedImage
     ): void {
+        $directory = "{$savePath}/{$expectedImage->id}";
+
+        foreach ($expectedImage->files as $file) {
+            self::assertSame(
+                $file->payload,
+                $this->loadFile("{$directory}/{$file->filename}")
+            );
+        }
+
         self::assertSame(
-            $this->loadFile("{$directory}/image{$imageExtension}"),
-            (string)$expected['response']->getBody()
-        );
-        self::assertSame(
-            json_decode($this->loadFile("{$directory}/meta.json"), true),
             [
-                'url' => $expected['url'],
-                'mimeType' => $expected['response']->getHeaderLine('Content-Type'),
-            ]
+                'id' => $expectedImage->id,
+                'url' => $expectedImage->url,
+                'files' => array_map(
+                    fn (\stdClass $file) => [
+                        'filename' => $file->filename,
+                        'mimeType' => $file->mimeType,
+                    ],
+                    $expectedImage->files
+                )
+            ],
+            json_decode($this->loadFile("{$directory}/meta.json"), true)
         );
     }
 
@@ -221,10 +237,10 @@ class MediaWikiImageScraperTest extends \Tests\TestCase
     }
 
     /**
-     * @param array<string,mixed>[] $imageResponses
+     * @param \stdClass[] $responses
      * @return ImageFetcherInterface[]
      */
-    private function createImageFetchers(array $imageResponses): array
+    private function createImageFetchers(array $responses): array
     {
         $fetchers = [
             $this->createMock(ImageFetcherInterface::class),
@@ -237,16 +253,20 @@ class MediaWikiImageScraperTest extends \Tests\TestCase
         $fetchers[2]->method('handles')->willReturn(true);
         $fetchers[2]->method('fetch')
             ->will(self::returnCallback(function (string $url) use (
-                $imageResponses
-            ): ResponseInterface {
-                foreach ($imageResponses as $imageResponse) {
-                    if ($imageResponse['url'] === $url) {
-                        $response = $imageResponse['response'];
-                        if ($response->getStatusCode() !== 200) {
+                $responses
+            ): array {
+                foreach ($responses as $response) {
+                    if ($response->url !== $url) {
+                        continue;
+                    }
+
+                    foreach ($response->httpResponses as $httpResponse) {
+                        if ($httpResponse->getStatusCode() !== 200) {
                             throw new ImageNotFoundException();
                         }
-                        return $response;
                     }
+
+                    return $response->httpResponses;
                 }
                 self::fail("Response for `{$url}` does not exist");
             }));
@@ -255,32 +275,58 @@ class MediaWikiImageScraperTest extends \Tests\TestCase
     }
 
     /**
-     * @return array<string,mixed>
+     * @param \stdClass[] $files
      */
-    private function createImageResponse(
+    private function createExpectedImage(
+        string $id,
         string $url,
-        string $contentType,
-        string $payload
-    ): array {
-        return [
-            'url' => $url,
-            'response' => new Response(
-                200,
-                ['Content-Type' => $contentType],
-                $payload
-            ),
-        ];
+        array $files
+    ): \stdClass {
+        $image = new \stdClass();
+        $image->id = $id;
+        $image->url = $url;
+        $image->files = $files;
+        return $image;
+    }
+
+    private function createExpectedFile(
+        string $filename,
+        ResponseInterface $response
+    ): \stdClass {
+        $file = new \stdClass();
+        $file->filename = $filename;
+        $file->mimeType = $response->getHeaderLine('Content-Type');
+        $file->payload = (string)$response->getBody();
+        return $file;
     }
 
     /**
-     * @return array<string,mixed>
+     * @param ResponseInterface[] $httpResponses
      */
-    private function createErrorResponse(string $url, int $httpStatus): array
+    private function createImageResponses(
+        string $url,
+        array $httpResponses
+    ): \stdClass {
+        $responses = new \stdClass();
+        $responses->url = $url;
+        $responses->httpResponses = $httpResponses;
+        return $responses;
+    }
+
+    private function createImageResponse(
+        string $contentType,
+        string $payload
+    ): ResponseInterface {
+        return new Response(
+            200,
+            ['Content-Type' => $contentType],
+            $payload
+        );
+    }
+
+    private function createErrorResponse(int $httpStatus): ResponseInterface
     {
-        return [
-            'url' => $url,
-            'response' => new Response($httpStatus),
-        ];
+        return new Response($httpStatus);
     }
 
     /**

@@ -176,18 +176,28 @@ final class MediaWikiImageScraper
         }
 
         $this->addInfoMessage(self::MSG_FETCH_IMAGE);
-        $response = $this->fetchImage($url);
+        $responses = $this->fetchImages($url);
         $this->addInfoMessage(self::MSG_IMAGE_FETCHED);
 
         $image = new \stdClass();
         $image->id = $imageId;
         $image->url = $url;
-        $image->mimeType = $response->getHeaderLine('Content-Type');
-        $image->payload = (string)$response->getBody();
+        $image->files = array_map(
+            function (ResponseInterface $response): \stdClass {
+                $file = new \stdClass();
+                $file->mimeType = $response->getHeaderLine('Content-Type');
+                $file->payload = (string)$response->getBody();
+                return $file;
+            },
+            $responses
+        );
         return $image;
     }
 
-    private function fetchImage(string $url): ResponseInterface
+    /**
+     * @return ResponseInterface[]
+     */
+    private function fetchImages(string $url): array
     {
         foreach ($this->imageFetchers as $imageFetcher) {
             if ($imageFetcher->handles($url)) {
@@ -222,17 +232,25 @@ final class MediaWikiImageScraper
         $dir = "{$this->savePath}/{$image->id}";
         mkdir($dir, 0777, true);
 
-        file_put_contents(
-            "{$dir}/image{$this->getImageExtension($image)}",
-            $image->payload
-        );
+        $numFiles = sizeof($image->files);
+        foreach ($image->files as $index => $file) {
+            $file->filename = $this->getImageFilename($file, $numFiles, $index);
+            file_put_contents("{$dir}/{$file->filename}", $file->payload);
+        }
 
         file_put_contents(
             "{$dir}/meta.json",
             json_encode(
                 [
+                    'id' => $image->id,
                     'url' => $image->url,
-                    'mimeType' => $image->mimeType,
+                    'files' => array_map(
+                        fn (\stdClass $file) => [
+                            'filename' => $file->filename,
+                            'mimeType' => $file->mimeType,
+                        ],
+                        $image->files
+                    ),
                 ],
                 JSON_PRETTY_PRINT
             )
@@ -241,9 +259,18 @@ final class MediaWikiImageScraper
         $this->addSuccessMessage(self::MSG_IMAGE_SAVED);
     }
 
-    private function getImageExtension(\stdClass $image): string
+    private function getImageFilename(
+        \stdClass $file,
+        int $numFiles,
+        int $index
+    ): string {
+        $filename = $numFiles > 1 ? 'image-' . ($index + 1) : 'image';
+        return $filename . $this->getImageExtension($file->mimeType);
+    }
+
+    private function getImageExtension(string $mimeType): string
     {
-        switch ($image->mimeType) {
+        switch ($mimeType) {
             case 'image/jpeg':
             case 'image/jpg':
                 return '.jpg';

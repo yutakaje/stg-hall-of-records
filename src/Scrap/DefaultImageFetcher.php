@@ -33,7 +33,10 @@ final class DefaultImageFetcher implements ImageFetcherInterface
         return true;
     }
 
-    public function fetch(string $url): ResponseInterface
+    /**
+     * @return ResponseInterface[]
+     */
+    public function fetch(string $url): array
     {
         $response = $this->sendRequest($url);
 
@@ -41,7 +44,7 @@ final class DefaultImageFetcher implements ImageFetcherInterface
             throw new ImageNotFoundException("Image not found at url `{$url}`");
         }
 
-        return $response;
+        return [$response];
     }
 
     private function sendRequest(string $url): ResponseInterface

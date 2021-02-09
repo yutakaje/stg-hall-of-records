@@ -51,13 +51,12 @@ class DefaultImageFetcherTest extends \Tests\TestCase
 
         $fetcher = new DefaultImageFetcher($httpClient);
 
-        self::assertSame($response, $fetcher->fetch($url));
+        self::assertSame([$response], $fetcher->fetch($url));
     }
 
     public function testFetchWith404(): void
     {
         $url = 'https://example.org/' . md5(random_bytes(32));
-        $response =
 
         $httpClient = $this->createMock(HttpClientInterface::class);
         $httpClient->method('sendRequest')
