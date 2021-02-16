@@ -36,6 +36,11 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         $this->scoreIdGenerator = $this->createIdGenerator();
     }
 
+    protected function userAgent(): string
+    {
+        return 'Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/96.0';
+    }
+
     /**
      * @param \Generator<int> $generator
      */

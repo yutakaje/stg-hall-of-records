@@ -14,18 +14,17 @@ declare(strict_types=1);
 namespace Stg\HallOfRecords\Scrap;
 
 use GuzzleHttp\Psr7\Request;
-use Psr\Http\Client\ClientInterface as HttpClientInterface;
-use Psr\Http\Client\RequestExceptionInterface;
 use Psr\Http\Message\ResponseInterface;
+use Stg\HallOfRecords\Http\HttpContentFetcher;
 use Stg\HallOfRecords\Error\StgException;
 
 final class DefaultImageFetcher implements ImageFetcherInterface
 {
-    private HttpClientInterface $httpClient;
+    private HttpContentFetcher $httpContentFetcher;
 
-    public function __construct(HttpClientInterface $httpClient)
+    public function __construct(HttpContentFetcher $httpContentFetcher)
     {
-        $this->httpClient = $httpClient;
+        $this->httpContentFetcher = $httpContentFetcher;
     }
 
     public function handles(string $url): bool
@@ -38,6 +37,10 @@ final class DefaultImageFetcher implements ImageFetcherInterface
      */
     public function fetch(string $url): array
     {
+        if (!$this->handles($url)) {
+            throw new StgException("Fetcher cannot handle url: `{$url}`");
+        }
+
         $response = $this->sendRequest($url);
 
         if ($response->getStatusCode() !== 200) {
@@ -49,12 +52,8 @@ final class DefaultImageFetcher implements ImageFetcherInterface
 
     private function sendRequest(string $url): ResponseInterface
     {
-        try {
-            return $this->httpClient->sendRequest(
-                new Request('GET', $url)
-            );
-        } catch (RequestExceptionInterface $exception) {
-            throw new StgException("Error fetching image: {$exception->getMessage()}");
-        }
+        return $this->httpContentFetcher->sendRequest(
+            new Request('GET', $url)
+        );
     }
 }

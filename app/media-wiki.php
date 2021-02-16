@@ -25,6 +25,7 @@ use Stg\HallOfRecords\Data\Score\ScoreRepositoryInterface;
 use Stg\HallOfRecords\Data\Setting\SettingRepository;
 use Stg\HallOfRecords\Data\Setting\SettingRepositoryInterface;
 use Stg\HallOfRecords\Export\MediaWikiExporter;
+use Stg\HallOfRecords\Http\HttpContentFetcher;
 use Stg\HallOfRecords\Import\MediaWikiImporter;
 use Stg\HallOfRecords\Import\MediaWiki\YamlExtractor;
 use Stg\HallOfRecords\Import\MediaWiki\YamlParser;
@@ -36,6 +37,7 @@ use Stg\HallOfRecords\Scrap\DefaultImageFetcher;
 
 return [
     'wiki-url' => 'https://shmups.wiki',
+    'user-agent' => 'Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/96.0',
 
     'save-path' => static function (): string {
         return dirname(__DIR__) . '/public/image-scraper/save';
@@ -73,6 +75,10 @@ return [
 
     DefaultImageFetcher::class => DI\autowire(),
 
+    HttpContentFetcher::class => DI\create()->constructor(
+        DI\get(HttpClientInterface::class),
+        DI\get('user-agent')
+    ),
     HttpClientInterface::class => DI\create(HttpClient::class),
 
     LoggerInterface::class => static function (): Logger {

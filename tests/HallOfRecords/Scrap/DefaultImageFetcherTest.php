@@ -17,6 +17,7 @@ use GuzzleHttp\Psr7\Response;
 use Psr\Http\Client\ClientInterface as HttpClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Stg\HallOfRecords\Http\HttpContentFetcher;
 use Stg\HallOfRecords\Scrap\DefaultImageFetcher;
 use Stg\HallOfRecords\Scrap\ImageNotFoundException;
 
@@ -24,7 +25,7 @@ class DefaultImageFetcherTest extends \Tests\TestCase
 {
     public function testHandles(): void
     {
-        $fetcher = new DefaultImageFetcher(
+        $fetcher = $this->createImagerFetcher(
             $this->createMock(HttpClientInterface::class)
         );
 
@@ -45,11 +46,12 @@ class DefaultImageFetcherTest extends \Tests\TestCase
                 $url,
                 $response
             ): ResponseInterface {
+                self::assertSame('GET', $request->getMethod());
                 self::assertSame($url, (string)$request->getUri());
                 return $response;
             }));
 
-        $fetcher = new DefaultImageFetcher($httpClient);
+        $fetcher = $this->createImagerFetcher($httpClient);
 
         self::assertSame([$response], $fetcher->fetch($url));
     }
@@ -62,7 +64,7 @@ class DefaultImageFetcherTest extends \Tests\TestCase
         $httpClient->method('sendRequest')
             ->willReturn(new Response(404));
 
-        $fetcher = new DefaultImageFetcher($httpClient);
+        $fetcher = $this->createImagerFetcher($httpClient);
 
         try {
             $fetcher->fetch($url);
@@ -70,5 +72,13 @@ class DefaultImageFetcherTest extends \Tests\TestCase
         } catch (ImageNotFoundException $exception) {
             self::assertStringContainsString($url, $exception->getMessage());
         }
+    }
+
+    private function createImagerFetcher(
+        HttpClientInterface $httpClient
+    ): DefaultImageFetcher {
+        return new DefaultImageFetcher(
+            new HttpContentFetcher($httpClient, $this->userAgent())
+        );
     }
 }
