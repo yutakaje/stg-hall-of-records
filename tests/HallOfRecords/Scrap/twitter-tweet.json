@@ -1,0 +1,215 @@
+{
+  "globalObjects": {
+    "tweets": {
+      "2188147843269071806": {
+        "created_at": "Sun Jan 19 13:23:07 +0000 2020",
+        "id_str": "2188147843269071806",
+        "full_text": "@{{ username }} おめです！",
+        "display_text_range": [],
+        "entities": {
+          "user_mentions": [
+            {
+              "screen_name": "{{ username }}",
+              "name": "誰か",
+              "id_str": "16269773048",
+              "indices": []
+            }
+          ]
+        },
+        "source": "<a href=\"http://yoshika23218.com/\" rel=\"nofollow\">twitcle plus</a>",
+        "in_reply_to_status_id_str": "{{ tweetId }}",
+        "in_reply_to_user_id_str": "16269773048",
+        "in_reply_to_screen_name": "{{ username }}",
+        "user_id_str": "671465856",
+        "retweet_count": 0,
+        "favorite_count": 0,
+        "reply_count": 0,
+        "quote_count": 0,
+        "conversation_id_str": "{{ tweetId }}",
+        "lang": "ja"
+      },
+      "1282871886543853528": {
+        "created_at": "Sun Jan 19 15:19:48 +0000 2020",
+        "id_str": "1282871886543853528",
+        "full_text": "@fx8wsdk3 ありがとう",
+        "display_text_range": [],
+        "entities": {
+          "user_mentions": [
+            {
+              "screen_name": "fx8wsdk3",
+              "name": "FX-DK",
+              "id_str": "86474218532",
+              "indices": []
+            }
+          ]
+        },
+        "source": "<a href=\"http://twitter.com/#!/download/ipad\" rel=\"nofollow\">Twitter for iPad</a>",
+        "in_reply_to_status_id_str": "3162818866879191383",
+        "in_reply_to_user_id_str": "86474218532",
+        "in_reply_to_screen_name": "fx8wsdk3",
+        "user_id_str": "16269773048",
+        "retweet_count": 0,
+        "favorite_count": 0,
+        "reply_count": 0,
+        "quote_count": 0,
+        "conversation_id_str": "{{ tweetId }}",
+        "lang": "ja"
+      },
+      "{{ tweetId }}": {
+        "created_at": "Sun Jan 19 09:12:58 +0000 2020",
+        "id_str": "{{ tweetId }}",
+        "full_text": "やった〜  https://t.co/82es904i5yX3",
+        "display_text_range": [],
+        "entities": {
+          "media": [
+            {
+              "id_str": "412884187282806",
+              "indices": [],
+              "media_url": "http://pbs.twimg.com/media/3b8i0pTLAA4iQ.jpg",
+              "media_url_https": "https://pbs.twimg.com/media/3b8i0pTLAA4iQ.jpg",
+              "url": "https://t.co/82es904i5yX3",
+              "display_url": "pic.twitter.com/82es904i5yX3",
+              "expanded_url": "https://twitter.com/{{ username }}/status/{{ tweetId }}/photo/1",
+              "type": "photo",
+              "original_info": {},
+              "sizes": {}
+            },
+            {
+              "id_str": "8443106928064651821",
+              "indices": [],
+              "media_url": "http://pbs.twimg.com/media/XobAEGfUwFFxEq7.jpg",
+              "media_url_https": "https://pbs.twimg.com/media/XobAEGfUwFFxEq7.jpg",
+              "url": "https://t.co/82es904i5yX3",
+              "display_url": "pic.twitter.com/82es904i5yX3",
+              "expanded_url": "https://twitter.com/{{ username }}/status/{{ tweetId }}/photo/1",
+              "type": "photo",
+              "original_info": {},
+              "sizes": {}
+            },
+            {
+              "id_str": "694808214410365432",
+              "indices": [],
+              "media_url": "http://pbs.twimg.com/media/Y5dUm984ABAgQ1Ct.jpg",
+              "media_url_https": "https://pbs.twimg.com/media/Y5dUm984ABAgQ1Ct.jpg",
+              "url": "https://t.co/82es904i5yX3",
+              "display_url": "pic.twitter.com/82es904i5yX3",
+              "expanded_url": "https://twitter.com/{{ username }}/status/{{ tweetId }}/photo/1",
+              "type": "photo",
+              "original_info": {},
+              "sizes": {}
+            }
+          ]
+        },
+        "extended_entities": {
+          "media": [
+            {
+              "id_str": "412884187282806",
+              "indices": [],
+              "media_url": "http://pbs.twimg.com/media/3b8i0pTLAA4iQ.jpg",
+              "media_url_https": "https://pbs.twimg.com/media/3b8i0pTLAA4iQ.jpg",
+              "url": "https://t.co/82es904i5yX3",
+              "display_url": "pic.twitter.com/82es904i5yX3",
+              "expanded_url": "https://twitter.com/{{ username }}/status/{{ tweetId }}/photo/1",
+              "type": "photo",
+              "original_info": {},
+              "sizes": {},
+              "media_key": "3_412884187282806",
+              "ext_media_color": {},
+              "ext_alt_text": null,
+              "ext_media_availability": {},
+              "ext": {}
+            },
+            {
+              "id_str": "8443106928064651821",
+              "indices": [],
+              "media_url": "http://pbs.twimg.com/media/XobAEGfUwFFxEq7.jpg",
+              "media_url_https": "https://pbs.twimg.com/media/XobAEGfUwFFxEq7.jpg",
+              "url": "https://t.co/82es904i5yX3",
+              "display_url": "pic.twitter.com/82es904i5yX3",
+              "expanded_url": "https://twitter.com/{{ username }}/status/{{ tweetId }}/photo/1",
+              "type": "photo",
+              "original_info": {},
+              "sizes": {},
+              "media_key": "3_8443106928064651821",
+              "ext_alt_text": null,
+              "ext_media_availability": {},
+              "ext_media_color": {},
+              "ext": {}
+            },
+            {
+              "id_str": "694808214410365432",
+              "indices": [],
+              "media_url": "http://pbs.twimg.com/media/Y5dUm984ABAgQ1Ct.jpg",
+              "media_url_https": "https://pbs.twimg.com/media/Y5dUm984ABAgQ1Ct.jpg",
+              "url": "https://t.co/82es904i5yX3",
+              "display_url": "pic.twitter.com/82es904i5yX3",
+              "expanded_url": "https://twitter.com/{{ username }}/status/{{ tweetId }}/photo/1",
+              "type": "photo",
+              "original_info": {},
+              "sizes": {},
+              "media_key": "3_694808214410365432",
+              "ext_alt_text": null,
+              "ext_media_color": {},
+              "ext_media_availability": {},
+              "ext": {}
+            }
+          ]
+        },
+        "source": "<a href=\"http://twitter.com/#!/download/ipad\" rel=\"nofollow\">Twitter for iPad</a>",
+        "user_id_str": "16269773048",
+        "retweet_count": 4,
+        "favorite_count": 34,
+        "reply_count": 3,
+        "quote_count": 0,
+        "conversation_id_str": "{{ tweetId }}",
+        "possibly_sensitive_editable": true,
+        "lang": "ja"
+      },
+      "3162818866879191383": {
+        "created_at": "Sun Jan 19 13:31:18 +0000 2020",
+        "id_str": "3162818866879191383",
+        "full_text": "@{{ username }} おめでとうございます！",
+        "display_text_range": [],
+        "entities": {
+          "user_mentions": [
+            {
+              "screen_name": "{{ username }}",
+              "name": "誰か",
+              "id_str": "16269773048",
+              "indices": []
+            }
+          ]
+        },
+        "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
+        "in_reply_to_status_id_str": "{{ tweetId }}",
+        "in_reply_to_user_id_str": "16269773048",
+        "in_reply_to_screen_name": "{{ username }}",
+        "user_id_str": "431517550",
+        "retweet_count": 0,
+        "favorite_count": 0,
+        "reply_count": 1,
+        "quote_count": 0,
+        "conversation_id_str": "{{ tweetId }}",
+        "lang": "ja"
+      }
+    },
+    "users": {
+    },
+    "moments": {
+    },
+    "cards": {
+    },
+    "places": {
+    },
+    "media": {
+    },
+    "broadcasts": {
+    },
+    "topics": {
+    },
+    "lists": {
+    }
+  },
+  "timeline": {
+  }
+}
