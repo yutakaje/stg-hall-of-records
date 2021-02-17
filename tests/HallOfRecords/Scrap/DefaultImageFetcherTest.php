@@ -14,9 +14,6 @@ declare(strict_types=1);
 namespace Tests\HallOfRecords\Scrap;
 
 use GuzzleHttp\Psr7\Response;
-use Psr\Http\Client\ClientInterface as HttpClientInterface;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 use Stg\HallOfRecords\Http\HttpContentFetcher;
 use Stg\HallOfRecords\Scrap\DefaultImageFetcher;
 use Stg\HallOfRecords\Scrap\ImageNotFoundException;
@@ -25,9 +22,7 @@ class DefaultImageFetcherTest extends \Tests\TestCase
 {
     public function testHandles(): void
     {
-        $fetcher = $this->createImagerFetcher(
-            $this->createMock(HttpClientInterface::class)
-        );
+        $fetcher = $this->createImagerFetcher([]);
 
         // Fetcher should handle any url.
         self::assertTrue($fetcher->handles(base64_encode(random_bytes(32))));
@@ -38,20 +33,9 @@ class DefaultImageFetcherTest extends \Tests\TestCase
         $url = 'https://example.org/' . md5(random_bytes(32));
         $response = new Response(200, [], random_bytes(64));
 
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient->method('sendRequest')
-            ->will(self::returnCallback(function (
-                RequestInterface $request
-            ) use (
-                $url,
-                $response
-            ): ResponseInterface {
-                self::assertSame('GET', $request->getMethod());
-                self::assertSame($url, (string)$request->getUri());
-                return $response;
-            }));
-
-        $fetcher = $this->createImagerFetcher($httpClient);
+        $fetcher = $this->createImagerFetcher([
+            $url => $response,
+        ]);
 
         self::assertSame([$response], $fetcher->fetch($url));
     }
@@ -60,11 +44,9 @@ class DefaultImageFetcherTest extends \Tests\TestCase
     {
         $url = 'https://example.org/' . md5(random_bytes(32));
 
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient->method('sendRequest')
-            ->willReturn(new Response(404));
-
-        $fetcher = $this->createImagerFetcher($httpClient);
+        $fetcher = $this->createImagerFetcher([
+            $url => new Response(404),
+        ]);
 
         try {
             $fetcher->fetch($url);
@@ -74,11 +56,19 @@ class DefaultImageFetcherTest extends \Tests\TestCase
         }
     }
 
-    private function createImagerFetcher(
-        HttpClientInterface $httpClient
-    ): DefaultImageFetcher {
+    /**
+     * @param array<string,Response> $responses
+     */
+    private function createImagerFetcher(array $responses): DefaultImageFetcher
+    {
         return new DefaultImageFetcher(
-            new HttpContentFetcher($httpClient, $this->userAgent())
+            new HttpContentFetcher(
+                $this->createHttpClient(array_map(
+                    fn (Response $response) => fn () => $response,
+                    $responses
+                )),
+                $this->userAgent()
+            )
         );
     }
 }

@@ -20,16 +20,38 @@ use Stg\HallOfRecords\Http\HttpContentFetcher;
 final class TwitterAccessHeaders
 {
     private HttpContentFetcher $httpContentFetcher;
+    private bool $useCache;
+    /** @var array<string,string> */
+    private array $cachedHeaders;
 
     public function __construct(HttpContentFetcher $httpContentFetcher)
     {
         $this->httpContentFetcher = $httpContentFetcher;
+        $this->useCache = true;
+        $this->cachedHeaders = [];
+    }
+
+    public function useCache(bool $flag): void
+    {
+        $this->useCache = $flag;
     }
 
     /**
      * @return array<string,string>
      */
     public function getHeaders(): array
+    {
+        if (!$this->useCache || $this->cachedHeaders == null) {
+            $this->cachedHeaders = $this->fetchHeaders();
+        }
+
+        return $this->cachedHeaders;
+    }
+
+    /**
+     * @return array<string,string>
+     */
+    private function fetchHeaders(): array
     {
         $accessToken = $this->extractAccessToken(
             $this->fetchMainJs(

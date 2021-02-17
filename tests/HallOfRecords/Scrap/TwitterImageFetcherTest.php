@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Tests\HallOfRecords\Scrap;
 
 use GuzzleHttp\Psr7\Response;
-use Psr\Http\Client\ClientInterface as HttpClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Stg\HallOfRecords\Error\StgException;
@@ -26,9 +25,7 @@ class TwitterImageFetcherTest extends \Tests\TestCase
 {
     public function testHandles(): void
     {
-        $fetcher = $this->createImagerFetcher(
-            $this->createMock(HttpClientInterface::class)
-        );
+        $fetcher = $this->createImagerFetcher([]);
 
         self::assertTrue($fetcher->handles($this->tweetUrl()));
         self::assertFalse($fetcher->handles('https://twitter.com/' . md5(random_bytes(32))));
@@ -50,97 +47,75 @@ class TwitterImageFetcherTest extends \Tests\TestCase
             'image2' => new Response(200, [], random_bytes(64)),
             'image3' => new Response(200, [], random_bytes(64)),
         ];
+        $callCounts = [
+            'indexPage' => 1,
+            'mainJs' => 1,
+            'guestToken' => 1,
+            'tweetJson' => 2,
+        ];
 
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient->method('sendRequest')
-            ->will(self::returnCallback(function (RequestInterface $request) use (
-                $tweetId,
-                $guestToken,
-                $responses
+        $checkCallCount = function (string $name) use (&$callCounts): void {
+            if ($callCounts[$name]-- === 0) {
+                self::fail("Page `{$name}` is called too many times");
+            }
+        };
+
+        $fetcher = $this->createImagerFetcher([
+            $this->indexPageUrl() => function (RequestInterface $request) use (
+                $responses,
+                $checkCallCount
             ): ResponseInterface {
-                $requestUrl = (string)$request->getUri()->withQuery('');
-                switch ($requestUrl) {
-                    case 'https://twitter.com/':
-                        self::assertSame('GET', $request->getMethod());
-                        return $responses['indexPage'];
+                $checkCallCount('indexPage');
+                self::assertSame('GET', $request->getMethod());
+                self::assertSame($this->userAgent(), $request->getHeaderLine('User-Agent'));
+                return $responses['indexPage'];
+            },
+            $this->mainJsUrl() => function (RequestInterface $request) use (
+                $responses,
+                $checkCallCount
+            ): ResponseInterface {
+                $checkCallCount('mainJs');
+                self::assertSame('GET', $request->getMethod());
+                self::assertSame($this->userAgent(), $request->getHeaderLine('User-Agent'));
+                return $responses['mainJs'];
+            },
+            $this->guestTokenUrl() => function (RequestInterface $request) use (
+                $responses,
+                $checkCallCount
+            ): ResponseInterface {
+                $checkCallCount('guestToken');
+                self::assertSame('POST', $request->getMethod());
+                self::assertSame($this->userAgent(), $request->getHeaderLine('User-Agent'));
+                self::assertSame('application/json', $request->getHeaderLine('Content-Type'));
+                self::assertSame(
+                    'Bearer AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUjeROCu5E6HI8'
+                    . 'nZzx4upTs3D1%vZt7ft8kF81IULq1cH6hjTLJu4vF33AGAWWCpjnTA',
+                    $request->getHeaderLine('Authorization')
+                );
+                return $responses['guestToken'];
+            },
+            $this->tweetJsonUrl($tweetId) => function (RequestInterface $request) use (
+                $responses,
+                $guestToken,
+                $checkCallCount
+            ): ResponseInterface {
+                $checkCallCount('tweetJson');
+                self::assertSame('GET', $request->getMethod());
+                self::assertSame($this->userAgent(), $request->getHeaderLine('User-Agent'));
+                self::assertSame(
+                    'Bearer AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUjeROCu5E6HI8'
+                    . 'nZzx4upTs3D1%vZt7ft8kF81IULq1cH6hjTLJu4vF33AGAWWCpjnTA',
+                    $request->getHeaderLine('Authorization')
+                );
+                self::assertSame($guestToken, $request->getHeaderLine('X-Guest-Token'));
+                return $responses['tweetJson'];
+            },
+            'https://pbs.twimg.com/media/3b8i0pTLAA4iQ.jpg' => fn () => $responses['image1'],
+            'https://pbs.twimg.com/media/XobAEGfUwFFxEq7.jpg' => fn () => $responses['image2'],
+            'https://pbs.twimg.com/media/Y5dUm984ABAgQ1Ct.jpg' => fn () => $responses['image3'],
+        ]);
 
-                    case 'https://abs.twimg.com/responsive-web/client-web/main.40da0595.js':
-                        self::assertSame('GET', $request->getMethod());
-                        return $responses['mainJs'];
-
-                    case 'https://api.twitter.com/1.1/guest/activate.json':
-                        self::assertSame('POST', $request->getMethod());
-                        self::assertSame(
-                            $this->userAgent(),
-                            $request->getHeaderLine('User-Agent')
-                        );
-                        self::assertSame(
-                            'application/json',
-                            $request->getHeaderLine('Content-Type')
-                        );
-                        self::assertSame(
-                            'Bearer AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUjeROCu5E6HI8'
-                            . 'nZzx4upTs3D1%vZt7ft8kF81IULq1cH6hjTLJu4vF33AGAWWCpjnTA',
-                            $request->getHeaderLine('Authorization')
-                        );
-                        return $responses['guestToken'];
-
-                    case "https://api.twitter.com/2/timeline/conversation/{$tweetId}.json":
-                        self::assertSame('GET', $request->getMethod());
-                        self::assertSame(
-                            'include_profile_interstitial_type=1'
-                            . '&include_blocking=1'
-                            . '&include_blocked_by=1'
-                            . '&include_followed_by=1'
-                            . '&include_want_retweets=1'
-                            . '&include_mute_edge=1'
-                            . '&include_can_dm=1'
-                            . '&include_can_media_tag=1'
-                            . '&skip_status=1'
-                            . '&cards_platform=Web-12'
-                            . '&include_cards=1'
-                            . '&include_ext_alt_text=true'
-                            . '&include_quote_count=true'
-                            . '&include_reply_count=1'
-                            . '&tweet_mode=extended'
-                            . '&include_entities=true'
-                            . '&include_user_entities=true'
-                            . '&include_ext_media_color=true'
-                            . '&include_ext_media_availability=true'
-                            . '&send_error_codes=true'
-                            . '&simple_quoted_tweet=true'
-                            . '&count=20'
-                            . '&include_ext_has_birdwatch_notes=false'
-                            . '&ext=mediaStats%2ChighlightedLabel',
-                            $request->getUri()->getQuery()
-                        );
-                        self::assertSame(
-                            $this->userAgent(),
-                            $request->getHeaderLine('User-Agent')
-                        );
-                        self::assertSame(
-                            'Bearer AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUjeROCu5E6HI8'
-                            . 'nZzx4upTs3D1%vZt7ft8kF81IULq1cH6hjTLJu4vF33AGAWWCpjnTA',
-                            $request->getHeaderLine('Authorization')
-                        );
-                        self::assertSame($guestToken, $request->getHeaderLine('X-Guest-Token'));
-                        return $responses['tweetJson'];
-
-                    case 'https://pbs.twimg.com/media/3b8i0pTLAA4iQ.jpg':
-                        return $responses['image1'];
-
-                    case 'https://pbs.twimg.com/media/XobAEGfUwFFxEq7.jpg':
-                        return $responses['image2'];
-
-                    case 'https://pbs.twimg.com/media/Y5dUm984ABAgQ1Ct.jpg':
-                        return $responses['image3'];
-
-                    default:
-                        self::fail("Unexpected url: `{$requestUrl}`");
-                }
-            }));
-
-        $fetcher = $this->createImagerFetcher($httpClient);
+        $tweetUrl = $this->tweetUrl($username, $tweetId);
 
         self::assertSame(
             [
@@ -148,10 +123,11 @@ class TwitterImageFetcherTest extends \Tests\TestCase
                 $responses['image2'],
                 $responses['image3'],
             ],
-            $fetcher->fetch(
-                $this->tweetUrl($username, $tweetId)
-            )
+            $fetcher->fetch($tweetUrl)
         );
+
+        // Call again to make sure resources are not fetched too many times.
+        $fetcher->fetch($tweetUrl);
     }
 
     public function testFetchWith404OnIndexPage(): void
@@ -196,23 +172,12 @@ class TwitterImageFetcherTest extends \Tests\TestCase
 
         $responses[$pageName] = new Response(404);
 
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient->method('sendRequest')
-            ->will(self::returnCallback(function (RequestInterface $request) use (
-                $urls,
-                $responses
-            ): ResponseInterface {
-                $requestUrl = (string)$request->getUri()->withQuery('');
-                foreach ($urls as $name => $url) {
-                    if ($requestUrl === $url) {
-                        return $responses[$name];
-                    }
-                }
-                self::fail("Unexpected url: `{$requestUrl}`");
-            }));
-
-        $fetcher = $this->createImagerFetcher($httpClient);
+        $fetcher = $this->createImagerFetcher([
+            $urls['indexPage'] => fn () => $responses['indexPage'],
+            $urls['mainJs'] => fn () => $responses['mainJs'],
+            $urls['guestToken'] => fn () => $responses['guestToken'],
+            $urls['tweetJson'] => fn () => $responses['tweetJson'],
+        ]);
 
         try {
             $fetcher->fetch(
@@ -267,23 +232,15 @@ class TwitterImageFetcherTest extends \Tests\TestCase
 
         $responses[$imageName] = new Response(404);
 
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient->method('sendRequest')
-            ->will(self::returnCallback(function (RequestInterface $request) use (
-                $urls,
-                $responses
-            ): ResponseInterface {
-                $requestUrl = (string)$request->getUri()->withQuery('');
-                foreach ($urls as $name => $url) {
-                    if ($requestUrl === $url) {
-                        return $responses[$name];
-                    }
-                }
-                self::fail("Unexpected url: `{$requestUrl}`");
-            }));
-
-        $fetcher = $this->createImagerFetcher($httpClient);
+        $fetcher = $this->createImagerFetcher([
+            $urls['indexPage'] => fn () => $responses['indexPage'],
+            $urls['mainJs'] => fn () => $responses['mainJs'],
+            $urls['guestToken'] => fn () => $responses['guestToken'],
+            $urls['tweetJson'] => fn () => $responses['tweetJson'],
+            $urls['image1'] => fn () => $responses['image1'],
+            $urls['image2'] => fn () => $responses['image2'],
+            $urls['image3'] => fn () => $responses['image3'],
+        ]);
 
         try {
             $fetcher->fetch(
@@ -327,7 +284,31 @@ class TwitterImageFetcherTest extends \Tests\TestCase
 
     private function tweetJsonUrl(string $tweetId): string
     {
-        return "https://api.twitter.com/2/timeline/conversation/{$tweetId}.json";
+        return "https://api.twitter.com/2/timeline/conversation/{$tweetId}.json"
+            . '?include_profile_interstitial_type=1'
+            . '&include_blocking=1'
+            . '&include_blocked_by=1'
+            . '&include_followed_by=1'
+            . '&include_want_retweets=1'
+            . '&include_mute_edge=1'
+            . '&include_can_dm=1'
+            . '&include_can_media_tag=1'
+            . '&skip_status=1'
+            . '&cards_platform=Web-12'
+            . '&include_cards=1'
+            . '&include_ext_alt_text=true'
+            . '&include_quote_count=true'
+            . '&include_reply_count=1'
+            . '&tweet_mode=extended'
+            . '&include_entities=true'
+            . '&include_user_entities=true'
+            . '&include_ext_media_color=true'
+            . '&include_ext_media_availability=true'
+            . '&send_error_codes=true'
+            . '&simple_quoted_tweet=true'
+            . '&count=20'
+            . '&include_ext_has_birdwatch_notes=false'
+            . '&ext=mediaStats%2ChighlightedLabel';
     }
 
     private function indexPageResponse(): ResponseInterface
@@ -361,11 +342,17 @@ class TwitterImageFetcherTest extends \Tests\TestCase
         return $this->loadFile(__DIR__ . "/twitter-{$name}");
     }
 
+    /**
+     * @param array<string,\Closure> $responseCallbacks
+     */
     private function createImagerFetcher(
-        HttpClientInterface $httpClient
+        array $responseCallbacks
     ): TwitterImageFetcher {
         return new TwitterImageFetcher(
-            new HttpContentFetcher($httpClient, $this->userAgent())
+            new HttpContentFetcher(
+                $this->createHttpClient($responseCallbacks),
+                $this->userAgent()
+            )
         );
     }
 }

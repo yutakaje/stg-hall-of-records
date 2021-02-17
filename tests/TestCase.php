@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace Tests;
 
+use Psr\Http\Client\ClientInterface as HttpClientInterface;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 use Stg\HallOfRecords\Data\Game\Game;
 use Stg\HallOfRecords\Data\Game\Games;
 use Stg\HallOfRecords\Data\Score\Score;
@@ -124,5 +127,27 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     protected static function succeed(): void
     {
         self::assertTrue(true);
+    }
+
+    /**
+     * @param array<string,\Closure> $responseCallbacks
+     */
+    protected function createHttpClient(array $responseCallbacks): HttpClientInterface
+    {
+        $httpClient = $this->createMock(HttpClientInterface::class);
+        $httpClient->method('sendRequest')
+            ->will(self::returnCallback(function (
+                RequestInterface $request
+            ) use ($responseCallbacks): ResponseInterface {
+                $requestUrl = (string)$request->getUri();
+                foreach ($responseCallbacks as $url => $responseCallback) {
+                    if ($url === $requestUrl) {
+                        return $responseCallback($request);
+                    }
+                }
+                self::fail("Response for `{$requestUrl}` does not exist");
+            }));
+
+        return $httpClient;
     }
 }
