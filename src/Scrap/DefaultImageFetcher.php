@@ -21,14 +21,28 @@ use Stg\HallOfRecords\Error\StgException;
 final class DefaultImageFetcher implements ImageFetcherInterface
 {
     private HttpContentFetcher $httpContentFetcher;
+    /** @var string[] */
+    private array $excludePatterns;
 
-    public function __construct(HttpContentFetcher $httpContentFetcher)
-    {
+    /**
+     * @param string[] $excludePatterns
+     */
+    public function __construct(
+        HttpContentFetcher $httpContentFetcher,
+        array $excludePatterns = []
+    ) {
         $this->httpContentFetcher = $httpContentFetcher;
+        $this->excludePatterns = $excludePatterns;
     }
 
     public function handles(string $url): bool
     {
+        foreach ($this->excludePatterns as $pattern) {
+            if (preg_match($pattern, $url) === 1) {
+                return false;
+            }
+        }
+
         return true;
     }
 

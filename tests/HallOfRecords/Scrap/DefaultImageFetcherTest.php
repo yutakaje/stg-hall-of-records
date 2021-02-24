@@ -22,10 +22,18 @@ class DefaultImageFetcherTest extends \Tests\TestCase
 {
     public function testHandles(): void
     {
-        $fetcher = $this->createImagerFetcher([]);
+        $fetcher = $this->createImagerFetcher([], [
+            '@^https://www\.example\.org/[^/]+$@',
+        ]);
 
-        // Fetcher should handle any url.
+        // Fetcher should handle any url unless explicitly excluded.
         self::assertTrue($fetcher->handles(base64_encode(random_bytes(32))));
+        self::assertFalse($fetcher->handles(
+            'https://www.example.org/' . md5(random_bytes(32))
+        ));
+        self::assertTrue($fetcher->handles(
+            'https://www.example.org/' . md5(random_bytes(32)) . '/'
+        ));
     }
 
     public function testFetch(): void
@@ -58,9 +66,12 @@ class DefaultImageFetcherTest extends \Tests\TestCase
 
     /**
      * @param array<string,Response> $responses
+     * @param string[] $excludePatterns
      */
-    private function createImagerFetcher(array $responses): DefaultImageFetcher
-    {
+    private function createImagerFetcher(
+        array $responses,
+        array $excludePatterns = []
+    ): DefaultImageFetcher {
         return new DefaultImageFetcher(
             new HttpContentFetcher(
                 $this->createHttpClient(array_map(
@@ -68,7 +79,8 @@ class DefaultImageFetcherTest extends \Tests\TestCase
                     $responses
                 )),
                 $this->userAgent()
-            )
+            ),
+            $excludePatterns
         );
     }
 }
