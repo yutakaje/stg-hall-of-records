@@ -16,7 +16,7 @@ namespace Tests\HallOfRecords\Scrap;
 use GuzzleHttp\Psr7\Response;
 use Stg\HallOfRecords\Http\HttpContentFetcher;
 use Stg\HallOfRecords\Scrap\DefaultImageFetcher;
-use Stg\HallOfRecords\Scrap\ImageNotFoundException;
+use Stg\HallOfRecords\Scrap\ImageFetcherException;
 
 class DefaultImageFetcherTest extends \Tests\TestCase
 {
@@ -59,7 +59,7 @@ class DefaultImageFetcherTest extends \Tests\TestCase
         try {
             $fetcher->fetch($url);
             self::fail('Call to `fetch` should throw an exception');
-        } catch (ImageNotFoundException $exception) {
+        } catch (ImageFetcherException $exception) {
             self::assertStringContainsString($url, $exception->getMessage());
         }
     }

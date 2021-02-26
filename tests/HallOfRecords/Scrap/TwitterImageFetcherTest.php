@@ -16,9 +16,8 @@ namespace Tests\HallOfRecords\Scrap;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use Stg\HallOfRecords\Error\StgException;
 use Stg\HallOfRecords\Http\HttpContentFetcher;
-use Stg\HallOfRecords\Scrap\ImageNotFoundException;
+use Stg\HallOfRecords\Scrap\ImageFetcherException;
 use Stg\HallOfRecords\Scrap\TwitterImageFetcher;
 
 class TwitterImageFetcherTest extends \Tests\TestCase
@@ -132,79 +131,40 @@ class TwitterImageFetcherTest extends \Tests\TestCase
 
     public function testFetchWith404OnIndexPage(): void
     {
-        $this->testFetchWith404OnTwitterPage('indexPage');
+        $this->testFetchWith404('indexPage');
     }
 
     public function testFetchWith404OnMainJs(): void
     {
-        $this->testFetchWith404OnTwitterPage('mainJs');
+        $this->testFetchWith404('mainJs');
     }
 
     public function testFetchWith404OnGuestToken(): void
     {
-        $this->testFetchWith404OnTwitterPage('guestToken');
+        $this->testFetchWith404('guestToken');
     }
 
     public function testFetchWith404OnTweetJson(): void
     {
-        $this->testFetchWith404OnTwitterPage('tweetJson');
-    }
-
-    private function testFetchWith404OnTwitterPage(string $pageName): void
-    {
-        $username = 'DareKa' . random_int(1, 99999);
-        $tweetId = (string)random_int(1000000, 9999999);
-        $guestToken = str_shuffle('3199159699012258891');
-
-        $urls = [
-            'indexPage' => $this->indexPageUrl(),
-            'mainJs' => $this->mainJsUrl(),
-            'guestToken' => $this->guestTokenUrl(),
-            'tweetJson' => $this->tweetJsonUrl($tweetId),
-        ];
-
-        $responses = [
-            'indexPage' => $this->indexPageResponse(),
-            'mainJs' => $this->mainJsResponse(),
-            'guestToken' => $this->guestTokenResponse($guestToken),
-            'tweetJson' => $this->tweetJsonResponse($tweetId, $username),
-        ];
-
-        $responses[$pageName] = new Response(404);
-
-        $fetcher = $this->createImagerFetcher([
-            $urls['indexPage'] => fn () => $responses['indexPage'],
-            $urls['mainJs'] => fn () => $responses['mainJs'],
-            $urls['guestToken'] => fn () => $responses['guestToken'],
-            $urls['tweetJson'] => fn () => $responses['tweetJson'],
-        ]);
-
-        try {
-            $fetcher->fetch(
-                $this->tweetUrl($username, $tweetId)
-            );
-            self::fail('Call to `fetch` should throw an exception');
-        } catch (StgException $exception) {
-            self::assertStringContainsString($urls[$pageName], $exception->getMessage());
-        }
+        $this->testFetchWith404('tweetJson');
     }
 
     public function testFetchWith404OnImage1(): void
     {
-        $this->testFetchWith404OnImage('image1');
+        $this->testFetchWith404('image1');
     }
 
     public function testFetchWith404OnImage2(): void
     {
-        $this->testFetchWith404OnImage('image2');
+        $this->testFetchWith404('image2');
     }
 
     public function testFetchWith404OnImage3(): void
     {
-        $this->testFetchWith404OnImage('image3');
+        $this->testFetchWith404('image3');
     }
 
-    private function testFetchWith404OnImage(string $imageName): void
+    private function testFetchWith404(string $imageName): void
     {
         $username = 'DareKa' . random_int(1, 99999);
         $tweetId = (string)random_int(1000000, 9999999);
@@ -247,7 +207,7 @@ class TwitterImageFetcherTest extends \Tests\TestCase
                 $this->tweetUrl($username, $tweetId)
             );
             self::fail('Call to `fetch` should throw an exception');
-        } catch (ImageNotFoundException $exception) {
+        } catch (ImageFetcherException $exception) {
             self::assertStringContainsString($urls[$imageName], $exception->getMessage());
         }
     }

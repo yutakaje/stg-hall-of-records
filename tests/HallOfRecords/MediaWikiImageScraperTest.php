@@ -19,8 +19,8 @@ use Psr\Http\Message\ResponseInterface;
 use Stg\HallOfRecords\Http\HttpContentFetcher;
 use Stg\HallOfRecords\MediaWikiImageScraper;
 use Stg\HallOfRecords\MediaWikiPageFetcher;
+use Stg\HallOfRecords\Scrap\ImageFetcherException;
 use Stg\HallOfRecords\Scrap\ImageFetcherInterface;
-use Stg\HallOfRecords\Scrap\ImageNotFoundException;
 use Stg\HallOfRecords\Scrap\Message;
 
 class MediaWikiImageScraperTest extends \Tests\TestCase
@@ -244,7 +244,7 @@ class MediaWikiImageScraperTest extends \Tests\TestCase
 
                     foreach ($response->httpResponses as $httpResponse) {
                         if ($httpResponse->getStatusCode() !== 200) {
-                            throw new ImageNotFoundException();
+                            throw new ImageFetcherException();
                         }
                     }
 

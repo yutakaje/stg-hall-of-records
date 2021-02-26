@@ -16,9 +16,8 @@ namespace Stg\HallOfRecords\Scrap;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\ResponseInterface;
 use Stg\HallOfRecords\Http\HttpContentFetcher;
-use Stg\HallOfRecords\Error\StgException;
 
-final class DefaultImageFetcher implements ImageFetcherInterface
+final class DefaultImageFetcher extends AbstractImageFetcher implements ImageFetcherInterface
 {
     private HttpContentFetcher $httpContentFetcher;
     /** @var string[] */
@@ -52,13 +51,13 @@ final class DefaultImageFetcher implements ImageFetcherInterface
     public function fetch(string $url): array
     {
         if (!$this->handles($url)) {
-            throw new StgException("Fetcher cannot handle url: `{$url}`");
+            throw $this->createException("Fetcher cannot handle url: `{$url}`");
         }
 
         $response = $this->sendRequest($url);
 
         if ($response->getStatusCode() !== 200) {
-            throw new ImageNotFoundException("Image not found at url `{$url}`");
+            throw $this->createException("Image not found at url `{$url}`");
         }
 
         return [$response];

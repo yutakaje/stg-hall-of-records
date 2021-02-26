@@ -14,9 +14,8 @@ declare(strict_types=1);
 namespace Stg\HallOfRecords\Scrap;
 
 use Psr\Http\Message\ResponseInterface;
-use Stg\HallOfRecords\Error\StgException;
 
-final class ImageFetcherDirector implements ImageFetcherInterface
+final class ImageFetcherDirector extends AbstractImageFetcher implements ImageFetcherInterface
 {
     /** @var ImageFetcherInterface[] */
     private array $imageFetchers;
@@ -51,6 +50,6 @@ final class ImageFetcherDirector implements ImageFetcherInterface
             }
         }
 
-        throw new StgException("No image fetcher found for url `{$url}`");
+        throw $this->createException("No image fetcher found for url `{$url}`");
     }
 }

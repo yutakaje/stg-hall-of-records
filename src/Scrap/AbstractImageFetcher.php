@@ -13,8 +13,10 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Scrap;
 
-use Stg\HallOfRecords\Error\StgException;
-
-class ImageNotFoundException extends StgException
+abstract class AbstractImageFetcher
 {
+    protected function createException(string $message): ImageFetcherException
+    {
+        return new ImageFetcherException($message);
+    }
 }

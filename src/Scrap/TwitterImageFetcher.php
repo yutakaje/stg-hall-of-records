@@ -18,7 +18,7 @@ use Psr\Http\Message\ResponseInterface;
 use Stg\HallOfRecords\Error\StgException;
 use Stg\HallOfRecords\Http\HttpContentFetcher;
 
-final class TwitterImageFetcher implements ImageFetcherInterface
+final class TwitterImageFetcher extends AbstractImageFetcher implements ImageFetcherInterface
 {
     private HttpContentFetcher $httpContentFetcher;
     private TwitterAccessHeaders $accessHeaders;
@@ -40,7 +40,7 @@ final class TwitterImageFetcher implements ImageFetcherInterface
     public function fetch(string $url): array
     {
         if (!$this->handles($url)) {
-            throw new StgException("Fetcher cannot handle url: `{$url}`");
+            throw $this->createException("Fetcher cannot handle url: `{$url}`");
         }
 
         return array_map(
@@ -52,7 +52,7 @@ final class TwitterImageFetcher implements ImageFetcherInterface
     private function fetchImage(string $url): ResponseInterface
     {
         if (!$this->handlesImage($url)) {
-            throw new StgException("Fetcher cannot handle image url: `{$url}`");
+            throw $this->createException("Fetcher cannot handle image url: `{$url}`");
         }
 
         $response = $this->httpContentFetcher->sendRequest(
@@ -60,7 +60,7 @@ final class TwitterImageFetcher implements ImageFetcherInterface
         );
 
         if ($response->getStatusCode() !== 200) {
-            throw new ImageNotFoundException("Image not found at url `{$url}`");
+            throw $this->createException("Image not found at url `{$url}`");
         }
 
         return $response;
@@ -71,15 +71,13 @@ final class TwitterImageFetcher implements ImageFetcherInterface
      */
     private function extractImageUrls(string $url): array
     {
-        $headers = $this->accessHeaders->getHeaders();
-
         $tweetId = $this->extractTweetId($url);
-        $tweet = $this->getTweet($tweetId, $headers);
+        $tweet = $this->getTweet($tweetId);
 
         $media = $tweet->entities->media ?? null;
 
         if ($media === null) {
-            throw new StgException("No media detected for tweet id `{$tweetId}`");
+            throw $this->createException("No media detected for tweet id `{$tweetId}`");
         }
 
         return array_map(
@@ -89,50 +87,14 @@ final class TwitterImageFetcher implements ImageFetcherInterface
         );
     }
 
-    /**
-     * @param array<string,string> $accessHeaders
-     */
-    private function getTweet(string $tweetId, array $accessHeaders): \stdClass
+    private function getTweet(string $tweetId): \stdClass
     {
-        $request = new Request('GET', $this->conversationUrl($tweetId));
-
-        foreach ($accessHeaders as $name => $value) {
-            $request = $request->withHeader($name, $value);
-        }
-
-        $json = $this->httpContentFetcher->fetchContent($request->withUri(
-            $request->getUri()->withQuery(implode('&', [
-                'include_profile_interstitial_type=1',
-                'include_blocking=1',
-                'include_blocked_by=1',
-                'include_followed_by=1',
-                'include_want_retweets=1',
-                'include_mute_edge=1',
-                'include_can_dm=1',
-                'include_can_media_tag=1',
-                'skip_status=1',
-                'cards_platform=Web-12',
-                'include_cards=1',
-                'include_ext_alt_text=true',
-                'include_quote_count=true',
-                'include_reply_count=1',
-                'tweet_mode=extended',
-                'include_entities=true',
-                'include_user_entities=true',
-                'include_ext_media_color=true',
-                'include_ext_media_availability=true',
-                'send_error_codes=true',
-                'simple_quoted_tweet=true',
-                'count=20',
-                'include_ext_has_birdwatch_notes=false',
-                'ext=mediaStats%2ChighlightedLabel',
-            ]))
-        ));
+        $json = $this->fetchTweet($tweetId);
 
         try {
             $conversation = json_decode($json, false, JSON_THROW_ON_ERROR);
         } catch (\JsonException $exception) {
-            throw new StgException(
+            throw $this->createException(
                 "Error decoding json for tweet id `{$tweetId}`"
                 . ": `{$exception->getMessage()}`"
             );
@@ -140,7 +102,7 @@ final class TwitterImageFetcher implements ImageFetcherInterface
 
         $tweets = $conversation->globalObjects->tweets ?? null;
         if (!($tweets instanceof \stdClass)) {
-            throw new StgException(
+            throw $this->createException(
                 "Unknown structure detected for tweet id `{$tweetId}` (I)"
             );
         }
@@ -148,7 +110,7 @@ final class TwitterImageFetcher implements ImageFetcherInterface
         $tweet = $tweets->{$tweetId} ?? null;
 
         if (!($tweet instanceof \stdClass)) {
-            throw new StgException(
+            throw $this->createException(
                 "Unknown structure detected for tweet id `{$tweetId}`"
             );
         }
@@ -156,10 +118,64 @@ final class TwitterImageFetcher implements ImageFetcherInterface
         return $tweet;
     }
 
+    private function fetchTweet(string $tweetId): string
+    {
+        $request = new Request('GET', $this->conversationUrl($tweetId));
+
+        foreach ($this->getAccessHeaders() as $name => $value) {
+            $request = $request->withHeader($name, $value);
+        }
+
+        try {
+            return $this->httpContentFetcher->fetchContent($request->withUri(
+                $request->getUri()->withQuery(implode('&', [
+                    'include_profile_interstitial_type=1',
+                    'include_blocking=1',
+                    'include_blocked_by=1',
+                    'include_followed_by=1',
+                    'include_want_retweets=1',
+                    'include_mute_edge=1',
+                    'include_can_dm=1',
+                    'include_can_media_tag=1',
+                    'skip_status=1',
+                    'cards_platform=Web-12',
+                    'include_cards=1',
+                    'include_ext_alt_text=true',
+                    'include_quote_count=true',
+                    'include_reply_count=1',
+                    'tweet_mode=extended',
+                    'include_entities=true',
+                    'include_user_entities=true',
+                    'include_ext_media_color=true',
+                    'include_ext_media_availability=true',
+                    'send_error_codes=true',
+                    'simple_quoted_tweet=true',
+                    'count=20',
+                    'include_ext_has_birdwatch_notes=false',
+                    'ext=mediaStats%2ChighlightedLabel',
+                ]))
+            ));
+        } catch (StgException $exception) {
+            throw $this->createException($exception->getMessage());
+        }
+    }
+
+    /**
+     * @return array<string,string>
+     */
+    private function getAccessHeaders(): array
+    {
+        try {
+            return $this->accessHeaders->getHeaders();
+        } catch (StgException $exception) {
+            throw $this->createException($exception->getMessage());
+        }
+    }
+
     private function extractTweetId(string $url): string
     {
         if (preg_match($this->tweetUrlPattern(), $url, $match) !== 1) {
-            throw new StgException("Unable to get tweet id from url: `{$url}`");
+            throw $this->createException("Unable to get tweet id from url: `{$url}`");
         }
 
         return $match['tweetId'];

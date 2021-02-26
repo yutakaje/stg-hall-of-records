@@ -14,12 +14,11 @@ declare(strict_types=1);
 namespace Stg\HallOfRecords;
 
 use Psr\Http\Message\ResponseInterface;
-use Stg\HallOfRecords\Error\StgException;
 use Stg\HallOfRecords\Import\MediaWiki\ParsedProperties;
 use Stg\HallOfRecords\Import\MediaWiki\YamlExtractor;
 use Stg\HallOfRecords\Import\MediaWiki\YamlParser;
+use Stg\HallOfRecords\Scrap\ImageFetcherException;
 use Stg\HallOfRecords\Scrap\ImageFetcherInterface;
-use Stg\HallOfRecords\Scrap\ImageNotFoundException;
 use Stg\HallOfRecords\Scrap\Message;
 use Stg\HallOfRecords\Scrap\MessageHandler;
 
@@ -155,7 +154,7 @@ final class MediaWikiImageScraper
                 $this->messageHandler->addContext('url', $url);
 
                 $images[] = $this->scrapImage($game, $score, $url);
-            } catch (ImageNotFoundException $exception) {
+            } catch (ImageFetcherException $exception) {
                 $this->addErrorMessage(self::MSG_IMAGE_NOT_FOUND);
             } finally {
                 $this->messageHandler->removeContext('url');
@@ -333,11 +332,6 @@ final class MediaWikiImageScraper
     {
         $parser = new YamlParser();
         return $parser->parse($sections);
-    }
-
-    private function createException(string $message): StgException
-    {
-        return new StgException("Error scrapping image: {$message}");
     }
 
     /**
