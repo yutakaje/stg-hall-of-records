@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Tests\HallOfRecords;
 
 use GuzzleHttp\Psr7\Response;
-use Psr\Http\Client\ClientInterface as HttpClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Stg\HallOfRecords\Http\HttpContentFetcher;
 use Stg\HallOfRecords\MediaWikiImageScraper;
 use Stg\HallOfRecords\MediaWikiPageFetcher;
 use Stg\HallOfRecords\Scrap\ImageFetcherInterface;
@@ -63,8 +63,8 @@ class MediaWikiImageScraperTest extends \Tests\TestCase
         ];
 
         $scraper = new MediaWikiImageScraper(
-            $this->createPageFetcher(),
-            $this->createImageFetchers($imageResponses)
+            $this->createPageFetcher('database'),
+            $this->createImageFetcher($imageResponses)
         );
 
         $scraper->scrap($savePath);
@@ -213,45 +213,27 @@ class MediaWikiImageScraperTest extends \Tests\TestCase
         return random_bytes(random_int(16, 64));
     }
 
-    private function createPageFetcher(): MediaWikiPageFetcher
+    private function createPageFetcher(string $filename): MediaWikiPageFetcher
     {
         $url = 'https://www.example.org';
 
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient->method('sendRequest')
-            ->will(self::returnCallback(function (
-                RequestInterface $request
-            ) use (
-                $url
-            ): ResponseInterface {
-                self::assertSame(
-                    "{$url}/index.php?title=database&action=edit",
-                    (string)$request->getUri()
-                );
-                return new Response(200, [], $this->loadFile(
-                    __DIR__ . '/media-wiki-image-scraper.database'
-                ));
-            }));
-
-        return new MediaWikiPageFetcher($httpClient, $url);
+        return new MediaWikiPageFetcher($this->createHttpClient([
+            "{$url}/index.php?title=database&action=edit" => fn () => new Response(
+                200,
+                [],
+                $this->loadFile(__DIR__ . "/media-wiki-image-scraper.{$filename}")
+            ),
+        ]), $url);
     }
 
     /**
      * @param \stdClass[] $responses
-     * @return ImageFetcherInterface[]
      */
-    private function createImageFetchers(array $responses): array
+    private function createImageFetcher(array $responses): ImageFetcherInterface
     {
-        $fetchers = [
-            $this->createMock(ImageFetcherInterface::class),
-            $this->createMock(ImageFetcherInterface::class),
-            $this->createMock(ImageFetcherInterface::class),
-        ];
-
-        $fetchers[0]->method('handles')->willReturn(false);
-        $fetchers[1]->method('handles')->willReturn(false);
-        $fetchers[2]->method('handles')->willReturn(true);
-        $fetchers[2]->method('fetch')
+        $fetcher = $this->createMock(ImageFetcherInterface::class);
+        $fetcher->method('handles')->willReturn(true);
+        $fetcher->method('fetch')
             ->will(self::returnCallback(function (string $url) use (
                 $responses
             ): array {
@@ -271,7 +253,7 @@ class MediaWikiImageScraperTest extends \Tests\TestCase
                 self::fail("Response for `{$url}` does not exist");
             }));
 
-        return $fetchers;
+        return $fetcher;
     }
 
     /**

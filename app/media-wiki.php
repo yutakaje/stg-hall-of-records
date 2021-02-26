@@ -34,6 +34,8 @@ use Stg\HallOfRecords\MediaWikiGenerator;
 use Stg\HallOfRecords\MediaWikiImageScraper;
 use Stg\HallOfRecords\MediaWikiPageFetcher;
 use Stg\HallOfRecords\Scrap\DefaultImageFetcher;
+use Stg\HallOfRecords\Scrap\ImageFetcherDirector;
+use Stg\HallOfRecords\Scrap\ImageFetcherInterface;
 
 return [
     'wiki-url' => 'https://shmups.wiki',
@@ -66,20 +68,19 @@ return [
     ),
     MediaWikiDatabaseFilter::class => DI\autowire(),
     MediaWikiGenerator::class => DI\autowire(),
-    MediaWikiImageScraper::class => DI\autowire()->constructor(
-        DI\get(MediaWikiPageFetcher::class),
-        [
-            DI\get(DefaultImageFetcher::class),
-        ]
-    ),
+    MediaWikiImageScraper::class => DI\autowire(),
 
+    ImageFetcherInterface::class => DI\create(ImageFetcherDirector::class),
+    ImageFetcherDirector::class => DI\create()->constructor([
+        DI\get(DefaultImageFetcher::class),
+    ]),
     DefaultImageFetcher::class => DI\autowire(),
 
+    HttpClientInterface::class => DI\create(HttpClient::class),
     HttpContentFetcher::class => DI\create()->constructor(
         DI\get(HttpClientInterface::class),
         DI\get('user-agent')
     ),
-    HttpClientInterface::class => DI\create(HttpClient::class),
 
     LoggerInterface::class => static function (): Logger {
         $logger = new Logger('stg-hall-of-records');

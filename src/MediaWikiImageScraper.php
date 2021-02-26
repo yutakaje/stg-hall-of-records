@@ -40,20 +40,16 @@ final class MediaWikiImageScraper
     private const MSG_IMAGE_SAVED = 'Image saved';
 
     private MediaWikiPageFetcher $pageFetcher;
-    /** @var ImageFetcherInterface[] */
-    private array $imageFetchers;
+    private ImageFetcherInterface $imageFetcher;
     private MessageHandler $messageHandler;
     private string $savePath;
 
-    /**
-     * @param ImageFetcherInterface[] $imageFetchers
-     */
     public function __construct(
         MediaWikiPageFetcher $pageFetcher,
-        array $imageFetchers
+        ImageFetcherInterface $imageFetcher
     ) {
         $this->pageFetcher = $pageFetcher;
-        $this->imageFetchers = $imageFetchers;
+        $this->imageFetcher = $imageFetcher;
         $this->messageHandler = new MessageHandler();
         $this->savePath = '';
     }
@@ -130,9 +126,17 @@ final class MediaWikiImageScraper
             $this->scrapImages(
                 $game,
                 $score,
-                $score->get('image-urls', [])
+                $this->extractUrlsFromScore($score)
             )
         );
+    }
+
+    /**
+     * @return string[]
+     */
+    private function extractUrlsFromScore(ParsedProperties $score): array
+    {
+        return $score->get('image-urls', []);
     }
 
     /**
@@ -199,13 +203,7 @@ final class MediaWikiImageScraper
      */
     private function fetchImages(string $url): array
     {
-        foreach ($this->imageFetchers as $imageFetcher) {
-            if ($imageFetcher->handles($url)) {
-                return $imageFetcher->fetch($url);
-            }
-        }
-
-        throw $this->createException("No image fetcher found for url `{$url}`");
+        return $this->imageFetcher->fetch($url);
     }
 
     /**
