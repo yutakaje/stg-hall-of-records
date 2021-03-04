@@ -70,9 +70,4 @@ class DefaultImageFetcherTest extends \Tests\TestCase
             )
         );
     }
-
-    private function randomUrl(): string
-    {
-        return 'https://www.example.org/' . md5(random_bytes(32));
-    }
 }

@@ -150,4 +150,9 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 
         return $httpClient;
     }
+
+    protected function randomUrl(): string
+    {
+        return 'https://www.example.org/' . md5(random_bytes(32));
+    }
 }

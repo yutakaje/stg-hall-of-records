@@ -75,9 +75,4 @@ class AggregateUrlExtractorTest extends \Tests\TestCase
     ): void {
         self::assertSame($expectedUrls, $extractor->extractUrls(new ParsedProperties()));
     }
-
-    private function randomUrl(): string
-    {
-        return 'https://www.example.org/' . md5(random_bytes(32));
-    }
 }

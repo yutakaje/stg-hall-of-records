@@ -47,14 +47,14 @@ class ImageFetcherDirectorTest extends \Tests\TestCase
         bool $expected,
         ImageFetcherDirector $director
     ): void {
-        $url = 'https://example.org/' . md5(random_bytes(32));
+        $url = $this->randomUrl();
 
         self::assertSame($expected, $director->handles($url));
     }
 
     public function testFetch(): void
     {
-        $url = 'https://example.org/' . md5(random_bytes(32));
+        $url = $this->randomUrl();
         $response = new Response(200, [], random_bytes(64));
 
         $fetchers = [

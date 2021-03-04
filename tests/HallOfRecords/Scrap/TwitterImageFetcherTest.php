@@ -27,8 +27,8 @@ class TwitterImageFetcherTest extends \Tests\TestCase
         $fetcher = $this->createImagerFetcher([]);
 
         self::assertTrue($fetcher->handles($this->tweetUrl()));
+        self::assertFalse($fetcher->handles($this->randomUrl()));
         self::assertFalse($fetcher->handles('https://twitter.com/' . md5(random_bytes(32))));
-        self::assertFalse($fetcher->handles('https://example.org/' . md5(random_bytes(32))));
     }
 
     public function testFetch(): void
