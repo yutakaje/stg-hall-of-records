@@ -17,6 +17,7 @@ use Psr\Http\Message\ResponseInterface;
 use Stg\HallOfRecords\Import\MediaWiki\ParsedProperties;
 use Stg\HallOfRecords\Import\MediaWiki\YamlExtractor;
 use Stg\HallOfRecords\Import\MediaWiki\YamlParser;
+use Stg\HallOfRecords\Scrap\Extract\UrlExtractorInterface;
 use Stg\HallOfRecords\Scrap\ImageFetcherException;
 use Stg\HallOfRecords\Scrap\ImageFetcherInterface;
 use Stg\HallOfRecords\Scrap\Message;
@@ -39,15 +40,18 @@ final class MediaWikiImageScraper
     private const MSG_IMAGE_SAVED = 'Image saved';
 
     private MediaWikiPageFetcher $pageFetcher;
+    private UrlExtractorInterface $urlExtractor;
     private ImageFetcherInterface $imageFetcher;
     private MessageHandler $messageHandler;
     private string $savePath;
 
     public function __construct(
         MediaWikiPageFetcher $pageFetcher,
+        UrlExtractorInterface $urlExtractor,
         ImageFetcherInterface $imageFetcher
     ) {
         $this->pageFetcher = $pageFetcher;
+        $this->urlExtractor = $urlExtractor;
         $this->imageFetcher = $imageFetcher;
         $this->messageHandler = new MessageHandler();
         $this->savePath = '';
@@ -125,17 +129,9 @@ final class MediaWikiImageScraper
             $this->scrapImages(
                 $game,
                 $score,
-                $this->extractUrlsFromScore($score)
+                $this->urlExtractor->extractUrls($score)
             )
         );
-    }
-
-    /**
-     * @return string[]
-     */
-    private function extractUrlsFromScore(ParsedProperties $score): array
-    {
-        return $score->get('image-urls', []);
     }
 
     /**

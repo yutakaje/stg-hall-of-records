@@ -34,6 +34,9 @@ use Stg\HallOfRecords\MediaWikiGenerator;
 use Stg\HallOfRecords\MediaWikiImageScraper;
 use Stg\HallOfRecords\MediaWikiPageFetcher;
 use Stg\HallOfRecords\Scrap\DefaultImageFetcher;
+use Stg\HallOfRecords\Scrap\Extract\AggregateUrlExtractor;
+use Stg\HallOfRecords\Scrap\Extract\DefaultUrlExtractor;
+use Stg\HallOfRecords\Scrap\Extract\UrlExtractorInterface;
 use Stg\HallOfRecords\Scrap\ImageFetcherDirector;
 use Stg\HallOfRecords\Scrap\ImageFetcherInterface;
 
@@ -69,6 +72,12 @@ return [
     MediaWikiDatabaseFilter::class => DI\autowire(),
     MediaWikiGenerator::class => DI\autowire(),
     MediaWikiImageScraper::class => DI\autowire(),
+
+    UrlExtractorInterface::class => DI\create(AggregateUrlExtractor::class),
+    AggregateUrlExtractor::class => DI\create()->constructor([
+        DI\get(DefaultUrlExtractor::class),
+    ]),
+    DefaultUrlExtractor::class => DI\autowire(),
 
     ImageFetcherInterface::class => DI\create(ImageFetcherDirector::class),
     ImageFetcherDirector::class => DI\create()->constructor([

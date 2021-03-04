@@ -17,8 +17,10 @@ use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Stg\HallOfRecords\Http\HttpContentFetcher;
+use Stg\HallOfRecords\Import\MediaWiki\ParsedProperties;
 use Stg\HallOfRecords\MediaWikiImageScraper;
 use Stg\HallOfRecords\MediaWikiPageFetcher;
+use Stg\HallOfRecords\Scrap\Extract\UrlExtractorInterface;
 use Stg\HallOfRecords\Scrap\ImageFetcherException;
 use Stg\HallOfRecords\Scrap\ImageFetcherInterface;
 use Stg\HallOfRecords\Scrap\Message;
@@ -64,6 +66,7 @@ class MediaWikiImageScraperTest extends \Tests\TestCase
 
         $scraper = new MediaWikiImageScraper(
             $this->createPageFetcher('database'),
+            $this->createUrlExtractor(),
             $this->createImageFetcher($imageResponses)
         );
 
@@ -224,6 +227,18 @@ class MediaWikiImageScraperTest extends \Tests\TestCase
                 $this->loadFile(__DIR__ . "/media-wiki-image-scraper.{$filename}")
             ),
         ]), $url);
+    }
+
+    private function createUrlExtractor(): UrlExtractorInterface
+    {
+        $extractor = $this->createMock(UrlExtractorInterface::class);
+        $extractor->method('extractUrls')->will(self::returnCallback(
+            function (ParsedProperties $score): array {
+                return $score->get('image-urls', []);
+            }
+        ));
+
+        return $extractor;
     }
 
     /**
