@@ -73,13 +73,13 @@ return [
     MediaWikiGenerator::class => DI\autowire(),
     MediaWikiImageScraper::class => DI\autowire(),
 
-    UrlExtractorInterface::class => DI\create(AggregateUrlExtractor::class),
+    UrlExtractorInterface::class => DI\get(AggregateUrlExtractor::class),
     AggregateUrlExtractor::class => DI\create()->constructor([
         DI\get(DefaultUrlExtractor::class),
     ]),
     DefaultUrlExtractor::class => DI\autowire(),
 
-    ImageFetcherInterface::class => DI\create(ImageFetcherDirector::class),
+    ImageFetcherInterface::class => DI\get(ImageFetcherDirector::class),
     ImageFetcherDirector::class => DI\create()->constructor([
         DI\get(DefaultImageFetcher::class),
     ]),
