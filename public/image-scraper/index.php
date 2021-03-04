@@ -33,12 +33,17 @@ try {
 
     $errorMessage = '';
     $messages = [];
+    $elapsedTime = 0;
 
     try {
         if (isset($_POST['scrap'])) {
+            $startTime = microtime(true);
+
             $scraper = $container->get(MediaWikiImageScraper::class);
             $scraper->scrap($container->get('save-path'));
+
             $messages = $scraper->getMessages();
+            $elapsedTime = microtime(true) - $startTime;
         }
     } catch (StgException $exception) {
         $errorMessage = $exception->getMessage();
@@ -51,6 +56,7 @@ try {
         'error' => $errorMessage,
         'messages' => $messages,
         'saveUrl' => $container->get('save-url'),
+        'elapsedTime' => $elapsedTime,
     ]);
 } catch (\Throwable $error) {
     // Make sure that unexpected errors do not leak to the client.

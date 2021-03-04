@@ -149,6 +149,10 @@
                 </show-scores>
             </stat>
         {% endfor %}
+            <stat>
+                <stat-title>Elapsed time</stat-title>
+                <stat-value>{{ elapsedTime|round(5) }}s</stat-value>
+            </stat>
         </stats>
 
         {{ messages|raw }}
