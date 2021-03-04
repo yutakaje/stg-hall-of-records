@@ -22,23 +22,14 @@ class DefaultImageFetcherTest extends \Tests\TestCase
 {
     public function testHandles(): void
     {
-        $fetcher = $this->createImagerFetcher([], [
-            '@^https://www\.example\.org/[^/]+$@',
-        ]);
+        $fetcher = $this->createImagerFetcher([]);
 
-        // Fetcher should handle any url unless explicitly excluded.
-        self::assertTrue($fetcher->handles(base64_encode(random_bytes(32))));
-        self::assertFalse($fetcher->handles(
-            'https://www.example.org/' . md5(random_bytes(32))
-        ));
-        self::assertTrue($fetcher->handles(
-            'https://www.example.org/' . md5(random_bytes(32)) . '/'
-        ));
+        self::assertTrue($fetcher->handles($this->randomUrl()));
     }
 
     public function testFetch(): void
     {
-        $url = 'https://example.org/' . md5(random_bytes(32));
+        $url = $this->randomUrl();
         $response = new Response(200, [], random_bytes(64));
 
         $fetcher = $this->createImagerFetcher([
@@ -50,7 +41,7 @@ class DefaultImageFetcherTest extends \Tests\TestCase
 
     public function testFetchWith404(): void
     {
-        $url = 'https://example.org/' . md5(random_bytes(32));
+        $url = $this->randomUrl();
 
         $fetcher = $this->createImagerFetcher([
             $url => new Response(404),
@@ -66,12 +57,9 @@ class DefaultImageFetcherTest extends \Tests\TestCase
 
     /**
      * @param array<string,Response> $responses
-     * @param string[] $excludePatterns
      */
-    private function createImagerFetcher(
-        array $responses,
-        array $excludePatterns = []
-    ): DefaultImageFetcher {
+    private function createImagerFetcher(array $responses): DefaultImageFetcher
+    {
         return new DefaultImageFetcher(
             new HttpContentFetcher(
                 $this->createHttpClient(array_map(
@@ -79,8 +67,12 @@ class DefaultImageFetcherTest extends \Tests\TestCase
                     $responses
                 )),
                 $this->userAgent()
-            ),
-            $excludePatterns
+            )
         );
+    }
+
+    private function randomUrl(): string
+    {
+        return 'https://www.example.org/' . md5(random_bytes(32));
     }
 }

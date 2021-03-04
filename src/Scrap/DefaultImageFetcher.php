@@ -20,28 +20,14 @@ use Stg\HallOfRecords\Http\HttpContentFetcher;
 final class DefaultImageFetcher extends AbstractImageFetcher implements ImageFetcherInterface
 {
     private HttpContentFetcher $httpContentFetcher;
-    /** @var string[] */
-    private array $excludePatterns;
 
-    /**
-     * @param string[] $excludePatterns
-     */
-    public function __construct(
-        HttpContentFetcher $httpContentFetcher,
-        array $excludePatterns = []
-    ) {
+    public function __construct(HttpContentFetcher $httpContentFetcher)
+    {
         $this->httpContentFetcher = $httpContentFetcher;
-        $this->excludePatterns = $excludePatterns;
     }
 
     public function handles(string $url): bool
     {
-        foreach ($this->excludePatterns as $pattern) {
-            if (preg_match($pattern, $url) === 1) {
-                return false;
-            }
-        }
-
         return true;
     }
 
