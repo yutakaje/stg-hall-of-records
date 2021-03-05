@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Stg\HallOfRecords;
 
 use Psr\Http\Message\ResponseInterface;
+use Stg\HallOfRecords\Error\StgException;
 use Stg\HallOfRecords\Import\MediaWiki\ParsedProperties;
 use Stg\HallOfRecords\Import\MediaWiki\YamlExtractor;
 use Stg\HallOfRecords\Import\MediaWiki\YamlParser;
@@ -332,18 +333,30 @@ final class MediaWikiImageScraper
 
     private function gameIdentifier(ParsedProperties $game): string
     {
-        return urlencode(
-            str_replace(' ', '_', strtolower($game->get('name', '')))
-        );
+        return $this->replace($game->get('name', ''), '/[^a-z0-9.-]/', '_');
     }
 
     private function scoreIdentifier(
         ParsedProperties $game,
         ParsedProperties $score
     ): string {
-        $score = preg_replace('/[^\d]/', '', $score->get('score', ''));
+        $score = $this->replace($score->get('score', ''), '/[^\d]/');
 
-        return $this->gameIdentifier($game) . '/' . urlencode($score);
+        return $this->gameIdentifier($game) . "/{$score}";
+    }
+
+    private function replace(
+        string $value,
+        string $pattern,
+        string $replace = ''
+    ): string {
+        $replacedValue = preg_replace($pattern, $replace, strtolower($value));
+
+        if ($replacedValue === null) {
+            throw new StgException("Error replacing pattern `{$pattern}`");
+        }
+
+        return $replacedValue;
     }
 
     private function makeImageId(
