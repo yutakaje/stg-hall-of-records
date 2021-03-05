@@ -93,7 +93,7 @@ final class TwitterAccessHeaders
 
     private function extractAccessToken(string $mainJs): string
     {
-        $pattern = '/s="(?<accessToken>AAAAA[^"]+)"/';
+        $pattern = '/="(?<accessToken>AAAAA[^"]+)"/';
 
         if (preg_match($pattern, $mainJs, $match) !== 1) {
             throw new StgException('Unable to extract access token from main js');
