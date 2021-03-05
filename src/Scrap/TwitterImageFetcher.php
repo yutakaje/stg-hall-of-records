@@ -74,10 +74,18 @@ final class TwitterImageFetcher extends AbstractImageFetcher implements ImageFet
         $tweetId = $this->extractTweetId($url);
         $tweet = $this->getTweet($tweetId);
 
-        $media = $tweet->entities->media ?? null;
+        $entities = $tweet->entities ?? null;
+        if (!($entities instanceof \stdClass)) {
+            throw $this->createException(
+                "Unknown structure detected for tweet id `{$tweetId}` (entities)"
+            );
+        }
 
-        if ($media === null) {
-            throw $this->createException("No media detected for tweet id `{$tweetId}`");
+        $media = $entities->media ?? [];
+        if (!is_array($media)) {
+            throw $this->createException(
+                "Unknown structure detected for tweet id `{$tweetId}` (media)"
+            );
         }
 
         return array_map(
@@ -111,7 +119,7 @@ final class TwitterImageFetcher extends AbstractImageFetcher implements ImageFet
 
         if (!($tweet instanceof \stdClass)) {
             throw $this->createException(
-                "Unknown structure detected for tweet id `{$tweetId}`"
+                "Unknown structure detected for tweet id `{$tweetId}` (II)"
             );
         }
 

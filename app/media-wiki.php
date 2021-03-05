@@ -37,8 +37,10 @@ use Stg\HallOfRecords\Scrap\DefaultImageFetcher;
 use Stg\HallOfRecords\Scrap\Extract\AggregateUrlExtractor;
 use Stg\HallOfRecords\Scrap\Extract\DefaultUrlExtractor;
 use Stg\HallOfRecords\Scrap\Extract\UrlExtractorInterface;
+use Stg\HallOfRecords\Scrap\Extract\TwitterUrlExtractor;
 use Stg\HallOfRecords\Scrap\ImageFetcherDirector;
 use Stg\HallOfRecords\Scrap\ImageFetcherInterface;
+use Stg\HallOfRecords\Scrap\TwitterImageFetcher;
 
 return [
     'wiki-url' => 'https://shmups.wiki',
@@ -75,15 +77,19 @@ return [
 
     UrlExtractorInterface::class => DI\get(AggregateUrlExtractor::class),
     AggregateUrlExtractor::class => DI\create()->constructor([
+        DI\get(TwitterUrlExtractor::class),
         DI\get(DefaultUrlExtractor::class),
     ]),
     DefaultUrlExtractor::class => DI\autowire(),
+    TwitterUrlExtractor::class => DI\autowire(),
 
     ImageFetcherInterface::class => DI\get(ImageFetcherDirector::class),
     ImageFetcherDirector::class => DI\create()->constructor([
+        DI\get(TwitterImageFetcher::class),
         DI\get(DefaultImageFetcher::class),
     ]),
     DefaultImageFetcher::class => DI\autowire(),
+    TwitterImageFetcher::class => DI\autowire(),
 
     HttpClientInterface::class => DI\create(HttpClient::class),
     HttpContentFetcher::class => DI\create()->constructor(
