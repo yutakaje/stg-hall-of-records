@@ -38,12 +38,19 @@ final class MediaWikiImageScraper
     private const MSG_IMAGE_FETCHED = 'Image fetched';
     private const MSG_IMAGE_ALREADY_EXISTS = 'Image already exists';
     private const MSG_IMAGE_SAVED = 'Image saved';
+    private const MSG_RUNTIME_LIMIT_REACHED = 'Runtime limit reached';
+    private const MSG_SCRAPPING_STARTED = 'Scrapping started';
+    private const MSG_SCRAPPING_COMPLETE = 'Scrapping complete';
 
     private MediaWikiPageFetcher $pageFetcher;
     private UrlExtractorInterface $urlExtractor;
     private ImageFetcherInterface $imageFetcher;
     private MessageHandler $messageHandler;
     private string $savePath;
+    /** Unit for time related properties is seconds */
+    private float $runtimeLimit;
+    private float $startTime;
+    private float $elapsedTime;
 
     public function __construct(
         MediaWikiPageFetcher $pageFetcher,
@@ -55,6 +62,9 @@ final class MediaWikiImageScraper
         $this->imageFetcher = $imageFetcher;
         $this->messageHandler = new MessageHandler();
         $this->savePath = '';
+        $this->runtimeLimit = 0.0;
+        $this->startTime = 0.0;
+        $this->elapsedTime = 0.0;
     }
 
     /**
@@ -67,16 +77,24 @@ final class MediaWikiImageScraper
         );
     }
 
-    public function scrap(string $path): void
+    public function getElapsedTime(): float
+    {
+        return $this->elapsedTime;
+    }
+
+    public function scrap(string $path, float $runtimeLimit = 0.0): void
     {
         $this->useSavePath($path);
+        $this->useRuntimeLimit($runtimeLimit);
         $this->messageHandler->reset();
 
         $data = $this->parse(
             $this->pageFetcher->fetch('database')
         );
 
+        $this->startTimer();
         $this->scrapImagesFromGames($data->get('games', []));
+        $this->stopTimer();
     }
 
     /**
@@ -84,6 +102,8 @@ final class MediaWikiImageScraper
      */
     private function scrapImagesFromGames(array $games): void
     {
+        $this->addInfoMessage(self::MSG_SCRAPPING_STARTED);
+
         foreach ($games as $game) {
             try {
                 $this->messageHandler->addContext('game', $this->gameIdentifier(
@@ -97,7 +117,14 @@ final class MediaWikiImageScraper
             } finally {
                 $this->messageHandler->removeContext('game');
             }
+
+            if ($this->isRuntimeLimitReached()) {
+                $this->addInfoMessage(self::MSG_RUNTIME_LIMIT_REACHED);
+                return;
+            }
         }
+
+        $this->addInfoMessage(self::MSG_SCRAPPING_COMPLETE);
     }
 
     private function scrapImagesFromGame(ParsedProperties $game): void
@@ -115,6 +142,10 @@ final class MediaWikiImageScraper
                 $this->addInfoMessage(self::MSG_SCORE_SCRAPPED);
             } finally {
                 $this->messageHandler->removeContext('score');
+            }
+
+            if ($this->isRuntimeLimitReached()) {
+                return;
             }
         }
     }
@@ -368,6 +399,32 @@ final class MediaWikiImageScraper
     private function useSavePath(string $path): void
     {
         $this->savePath = $path;
+    }
+
+    private function useRuntimeLimit(float $runtimeLimit): void
+    {
+        $this->runtimeLimit = $runtimeLimit;
+    }
+
+    private function isRuntimeLimitReached(): bool
+    {
+        if ($this->runtimeLimit < 0.1) {
+            return false;
+        }
+
+        return microtime(true) - $this->startTime > $this->runtimeLimit;
+    }
+
+    private function startTimer(): void
+    {
+        $this->startTime = microtime(true);
+        $this->elapsedTime = 0.0;
+    }
+
+    private function stopTimer(): void
+    {
+        $this->elapsedTime = microtime(true) - $this->startTime;
+        $this->startTime = 0.0;
     }
 
     /**

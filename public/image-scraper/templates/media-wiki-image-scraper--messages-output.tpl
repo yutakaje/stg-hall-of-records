@@ -18,7 +18,7 @@
             {% include('media-wiki-image-scraper--game-output.tpl') %}
         {% endif %}
         {% set gameMessages = [] %}
-        <message class="general">{{ message.message }}</message>
+        <message>{{ message.message }}</message>
     {% endif %}
 {% endfor %}
 {% if gameMessages %}

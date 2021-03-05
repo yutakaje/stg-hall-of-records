@@ -31,19 +31,35 @@ try {
 
     $errorHandler->registerLogger($container->get(LoggerInterface::class));
 
+    $runtimeLimit = [
+        'value' => 30.0,
+        'min' => 1.0,
+        'max' => 100.0,
+    ];
     $errorMessage = '';
     $messages = [];
     $elapsedTime = 0;
 
     try {
         if (isset($_POST['scrap'])) {
-            $startTime = microtime(true);
+            if (
+                isset($_POST['runtimeLimit'])
+                && (string)(float)$_POST['runtimeLimit'] === $_POST['runtimeLimit']
+            ) {
+                $runtimeLimit['value'] = max(
+                    $runtimeLimit['min'],
+                    min(
+                        $runtimeLimit['max'],
+                        (float)$_POST['runtimeLimit']
+                    )
+                );
+            }
 
             $scraper = $container->get(MediaWikiImageScraper::class);
-            $scraper->scrap($container->get('save-path'));
+            $scraper->scrap($container->get('save-path'), $runtimeLimit['value']);
 
             $messages = $scraper->getMessages();
-            $elapsedTime = microtime(true) - $startTime;
+            $elapsedTime = $scraper->getElapsedTime();
         }
     } catch (StgException $exception) {
         $errorMessage = $exception->getMessage();
@@ -53,6 +69,7 @@ try {
         new FilesystemLoader(__DIR__ . '/templates')
     );
     echo $twig->render('media-wiki-image-scraper.tpl', [
+        'runtimeLimit' => $runtimeLimit,
         'error' => $errorMessage,
         'messages' => $messages,
         'saveUrl' => $container->get('save-url'),

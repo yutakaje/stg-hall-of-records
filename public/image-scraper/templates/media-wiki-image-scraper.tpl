@@ -25,6 +25,10 @@
       output messages {
           display: block;
       }
+      output message {
+          display: block;
+          font-size: small;
+      }
       output stats + messages {
           margin-top: 15px;
       }
@@ -42,7 +46,9 @@
           font-size: small;
           padding: 5px;
       }
-      output game + game {
+      output game + game,
+      output message + game,
+      output game + message {
           margin-top: 15px;
       }
 
@@ -90,6 +96,10 @@
       .success {
           color: #17c817;
       }
+
+      #runtimeLimit {
+          width: 75px;
+      }
     </style>
   </head>
 
@@ -103,6 +113,17 @@
     <p>Already saved images can be browsed <a href="{{ saveUrl }}">here</a>.</p>
 
     <form method="post">
+    <div>
+      <label for="runtimeLimit">Runtime limit (in seconds)</label>
+      <input type="number"
+             id="runtimeLimit"
+             name="runtimeLimit"
+             value="{{ runtimeLimit.value }}"
+             min="{{ runtimeLimit.min }}"
+             max="{{ runtimeLimit.max }}"
+             step="0.1"
+             />
+    </div>
     <div>
         <input type="submit" name="scrap" value="Scrap images" />
     </div>

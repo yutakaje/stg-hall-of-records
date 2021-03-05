@@ -65,7 +65,9 @@ class MediaWikiImageScraperTest extends \Tests\TestCase
         ];
 
         $scraper = new MediaWikiImageScraper(
-            $this->createPageFetcher('database'),
+            $this->createPageFetcher(
+                $this->loadFile(__DIR__ . '/media-wiki-image-scraper.database')
+            ),
             $this->createUrlExtractor(),
             $this->createImageFetcher($imageResponses)
         );
@@ -103,6 +105,9 @@ class MediaWikiImageScraperTest extends \Tests\TestCase
         ));
 
         self::assertEquals(array_merge(
+            [
+                $this->createMessage('info', 'Scrapping started'),
+            ],
             $this->addGameContext('armed_police_batrider', [
                 $this->createMessage('info', 'Scrapping from game'),
                 $this->addScoreContext('armed_police_batrider/29449270', [
@@ -188,7 +193,67 @@ class MediaWikiImageScraperTest extends \Tests\TestCase
                 ]),
                 $this->createMessage('info', 'Scrapped from game'),
             ]),
+            [
+                $this->createMessage('info', 'Scrapping complete'),
+            ]
         ), $scraper->getMessages());
+    }
+
+    public function testScrapWithRuntimeLimit(): void
+    {
+        $runtimeLimit = random_int(10, 50) / 100;
+        $savePath = sys_get_temp_dir() . '/stg-scrap_' . random_int(1, 9999999);
+
+        $imageResponse = $this->createImageResponses(
+            'https://example.org/uri',
+            [$this->createErrorResponse(404)]
+        );
+
+        $wrap = fn (string $value) => <<<YAML
+<nowiki>
+{$value}
+</nowiki>
+YAML;
+        $createGameEntry = fn (int $i) => $wrap(<<<YAML
+name: some-game-{$i}
+scores:
+  - image-urls:
+      - https://example.org/uri
+YAML);
+
+        $database = $wrap('name: global') . implode(PHP_EOL, array_map(
+            fn (int $i) => $createGameEntry($i),
+            range(1, 1000)
+        ));
+
+        $payload = str_replace(
+            '{{contents}}',
+            htmlentities($database),
+            $this->loadFile(__DIR__ . '/media-wiki-page-fetcher.wiki.page')
+        );
+
+        $scraper = new MediaWikiImageScraper(
+            $this->createPageFetcher($payload),
+            $this->createUrlExtractor(),
+            $this->createImageFetcher([$imageResponse])
+        );
+
+        $startTime = microtime(true);
+        $scraper->scrap($savePath, $runtimeLimit);
+        $elapsedTime = microtime(true) - $startTime;
+
+        self::assertEqualsWithDelta($runtimeLimit, $scraper->getElapsedTime(), 0.01);
+        self::assertLessThan($elapsedTime, $scraper->getElapsedTime());
+        self::assertEquals(
+            [
+                $this->createMessage('info', 'Scrapping started'),
+                $this->createMessage('info', 'Runtime limit reached'),
+            ],
+            array_merge(
+                array_slice($scraper->getMessages(), 0, 1),
+                array_slice($scraper->getMessages(), -1, 1)
+            )
+        );
     }
 
     private function assertBackedUpFiles(
@@ -225,7 +290,7 @@ class MediaWikiImageScraperTest extends \Tests\TestCase
         return random_bytes(random_int(16, 64));
     }
 
-    private function createPageFetcher(string $filename): MediaWikiPageFetcher
+    private function createPageFetcher(string $payload): MediaWikiPageFetcher
     {
         $url = 'https://www.example.org';
 
@@ -233,7 +298,7 @@ class MediaWikiImageScraperTest extends \Tests\TestCase
             "{$url}/index.php?title=database&action=edit" => fn () => new Response(
                 200,
                 [],
-                $this->loadFile(__DIR__ . "/media-wiki-image-scraper.{$filename}")
+                $payload
             ),
         ]), $url);
     }
