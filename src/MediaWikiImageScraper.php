@@ -150,8 +150,6 @@ final class MediaWikiImageScraper
                 $this->messageHandler->addContext('url', $url);
 
                 $images[] = $this->scrapImage($game, $score, $url);
-            } catch (ImageFetcherException $exception) {
-                $this->addErrorMessage(self::MSG_IMAGE_NOT_FOUND);
             } finally {
                 $this->messageHandler->removeContext('url');
             }
@@ -167,17 +165,37 @@ final class MediaWikiImageScraper
     ): ?\stdClass {
         $imageId = $this->makeImageId($game, $score, $url);
 
-        if ($this->imageExists($imageId)) {
-            $this->addInfoMessage(self::MSG_IMAGE_ALREADY_EXISTS, [
-                'image' => $imageId,
+        try {
+            $this->messageHandler->addContext('image', $imageId);
+
+            if ($this->imageExists($imageId)) {
+                $this->addInfoMessage(self::MSG_IMAGE_ALREADY_EXISTS);
+                return null;
+            }
+
+            $this->addInfoMessage(self::MSG_FETCH_IMAGE);
+            $responses = $this->fetchImages($url);
+            $this->addInfoMessage(self::MSG_IMAGE_FETCHED);
+
+            return $this->createImage($imageId, $url, $responses);
+        } catch (ImageFetcherException $exception) {
+            $this->addErrorMessage(self::MSG_IMAGE_NOT_FOUND, [
+                'error' => $exception->getMessage(),
             ]);
             return null;
+        } finally {
+            $this->messageHandler->removeContext('image');
         }
+    }
 
-        $this->addInfoMessage(self::MSG_FETCH_IMAGE);
-        $responses = $this->fetchImages($url);
-        $this->addInfoMessage(self::MSG_IMAGE_FETCHED);
-
+    /**
+     * @param ResponseInterface[] $responses
+     */
+    private function createImage(
+        string $imageId,
+        string $url,
+        array $responses
+    ): \stdClass {
         $image = new \stdClass();
         $image->id = $imageId;
         $image->url = $url;
