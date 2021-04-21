@@ -68,5 +68,6 @@ final class Twig
             'formatDate',
             fn ($date) => $this->formatter->formatDate($date)
         ));
+        $twig->addFilter(new TwigFilter('md5', 'md5'));
     }
 }

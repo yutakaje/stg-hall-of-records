@@ -57,6 +57,7 @@ final class MediaWikiExporter
         return $this->createMainTemplate($globalLayout)->render([
             'description' => $globalSettings->get('description', ''),
             'games' => $this->createGameVariables($locale, $globalLayout),
+            'locale' => $locale,
         ]);
     }
 
