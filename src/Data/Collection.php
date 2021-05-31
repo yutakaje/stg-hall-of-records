@@ -81,7 +81,6 @@ abstract class Collection
      */
     public function sort(array $sort): Collection
     {
-        /** @var ArraySorter<Item> */
         $sorter = new ArraySorter();
         return new static(
             $sorter->sort($this->items, $sort)

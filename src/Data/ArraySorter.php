@@ -13,12 +13,10 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Data;
 
-/**
- * @template Item of ItemInterface
- */
 final class ArraySorter
 {
     /**
+     * @template Item of ItemInterface
      * @param Item[] $items
      * @param array<string,mixed> $sort
      * @return Item[]

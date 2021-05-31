@@ -361,8 +361,7 @@ final class MediaWikiImporter
         return array_reduce(
             array_filter(
                 array_keys($properties->all()),
-                fn ($name) => is_string($name)
-                    && $properties->get("{$name}-{$locale}") !== null
+                fn ($name) => $properties->get("{$name}-{$locale}") !== null
             ),
             fn (Translator $translator, string $name) => $translator->add(
                 $name,
