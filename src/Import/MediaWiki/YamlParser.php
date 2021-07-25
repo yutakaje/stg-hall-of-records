@@ -120,9 +120,11 @@ final class YamlParser
 
         // Remove separators from score values for sorting, otherwise they will be
         // interpreted as strings.
-        $properties['score-sort'] = $this->convertScoreToNumber(
-            $properties['score-real']
-        );
+        if (!isset($properties['score-sort'])) {
+            $properties['score-sort'] = $this->convertScoreToNumber(
+                $properties['score-real']
+            );
+        }
 
         foreach ($properties as $name => $value) {
             $properties[$name] = $this->parseProperty($value);
