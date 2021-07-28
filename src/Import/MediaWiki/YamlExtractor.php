@@ -20,7 +20,7 @@ use Symfony\Component\Yaml\Yaml;
 final class YamlExtractor
 {
     /**
-     * @return array[]
+     * @return array<string,mixed>[]
      */
     public function extract(string $input): array
     {

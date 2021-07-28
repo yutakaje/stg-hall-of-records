@@ -2,8 +2,21 @@ parameters:
     level: max
     paths:
         - src
+        - app
+        - public
         - tests
+    typeAliases:
+        QueryParams: 'array<string,mixed>'
+        Row: 'array<string,mixed>'
+    checkMissingCallableSignature: true
+    checkInternalClassCaseSensitivity: true
+    checkTooWideReturnTypesInProtectedAndPublicMethods: true
+    checkUninitializedProperties: true
+
+    ignoreErrors:
+        - '#Class Tests\\TestCase has an uninitialized property \$[a-zA-Z0-9]+\. Give it default value or assign it in the constructor\.#'    
 
 includes:
+    - vendor/phpstan/phpstan/conf/bleedingEdge.neon
     - vendor/phpstan/phpstan-strict-rules/rules.neon
     - vendor/phpstan/phpstan-deprecation-rules/rules.neon

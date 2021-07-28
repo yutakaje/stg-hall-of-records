@@ -130,7 +130,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @param array<string,\Closure> $responseCallbacks
+     * @param array<string,\Closure(RequestInterface):ResponseInterface> $responseCallbacks
      */
     protected function createHttpClient(array $responseCallbacks): HttpClientInterface
     {

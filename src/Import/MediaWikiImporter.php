@@ -72,12 +72,11 @@ final class MediaWikiImporter
     }
 
     /**
-     * @return array[]
+     * @return array<string,mixed>[]
      */
     private function extractYaml(string $input): array
     {
-        $extractor = new YamlExtractor();
-        return $extractor->extract($input);
+        return $this->extractor->extract($input);
     }
 
     /**
@@ -85,8 +84,7 @@ final class MediaWikiImporter
      */
     private function parseYaml(array $sections): ParsedProperties
     {
-        $parser = new YamlParser();
-        return $parser->parse($sections);
+        return $this->parser->parse($sections);
     }
 
     private function populateRepositories(

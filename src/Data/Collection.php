@@ -30,14 +30,19 @@ abstract class Collection
     }
 
     /**
-     * @return mixed[]
+     * @template T of mixed
+     * @param \Closure(Item):T $callback
+     * @return T[]
      */
-    public function map(callable $callback): array
+    public function map(\Closure $callback): array
     {
         return array_map($callback, $this->items);
     }
 
-    public function apply(callable $callback): void
+    /**
+     * @param \Closure(Item):void $callback
+     */
+    public function apply(\Closure $callback): void
     {
         foreach ($this->items as $item) {
             $callback($item);
@@ -45,21 +50,24 @@ abstract class Collection
     }
 
     /**
-     * @param mixed $initial
-     * @return mixed
+     * @template T of mixed
+     * @param \Closure(T,Item):T $callback
+     * @param T $initial
+     * @return T
      */
-    public function reduce(callable $callback, $initial)
+    public function reduce(\Closure $callback, $initial)
     {
         return array_reduce($this->items, $callback, $initial);
     }
 
     /**
+     * @param \Closure(Item):bool $callback
      * @return static
      */
-    public function filter(callable $callback): Collection
+    public function filter(\Closure $callback): Collection
     {
         return new static(array_values(
-            array_filter($this->items, $callback, ARRAY_FILTER_USE_BOTH)
+            array_filter($this->items, $callback)
         ));
     }
 

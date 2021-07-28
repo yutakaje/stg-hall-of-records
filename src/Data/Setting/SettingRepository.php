@@ -49,6 +49,7 @@ final class SettingRepository implements SettingRepositoryInterface
     }
 
     /**
+     * @param \Closure(Setting):bool $callback
      * @return Setting[]
      */
     private function filterSettings(\Closure $callback): array

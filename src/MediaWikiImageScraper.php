@@ -375,7 +375,7 @@ final class MediaWikiImageScraper
     }
 
     /**
-     * @return array[]
+     * @return array<string,mixed>[]
      */
     private function extractYaml(string $input): array
     {

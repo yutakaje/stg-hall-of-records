@@ -120,6 +120,9 @@ class ScoreRepositoryTest extends \Tests\TestCase
         ]);
     }
 
+    /**
+     * @return \Closure(Score):void
+     */
     private function addToRepository(ScoreRepository $repository): \Closure
     {
         return function (Score $score) use ($repository): void {

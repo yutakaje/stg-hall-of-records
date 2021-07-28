@@ -303,7 +303,7 @@ class TwitterImageFetcherTest extends \Tests\TestCase
     }
 
     /**
-     * @param array<string,\Closure> $responseCallbacks
+     * @param array<string,\Closure(RequestInterface):ResponseInterface> $responseCallbacks
      */
     private function createImagerFetcher(
         array $responseCallbacks

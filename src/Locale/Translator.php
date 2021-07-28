@@ -155,6 +155,9 @@ final class Translator
         return $value;
     }
 
+    /**
+     * @return \Closure(array<string,string>):string
+     */
     private function createFuzzyReplaceCallback(string $replace): \Closure
     {
         preg_match_all('/{{(?:[\w-]+)}}/u', $replace, $placeholderMatches);

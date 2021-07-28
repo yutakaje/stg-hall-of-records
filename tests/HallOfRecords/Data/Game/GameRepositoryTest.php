@@ -58,6 +58,9 @@ class GameRepositoryTest extends \Tests\TestCase
         ]);
     }
 
+    /**
+     * @return \Closure(Game):void
+     */
     private function addToRepository(GameRepository $repository): \Closure
     {
         return function (Game $game) use ($repository): void {

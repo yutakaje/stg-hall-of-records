@@ -101,6 +101,9 @@ class SettingRepositoryTest extends \Tests\TestCase
         ]);
     }
 
+    /**
+     * @return \Closure(Setting):void
+     */
     private function addToRepository(SettingRepository $repository): \Closure
     {
         return function (Setting $setting) use ($repository): void {

@@ -55,17 +55,4 @@ final class ScoreVariable extends \stdClass
         $variable->attributes = $column['attributes'] ?? [];
         return $variable;
     }
-
-    /**
-     * @param array<string,mixed> $column
-     */
-    private function getColumnAttrs(array $column, Score $score): string
-    {
-        $columnName = $column['name'] ?? null;
-        if ($columnName === null) {
-            return '';
-        }
-
-        return $score->attribute('layout')['columns'][$columnName] ?? '';
-    }
 }

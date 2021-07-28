@@ -14,6 +14,8 @@ declare(strict_types=1);
 namespace Stg\HallOfRecords\Scrap;
 
 use GuzzleHttp\Psr7\Request;
+use Nette\Utils\Json;
+use Nette\Utils\JsonException;
 use Psr\Http\Message\ResponseInterface;
 use Stg\HallOfRecords\Error\StgException;
 use Stg\HallOfRecords\Http\HttpContentFetcher;
@@ -100,8 +102,8 @@ final class TwitterImageFetcher extends AbstractImageFetcher implements ImageFet
         $json = $this->fetchTweet($tweetId);
 
         try {
-            $conversation = json_decode($json, false, JSON_THROW_ON_ERROR);
-        } catch (\JsonException $exception) {
+            $conversation = Json::decode($json);
+        } catch (JsonException $exception) {
             throw $this->createException(
                 "Error decoding json for tweet id `{$tweetId}`"
                 . ": `{$exception->getMessage()}`"
