@@ -82,8 +82,7 @@ final class CompaniesTable
                 'companies',
                 $qb->expr()->eq('companies.id', 'localized.company_id')
             )
-            ->getSQL()
-        );
+            ->getSQL());
     }
 
     /**
