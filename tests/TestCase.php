@@ -13,15 +13,26 @@ declare(strict_types=1);
 
 namespace Tests;
 
+use Psr\Container\ContainerInterface;
 use Psr\Http\Client\ClientInterface as HttpClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Slim\App;
 use Stg\HallOfRecords\Data\Game\Game;
 use Stg\HallOfRecords\Data\Game\Games;
 use Stg\HallOfRecords\Data\Score\Score;
 use Stg\HallOfRecords\Data\Score\Scores;
 use Stg\HallOfRecords\Data\Setting\GameSetting;
 use Stg\HallOfRecords\Data\Setting\GlobalSetting;
+use Stg\HallOfRecords\Database\Database;
+use Tests\Helper\AppHelper;
+use Tests\Helper\ContainerHelper;
+use Tests\Helper\DatabaseHelper;
+use Tests\Helper\FilesystemHelper;
+use Tests\Helper\HttpHelper;
+use Tests\Helper\LocaleHelper;
+use Tests\Helper\LoggingHelper;
+use Tests\Helper\MediaWikiHelper;
 
 abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
@@ -30,6 +41,14 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     /** @var \Generator<int> */
     private \Generator $scoreIdGenerator;
 
+    private ContainerInterface $container;
+    private DatabaseHelper $database;
+    private FilesystemHelper $filesystem;
+    private HttpHelper $http;
+    private LocaleHelper $locale;
+    private LoggingHelper $logging;
+    private MediaWikiHelper $mediaWiki;
+
     /**
      * This method is called before each test.
      */
@@ -37,6 +56,49 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     {
         $this->gameIdGenerator = $this->createIdGenerator();
         $this->scoreIdGenerator = $this->createIdGenerator();
+
+        $this->filesystem = new FilesystemHelper();
+        $this->http = new HttpHelper();
+
+        $this->container = ContainerHelper::createContainer(
+            $this->filesystem->rootDir()
+        );
+
+        $this->database = DatabaseHelper::init($this->container);
+        $this->locale = LocaleHelper::init($this->container);
+        $this->logging = LoggingHelper::init($this->container);
+        $this->mediaWiki = new MediaWikiHelper($this->filesystem);
+    }
+
+
+    final protected function app(): App
+    {
+        return AppHelper::createApp($this->container);
+    }
+
+    final protected function database(): Database
+    {
+        return $this->database->database();
+    }
+
+    final protected function http(): HttpHelper
+    {
+        return $this->http;
+    }
+
+    final protected function locale(): LocaleHelper
+    {
+        return $this->locale;
+    }
+
+    final protected function logging(): LoggingHelper
+    {
+        return $this->logging;
+    }
+
+    final protected function mediaWiki(): MediaWikiHelper
+    {
+        return $this->mediaWiki;
     }
 
     protected function userAgent(): string
@@ -113,15 +175,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 
     protected function loadFile(string $filename): string
     {
-        $contents = file_get_contents($filename);
-
-        if ($contents === false) {
-            throw new \UnexpectedValueException(
-                "Unable to load file: `{$filename}`"
-            );
-        }
-
-        return $contents;
+        return $this->filesystem->loadFile($filename);
     }
 
     protected static function succeed(): void
