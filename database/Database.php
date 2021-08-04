@@ -35,7 +35,7 @@ final class Database
         $schemaManager = $this->connection->createSchemaManager();
         $schema = $schemaManager->createSchema();
 
-        $companies = $this->companies->createObjects($schemaManager, $schema);
+        $this->companies->createObjects($schemaManager, $schema);
     }
 
     public function companies(): CompaniesTable

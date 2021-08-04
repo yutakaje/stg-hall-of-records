@@ -37,6 +37,7 @@
     },
     "autoload": {
         "psr-4": {
+            "Stg\\HallOfRecords\\Database\\": "database/",
             "Stg\\HallOfRecords\\": "src/"
         }
     },
