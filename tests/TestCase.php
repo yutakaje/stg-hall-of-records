@@ -41,13 +41,13 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     /** @var \Generator<int> */
     private \Generator $scoreIdGenerator;
 
-    private ContainerInterface $container;
-    private DatabaseHelper $database;
-    private FilesystemHelper $filesystem;
-    private HttpHelper $http;
-    private LocaleHelper $locale;
-    private LoggingHelper $logging;
-    private MediaWikiHelper $mediaWiki;
+    private ?ContainerInterface $container;
+    private ?DatabaseHelper $database;
+    private ?FilesystemHelper $filesystem;
+    private ?HttpHelper $http;
+    private ?LocaleHelper $locale;
+    private ?LoggingHelper $logging;
+    private ?MediaWikiHelper $mediaWiki;
 
     /**
      * This method is called before each test.
@@ -57,47 +57,83 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         $this->gameIdGenerator = $this->createIdGenerator();
         $this->scoreIdGenerator = $this->createIdGenerator();
 
-        $this->filesystem = new FilesystemHelper();
-        $this->http = new HttpHelper();
-
-        $this->container = ContainerHelper::createContainer(
-            $this->filesystem->rootDir()
-        );
-
-        $this->database = DatabaseHelper::init($this->container);
-        $this->locale = LocaleHelper::init($this->container);
-        $this->logging = LoggingHelper::init($this->container);
-        $this->mediaWiki = new MediaWikiHelper($this->filesystem);
+        // Lazy load everything.
+        $this->container = null;
+        $this->database = null;
+        $this->filesystem = null;
+        $this->http = null;
+        $this->locale = null;
+        $this->logging = null;
+        $this->mediaWiki = null;
     }
 
+    private function container(): ContainerInterface
+    {
+        if ($this->container === null) {
+            $this->container = ContainerHelper::createContainer(
+                $this->filesystem()->rootDir()
+            );
+        }
+
+        return $this->container;
+    }
 
     final protected function app(): App
     {
-        return AppHelper::createApp($this->container);
+        return AppHelper::createApp($this->container());
     }
 
     final protected function database(): Database
     {
+        if ($this->database === null) {
+            $this->database = DatabaseHelper::init($this->container());
+        }
+
         return $this->database->database();
+    }
+
+    final protected function filesystem(): FilesystemHelper
+    {
+        if ($this->filesystem === null) {
+            $this->filesystem = new FilesystemHelper();
+        }
+
+        return $this->filesystem;
     }
 
     final protected function http(): HttpHelper
     {
+        if ($this->http === null) {
+            $this->http = new HttpHelper();
+        }
+
         return $this->http;
     }
 
     final protected function locale(): LocaleHelper
     {
+        if ($this->locale === null) {
+            $this->locale = LocaleHelper::init($this->container());
+        }
+
         return $this->locale;
     }
 
     final protected function logging(): LoggingHelper
     {
+        if ($this->logging === null) {
+            $this->logging = LoggingHelper::init($this->container());
+        }
+
         return $this->logging;
     }
 
     final protected function mediaWiki(): MediaWikiHelper
     {
+        if ($this->mediaWiki === null) {
+            $this->mediaWiki = new MediaWikiHelper($this->filesystem());
+        }
+
         return $this->mediaWiki;
     }
 
@@ -175,7 +211,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 
     protected function loadFile(string $filename): string
     {
-        return $this->filesystem->loadFile($filename);
+        return $this->filesystem()->loadFile($filename);
     }
 
     protected static function succeed(): void
