@@ -17,6 +17,7 @@ use Doctrine\DBAL\Connection;
 use Stg\HallOfRecords\Database\Definition\CompaniesTable;
 use Stg\HallOfRecords\Database\Definition\GamesTable;
 use Stg\HallOfRecords\Database\Definition\PlayersTable;
+use Stg\HallOfRecords\Database\Definition\ScoresTable;
 use Stg\HallOfRecords\Shared\Infrastructure\Locale\Locales;
 
 final class Database
@@ -25,6 +26,7 @@ final class Database
     private CompaniesTable $companies;
     private GamesTable $games;
     private PlayersTable $players;
+    private ScoresTable $scores;
 
     public function __construct(
         Connection $connection,
@@ -33,7 +35,8 @@ final class Database
         $this->connection = $connection;
         $this->companies = new CompaniesTable($this->connection, $locales);
         $this->games = new GamesTable($this->connection, $locales);
-        $this->players = new PlayersTable($this->connection, $locales);
+        $this->players = new PlayersTable($this->connection);
+        $this->scores = new ScoresTable($this->connection);
     }
 
     public function createObjects(): void
@@ -46,6 +49,8 @@ final class Database
         $games = $this->games->createObjects($schemaManager, $schema, $companies);
 
         $players = $this->players->createObjects($schemaManager, $schema);
+
+        $this->scores->createObjects($schemaManager, $schema, $games, $players);
     }
 
     public function companies(): CompaniesTable
@@ -61,5 +66,10 @@ final class Database
     public function players(): PlayersTable
     {
         return $this->players;
+    }
+
+    public function scores(): ScoresTable
+    {
+        return $this->scores;
     }
 }

@@ -78,7 +78,7 @@ final class GamesTable
             'localized.locale',
             'localized.name',
             'games.company_id',
-            'localizedCompanies.name AS company_name'
+            'companies.name AS company_name'
         )
             ->from('stg_games_locale', 'localized')
             ->join(
@@ -90,10 +90,10 @@ final class GamesTable
             ->join(
                 'games',
                 'stg_query_companies',
-                'localizedCompanies',
+                'companies',
                 (string)$qb->expr()->and(
-                    $qb->expr()->eq('localizedCompanies.id', 'games.company_id'),
-                    $qb->expr()->eq('localizedCompanies.locale', 'localized.locale')
+                    $qb->expr()->eq('companies.id', 'games.company_id'),
+                    $qb->expr()->eq('companies.locale', 'localized.locale')
                 )
             )
             ->getSQL());
