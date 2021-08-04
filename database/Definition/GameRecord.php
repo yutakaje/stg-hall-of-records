@@ -16,9 +16,10 @@ namespace Stg\HallOfRecords\Database\Definition;
 /**
  * @phpstan-type Names array<string,string>
  */
-final class CompanyRecord
+final class GameRecord
 {
     private int $id;
+    private int $companyId;
     /** @var Names */
     private array $names;
 
@@ -27,15 +28,22 @@ final class CompanyRecord
      */
     public function __construct(
         int $id,
+        int $companyId,
         array $names
     ) {
         $this->id = $id;
+        $this->companyId = $companyId;
         $this->names = $names;
     }
 
     public function id(): int
     {
         return $this->id;
+    }
+
+    public function companyId(): int
+    {
+        return $this->companyId;
     }
 
     public function name(string $locale): string

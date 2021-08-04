@@ -15,12 +15,14 @@ namespace Stg\HallOfRecords\Database;
 
 use Doctrine\DBAL\Connection;
 use Stg\HallOfRecords\Database\Definition\CompaniesTable;
+use Stg\HallOfRecords\Database\Definition\GamesTable;
 use Stg\HallOfRecords\Shared\Infrastructure\Locale\Locales;
 
 final class Database
 {
     private Connection $connection;
     private CompaniesTable $companies;
+    private GamesTable $games;
 
     public function __construct(
         Connection $connection,
@@ -28,6 +30,7 @@ final class Database
     ) {
         $this->connection = $connection;
         $this->companies = new CompaniesTable($this->connection, $locales);
+        $this->games = new GamesTable($this->connection, $locales);
     }
 
     public function createObjects(): void
@@ -35,11 +38,18 @@ final class Database
         $schemaManager = $this->connection->createSchemaManager();
         $schema = $schemaManager->createSchema();
 
-        $this->companies->createObjects($schemaManager, $schema);
+        $companies = $this->companies->createObjects($schemaManager, $schema);
+
+        $games = $this->games->createObjects($schemaManager, $schema, $companies);
     }
 
     public function companies(): CompaniesTable
     {
         return $this->companies;
+    }
+
+    public function games(): GamesTable
+    {
+        return $this->games;
     }
 }
