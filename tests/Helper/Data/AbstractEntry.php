@@ -11,9 +11,9 @@
 
 declare(strict_types=1);
 
-namespace Stg\HallOfRecords\Database\Definition;
+namespace Tests\Helper\Data;
 
-abstract class AbstractRecord
+abstract class AbstractEntry
 {
     private ?int $id;
 
@@ -24,7 +24,7 @@ abstract class AbstractRecord
 
     public function hasId(): bool
     {
-        return $this->id === null;
+        return $this->id !== null;
     }
 
     public function id(): int
@@ -36,7 +36,7 @@ abstract class AbstractRecord
         return $this->id;
     }
 
-    public function setId(int $id): void
+    final protected function setId(int $id): void
     {
         if ($this->id !== null) {
             throw new \LogicException('Id has already been set');

@@ -28,6 +28,7 @@ use Stg\HallOfRecords\Database\Database;
 use Tests\Helper\AppHelper;
 use Tests\Helper\ContainerHelper;
 use Tests\Helper\DatabaseHelper;
+use Tests\Helper\DataHelper;
 use Tests\Helper\FilesystemHelper;
 use Tests\Helper\HttpHelper;
 use Tests\Helper\LocaleHelper;
@@ -42,6 +43,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     private \Generator $scoreIdGenerator;
 
     private ?ContainerInterface $container;
+    private ?DataHelper $data;
     private ?DatabaseHelper $database;
     private ?FilesystemHelper $filesystem;
     private ?HttpHelper $http;
@@ -59,6 +61,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 
         // Lazy load everything.
         $this->container = null;
+        $this->data = null;
         $this->database = null;
         $this->filesystem = null;
         $this->http = null;
@@ -81,6 +84,18 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     final protected function app(): App
     {
         return AppHelper::createApp($this->container());
+    }
+
+    final protected function data(): DataHelper
+    {
+        if ($this->data === null) {
+            $this->data = new DataHelper(
+                $this->database(),
+                $this->locale()
+            );
+        }
+
+        return $this->data;
     }
 
     final protected function database(): Database

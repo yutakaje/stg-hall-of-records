@@ -32,14 +32,6 @@ final class CompanyRecord extends AbstractRecord
 
     public function name(string $locale): string
     {
-        $name = $this->names[$locale] ?? null;
-
-        if ($name === null) {
-            throw new \InvalidArgumentException(
-                "No name specified for id `{$this->id()}` and locale `{$locale}`"
-            );
-        }
-
-        return $name;
+        return $this->localizedValue($this->names, $locale);
     }
 }

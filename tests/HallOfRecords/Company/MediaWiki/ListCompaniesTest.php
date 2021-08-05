@@ -15,7 +15,7 @@ namespace Tests\HallOfRecords\Company\MediaWiki;
 
 use Fig\Http\Message\StatusCodeInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Stg\HallOfRecords\Database\Definition\CompanyRecord;
+use Tests\Helper\Data\CompanyEntry;
 
 class ListCompaniesTest extends \Tests\TestCase
 {
@@ -40,9 +40,9 @@ class ListCompaniesTest extends \Tests\TestCase
         ServerRequestInterface $request,
         string $locale
     ): void {
-        $companies = $this->createRecords();
+        $companies = $this->createCompanies();
 
-        $this->database()->companies()->insertRecords($companies);
+        $this->insertCompanies($companies);
 
         $response = $this->app()->handle($request);
 
@@ -58,21 +58,29 @@ class ListCompaniesTest extends \Tests\TestCase
     }
 
     /**
-     * @return CompanyRecord[]
+     * @return CompanyEntry[]
      */
-    private function createRecords(): array
+    private function createCompanies(): array
     {
-        $db = $this->database()->companies();
-
         return [
-            $db->createRecord($this->locale()->localize('konami')),
-            $db->createRecord($this->locale()->localize('cave')),
-            $db->createRecord($this->locale()->localize('raizing')),
+            $this->data()->createCompany('konami'),
+            $this->data()->createCompany('cave'),
+            $this->data()->createCompany('raizing'),
         ];
     }
 
     /**
-     * @param CompanyRecord[] $companies
+     * @param CompanyEntry[] $companies
+     */
+    private function insertCompanies(array $companies): void
+    {
+        foreach ($companies as $company) {
+            $this->data()->insertCompany($company);
+        }
+    }
+
+    /**
+     * @param CompanyEntry[] $companies
      */
     private function createOutput(array $companies, string $locale): string
     {
@@ -84,7 +92,7 @@ class ListCompaniesTest extends \Tests\TestCase
     }
 
     /**
-     * @param CompanyRecord[] $companies
+     * @param CompanyEntry[] $companies
      */
     private function createCompaniesOutput(array $companies, string $locale): string
     {
@@ -95,7 +103,7 @@ class ListCompaniesTest extends \Tests\TestCase
 {% endfor %}
 HTML,
             implode(PHP_EOL, array_map(
-                fn (CompanyRecord $company) => $this->createCompanyOutput(
+                fn (CompanyEntry $company) => $this->createCompanyOutput(
                     $company,
                     $locale
                 ),
@@ -110,7 +118,7 @@ HTML,
     }
 
     private function createCompanyOutput(
-        CompanyRecord $company,
+        CompanyEntry $company,
         string $locale
     ): string {
         return str_replace(
