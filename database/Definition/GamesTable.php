@@ -18,7 +18,6 @@ use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Schema\Table;
 use Doctrine\DBAL\Schema\View;
-use Stg\HallOfRecords\Database\IdGenerator;
 use Stg\HallOfRecords\Shared\Infrastructure\Locale\Locales;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\DateTime;
 
@@ -28,7 +27,6 @@ use Stg\HallOfRecords\Shared\Infrastructure\Type\DateTime;
 final class GamesTable
 {
     private Connection $connection;
-    private IdGenerator $idGenerator;
     private Locales $locales;
 
     public function __construct(
@@ -37,7 +35,6 @@ final class GamesTable
     ) {
         $this->connection = $connection;
         $this->locales = $locales;
-        $this->idGenerator = new IdGenerator();
     }
 
     public function createObjects(
@@ -46,7 +43,7 @@ final class GamesTable
         Table $companies
     ): Table {
         $games = $schema->createTable('stg_games');
-        $games->addColumn('id', 'integer');
+        $games->addColumn('id', 'integer', ['autoincrement' => true]);
         $games->addColumn('created_date', 'datetime');
         $games->addColumn('last_modified_date', 'datetime');
         $games->addColumn('company_id', 'integer');
@@ -103,12 +100,10 @@ final class GamesTable
      * @param Names $names
      */
     public function createRecord(
-        ?int $gameId,
         int $companyId,
         array $names
     ): GameRecord {
         return new GameRecord(
-            $gameId ?? $this->idGenerator->nextId(),
             $companyId,
             $this->localizeValues($names)
         );
@@ -119,16 +114,16 @@ final class GamesTable
         $qb = $this->connection->createQueryBuilder();
         $qb->insert('stg_games')
             ->values([
-                'id' => ':id',
                 'created_date' => ':createdDate',
                 'last_modified_date' => ':lastModifiedDate',
                 'company_id' => ':companyId',
             ])
-            ->setParameter('id', $record->id())
             ->setParameter('createdDate', DateTime::now())
             ->setParameter('lastModifiedDate', DateTime::now())
             ->setParameter('companyId', $record->companyId())
             ->executeStatement();
+
+        $record->setId((int)$this->connection->lastInsertId());
 
         foreach ($this->locales->all() as $locale) {
             $this->insertLocalizedRecord($record, $locale);

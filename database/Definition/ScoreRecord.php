@@ -13,31 +13,24 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Database\Definition;
 
-final class ScoreRecord
+final class ScoreRecord extends AbstractRecord
 {
-    private int $id;
     private int $gameId;
     private int $playerId;
     private string $playerName;
     private string $scoreValue;
 
     public function __construct(
-        int $id,
         int $gameId,
         int $playerId,
         string $playerName,
         string $scoreValue
     ) {
-        $this->id = $id;
+        parent::__construct();
         $this->gameId = $gameId;
         $this->playerId = $playerId;
         $this->playerName = $playerName;
         $this->scoreValue = $scoreValue;
-    }
-
-    public function id(): int
-    {
-        return $this->id;
     }
 
     public function gameId(): int

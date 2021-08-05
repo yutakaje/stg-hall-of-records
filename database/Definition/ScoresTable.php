@@ -18,18 +18,15 @@ use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Schema\Table;
 use Doctrine\DBAL\Schema\View;
-use Stg\HallOfRecords\Database\IdGenerator;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\DateTime;
 
 final class ScoresTable
 {
     private Connection $connection;
-    private IdGenerator $idGenerator;
 
     public function __construct(Connection $connection)
     {
         $this->connection = $connection;
-        $this->idGenerator = new IdGenerator();
     }
 
     public function createObjects(
@@ -39,7 +36,7 @@ final class ScoresTable
         Table $players
     ): Table {
         $scores = $schema->createTable('stg_scores');
-        $scores->addColumn('id', 'integer');
+        $scores->addColumn('id', 'integer', ['autoincrement' => true]);
         $scores->addColumn('created_date', 'datetime');
         $scores->addColumn('last_modified_date', 'datetime');
         $scores->addColumn('game_id', 'integer');
@@ -84,14 +81,12 @@ final class ScoresTable
     }
 
     public function createRecord(
-        ?int $scoreId,
         int $gameId,
         int $playerId,
         string $playerName,
         string $scoreValue
     ): ScoreRecord {
         return new ScoreRecord(
-            $scoreId ?? $this->idGenerator->nextId(),
             $gameId,
             $playerId,
             $playerName,
@@ -104,7 +99,6 @@ final class ScoresTable
         $qb = $this->connection->createQueryBuilder();
         $qb->insert('stg_scores')
             ->values([
-                'id' => ':id',
                 'created_date' => ':createdDate',
                 'last_modified_date' => ':lastModifiedDate',
                 'game_id' => ':gameId',
@@ -112,7 +106,6 @@ final class ScoresTable
                 'player_name' => ':playerName',
                 'score_value' => ':scoreValue',
             ])
-            ->setParameter('id', $record->id())
             ->setParameter('createdDate', DateTime::now())
             ->setParameter('lastModifiedDate', DateTime::now())
             ->setParameter('gameId', $record->gameId())
@@ -120,6 +113,8 @@ final class ScoresTable
             ->setParameter('playerName', $record->playerName())
             ->setParameter('scoreValue', $record->scoreValue())
             ->executeStatement();
+
+        $record->setId((int)$this->connection->lastInsertId());
     }
 
     /**

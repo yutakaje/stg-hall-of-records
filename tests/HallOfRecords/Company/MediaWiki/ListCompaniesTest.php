@@ -65,9 +65,9 @@ class ListCompaniesTest extends \Tests\TestCase
         $db = $this->database()->companies();
 
         return [
-            $db->createRecord(null, $this->locale()->localize('konami')),
-            $db->createRecord(null, $this->locale()->localize('cave')),
-            $db->createRecord(null, $this->locale()->localize('raizing')),
+            $db->createRecord($this->locale()->localize('konami')),
+            $db->createRecord($this->locale()->localize('cave')),
+            $db->createRecord($this->locale()->localize('raizing')),
         ];
     }
 

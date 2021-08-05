@@ -16,26 +16,18 @@ namespace Stg\HallOfRecords\Database\Definition;
 /**
  * @phpstan-type Names array<string,string>
  */
-final class CompanyRecord
+final class CompanyRecord extends AbstractRecord
 {
-    private int $id;
     /** @var Names */
     private array $names;
 
     /**
      * @param Names $names
      */
-    public function __construct(
-        int $id,
-        array $names
-    ) {
-        $this->id = $id;
-        $this->names = $names;
-    }
-
-    public function id(): int
+    public function __construct(array $names)
     {
-        return $this->id;
+        parent::__construct();
+        $this->names = $names;
     }
 
     public function name(string $locale): string
@@ -44,7 +36,7 @@ final class CompanyRecord
 
         if ($name === null) {
             throw new \InvalidArgumentException(
-                "No name specified for id `{$this->id}` and locale `{$locale}`"
+                "No name specified for id `{$this->id()}` and locale `{$locale}`"
             );
         }
 

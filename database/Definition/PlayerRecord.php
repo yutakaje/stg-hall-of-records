@@ -16,9 +16,8 @@ namespace Stg\HallOfRecords\Database\Definition;
 /**
  * @phpstan-type Aliases string[]
  */
-final class PlayerRecord
+final class PlayerRecord extends AbstractRecord
 {
-    private int $id;
     private string $name;
     /** @var Aliases */
     private array $aliases;
@@ -27,18 +26,12 @@ final class PlayerRecord
      * @param Aliases $aliases
      */
     public function __construct(
-        int $id,
         string $name,
         array $aliases
     ) {
-        $this->id = $id;
+        parent::__construct();
         $this->name = $name;
         $this->aliases = $aliases;
-    }
-
-    public function id(): int
-    {
-        return $this->id;
     }
 
     public function name(): string

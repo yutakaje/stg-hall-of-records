@@ -18,7 +18,6 @@ use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Schema\Table;
 use Doctrine\DBAL\Schema\View;
-use Stg\HallOfRecords\Database\IdGenerator;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\DateTime;
 
 /**
@@ -27,14 +26,10 @@ use Stg\HallOfRecords\Shared\Infrastructure\Type\DateTime;
 final class PlayersTable
 {
     private Connection $connection;
-    private IdGenerator $playerIdGenerator;
-    private IdGenerator $aliasIdGenerator;
 
     public function __construct(Connection $connection)
     {
         $this->connection = $connection;
-        $this->playerIdGenerator = new IdGenerator();
-        $this->aliasIdGenerator = new IdGenerator();
     }
 
     public function createObjects(
@@ -42,7 +37,7 @@ final class PlayersTable
         Schema $schema
     ): Table {
         $players = $schema->createTable('stg_players');
-        $players->addColumn('id', 'integer');
+        $players->addColumn('id', 'integer', ['autoincrement' => true]);
         $players->addColumn('created_date', 'datetime');
         $players->addColumn('last_modified_date', 'datetime');
         $players->addColumn('name', 'string', ['length' => 100]);
@@ -50,7 +45,7 @@ final class PlayersTable
         $schemaManager->createTable($players);
 
         $localePlayers = $schema->createTable('stg_player_aliases');
-        $localePlayers->addColumn('id', 'integer');
+        $localePlayers->addColumn('id', 'integer', ['autoincrement' => true]);
         $localePlayers->addColumn('player_id', 'integer');
         $localePlayers->addColumn('alias', 'string', ['length' => 100]);
         $localePlayers->setPrimaryKey(['id']);
@@ -64,12 +59,10 @@ final class PlayersTable
      * @param Aliases $aliases
      */
     public function createRecord(
-        ?int $playerId,
         string $name,
         array $aliases = []
     ): PlayerRecord {
         return new PlayerRecord(
-            $playerId ?? $this->playerIdGenerator->nextId(),
             $name,
             $aliases
         );
@@ -80,16 +73,16 @@ final class PlayersTable
         $qb = $this->connection->createQueryBuilder();
         $qb->insert('stg_players')
             ->values([
-                'id' => ':id',
                 'created_date' => ':createdDate',
                 'last_modified_date' => ':lastModifiedDate',
                 'name' => ':name',
             ])
-            ->setParameter('id', $record->id())
             ->setParameter('createdDate', DateTime::now())
             ->setParameter('lastModifiedDate', DateTime::now())
             ->setParameter('name', $record->name())
             ->executeStatement();
+
+        $record->setId((int)$this->connection->lastInsertId());
 
         foreach ($record->aliases() as $alias) {
             $this->insertAliasRecord($record, $alias);
@@ -113,11 +106,9 @@ final class PlayersTable
         $qb = $this->connection->createQueryBuilder();
         $qb->insert('stg_player_aliases')
             ->values([
-                'id' => ':id',
                 'player_id' => ':playerId',
                 'alias' => ':alias',
             ])
-            ->setParameter('id', $this->aliasIdGenerator->nextId())
             ->setParameter('playerId', $record->id())
             ->setParameter('alias', $alias)
             ->executeStatement();
