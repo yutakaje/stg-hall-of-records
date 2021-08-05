@@ -11,7 +11,10 @@
 
 declare(strict_types=1);
 
-return array_merge(
-    require __DIR__ . '/shared.php',
-    require __DIR__ . '/company.php'
-);
+use DI\ContainerBuilder;
+
+return function (ContainerBuilder $builder): void {
+    $builder->addDefinitions(require __DIR__ . '/shared.php');
+    $builder->addDefinitions(require __DIR__ . '/company.php');
+    $builder->addDefinitions(require __DIR__ . '/game.php');
+};

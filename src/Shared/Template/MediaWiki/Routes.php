@@ -24,4 +24,14 @@ final class Routes
     {
         return "/companies/{$id}";
     }
+
+    public function listGames(): string
+    {
+        return '/games';
+    }
+
+    public function viewGame(string $id = '{id}'): string
+    {
+        return "/games/{$id}";
+    }
 }

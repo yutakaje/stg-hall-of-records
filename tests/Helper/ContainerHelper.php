@@ -25,7 +25,9 @@ final class ContainerHelper
         $appDir = "{$rootDir}/app";
 
         $builder = new ContainerBuilder();
-        $builder->addDefinitions("{$appDir}/definitions.php");
+
+        $definitionsLoader = require "{$appDir}/definitions.php";
+        $definitionsLoader($builder);
 
         // Do not use real values for database connection or logger.
         $builder->addDefinitions([
