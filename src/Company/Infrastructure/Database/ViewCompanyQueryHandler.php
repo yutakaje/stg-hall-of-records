@@ -16,6 +16,7 @@ namespace Stg\HallOfRecords\Company\Infrastructure\Database;
 use Doctrine\DBAL\Connection;
 use Stg\HallOfRecords\Company\Application\Query\ViewCompanyQueryHandlerInterface;
 use Stg\HallOfRecords\Shared\Application\Query\Resource;
+use Stg\HallOfRecords\Shared\Application\Query\Resources;
 use Stg\HallOfRecords\Shared\Application\Query\ViewQuery;
 use Stg\HallOfRecords\Shared\Application\Query\ViewResult;
 use Stg\HallOfRecords\Shared\Infrastructure\Error\ResourceNotFoundException;
@@ -31,8 +32,11 @@ final class ViewCompanyQueryHandler implements ViewCompanyQueryHandlerInterface
 
     public function execute(ViewQuery $query): ViewResult
     {
+        $company = $this->readCompany($query);
+        $company->games = $this->readGames($query);
+
         return new ViewResult(
-            $this->readCompany($query),
+            $company,
             $query->locale()
         );
     }
@@ -60,6 +64,31 @@ final class ViewCompanyQueryHandler implements ViewCompanyQueryHandlerInterface
         return $this->createCompany($row);
     }
 
+    private function readGames(ViewQuery $query): Resources
+    {
+        $qb = $this->connection->createQueryBuilder();
+
+        $stmt = $qb->select('id', 'name')
+            ->from('stg_query_games')
+            ->where($qb->expr()->and(
+                $qb->expr()->eq('company_id', ':companyId'),
+                $qb->expr()->eq('locale', ':locale')
+            ))
+            ->setParameter('companyId', $query->id())
+            ->setParameter('locale', $query->locale())
+            ->orderBy('name')
+            ->addOrderBy('id')
+            ->executeQuery();
+
+        $games = [];
+
+        while (($row = $stmt->fetchAssociative()) !== false) {
+            $games[] = $this->createGame($row);
+        }
+
+        return new Resources($games);
+    }
+
     /**
      * @param Row $row
      */
@@ -70,5 +99,17 @@ final class ViewCompanyQueryHandler implements ViewCompanyQueryHandlerInterface
         $company->name = $row['name'];
 
         return $company;
+    }
+
+    /**
+     * @param Row $row
+     */
+    private function createGame(array $row): Resource
+    {
+        $game = new Resource();
+        $game->id = $row['id'];
+        $game->name = $row['name'];
+
+        return $game;
     }
 }

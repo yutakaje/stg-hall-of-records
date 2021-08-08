@@ -51,4 +51,20 @@ final class HttpHelper
     ): ResponseInterface {
         return $this->responseFactory->createResponse($statusCode, $reasonPhrase);
     }
+
+    public function replaceInUriPath(
+        ServerRequestInterface $request,
+        string $search,
+        string $replace
+    ): ServerRequestInterface {
+        $uri = $request->getUri();
+
+        return $request->withUri(
+            $uri->withPath(str_replace(
+                rawurlencode($search),
+                rawurlencode($replace),
+                $uri->getPath()
+            ))
+        );
+    }
 }

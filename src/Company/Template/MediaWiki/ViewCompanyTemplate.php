@@ -16,6 +16,7 @@ namespace Stg\HallOfRecords\Company\Template\MediaWiki;
 use Psr\Http\Message\ResponseInterface;
 use Stg\HallOfRecords\Company\Template\ViewCompanyTemplateInterface;
 use Stg\HallOfRecords\Shared\Application\Query\Resource;
+use Stg\HallOfRecords\Shared\Application\Query\Resources;
 use Stg\HallOfRecords\Shared\Application\Query\ViewResult;
 use Stg\HallOfRecords\Shared\Template\MediaWiki\BasicTemplate;
 use Stg\HallOfRecords\Shared\Template\MediaWiki\Routes;
@@ -63,6 +64,7 @@ final class ViewCompanyTemplate implements ViewCompanyTemplateInterface
     ): string {
         return $renderer->render('main', [
             'company' => $this->createCompanyVar($company),
+            'games' => $this->renderGames($renderer, $company->games),
         ]);
     }
 
@@ -72,6 +74,36 @@ final class ViewCompanyTemplate implements ViewCompanyTemplateInterface
         $var->id = $company->id;
         $var->name = $company->name;
         $var->link = $this->routes->viewCompany($company->id);
+
+        return $var;
+    }
+
+    private function renderGames(
+        Renderer $renderer,
+        Resources $games
+    ): string {
+        return $renderer->render('games-list', [
+            'games' => $games->map(
+                fn (Resource $game) => $this->renderGame($renderer, $game)
+            ),
+        ]);
+    }
+
+    private function renderGame(
+        Renderer $renderer,
+        Resource $game
+    ): string {
+        return $renderer->render('game-entry', [
+            'game' => $this->createGameVar($game),
+        ]);
+    }
+
+    private function createGameVar(Resource $game): \stdClass
+    {
+        $var = new \stdClass();
+        $var->id = $game->id;
+        $var->name = $game->name;
+        $var->link = $this->routes->viewGame($game->id);
 
         return $var;
     }
