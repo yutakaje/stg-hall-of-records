@@ -16,6 +16,7 @@ namespace Stg\HallOfRecords\Game\Infrastructure\Database;
 use Doctrine\DBAL\Connection;
 use Stg\HallOfRecords\Game\Application\Query\ViewGameQueryHandlerInterface;
 use Stg\HallOfRecords\Shared\Application\Query\Resource;
+use Stg\HallOfRecords\Shared\Application\Query\Resources;
 use Stg\HallOfRecords\Shared\Application\Query\ViewQuery;
 use Stg\HallOfRecords\Shared\Application\Query\ViewResult;
 use Stg\HallOfRecords\Shared\Infrastructure\Error\ResourceNotFoundException;
@@ -31,8 +32,11 @@ final class ViewGameQueryHandler implements ViewGameQueryHandlerInterface
 
     public function execute(ViewQuery $query): ViewResult
     {
+        $game = $this->readGame($query);
+        $game->scores = $this->readScores($query);
+
         return new ViewResult(
-            $this->readGame($query),
+            $game,
             $query->locale()
         );
     }
@@ -60,6 +64,31 @@ final class ViewGameQueryHandler implements ViewGameQueryHandlerInterface
         return $this->createGame($row);
     }
 
+    private function readScores(ViewQuery $query): Resources
+    {
+        $qb = $this->connection->createQueryBuilder();
+
+        $stmt = $qb->select('id', 'player_id', 'player_name', 'score_value')
+            ->from('stg_query_scores')
+            ->where($qb->expr()->and(
+                $qb->expr()->eq('game_id', ':gameId'),
+                $qb->expr()->eq('locale', ':locale')
+            ))
+            ->setParameter('gameId', $query->id())
+            ->setParameter('locale', $query->locale())
+            ->orderBy('score_value', 'desc')
+            ->addOrderBy('id')
+            ->executeQuery();
+
+        $scores = [];
+
+        while (($row = $stmt->fetchAssociative()) !== false) {
+            $scores[] = $this->createScore($row);
+        }
+
+        return new Resources($scores);
+    }
+
     /**
      * @param Row $row
      */
@@ -83,5 +112,19 @@ final class ViewGameQueryHandler implements ViewGameQueryHandlerInterface
         $company->name = $row['company_name'];
 
         return $company;
+    }
+
+    /**
+     * @param Row $row
+     */
+    private function createScore(array $row): Resource
+    {
+        $score = new Resource();
+        $score->id = $row['id'];
+        $score->playerId = $row['player_id'];
+        $score->playerName = $row['player_name'];
+        $score->scoreValue = $row['score_value'];
+
+        return $score;
     }
 }

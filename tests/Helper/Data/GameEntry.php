@@ -23,6 +23,8 @@ final class GameEntry extends AbstractEntry
     /** @var Names */
     private array $names;
     private CompanyEntry $company;
+    /** @var ScoreEntry[] */
+    private array $scores;
 
     /**
      * @param Names $names
@@ -34,6 +36,7 @@ final class GameEntry extends AbstractEntry
         parent::__construct();
         $this->names = $names;
         $this->company = $company;
+        $this->scores = [];
     }
 
     /**
@@ -52,6 +55,19 @@ final class GameEntry extends AbstractEntry
     public function company(): CompanyEntry
     {
         return $this->company;
+    }
+
+    /**
+     * @return ScoreEntry[]
+     */
+    public function scores(): array
+    {
+        return $this->scores;
+    }
+
+    public function addScore(ScoreEntry $score): void
+    {
+        $this->scores[] = $score;
     }
 
     public function insert(GamesTable $db): void

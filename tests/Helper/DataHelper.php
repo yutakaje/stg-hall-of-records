@@ -119,4 +119,14 @@ final class DataHelper
             $this->database->scores()
         );
     }
+
+    /**
+     * @param ScoreEntry[] $scores
+     */
+    public function insertScores(array $scores): void
+    {
+        foreach ($scores as $score) {
+            $this->insertScore($score);
+        }
+    }
 }

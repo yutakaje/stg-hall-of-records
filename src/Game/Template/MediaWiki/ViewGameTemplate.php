@@ -16,6 +16,7 @@ namespace Stg\HallOfRecords\Game\Template\MediaWiki;
 use Psr\Http\Message\ResponseInterface;
 use Stg\HallOfRecords\Game\Template\ViewGameTemplateInterface;
 use Stg\HallOfRecords\Shared\Application\Query\Resource;
+use Stg\HallOfRecords\Shared\Application\Query\Resources;
 use Stg\HallOfRecords\Shared\Application\Query\ViewResult;
 use Stg\HallOfRecords\Shared\Template\MediaWiki\BasicTemplate;
 use Stg\HallOfRecords\Shared\Template\MediaWiki\Routes;
@@ -64,6 +65,7 @@ final class ViewGameTemplate implements ViewGameTemplateInterface
         return $renderer->render('main', [
             'game' => $this->createGameVar($game),
             'company' => $this->createCompanyVar($game->company),
+            'scores' => $this->renderScores($renderer, $game->scores),
         ]);
     }
 
@@ -83,6 +85,47 @@ final class ViewGameTemplate implements ViewGameTemplateInterface
         $var->id = $company->id;
         $var->name = $company->name;
         $var->link = $this->routes->viewCompany($company->id);
+
+        return $var;
+    }
+
+    private function renderScores(
+        Renderer $renderer,
+        Resources $scores
+    ): string {
+        return $renderer->render('scores-list', [
+            'scores' => $scores->map(
+                fn (Resource $score) => $this->renderScore($renderer, $score)
+            ),
+        ]);
+    }
+
+    private function renderScore(
+        Renderer $renderer,
+        Resource $score
+    ): string {
+        return $renderer->render('score-entry', [
+            'score' => $this->createScoreVar($score),
+            'player' => $this->createPlayerVar($score),
+        ]);
+    }
+
+    private function createScoreVar(Resource $score): \stdClass
+    {
+        $var = new \stdClass();
+        $var->id = $score->id;
+        $var->playerName = $score->playerName;
+        $var->scoreValue = $score->scoreValue;
+
+        return $var;
+    }
+
+    private function createPlayerVar(Resource $score): \stdClass
+    {
+        $var = new \stdClass();
+        $var->id = $score->playerId;
+        $var->name = $score->playerName;
+        $var->link = $this->routes->viewPlayer($score->playerId);
 
         return $var;
     }

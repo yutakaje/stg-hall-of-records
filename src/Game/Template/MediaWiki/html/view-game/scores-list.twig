@@ -1,0 +1,4 @@
+<h3>Scores ({{ scores|length }})</h3>
+{% for entry in scores %}
+  {{ entry|raw }}
+{% endfor %}
