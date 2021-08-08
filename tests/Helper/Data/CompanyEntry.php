@@ -22,6 +22,8 @@ final class CompanyEntry extends AbstractEntry
 {
     /** @var Names */
     private array $names;
+    /** @var GameEntry[] */
+    private array $games;
 
     /**
      * @param Names $names
@@ -30,6 +32,7 @@ final class CompanyEntry extends AbstractEntry
     {
         parent::__construct();
         $this->names = $names;
+        $this->games = [];
     }
 
     /**
@@ -43,6 +46,19 @@ final class CompanyEntry extends AbstractEntry
     public function name(string $locale): string
     {
         return $this->localizedValue($this->names, $locale);
+    }
+
+    /**
+     * @return GameEntry[]
+     */
+    public function games(): array
+    {
+        return $this->games;
+    }
+
+    public function addGame(GameEntry $game): void
+    {
+        $this->games[] = $game;
     }
 
     public function insert(CompaniesTable $db): void

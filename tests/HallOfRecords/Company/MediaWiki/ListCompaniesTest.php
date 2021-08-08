@@ -63,10 +63,26 @@ class ListCompaniesTest extends \Tests\TestCase
     private function createCompanies(): array
     {
         return [
-            $this->data()->createCompany('konami'),
-            $this->data()->createCompany('cave'),
-            $this->data()->createCompany('raizing'),
+            $this->createCompany('konami'),
+            $this->createCompany('cave'),
+            $this->createCompany('raizing'),
         ];
+    }
+
+    private function createCompany(string $name): CompanyEntry
+    {
+        $company = $this->data()->createCompany($name);
+
+        // Add some games for this company to ensure
+        // that the count functions work as expected.
+        $numGames = random_int(1, 5);
+        for ($i = 0; $i < $numGames; ++$i) {
+            $company->addGame(
+                $this->data()->createGame("game{$i}", $company)
+            );
+        }
+
+        return $company;
     }
 
     /**
@@ -76,6 +92,7 @@ class ListCompaniesTest extends \Tests\TestCase
     {
         foreach ($companies as $company) {
             $this->data()->insertCompany($company);
+            $this->data()->insertGames($company->games());
         }
     }
 
@@ -121,16 +138,22 @@ HTML,
         CompanyEntry $company,
         string $locale
     ): string {
+        $numGames = sizeof($company->games());
+
         return str_replace(
             [
                 '{{ company.link }}',
                 '{{ company.name }}',
+                '{{ company.numGames }}',
+                "{{ company.numGames == 1 ? 'game' : 'games' }}"
             ],
             [
                 "/companies/{$company->id()}",
                 $company->name($locale),
+                $numGames,
+                $numGames === 1 ? 'game' : 'games',
             ],
-            $this->mediaWiki()->loadTemplate('Company', 'list-companies/entry')
+            $this->mediaWiki()->loadTemplate('Company', 'list-companies/company-entry')
         );
     }
 }

@@ -73,7 +73,7 @@ final class ListCompaniesTemplate implements ListCompaniesTemplateInterface
         Renderer $renderer,
         Resource $company
     ): string {
-        return $renderer->render('entry', [
+        return $renderer->render('company-entry', [
             'company' => $this->createCompanyVar($company),
         ]);
     }
@@ -83,6 +83,7 @@ final class ListCompaniesTemplate implements ListCompaniesTemplateInterface
         $var = new \stdClass();
         $var->id = $company->id;
         $var->name = $company->name;
+        $var->numGames = $company->numGames;
         $var->link = $this->routes->viewCompany($company->id);
 
         return $var;

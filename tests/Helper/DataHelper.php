@@ -68,6 +68,16 @@ final class DataHelper
     }
 
     /**
+     * @param GameEntry[] $games
+     */
+    public function insertGames(array $games): void
+    {
+        foreach ($games as $game) {
+            $this->insertGame($game);
+        }
+    }
+
+    /**
      * @param Aliases $aliases
      */
     public function createPlayer(

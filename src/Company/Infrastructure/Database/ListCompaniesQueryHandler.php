@@ -41,8 +41,12 @@ final class ListCompaniesQueryHandler implements ListCompaniesQueryHandlerInterf
     {
         $qb = $this->connection->createQueryBuilder();
 
-        $stmt = $qb->select('id', 'name')
-            ->from('stg_query_companies')
+        $stmt = $qb->select(
+            'id',
+            'name',
+            "({$this->numGamesQuery()}) AS num_games"
+        )
+            ->from('stg_query_companies', 'companies')
             ->where($qb->expr()->eq('locale', ':locale'))
             ->setParameter('locale', $query->locale())
             ->orderBy('name')
@@ -58,6 +62,16 @@ final class ListCompaniesQueryHandler implements ListCompaniesQueryHandlerInterf
         return new Resources($companies);
     }
 
+    private function numGamesQuery(): string
+    {
+        $qb = $this->connection->createQueryBuilder();
+
+        return $qb->select('count(*)')
+            ->from('stg_games')
+            ->where($qb->expr()->eq('company_id', 'companies.id'))
+            ->getSQL();
+    }
+
     /**
      * @param Row $row
      */
@@ -66,6 +80,7 @@ final class ListCompaniesQueryHandler implements ListCompaniesQueryHandlerInterf
         $company = new Resource();
         $company->id = $row['id'];
         $company->name = $row['name'];
+        $company->numGames = $row['num_games'];
 
         return $company;
     }
