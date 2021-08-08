@@ -82,7 +82,7 @@ final class DataHelper
      */
     public function createPlayer(
         string $name,
-        array $aliases
+        array $aliases = []
     ): PlayerEntry {
         return new PlayerEntry(
             $name,

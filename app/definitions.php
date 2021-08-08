@@ -17,4 +17,5 @@ return function (ContainerBuilder $builder): void {
     $builder->addDefinitions(require __DIR__ . '/shared.php');
     $builder->addDefinitions(require __DIR__ . '/company.php');
     $builder->addDefinitions(require __DIR__ . '/game.php');
+    $builder->addDefinitions(require __DIR__ . '/player.php');
 };

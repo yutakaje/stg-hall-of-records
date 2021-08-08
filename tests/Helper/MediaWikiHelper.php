@@ -46,4 +46,35 @@ final class MediaWikiHelper
 
         return $canonicalized;
     }
+
+    public function removePlaceholders(string $value): string
+    {
+        return $this->removePlaceholderPair(
+            $this->removePlaceholderPair($value, '{{', '}}'),
+            '{%',
+            '%}'
+        );
+    }
+
+    private function removePlaceholderPair(
+        string $value,
+        string $begin,
+        string $end
+    ): string {
+        $delim = '/';
+
+        $replaced = preg_replace(
+            $delim . preg_quote($begin, $delim)
+            . '.+?'
+            . preg_quote($end, $delim) . $delim,
+            '',
+            $value
+        );
+
+        if ($replaced === null) {
+            throw new \UnexpectedValueException('Error replacing placeholders');
+        }
+
+        return $replaced;
+    }
 }
