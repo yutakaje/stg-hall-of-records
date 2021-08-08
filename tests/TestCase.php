@@ -202,6 +202,8 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * @TODO Rename createGameEntry() function in test classes to createGame()
+     *     once this function is not used anymore.
      * @param array<string,mixed> $properties
      */
     protected function createGame(array $properties): Game
