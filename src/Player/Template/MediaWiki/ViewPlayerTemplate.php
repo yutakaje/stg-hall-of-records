@@ -16,6 +16,7 @@ namespace Stg\HallOfRecords\Player\Template\MediaWiki;
 use Psr\Http\Message\ResponseInterface;
 use Stg\HallOfRecords\Player\Template\ViewPlayerTemplateInterface;
 use Stg\HallOfRecords\Shared\Application\Query\Resource;
+use Stg\HallOfRecords\Shared\Application\Query\Resources;
 use Stg\HallOfRecords\Shared\Application\Query\ViewResult;
 use Stg\HallOfRecords\Shared\Template\MediaWiki\BasicTemplate;
 use Stg\HallOfRecords\Shared\Template\MediaWiki\Routes;
@@ -66,6 +67,7 @@ final class ViewPlayerTemplate implements ViewPlayerTemplateInterface
                 $player,
                 $this->renderAliases($renderer, $player)
             ),
+            'scores' => $this->renderScores($renderer, $player->scores),
         ]);
     }
 
@@ -89,5 +91,46 @@ final class ViewPlayerTemplate implements ViewPlayerTemplateInterface
         return $renderer->render('aliases-list', [
             'aliases' => $player->aliases,
         ]);
+    }
+
+    private function renderScores(
+        Renderer $renderer,
+        Resources $scores
+    ): string {
+        return $renderer->render('scores-list', [
+            'scores' => $scores->map(
+                fn (Resource $score) => $this->renderScore($renderer, $score)
+            ),
+        ]);
+    }
+
+    private function renderScore(
+        Renderer $renderer,
+        Resource $score
+    ): string {
+        return $renderer->render('score-entry', [
+            'game' => $this->createGameVar($score),
+            'score' => $this->createScoreVar($score),
+        ]);
+    }
+
+    private function createGameVar(Resource $score): \stdClass
+    {
+        $var = new \stdClass();
+        $var->id = $score->gameId;
+        $var->name = $score->gameName;
+        $var->link = $this->routes->viewGame($score->gameId);
+
+        return $var;
+    }
+
+    private function createScoreVar(Resource $score): \stdClass
+    {
+        $var = new \stdClass();
+        $var->id = $score->id;
+        $var->playerName = $score->playerName;
+        $var->scoreValue = $score->scoreValue;
+
+        return $var;
     }
 }

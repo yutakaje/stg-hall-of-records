@@ -63,7 +63,7 @@ final class ScoresTable
             'scores.last_modified_date',
             'scores.game_id',
             'games.locale',
-            'games.name',
+            'games.name AS game_name',
             'games.company_id',
             'games.company_name',
             'scores.player_id',

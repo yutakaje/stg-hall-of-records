@@ -131,8 +131,7 @@ class ViewGameTest extends \Tests\TestCase
      */
     private function createScoresOutput(array $scores, string $locale): string
     {
-        usort($scores, fn ($lhs, $rhs) => $lhs->scoreValue() <=> $rhs->scoreValue());
-        $scores = array_reverse($scores);
+        usort($scores, fn ($lhs, $rhs) => $rhs->scoreValue() <=> $lhs->scoreValue());
 
         return $this->mediaWiki()->removePlaceholders(
             $this->data()->replace(

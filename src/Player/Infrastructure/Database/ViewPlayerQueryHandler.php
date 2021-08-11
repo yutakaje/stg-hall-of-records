@@ -16,6 +16,7 @@ namespace Stg\HallOfRecords\Player\Infrastructure\Database;
 use Doctrine\DBAL\Connection;
 use Stg\HallOfRecords\Player\Application\Query\ViewPlayerQueryHandlerInterface;
 use Stg\HallOfRecords\Shared\Application\Query\Resource;
+use Stg\HallOfRecords\Shared\Application\Query\Resources;
 use Stg\HallOfRecords\Shared\Application\Query\ViewQuery;
 use Stg\HallOfRecords\Shared\Application\Query\ViewResult;
 use Stg\HallOfRecords\Shared\Infrastructure\Error\ResourceNotFoundException;
@@ -33,6 +34,7 @@ final class ViewPlayerQueryHandler implements ViewPlayerQueryHandlerInterface
     {
         $player = $this->readPlayer($query);
         $player->aliases = $this->readAliases($query);
+        $player->scores = $this->readScores($query);
 
         return new ViewResult(
             $player,
@@ -83,6 +85,39 @@ final class ViewPlayerQueryHandler implements ViewPlayerQueryHandlerInterface
         return $aliases;
     }
 
+    private function readScores(ViewQuery $query): Resources
+    {
+        $qb = $this->connection->createQueryBuilder();
+
+        $stmt = $qb->select(
+            'id',
+            'game_id',
+            'game_name',
+            'player_name',
+            'score_value'
+        )
+            ->from('stg_query_scores')
+            ->where($qb->expr()->and(
+                $qb->expr()->eq('player_id', ':playerId'),
+                $qb->expr()->eq('locale', ':locale')
+            ))
+            ->setParameter('playerId', $query->id())
+            ->setParameter('locale', $query->locale())
+            ->orderBy('game_name')
+            ->addOrderBy('game_id')
+            ->addOrderBy('score_value', 'desc')
+            ->addOrderBy('id')
+            ->executeQuery();
+
+        $scores = [];
+
+        while (($row = $stmt->fetchAssociative()) !== false) {
+            $scores[] = $this->createScore($row);
+        }
+
+        return new Resources($scores);
+    }
+
     /**
      * @param Row $row
      */
@@ -93,5 +128,20 @@ final class ViewPlayerQueryHandler implements ViewPlayerQueryHandlerInterface
         $player->name = $row['name'];
 
         return $player;
+    }
+
+    /**
+     * @param Row $row
+     */
+    private function createScore(array $row): Resource
+    {
+        $score = new Resource();
+        $score->id = $row['id'];
+        $score->gameId = $row['game_id'];
+        $score->gameName = $row['game_name'];
+        $score->playerName = $row['player_name'];
+        $score->scoreValue = $row['score_value'];
+
+        return $score;
     }
 }

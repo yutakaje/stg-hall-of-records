@@ -23,17 +23,20 @@ final class PlayerEntry extends AbstractEntry
     private string $name;
     /** @var Aliases */
     private array $aliases;
+    /** @var ScoreEntry[] */
+    private array $scores;
 
     /**
      * @param Aliases $aliases
      */
     public function __construct(
         string $name,
-        array $aliases
+        array $aliases = []
     ) {
         parent::__construct();
         $this->name = $name;
         $this->aliases = $aliases;
+        $this->scores = [];
     }
 
     public function name(): string
@@ -47,6 +50,19 @@ final class PlayerEntry extends AbstractEntry
     public function aliases(): array
     {
         return $this->aliases;
+    }
+
+    /**
+     * @return ScoreEntry[]
+     */
+    public function scores(): array
+    {
+        return $this->scores;
+    }
+
+    public function addScore(ScoreEntry $score): void
+    {
+        $this->scores[] = $score;
     }
 
     public function insert(PlayersTable $db): void
