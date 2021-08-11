@@ -91,10 +91,11 @@ class ListGamesTest extends \Tests\TestCase
      */
     private function createOutput(array $games, string $locale): string
     {
-        return str_replace(
-            '{{content|raw}}',
-            $this->createGamesOutput($games, $locale),
-            $this->mediaWiki()->loadTemplate('Shared', 'basic')
+        return $this->data()->replace(
+            $this->mediaWiki()->loadTemplate('Shared', 'basic'),
+            [
+                '{{content|raw}}' => $this->createGamesOutput($games, $locale),
+            ]
         );
     }
 
@@ -103,25 +104,24 @@ class ListGamesTest extends \Tests\TestCase
      */
     private function createGamesOutput(array $games, string $locale): string
     {
-        return str_replace(
-            <<<'HTML'
-{% for entry in games %}
-  {{ entry|raw }}
-{% endfor %}
-HTML,
-            implode(PHP_EOL, array_map(
-                fn (GameEntry $game) => $this->createGameOutput(
-                    $game,
-                    $locale
-                ),
+        return $this->mediaWiki()->removePlaceholders(
+            $this->data()->replace(
+                $this->mediaWiki()->loadTemplate('Game', 'list-games/main'),
                 [
-                    $games[2],
-                    $games[3],
-                    $games[1],
-                    $games[0],
+                    '{{ entry|raw }}' => implode(PHP_EOL, array_map(
+                        fn (GameEntry $game) => $this->createGameOutput(
+                            $game,
+                            $locale
+                        ),
+                        [
+                            $games[2],
+                            $games[3],
+                            $games[1],
+                            $games[0],
+                        ]
+                    )),
                 ]
-            )),
-            $this->mediaWiki()->loadTemplate('Game', 'list-games/main')
+            )
         );
     }
 
@@ -129,16 +129,12 @@ HTML,
         GameEntry $game,
         string $locale
     ): string {
-        return str_replace(
+        return $this->data()->replace(
+            $this->mediaWiki()->loadTemplate('Game', 'list-games/entry'),
             [
-                '{{ game.link }}',
-                '{{ game.name }}',
-            ],
-            [
-                "/games/{$game->id()}",
-                $game->name($locale),
-            ],
-            $this->mediaWiki()->loadTemplate('Game', 'list-games/entry')
+                '{{ game.link }}' => "/games/{$game->id()}",
+                '{{ game.name }}' => $game->name($locale),
+            ]
         );
     }
 }

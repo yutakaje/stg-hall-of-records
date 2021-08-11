@@ -84,10 +84,11 @@ class ListPlayersTest extends \Tests\TestCase
      */
     private function createOutput(array $players, string $locale): string
     {
-        return str_replace(
-            '{{content|raw}}',
-            $this->createPlayersOutput($players, $locale),
-            $this->mediaWiki()->loadTemplate('Shared', 'basic')
+        return $this->data()->replace(
+            $this->mediaWiki()->loadTemplate('Shared', 'basic'),
+            [
+                '{{content|raw}}' => $this->createPlayersOutput($players, $locale),
+            ]
         );
     }
 
@@ -96,24 +97,23 @@ class ListPlayersTest extends \Tests\TestCase
      */
     private function createPlayersOutput(array $players, string $locale): string
     {
-        return str_replace(
-            <<<'HTML'
-{% for entry in players %}
-  {{ entry|raw }}
-{% endfor %}
-HTML,
-            implode(PHP_EOL, array_map(
-                fn (PlayerEntry $player) => $this->createPlayerOutput(
-                    $player,
-                    $locale
-                ),
+        return $this->mediaWiki()->removePlaceholders(
+            $this->data()->replace(
+                $this->mediaWiki()->loadTemplate('Player', 'list-players/main'),
                 [
-                    $players[1],
-                    $players[0],
-                    $players[2],
+                    '{{ entry|raw }}' => implode(PHP_EOL, array_map(
+                        fn (PlayerEntry $player) => $this->createPlayerOutput(
+                            $player,
+                            $locale
+                        ),
+                        [
+                            $players[1],
+                            $players[0],
+                            $players[2],
+                        ]
+                    )),
                 ]
-            )),
-            $this->mediaWiki()->loadTemplate('Player', 'list-players/main')
+            )
         );
     }
 
@@ -121,16 +121,12 @@ HTML,
         PlayerEntry $player,
         string $locale
     ): string {
-        return str_replace(
+        return $this->data()->replace(
+            $this->mediaWiki()->loadTemplate('Player', 'list-players/player-entry'),
             [
-                '{{ player.link }}',
-                '{{ player.name }}',
-            ],
-            [
-                "/players/{$player->id()}",
-                $player->name(),
-            ],
-            $this->mediaWiki()->loadTemplate('Player', 'list-players/player-entry')
+                '{{ player.link }}' => "/players/{$player->id()}",
+                '{{ player.name }}' => $player->name(),
+            ]
         );
     }
 }

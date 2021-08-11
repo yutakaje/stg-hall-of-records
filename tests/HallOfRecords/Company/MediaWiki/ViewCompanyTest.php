@@ -88,10 +88,11 @@ class ViewCompanyTest extends \Tests\TestCase
 
     private function createOutput(CompanyEntry $company, string $locale): string
     {
-        return str_replace(
-            '{{content|raw}}',
-            $this->createCompanyOutput($company, $locale),
-            $this->mediaWiki()->loadTemplate('Shared', 'basic')
+        return $this->data()->replace(
+            $this->mediaWiki()->loadTemplate('Shared', 'basic'),
+            [
+                '{{content|raw}}' => $this->createCompanyOutput($company, $locale),
+            ]
         );
     }
 
@@ -99,18 +100,13 @@ class ViewCompanyTest extends \Tests\TestCase
         CompanyEntry $company,
         string $locale
     ): string {
-        return str_replace(
+        return $this->data()->replace(
+            $this->mediaWiki()->loadTemplate('Company', 'view-company/main'),
             [
-                '{{ company.link }}',
-                '{{ company.name }}',
-                '{{ games|raw }}',
-            ],
-            [
-                "/companies/{$company->id()}",
-                $company->name($locale),
-                $this->createGamesOutput($company->games(), $locale),
-            ],
-            $this->mediaWiki()->loadTemplate('Company', 'view-company/main')
+                '{{ company.link }}' => "/companies/{$company->id()}",
+                '{{ company.name }}' => $company->name($locale),
+                '{{ games|raw }}' => $this->createGamesOutput($company->games(), $locale),
+            ]
         );
     }
 
@@ -119,34 +115,28 @@ class ViewCompanyTest extends \Tests\TestCase
      */
     private function createGamesOutput(array $games, string $locale): string
     {
-        return $this->mediaWiki()->removePlaceholders(str_replace(
-            [
-                "{{ games|length }}",
-                "{{ entry|raw }}",
-            ],
-            [
-                sizeof($games),
-                implode(PHP_EOL, array_map(
-                    fn (GameEntry $game) => $this->createGameOutput($game, $locale),
-                    $games
-                )),
-            ],
-            $this->mediaWiki()->loadTemplate('Company', 'view-company/games-list')
-        ));
+        return $this->mediaWiki()->removePlaceholders(
+            $this->data()->replace(
+                $this->mediaWiki()->loadTemplate('Company', 'view-company/games-list'),
+                [
+                    "{{ games|length }}" => sizeof($games),
+                    "{{ entry|raw }}" => implode(PHP_EOL, array_map(
+                        fn (GameEntry $game) => $this->createGameOutput($game, $locale),
+                        $games
+                    )),
+                ]
+            )
+        );
     }
 
     private function createGameOutput(GameEntry $game, string $locale): string
     {
-        return str_replace(
+        return $this->data()->replace(
+            $this->mediaWiki()->loadTemplate('Company', 'view-company/game-entry'),
             [
-                '{{ game.link }}',
-                '{{ game.name }}',
-            ],
-            [
-                "/games/{$game->id()}",
-                $game->name($locale),
-            ],
-            $this->mediaWiki()->loadTemplate('Company', 'view-company/game-entry')
+                '{{ game.link }}' => "/games/{$game->id()}",
+                '{{ game.name }}' => $game->name($locale),
+            ]
         );
     }
 }

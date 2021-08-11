@@ -129,4 +129,16 @@ final class DataHelper
             $this->insertScore($score);
         }
     }
+
+    /**
+     * @param array<string,string|int> $replacements
+     */
+    public function replace(string $value, array $replacements): string
+    {
+        foreach ($replacements as $search => $replace) {
+            $value = str_replace($search, (string)$replace, $value);
+        }
+
+        return $value;
+    }
 }

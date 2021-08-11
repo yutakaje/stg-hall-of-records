@@ -91,10 +91,11 @@ class ViewPlayerTest extends \Tests\TestCase
 
     private function createOutput(PlayerEntry $player, string $locale): string
     {
-        return str_replace(
-            '{{content|raw}}',
-            $this->createPlayerOutput($player, $locale),
-            $this->mediaWiki()->loadTemplate('Shared', 'basic')
+        return $this->data()->replace(
+            $this->mediaWiki()->loadTemplate('Shared', 'basic'),
+            [
+                '{{content|raw}}' => $this->createPlayerOutput($player, $locale),
+            ]
         );
     }
 
@@ -102,20 +103,17 @@ class ViewPlayerTest extends \Tests\TestCase
         PlayerEntry $player,
         string $locale
     ): string {
-        return str_replace(
+        return $this->data()->replace(
+            $this->mediaWiki()->loadTemplate('Player', 'view-player/main'),
             [
-                '{{ player.id }}',
-                '{{ player.name }}',
-                '{{ player.link }}',
-                '{{ player.aliases|raw }}',
-            ],
-            [
-                $player->id(),
-                $player->name(),
-                "/players/{$player->id()}",
-                $this->createAliasesOutput($player->aliases(), $locale),
-            ],
-            $this->mediaWiki()->loadTemplate('Player', 'view-player/main')
+                '{{ player.id }}' => $player->id(),
+                '{{ player.name }}' => $player->name(),
+                '{{ player.link }}' => "/players/{$player->id()}",
+                '{{ player.aliases|raw }}' => $this->createAliasesOutput(
+                    $player->aliases(),
+                    $locale
+                ),
+            ]
         );
     }
 
@@ -132,10 +130,13 @@ class ViewPlayerTest extends \Tests\TestCase
 
         sort($aliases);
 
-        return $this->mediaWiki()->removePlaceholders(str_replace(
-            "{{ aliases|join(', ') }}",
-            implode(', ', $aliases),
-            $this->mediaWiki()->loadTemplate('Player', 'view-player/aliases-list')
-        ));
+        return $this->mediaWiki()->removePlaceholders(
+            $this->data()->replace(
+                $this->mediaWiki()->loadTemplate('Player', 'view-player/aliases-list'),
+                [
+                    "{{ aliases|join(', ') }}" => implode(', ', $aliases),
+                ]
+            )
+        );
     }
 }

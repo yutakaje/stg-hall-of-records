@@ -101,10 +101,14 @@ class ListCompaniesTest extends \Tests\TestCase
      */
     private function createOutput(array $companies, string $locale): string
     {
-        return str_replace(
-            '{{content|raw}}',
-            $this->createCompaniesOutput($companies, $locale),
-            $this->mediaWiki()->loadTemplate('Shared', 'basic')
+        return $this->data()->replace(
+            $this->mediaWiki()->loadTemplate('Shared', 'basic'),
+            [
+                '{{content|raw}}' => $this->createCompaniesOutput(
+                    $companies,
+                    $locale
+                ),
+            ]
         );
     }
 
@@ -113,24 +117,23 @@ class ListCompaniesTest extends \Tests\TestCase
      */
     private function createCompaniesOutput(array $companies, string $locale): string
     {
-        return str_replace(
-            <<<'HTML'
-{% for entry in companies %}
-  {{ entry|raw }}
-{% endfor %}
-HTML,
-            implode(PHP_EOL, array_map(
-                fn (CompanyEntry $company) => $this->createCompanyOutput(
-                    $company,
-                    $locale
-                ),
+        return $this->mediaWiki()->removePlaceholders(
+            $this->data()->replace(
+                $this->mediaWiki()->loadTemplate('Company', 'list-companies/main'),
                 [
-                    $companies[1],
-                    $companies[0],
-                    $companies[2],
+                    '{{ entry|raw }}' => implode(PHP_EOL, array_map(
+                        fn (CompanyEntry $company) => $this->createCompanyOutput(
+                            $company,
+                            $locale
+                        ),
+                        [
+                            $companies[1],
+                            $companies[0],
+                            $companies[2],
+                        ]
+                    )),
                 ]
-            )),
-            $this->mediaWiki()->loadTemplate('Company', 'list-companies/main')
+            )
         );
     }
 
@@ -140,20 +143,14 @@ HTML,
     ): string {
         $numGames = sizeof($company->games());
 
-        return str_replace(
+        return $this->data()->replace(
+            $this->mediaWiki()->loadTemplate('Company', 'list-companies/company-entry'),
             [
-                '{{ company.link }}',
-                '{{ company.name }}',
-                '{{ company.numGames }}',
-                "{{ company.numGames == 1 ? 'game' : 'games' }}"
-            ],
-            [
-                "/companies/{$company->id()}",
-                $company->name($locale),
-                $numGames,
-                $numGames === 1 ? 'game' : 'games',
-            ],
-            $this->mediaWiki()->loadTemplate('Company', 'list-companies/company-entry')
+                '{{ company.link }}' => "/companies/{$company->id()}",
+                '{{ company.name }}' => $company->name($locale),
+                '{{ company.numGames }}' => $numGames,
+                "{{ company.numGames == 1 ? 'game' : 'games' }}" => $numGames === 1 ? 'game' : 'games',
+            ]
         );
     }
 }

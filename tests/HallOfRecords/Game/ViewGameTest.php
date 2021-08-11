@@ -98,10 +98,11 @@ class ViewGameTest extends \Tests\TestCase
 
     private function createOutput(GameEntry $game, string $locale): string
     {
-        return str_replace(
-            '{{content|raw}}',
-            $this->createGameOutput($game, $locale),
-            $this->mediaWiki()->loadTemplate('Shared', 'basic')
+        return $this->data()->replace(
+            $this->mediaWiki()->loadTemplate('Shared', 'basic'),
+            [
+                '{{content|raw}}' => $this->createGameOutput($game, $locale),
+            ]
         );
     }
 
@@ -111,20 +112,17 @@ class ViewGameTest extends \Tests\TestCase
     ): string {
         $company = $game->company();
 
-        return str_replace(
+        return $this->data()->replace(
+            $this->mediaWiki()->loadTemplate('Game', 'view-game/main'),
             [
-                '{{ game.name }}',
-                '{{ company.link }}',
-                '{{ company.name }}',
-                '{{ scores|raw }}',
-            ],
-            [
-                $game->name($locale),
-                "/companies/{$company->id()}",
-                $company->name($locale),
-                $this->createScoresOutput($game->scores(), $locale),
-            ],
-            $this->mediaWiki()->loadTemplate('Game', 'view-game/main')
+                '{{ game.name }}' => $game->name($locale),
+                '{{ company.link }}' => "/companies/{$company->id()}",
+                '{{ company.name }}' => $company->name($locale),
+                '{{ scores|raw }}' => $this->createScoresOutput(
+                    $game->scores(),
+                    $locale
+                ),
+            ]
         );
     }
 
@@ -136,40 +134,34 @@ class ViewGameTest extends \Tests\TestCase
         usort($scores, fn ($lhs, $rhs) => $lhs->scoreValue() <=> $rhs->scoreValue());
         $scores = array_reverse($scores);
 
-        return $this->mediaWiki()->removePlaceholders(str_replace(
-            [
-                "{{ scores|length }}",
-                "{{ entry|raw }}",
-            ],
-            [
-                sizeof($scores),
-                implode(PHP_EOL, array_map(
-                    fn (ScoreEntry $score) => $this->createScoreOutput($score, $locale),
-                    $scores
-                )),
-            ],
-            $this->mediaWiki()->loadTemplate('Game', 'view-game/scores-list')
-        ));
+        return $this->mediaWiki()->removePlaceholders(
+            $this->data()->replace(
+                $this->mediaWiki()->loadTemplate('Game', 'view-game/scores-list'),
+                [
+                    "{{ scores|length }}" => sizeof($scores),
+                    "{{ entry|raw }}" => implode(PHP_EOL, array_map(
+                        fn (ScoreEntry $score) => $this->createScoreOutput(
+                            $score,
+                            $locale
+                        ),
+                        $scores
+                    )),
+                ]
+            )
+        );
     }
 
     private function createScoreOutput(ScoreEntry $score, string $locale): string
     {
-        return str_replace(
+        return $this->data()->replace(
+            $this->mediaWiki()->loadTemplate('Game', 'view-game/score-entry'),
             [
-                '{{ score.id }}',
-                '{{ player.id }}',
-                '{{ player.link }}',
-                '{{ score.playerName }}',
-                '{{ score.scoreValue }}',
-            ],
-            [
-                $score->id(),
-                $score->player()->id(),
-                "/players/{$score->player()->id()}",
-                $score->playerName(),
-                $score->scoreValue(),
-            ],
-            $this->mediaWiki()->loadTemplate('Game', 'view-game/score-entry')
+                '{{ score.id }}' => $score->id(),
+                '{{ player.id }}' => $score->player()->id(),
+                '{{ player.link }}' => "/players/{$score->player()->id()}",
+                '{{ score.playerName }}' => $score->playerName(),
+                '{{ score.scoreValue }}' => $score->scoreValue(),
+            ]
         );
     }
 }
