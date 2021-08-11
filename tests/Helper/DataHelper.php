@@ -57,12 +57,18 @@ final class DataHelper
     }
 
     public function createGame(
+        CompanyEntry $company,
         string $name,
-        CompanyEntry $company
+        string $translitName = ''
     ): GameEntry {
+        if ($translitName === '') {
+            $translitName = "{$name}-translit";
+        }
+
         return new GameEntry(
+            $company,
             $this->localizer->localize($name),
-            $company
+            $this->localizer->localize($translitName)
         );
     }
 

@@ -67,8 +67,8 @@ class ViewGameTest extends \Tests\TestCase
     private function createGameEntry(): GameEntry
     {
         $game = $this->data()->createGame(
-            'ketsui',
-            $this->data()->createCompany('cave')
+            $this->data()->createCompany('cave'),
+            'ketsui'
         );
 
         // Add some scores for this game to ensure

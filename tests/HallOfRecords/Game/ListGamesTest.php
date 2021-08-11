@@ -68,11 +68,28 @@ class ListGamesTest extends \Tests\TestCase
             $this->data()->createCompany('raizing'),
         ];
 
+        // Index represents expected sort order.
         return [
-            $this->data()->createGame('Ketsui', $companies[1]),
-            $this->data()->createGame('Esprade', $companies[1]),
-            $this->data()->createGame('Battle Garegga', $companies[2]),
-            $this->data()->createGame('Detana! TwinBee', $companies[0]),
+            1 => $this->data()->createGame(
+                $companies[1],
+                'ケツイ〜絆地獄たち〜',
+                'けついきずなじごくたち'
+            ),
+            0 => $this->data()->createGame(
+                $companies[1],
+                'エスプレイド',
+                'えすぷれいど'
+            ),
+            3 => $this->data()->createGame(
+                $companies[2],
+                'バトルガレッガ',
+                'ばとるがれっが'
+            ),
+            2 => $this->data()->createGame(
+                $companies[0],
+                '出たな!ツインビー',
+                'でたな!ついんびー',
+            ),
         ];
     }
 
@@ -104,6 +121,8 @@ class ListGamesTest extends \Tests\TestCase
      */
     private function createGamesOutput(array $games, string $locale): string
     {
+        ksort($games);
+
         return $this->mediaWiki()->removePlaceholders(
             $this->data()->replace(
                 $this->mediaWiki()->loadTemplate('Game', 'list-games/main'),
@@ -113,12 +132,7 @@ class ListGamesTest extends \Tests\TestCase
                             $game,
                             $locale
                         ),
-                        [
-                            $games[2],
-                            $games[3],
-                            $games[1],
-                            $games[0],
-                        ]
+                        $games
                     )),
                 ]
             )

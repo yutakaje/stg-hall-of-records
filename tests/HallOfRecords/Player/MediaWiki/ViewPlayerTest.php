@@ -90,9 +90,9 @@ class ViewPlayerTest extends \Tests\TestCase
         ];
 
         $games = [
-            $this->data()->createGame('Ketsui', $companies[1]),
-            $this->data()->createGame('Esprade', $companies[1]),
-            $this->data()->createGame('Detana! TwinBee', $companies[0]),
+            $this->data()->createGame($companies[1], 'Ketsui'),
+            $this->data()->createGame($companies[1], 'Esprade'),
+            $this->data()->createGame($companies[0], 'Detana! TwinBee'),
         ];
         $randomGame = fn () => $games[random_int(0, 2)];
 

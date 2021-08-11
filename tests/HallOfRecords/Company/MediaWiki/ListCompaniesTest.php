@@ -62,11 +62,12 @@ class ListCompaniesTest extends \Tests\TestCase
      */
     private function createCompanies(): array
     {
+        // Index represents expected sort order.
         return [
-            $this->createCompany('カプコン', 'かぷこん'),
-            $this->createCompany('彩京', 'さいきょう'),
-            $this->createCompany('東亜プラン', 'とあぷらん'),
-            $this->createCompany('四ツ羽根', 'よつばね'),
+            1 => $this->createCompany('彩京', 'さいきょう'),
+            0 => $this->createCompany('カプコン', 'かぷこん'),
+            3 => $this->createCompany('四ツ羽根', 'よつばね'),
+            2 => $this->createCompany('東亜プラン', 'とあぷらん'),
         ];
     }
 
@@ -81,7 +82,7 @@ class ListCompaniesTest extends \Tests\TestCase
         $numGames = random_int(1, 5);
         for ($i = 0; $i < $numGames; ++$i) {
             $company->addGame(
-                $this->data()->createGame("game{$i}", $company)
+                $this->data()->createGame($company, "game{$i}")
             );
         }
 
@@ -120,9 +121,7 @@ class ListCompaniesTest extends \Tests\TestCase
      */
     private function createCompaniesOutput(array $companies, string $locale): string
     {
-        usort($companies, function ($lhs, $rhs) use ($locale): int {
-            return $lhs->translitName($locale) <=> $rhs->translitName($locale);
-        });
+        ksort($companies);
 
         return $this->mediaWiki()->removePlaceholders(
             $this->data()->replace(

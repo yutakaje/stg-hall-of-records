@@ -20,23 +20,34 @@ use Stg\HallOfRecords\Database\Definition\GamesTable;
  */
 final class GameEntry extends AbstractEntry
 {
+    private CompanyEntry $company;
     /** @var Names */
     private array $names;
-    private CompanyEntry $company;
+    /** @var Names */
+    private array $translitNames;
+
     /** @var ScoreEntry[] */
     private array $scores;
 
     /**
      * @param Names $names
+     * @param Names $translitNames
      */
     public function __construct(
+        CompanyEntry $company,
         array $names,
-        CompanyEntry $company
+        array $translitNames
     ) {
         parent::__construct();
-        $this->names = $names;
         $this->company = $company;
+        $this->names = $names;
+        $this->translitNames = $translitNames;
         $this->scores = [];
+    }
+
+    public function company(): CompanyEntry
+    {
+        return $this->company;
     }
 
     /**
@@ -52,9 +63,17 @@ final class GameEntry extends AbstractEntry
         return $this->localizedValue($this->names, $locale);
     }
 
-    public function company(): CompanyEntry
+    /**
+     * @return Names
+     */
+    public function translitNames(): array
     {
-        return $this->company;
+        return $this->translitNames;
+    }
+
+    public function translitName(string $locale): string
+    {
+        return $this->localizedValue($this->translitNames, $locale);
     }
 
     /**
@@ -78,7 +97,8 @@ final class GameEntry extends AbstractEntry
 
         $record = $db->createRecord(
             $this->company->id(),
-            $this->names
+            $this->names,
+            $this->translitNames
         );
         $db->insertRecord($record);
 

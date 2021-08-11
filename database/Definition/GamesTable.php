@@ -55,6 +55,7 @@ final class GamesTable
         $localeGames->addColumn('game_id', 'integer');
         $localeGames->addColumn('locale', 'string', ['length' => 16]);
         $localeGames->addColumn('name', 'string', ['length' => 100]);
+        $localeGames->addColumn('name_translit', 'string', ['length' => 100]);
         $localeGames->setPrimaryKey(['game_id', 'locale']);
         $localeGames->addForeignKeyConstraint($games, ['game_id'], ['id']);
         $schemaManager->createTable($localeGames);
@@ -74,8 +75,10 @@ final class GamesTable
             'games.last_modified_date',
             'localized.locale',
             'localized.name',
+            'localized.name_translit',
             'games.company_id',
-            'companies.name AS company_name'
+            'companies.name AS company_name',
+            'companies.name_translit AS company_name_translit'
         )
             ->from('stg_games_locale', 'localized')
             ->join(
@@ -98,14 +101,21 @@ final class GamesTable
 
     /**
      * @param Names $names
+     * @param Names $translitNames
      */
     public function createRecord(
         int $companyId,
-        array $names
+        array $names,
+        array $translitNames = []
     ): GameRecord {
+        if ($translitNames == null) {
+            $translitNames = $names;
+        }
+
         return new GameRecord(
             $companyId,
-            $this->localizeValues($names)
+            $this->localizeValues($names),
+            $this->localizeValues($translitNames)
         );
     }
 
@@ -150,10 +160,12 @@ final class GamesTable
                 'game_id' => ':gameId',
                 'locale' => ':locale',
                 'name' => ':name',
+                'name_translit' => ':translitName',
             ])
             ->setParameter('gameId', $record->id())
             ->setParameter('locale', $locale)
             ->setParameter('name', $record->name($locale))
+            ->setParameter('translitName', $record->translitName($locale))
             ->executeStatement();
     }
 

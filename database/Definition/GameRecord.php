@@ -21,17 +21,22 @@ final class GameRecord extends AbstractRecord
     private int $companyId;
     /** @var Names */
     private array $names;
+    /** @var Names */
+    private array $translitNames;
 
     /**
      * @param Names $names
+     * @param Names $translitNames
      */
     public function __construct(
         int $companyId,
-        array $names
+        array $names,
+        array $translitNames
     ) {
         parent::__construct();
         $this->companyId = $companyId;
         $this->names = $names;
+        $this->translitNames = $translitNames;
     }
 
     public function companyId(): int
@@ -42,5 +47,10 @@ final class GameRecord extends AbstractRecord
     public function name(string $locale): string
     {
         return $this->localizedValue($this->names, $locale);
+    }
+
+    public function translitName(string $locale): string
+    {
+        return $this->localizedValue($this->translitNames, $locale);
     }
 }

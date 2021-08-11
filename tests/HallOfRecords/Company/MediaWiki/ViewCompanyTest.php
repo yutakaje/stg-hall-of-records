@@ -73,7 +73,7 @@ class ViewCompanyTest extends \Tests\TestCase
         $numGames = random_int(1, 5);
         for ($i = 0; $i < $numGames; ++$i) {
             $company->addGame(
-                $this->data()->createGame("game{$i}", $company)
+                $this->data()->createGame($company, "game{$i}")
             );
         }
 
