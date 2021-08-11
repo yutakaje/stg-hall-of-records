@@ -63,15 +63,18 @@ class ListCompaniesTest extends \Tests\TestCase
     private function createCompanies(): array
     {
         return [
-            $this->createCompany('konami'),
-            $this->createCompany('cave'),
-            $this->createCompany('raizing'),
+            $this->createCompany('カプコン', 'かぷこん'),
+            $this->createCompany('彩京', 'さいきょう'),
+            $this->createCompany('東亜プラン', 'とあぷらん'),
+            $this->createCompany('四ツ羽根', 'よつばね'),
         ];
     }
 
-    private function createCompany(string $name): CompanyEntry
-    {
-        $company = $this->data()->createCompany($name);
+    private function createCompany(
+        string $name,
+        string $translitName = ''
+    ): CompanyEntry {
+        $company = $this->data()->createCompany($name, $translitName);
 
         // Add some games for this company to ensure
         // that the count functions work as expected.
@@ -117,6 +120,10 @@ class ListCompaniesTest extends \Tests\TestCase
      */
     private function createCompaniesOutput(array $companies, string $locale): string
     {
+        usort($companies, function ($lhs, $rhs) use ($locale): int {
+            return $lhs->translitName($locale) <=> $rhs->translitName($locale);
+        });
+
         return $this->mediaWiki()->removePlaceholders(
             $this->data()->replace(
                 $this->mediaWiki()->loadTemplate('Company', 'list-companies/main'),
@@ -126,11 +133,7 @@ class ListCompaniesTest extends \Tests\TestCase
                             $company,
                             $locale
                         ),
-                        [
-                            $companies[1],
-                            $companies[0],
-                            $companies[2],
-                        ]
+                        $companies
                     )),
                 ]
             )

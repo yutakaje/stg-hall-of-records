@@ -49,7 +49,7 @@ final class ListCompaniesQueryHandler implements ListCompaniesQueryHandlerInterf
             ->from('stg_query_companies', 'companies')
             ->where($qb->expr()->eq('locale', ':locale'))
             ->setParameter('locale', $query->locale())
-            ->orderBy('name')
+            ->orderBy('name_translit')
             ->addOrderBy('id')
             ->executeQuery();
 

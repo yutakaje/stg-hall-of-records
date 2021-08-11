@@ -35,10 +35,17 @@ final class DataHelper
         $this->localizer = $localizer;
     }
 
-    public function createCompany(string $name): CompanyEntry
-    {
+    public function createCompany(
+        string $name,
+        string $translitName = ''
+    ): CompanyEntry {
+        if ($translitName === '') {
+            $translitName = "{$name}-translit";
+        }
+
         return new CompanyEntry(
-            $this->localizer->localize($name)
+            $this->localizer->localize($name),
+            $this->localizer->localize($translitName)
         );
     }
 

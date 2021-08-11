@@ -52,6 +52,7 @@ final class CompaniesTable
         $localeCompanies->addColumn('company_id', 'integer');
         $localeCompanies->addColumn('locale', 'string', ['length' => 16]);
         $localeCompanies->addColumn('name', 'string', ['length' => 100]);
+        $localeCompanies->addColumn('name_translit', 'string', ['length' => 100]);
         $localeCompanies->setPrimaryKey(['company_id', 'locale']);
         $localeCompanies->addForeignKeyConstraint($companies, ['company_id'], ['id']);
         $schemaManager->createTable($localeCompanies);
@@ -70,7 +71,8 @@ final class CompaniesTable
             'companies.created_date',
             'companies.last_modified_date',
             'localized.locale',
-            'localized.name'
+            'localized.name',
+            'localized.name_translit'
         )
             ->from('stg_companies_locale', 'localized')
             ->join(
@@ -84,11 +86,19 @@ final class CompaniesTable
 
     /**
      * @param Names $names
+     * @param Names $translitNames
      */
-    public function createRecord(array $names): CompanyRecord
-    {
+    public function createRecord(
+        array $names,
+        array $translitNames = []
+    ): CompanyRecord {
+        if ($translitNames == null) {
+            $translitNames = $names;
+        }
+
         return new CompanyRecord(
-            $this->localizeValues($names)
+            $this->localizeValues($names),
+            $this->localizeValues($translitNames)
         );
     }
 
@@ -131,10 +141,12 @@ final class CompaniesTable
                 'company_id' => ':companyId',
                 'locale' => ':locale',
                 'name' => ':name',
+                'name_translit' => ':translitName',
             ])
             ->setParameter('companyId', $record->id())
             ->setParameter('locale', $locale)
             ->setParameter('name', $record->name($locale))
+            ->setParameter('translitName', $record->translitName($locale))
             ->executeStatement();
     }
 
