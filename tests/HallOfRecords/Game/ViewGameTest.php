@@ -15,6 +15,7 @@ namespace Tests\HallOfRecords\Game;
 
 use Fig\Http\Message\StatusCodeInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 use Tests\Helper\Data\GameEntry;
 use Tests\Helper\Data\ScoreEntry;
 
@@ -32,14 +33,14 @@ class ViewGameTest extends \Tests\TestCase
         $locale = $this->locale()->random();
 
         $request = $this->http()->createServerRequest('GET', '/games/{id}')
-            ->withHeader('Accept-Language', $locale);
+            ->withHeader('Accept-Language', $locale->value());
 
         $this->testWithLocale($request, $locale);
     }
 
     private function testWithLocale(
         ServerRequestInterface $request,
-        string $locale
+        Locale $locale
     ): void {
         $game = $this->createGameEntry();
 
@@ -96,7 +97,7 @@ class ViewGameTest extends \Tests\TestCase
         $this->data()->insertScores($game->scores());
     }
 
-    private function createOutput(GameEntry $game, string $locale): string
+    private function createOutput(GameEntry $game, Locale $locale): string
     {
         return $this->data()->replace(
             $this->mediaWiki()->loadTemplate('Shared', 'basic'),
@@ -108,7 +109,7 @@ class ViewGameTest extends \Tests\TestCase
 
     private function createGameOutput(
         GameEntry $game,
-        string $locale
+        Locale $locale
     ): string {
         $company = $game->company();
 
@@ -129,7 +130,7 @@ class ViewGameTest extends \Tests\TestCase
     /**
      * @param ScoreEntry[] $scores
      */
-    private function createScoresOutput(array $scores, string $locale): string
+    private function createScoresOutput(array $scores, Locale $locale): string
     {
         usort($scores, fn ($lhs, $rhs) => $rhs->scoreValue() <=> $lhs->scoreValue());
 
@@ -150,7 +151,7 @@ class ViewGameTest extends \Tests\TestCase
         );
     }
 
-    private function createScoreOutput(ScoreEntry $score, string $locale): string
+    private function createScoreOutput(ScoreEntry $score, Locale $locale): string
     {
         return $this->data()->replace(
             $this->mediaWiki()->loadTemplate('Game', 'view-game/score-entry'),

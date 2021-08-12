@@ -15,6 +15,7 @@ namespace Tests\Helper;
 
 use Psr\Container\ContainerInterface;
 use Stg\HallOfRecords\Shared\Infrastructure\Locale\Locales;
+use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 
 final class LocaleHelper
 {
@@ -33,19 +34,19 @@ final class LocaleHelper
     }
 
     /**
-     * @return string[]
+     * @return Locale[]
      */
     public function all(): array
     {
         return $this->locales->all();
     }
 
-    public function default(): string
+    public function default(): Locale
     {
         return $this->locales->default();
     }
 
-    public function random(): string
+    public function random(): Locale
     {
         $locales = $this->all();
         return $locales[array_rand($locales)];
@@ -59,7 +60,7 @@ final class LocaleHelper
         $localized = [];
 
         foreach ($this->all() as $locale) {
-            $localized[$locale] = "{$value}-{$locale}";
+            $localized[$locale->value()] = "{$value}-{$locale->value()}";
         }
 
         return $localized;

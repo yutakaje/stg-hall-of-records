@@ -52,7 +52,7 @@ final class ViewGameQueryHandler implements ViewGameQueryHandlerInterface
                 $qb->expr()->eq('locale', ':locale')
             ))
             ->setParameter('id', $query->id())
-            ->setParameter('locale', $query->locale())
+            ->setParameter('locale', $query->locale()->value())
             ->executeQuery();
 
         $row = $stmt->fetchAssociative();
@@ -75,7 +75,7 @@ final class ViewGameQueryHandler implements ViewGameQueryHandlerInterface
                 $qb->expr()->eq('locale', ':locale')
             ))
             ->setParameter('gameId', $query->id())
-            ->setParameter('locale', $query->locale())
+            ->setParameter('locale', $query->locale()->value())
             ->orderBy('score_value', 'desc')
             ->addOrderBy('id')
             ->executeQuery();

@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Shared\Template\MediaWiki;
 
+use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 use Stg\HallOfRecords\Shared\Template\Renderer;
 
 final class BasicTemplate
@@ -24,7 +25,7 @@ final class BasicTemplate
         $this->renderer = Renderer::createWithFiles(__DIR__ . '/html');
     }
 
-    public function render(string $locale, string $content): string
+    public function render(Locale $locale, string $content): string
     {
         return $this->renderer->withLocale($locale)
             ->render('basic', [

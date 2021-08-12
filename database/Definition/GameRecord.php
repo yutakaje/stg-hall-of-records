@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Database\Definition;
 
+use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
+
 /**
  * @phpstan-type Names array<string,string>
  */
@@ -44,12 +46,12 @@ final class GameRecord extends AbstractRecord
         return $this->companyId;
     }
 
-    public function name(string $locale): string
+    public function name(Locale $locale): string
     {
         return $this->localizedValue($this->names, $locale);
     }
 
-    public function translitName(string $locale): string
+    public function translitName(Locale $locale): string
     {
         return $this->localizedValue($this->translitNames, $locale);
     }

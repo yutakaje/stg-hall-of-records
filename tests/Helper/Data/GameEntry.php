@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Tests\Helper\Data;
 
 use Stg\HallOfRecords\Database\Definition\GamesTable;
+use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 
 /**
  * @phpstan-type Names array<string,string>
@@ -58,7 +59,7 @@ final class GameEntry extends AbstractEntry
         return $this->names;
     }
 
-    public function name(string $locale): string
+    public function name(Locale $locale): string
     {
         return $this->localizedValue($this->names, $locale);
     }
@@ -71,7 +72,7 @@ final class GameEntry extends AbstractEntry
         return $this->translitNames;
     }
 
-    public function translitName(string $locale): string
+    public function translitName(Locale $locale): string
     {
         return $this->localizedValue($this->translitNames, $locale);
     }

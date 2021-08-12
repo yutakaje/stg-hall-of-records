@@ -16,24 +16,27 @@ namespace Tests\HallOfRecords\Shared\Infrastructure\Locale;
 use Psr\Http\Message\ServerRequestInterface;
 use Stg\HallOfRecords\Shared\Infrastructure\Locale\LocaleNegotiator;
 use Stg\HallOfRecords\Shared\Infrastructure\Locale\Locales;
+use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 
 class LocaleNegotiatorTest extends \Tests\TestCase
 {
     public function testWithLocalesInHeader(): void
     {
-        $negotiator = new LocaleNegotiator(new Locales([
-            'ja',
-            'en',
-            'kr',
-        ]));
+        $locales = new Locales('ja', [
+            new Locale('en'),
+            new Locale('ja'),
+            new Locale('kr'),
+        ]);
 
-        self::assertSame('en', $negotiator->negotiate(
+        $negotiator = new LocaleNegotiator($locales);
+
+        self::assertSame($locales->get('en'), $negotiator->negotiate(
             $this->createRequest('en-US,en;q=0.5')
         ));
-        self::assertSame('kr', $negotiator->negotiate(
+        self::assertSame($locales->get('kr'), $negotiator->negotiate(
             $this->createRequest('kr,ja-JP,es-ES')
         ));
-        self::assertSame('ja', $negotiator->negotiate(
+        self::assertSame($locales->get('ja'), $negotiator->negotiate(
             $this->createRequest('fr_FR,it_IT')
         ));
     }

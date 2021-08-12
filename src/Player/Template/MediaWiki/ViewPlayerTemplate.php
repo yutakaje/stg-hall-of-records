@@ -18,6 +18,7 @@ use Stg\HallOfRecords\Player\Template\ViewPlayerTemplateInterface;
 use Stg\HallOfRecords\Shared\Application\Query\Resource;
 use Stg\HallOfRecords\Shared\Application\Query\Resources;
 use Stg\HallOfRecords\Shared\Application\Query\ViewResult;
+use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 use Stg\HallOfRecords\Shared\Template\MediaWiki\BasicTemplate;
 use Stg\HallOfRecords\Shared\Template\MediaWiki\Routes;
 use Stg\HallOfRecords\Shared\Template\Renderer;
@@ -50,7 +51,7 @@ final class ViewPlayerTemplate implements ViewPlayerTemplateInterface
         return $response;
     }
 
-    private function createOutput(Resource $player, string $locale): string
+    private function createOutput(Resource $player, Locale $locale): string
     {
         return $this->wrapper->render($locale, $this->renderPlayer(
             $this->renderer->withLocale($locale),

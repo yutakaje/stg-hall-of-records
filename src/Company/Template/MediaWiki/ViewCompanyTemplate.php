@@ -18,6 +18,7 @@ use Stg\HallOfRecords\Company\Template\ViewCompanyTemplateInterface;
 use Stg\HallOfRecords\Shared\Application\Query\Resource;
 use Stg\HallOfRecords\Shared\Application\Query\Resources;
 use Stg\HallOfRecords\Shared\Application\Query\ViewResult;
+use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 use Stg\HallOfRecords\Shared\Template\MediaWiki\BasicTemplate;
 use Stg\HallOfRecords\Shared\Template\MediaWiki\Routes;
 use Stg\HallOfRecords\Shared\Template\Renderer;
@@ -50,7 +51,7 @@ final class ViewCompanyTemplate implements ViewCompanyTemplateInterface
         return $response;
     }
 
-    private function createOutput(Resource $company, string $locale): string
+    private function createOutput(Resource $company, Locale $locale): string
     {
         return $this->wrapper->render($locale, $this->renderCompany(
             $this->renderer->withLocale($locale),

@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Tests\HallOfRecords\Shared\Template;
 
+use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 use Stg\HallOfRecords\Shared\Template\Renderer;
 
 class RendererTest extends \Tests\TestCase
@@ -21,7 +22,9 @@ class RendererTest extends \Tests\TestCase
     {
         $renderer = Renderer::createWithFiles(__DIR__);
 
-        self::assertNotEquals($renderer, $renderer->withLocale('en'));
+        self::assertNotEquals($renderer, $renderer->withLocale(
+            new Locale('en')
+        ));
     }
 
     public function testLocaleAwareness(): void
@@ -37,11 +40,13 @@ class RendererTest extends \Tests\TestCase
         );
         self::assertSame(
             $this->loadFile(__DIR__ . '/template.ja.twig'),
-            $renderer->withLocale('ja')->render('template', $context)
+            $renderer->withLocale(new Locale('ja'))
+                ->render('template', $context)
         );
         self::assertSame(
             $this->loadFile(__DIR__ . '/template.twig'),
-            $renderer->withLocale('en')->render('template', $context)
+            $renderer->withLocale(new Locale('en'))
+                ->render('template', $context)
         );
     }
 

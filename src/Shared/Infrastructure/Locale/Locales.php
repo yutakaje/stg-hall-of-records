@@ -13,38 +13,64 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Shared\Infrastructure\Locale;
 
+use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
+
 final class Locales
 {
-    /** @var string[] */
+    /** @var Locale[] */
     private array $locales;
+    private Locale $default;
 
     /**
-     * @param string[] $locales
+     * @param Locale[] $locales
      */
-    public function __construct(array $locales)
+    public function __construct(string $default, array $locales)
     {
         if ($locales == null) {
             throw new \InvalidArgumentException('At least one locale must be given');
         }
 
         $this->locales = $locales;
+        $this->default = $this->get($default);
     }
 
     /**
-     * @return string[]
+     * @return Locale[]
      */
     public function all(): array
     {
         return $this->locales;
     }
 
-    public function exists(string $locale): bool
+    public function get(string $value): Locale
     {
-        return in_array($locale, $this->locales, true);
+        $locale = $this->getByValue($value);
+
+        if ($locale === null) {
+            throw new \LogicException("Locale `{$value}` does not exist");
+        }
+
+        return $locale;
     }
 
-    public function default(): string
+    public function exists(string $value): bool
     {
-        return $this->locales[0];
+        return $this->getByValue($value) !== null;
+    }
+
+    public function default(): Locale
+    {
+        return $this->default;
+    }
+
+    private function getByValue(string $value): ?Locale
+    {
+        foreach ($this->locales as $locale) {
+            if ($locale->value() === $value) {
+                return $locale;
+            }
+        }
+
+        return null;
     }
 }

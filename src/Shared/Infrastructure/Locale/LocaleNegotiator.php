@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Stg\HallOfRecords\Shared\Infrastructure\Locale;
 
 use Psr\Http\Message\ServerRequestInterface;
+use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 
 final class LocaleNegotiator
 {
@@ -24,11 +25,11 @@ final class LocaleNegotiator
         $this->locales = $locales;
     }
 
-    public function negotiate(ServerRequestInterface $request): string
+    public function negotiate(ServerRequestInterface $request): Locale
     {
-        foreach ($this->getAcceptedLocales($request) as $locale) {
-            if ($this->locales->exists($locale)) {
-                return $locale;
+        foreach ($this->getAcceptedLocales($request) as $acceptedLocale) {
+            if ($this->locales->exists($acceptedLocale)) {
+                return $this->locales->get($acceptedLocale);
             }
         }
 

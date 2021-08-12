@@ -13,11 +13,13 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Shared\Application\Query;
 
+use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
+
 final class ListResult extends AbstractResult
 {
     private Resources $resources;
 
-    public function __construct(Resources $resources, string $locale)
+    public function __construct(Resources $resources, Locale $locale)
     {
         parent::__construct($locale);
         $this->resources = $resources;

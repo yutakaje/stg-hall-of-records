@@ -15,6 +15,7 @@ namespace Tests\HallOfRecords\Player\MediaWiki;
 
 use Fig\Http\Message\StatusCodeInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 use Tests\Helper\Data\GameEntry;
 use Tests\Helper\Data\PlayerEntry;
 use Tests\Helper\Data\ScoreEntry;
@@ -37,7 +38,7 @@ class ViewPlayerTest extends \Tests\TestCase
         $locale = $this->locale()->random();
 
         $request = $this->http()->createServerRequest('GET', '/players/{id}')
-            ->withHeader('Accept-Language', $locale);
+            ->withHeader('Accept-Language', $locale->value());
 
         $this->executeTest($player, $request, $locale);
     }
@@ -54,7 +55,7 @@ class ViewPlayerTest extends \Tests\TestCase
     private function executeTest(
         PlayerEntry $player,
         ServerRequestInterface $request,
-        string $locale
+        Locale $locale
     ): void {
         $this->insertPlayer($player);
 
@@ -121,7 +122,7 @@ class ViewPlayerTest extends \Tests\TestCase
         $this->data()->insertScores($player->scores());
     }
 
-    private function createOutput(PlayerEntry $player, string $locale): string
+    private function createOutput(PlayerEntry $player, Locale $locale): string
     {
         return $this->data()->replace(
             $this->mediaWiki()->loadTemplate('Shared', 'basic'),
@@ -133,7 +134,7 @@ class ViewPlayerTest extends \Tests\TestCase
 
     private function createPlayerOutput(
         PlayerEntry $player,
-        string $locale
+        Locale $locale
     ): string {
         return $this->data()->replace(
             $this->mediaWiki()->loadTemplate('Player', 'view-player/main'),
@@ -158,7 +159,7 @@ class ViewPlayerTest extends \Tests\TestCase
      */
     private function createAliasesOutput(
         array $aliases,
-        string $locale
+        Locale $locale
     ): string {
         if ($aliases == null) {
             return '';
@@ -179,7 +180,7 @@ class ViewPlayerTest extends \Tests\TestCase
     /**
      * @param ScoreEntry[] $scores
      */
-    private function createScoresOutput(array $scores, string $locale): string
+    private function createScoresOutput(array $scores, Locale $locale): string
     {
         usort($scores, function (ScoreEntry $lhs, ScoreEntry $rhs) use ($locale): int {
             if ($lhs->game()->name($locale) !== $rhs->game()->name($locale)) {
@@ -210,7 +211,7 @@ class ViewPlayerTest extends \Tests\TestCase
         );
     }
 
-    private function createScoreOutput(ScoreEntry $score, string $locale): string
+    private function createScoreOutput(ScoreEntry $score, Locale $locale): string
     {
         return $this->data()->replace(
             $this->mediaWiki()->loadTemplate('Player', 'view-player/score-entry'),

@@ -20,6 +20,7 @@ use Doctrine\DBAL\Schema\Table;
 use Doctrine\DBAL\Schema\View;
 use Stg\HallOfRecords\Shared\Infrastructure\Locale\Locales;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\DateTime;
+use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 
 /**
  * @phpstan-import-type Names from GameRecord
@@ -152,7 +153,7 @@ final class GamesTable
 
     private function insertLocalizedRecord(
         GameRecord $record,
-        string $locale
+        Locale $locale
     ): void {
         $qb = $this->connection->createQueryBuilder();
         $qb->insert('stg_games_locale')
@@ -163,7 +164,7 @@ final class GamesTable
                 'name_translit' => ':translitName',
             ])
             ->setParameter('gameId', $record->id())
-            ->setParameter('locale', $locale)
+            ->setParameter('locale', $locale->value())
             ->setParameter('name', $record->name($locale))
             ->setParameter('translitName', $record->translitName($locale))
             ->executeStatement();
@@ -179,7 +180,7 @@ final class GamesTable
         $localized = [];
 
         foreach ($this->locales->all() as $locale) {
-            $localized[$locale] = $values[$locale];
+            $localized[$locale->value()] = $values[$locale->value()];
         }
 
         return $localized;

@@ -11,21 +11,16 @@
 
 declare(strict_types=1);
 
-namespace Stg\HallOfRecords\Shared\Application\Query;
+namespace Tests\HallOfRecords\Shared\Infrastructure\Type;
 
 use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 
-abstract class AbstractQuery
+class LocaleTest extends \Tests\TestCase
 {
-    private Locale $locale;
-
-    public function __construct(Locale $locale)
+    public function testWithValue(): void
     {
-        $this->locale = $locale;
-    }
+        $locale = new Locale('kr');
 
-    public function locale(): Locale
-    {
-        return $this->locale;
+        self::assertSame('kr', $locale->value());
     }
 }

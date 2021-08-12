@@ -15,6 +15,7 @@ namespace Tests\HallOfRecords\Company\MediaWiki;
 
 use Fig\Http\Message\StatusCodeInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 use Tests\Helper\Data\CompanyEntry;
 use Tests\Helper\Data\GameEntry;
 
@@ -32,14 +33,14 @@ class ViewCompanyTest extends \Tests\TestCase
         $locale = $this->locale()->random();
 
         $request = $this->http()->createServerRequest('GET', '/companies/{id}')
-            ->withHeader('Accept-Language', $locale);
+            ->withHeader('Accept-Language', $locale->value());
 
         $this->testWithLocale($request, $locale);
     }
 
     private function testWithLocale(
         ServerRequestInterface $request,
-        string $locale
+        Locale $locale
     ): void {
         $company = $this->createCompany();
 
@@ -86,7 +87,7 @@ class ViewCompanyTest extends \Tests\TestCase
         $this->data()->insertGames($company->games());
     }
 
-    private function createOutput(CompanyEntry $company, string $locale): string
+    private function createOutput(CompanyEntry $company, Locale $locale): string
     {
         return $this->data()->replace(
             $this->mediaWiki()->loadTemplate('Shared', 'basic'),
@@ -98,7 +99,7 @@ class ViewCompanyTest extends \Tests\TestCase
 
     private function createCompanyOutput(
         CompanyEntry $company,
-        string $locale
+        Locale $locale
     ): string {
         return $this->data()->replace(
             $this->mediaWiki()->loadTemplate('Company', 'view-company/main'),
@@ -113,7 +114,7 @@ class ViewCompanyTest extends \Tests\TestCase
     /**
      * @param GameEntry[] $games
      */
-    private function createGamesOutput(array $games, string $locale): string
+    private function createGamesOutput(array $games, Locale $locale): string
     {
         return $this->mediaWiki()->removePlaceholders(
             $this->data()->replace(
@@ -121,7 +122,10 @@ class ViewCompanyTest extends \Tests\TestCase
                 [
                     "{{ games|length }}" => sizeof($games),
                     "{{ entry|raw }}" => implode(PHP_EOL, array_map(
-                        fn (GameEntry $game) => $this->createGameOutput($game, $locale),
+                        fn (GameEntry $game) => $this->createGameOutput(
+                            $game,
+                            $locale
+                        ),
                         $games
                     )),
                 ]
@@ -129,7 +133,7 @@ class ViewCompanyTest extends \Tests\TestCase
         );
     }
 
-    private function createGameOutput(GameEntry $game, string $locale): string
+    private function createGameOutput(GameEntry $game, Locale $locale): string
     {
         return $this->data()->replace(
             $this->mediaWiki()->loadTemplate('Company', 'view-company/game-entry'),

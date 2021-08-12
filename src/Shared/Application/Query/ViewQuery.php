@@ -13,11 +13,13 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Shared\Application\Query;
 
+use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
+
 final class ViewQuery extends AbstractQuery
 {
     private string $id;
 
-    public function __construct(string $id, string $locale)
+    public function __construct(string $id, Locale $locale)
     {
         parent::__construct($locale);
         $this->id = $id;

@@ -44,7 +44,7 @@ final class ListGamesQueryHandler implements ListGamesQueryHandlerInterface
         $stmt = $qb->select('id', 'name', 'company_id', 'company_name')
             ->from('stg_query_games')
             ->where($qb->expr()->eq('locale', ':locale'))
-            ->setParameter('locale', $query->locale())
+            ->setParameter('locale', $query->locale()->value())
             ->orderBy('name_translit')
             ->addOrderBy('id')
             ->executeQuery();

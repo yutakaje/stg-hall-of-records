@@ -18,6 +18,7 @@ use Stg\HallOfRecords\Player\Template\ListPlayersTemplateInterface;
 use Stg\HallOfRecords\Shared\Application\Query\ListResult;
 use Stg\HallOfRecords\Shared\Application\Query\Resource;
 use Stg\HallOfRecords\Shared\Application\Query\Resources;
+use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 use Stg\HallOfRecords\Shared\Template\MediaWiki\BasicTemplate;
 use Stg\HallOfRecords\Shared\Template\MediaWiki\Routes;
 use Stg\HallOfRecords\Shared\Template\Renderer;
@@ -50,7 +51,7 @@ final class ListPlayersTemplate implements ListPlayersTemplateInterface
         return $response;
     }
 
-    private function createOutput(Resources $players, string $locale): string
+    private function createOutput(Resources $players, Locale $locale): string
     {
         return $this->wrapper->render($locale, $this->renderPlayers(
             $this->renderer->withLocale($locale),

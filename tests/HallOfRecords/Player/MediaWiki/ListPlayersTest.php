@@ -15,6 +15,7 @@ namespace Tests\HallOfRecords\Player\MediaWiki;
 
 use Fig\Http\Message\StatusCodeInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 use Tests\Helper\Data\PlayerEntry;
 
 class ListPlayersTest extends \Tests\TestCase
@@ -31,14 +32,14 @@ class ListPlayersTest extends \Tests\TestCase
         $locale = $this->locale()->random();
 
         $request = $this->http()->createServerRequest('GET', '/players')
-            ->withHeader('Accept-Language', $locale);
+            ->withHeader('Accept-Language', $locale->value());
 
         $this->testWithLocale($request, $locale);
     }
 
     private function testWithLocale(
         ServerRequestInterface $request,
-        string $locale
+        Locale $locale
     ): void {
         $players = $this->createPlayers();
 
@@ -82,7 +83,7 @@ class ListPlayersTest extends \Tests\TestCase
     /**
      * @param PlayerEntry[] $players
      */
-    private function createOutput(array $players, string $locale): string
+    private function createOutput(array $players, Locale $locale): string
     {
         return $this->data()->replace(
             $this->mediaWiki()->loadTemplate('Shared', 'basic'),
@@ -95,7 +96,7 @@ class ListPlayersTest extends \Tests\TestCase
     /**
      * @param PlayerEntry[] $players
      */
-    private function createPlayersOutput(array $players, string $locale): string
+    private function createPlayersOutput(array $players, Locale $locale): string
     {
         return $this->mediaWiki()->removePlaceholders(
             $this->data()->replace(
@@ -119,7 +120,7 @@ class ListPlayersTest extends \Tests\TestCase
 
     private function createPlayerOutput(
         PlayerEntry $player,
-        string $locale
+        Locale $locale
     ): string {
         return $this->data()->replace(
             $this->mediaWiki()->loadTemplate('Player', 'list-players/player-entry'),

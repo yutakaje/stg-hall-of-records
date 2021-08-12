@@ -15,6 +15,7 @@ namespace Tests\HallOfRecords\Company\MediaWiki;
 
 use Fig\Http\Message\StatusCodeInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 use Tests\Helper\Data\CompanyEntry;
 
 class ListCompaniesTest extends \Tests\TestCase
@@ -31,14 +32,14 @@ class ListCompaniesTest extends \Tests\TestCase
         $locale = $this->locale()->random();
 
         $request = $this->http()->createServerRequest('GET', '/companies')
-            ->withHeader('Accept-Language', $locale);
+            ->withHeader('Accept-Language', $locale->value());
 
         $this->testWithLocale($request, $locale);
     }
 
     private function testWithLocale(
         ServerRequestInterface $request,
-        string $locale
+        Locale $locale
     ): void {
         $companies = $this->createCompanies();
 
@@ -103,7 +104,7 @@ class ListCompaniesTest extends \Tests\TestCase
     /**
      * @param CompanyEntry[] $companies
      */
-    private function createOutput(array $companies, string $locale): string
+    private function createOutput(array $companies, Locale $locale): string
     {
         return $this->data()->replace(
             $this->mediaWiki()->loadTemplate('Shared', 'basic'),
@@ -119,7 +120,7 @@ class ListCompaniesTest extends \Tests\TestCase
     /**
      * @param CompanyEntry[] $companies
      */
-    private function createCompaniesOutput(array $companies, string $locale): string
+    private function createCompaniesOutput(array $companies, Locale $locale): string
     {
         ksort($companies);
 
@@ -141,7 +142,7 @@ class ListCompaniesTest extends \Tests\TestCase
 
     private function createCompanyOutput(
         CompanyEntry $company,
-        string $locale
+        locale $locale
     ): string {
         $numGames = sizeof($company->games());
 

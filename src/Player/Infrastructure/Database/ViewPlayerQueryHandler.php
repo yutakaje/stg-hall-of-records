@@ -102,7 +102,7 @@ final class ViewPlayerQueryHandler implements ViewPlayerQueryHandlerInterface
                 $qb->expr()->eq('locale', ':locale')
             ))
             ->setParameter('playerId', $query->id())
-            ->setParameter('locale', $query->locale())
+            ->setParameter('locale', $query->locale()->value())
             ->orderBy('game_name')
             ->addOrderBy('game_id')
             ->addOrderBy('score_value', 'desc')

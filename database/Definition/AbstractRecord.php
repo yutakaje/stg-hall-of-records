@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Database\Definition;
 
+use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
+
 abstract class AbstractRecord
 {
     private ?int $id;
@@ -50,13 +52,14 @@ abstract class AbstractRecord
      * @param array<string,T> $values
      * @return T
      */
-    protected function localizedValue(array $values, string $locale)
+    protected function localizedValue(array $values, locale $locale)
     {
-        $value = $values[$locale] ?? null;
+        $value = $values[$locale->value()] ?? null;
 
         if ($value === null) {
             throw new \InvalidArgumentException(
-                "No value specified for id `{$this->id()}` and locale `{$locale}`"
+                "No value specified for id `{$this->id()}`"
+                . " and locale `{$locale->value()}`"
             );
         }
 

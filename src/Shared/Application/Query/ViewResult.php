@@ -13,11 +13,13 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Shared\Application\Query;
 
+use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
+
 final class ViewResult extends AbstractResult
 {
     private Resource $resource;
 
-    public function __construct(Resource $resource, string $locale)
+    public function __construct(Resource $resource, Locale $locale)
     {
         parent::__construct($locale);
         $this->resource = $resource;

@@ -15,6 +15,7 @@ namespace Tests\HallOfRecords\Game;
 
 use Fig\Http\Message\StatusCodeInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 use Tests\Helper\Data\GameEntry;
 
 class ListGamesTest extends \Tests\TestCase
@@ -31,14 +32,14 @@ class ListGamesTest extends \Tests\TestCase
         $locale = $this->locale()->random();
 
         $request = $this->http()->createServerRequest('GET', '/games')
-            ->withHeader('Accept-Language', $locale);
+            ->withHeader('Accept-Language', $locale->value());
 
         $this->testWithLocale($request, $locale);
     }
 
     private function testWithLocale(
         ServerRequestInterface $request,
-        string $locale
+        Locale $locale
     ): void {
         $games = $this->createGames();
 
@@ -106,7 +107,7 @@ class ListGamesTest extends \Tests\TestCase
     /**
      * @param GameEntry[] $games
      */
-    private function createOutput(array $games, string $locale): string
+    private function createOutput(array $games, Locale $locale): string
     {
         return $this->data()->replace(
             $this->mediaWiki()->loadTemplate('Shared', 'basic'),
@@ -119,7 +120,7 @@ class ListGamesTest extends \Tests\TestCase
     /**
      * @param GameEntry[] $games
      */
-    private function createGamesOutput(array $games, string $locale): string
+    private function createGamesOutput(array $games, Locale $locale): string
     {
         ksort($games);
 
@@ -141,7 +142,7 @@ class ListGamesTest extends \Tests\TestCase
 
     private function createGameOutput(
         GameEntry $game,
-        string $locale
+        Locale $locale
     ): string {
         return $this->data()->replace(
             $this->mediaWiki()->loadTemplate('Game', 'list-games/entry'),

@@ -44,13 +44,13 @@ final class PlayersTable
         $players->setPrimaryKey(['id']);
         $schemaManager->createTable($players);
 
-        $localePlayers = $schema->createTable('stg_player_aliases');
-        $localePlayers->addColumn('id', 'integer', ['autoincrement' => true]);
-        $localePlayers->addColumn('player_id', 'integer');
-        $localePlayers->addColumn('alias', 'string', ['length' => 100]);
-        $localePlayers->setPrimaryKey(['id']);
-        $localePlayers->addForeignKeyConstraint($players, ['player_id'], ['id']);
-        $schemaManager->createTable($localePlayers);
+        $playerAliases = $schema->createTable('stg_player_aliases');
+        $playerAliases->addColumn('id', 'integer', ['autoincrement' => true]);
+        $playerAliases->addColumn('player_id', 'integer');
+        $playerAliases->addColumn('alias', 'string', ['length' => 100]);
+        $playerAliases->setPrimaryKey(['id']);
+        $playerAliases->addForeignKeyConstraint($players, ['player_id'], ['id']);
+        $schemaManager->createTable($playerAliases);
 
         return $players;
     }

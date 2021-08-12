@@ -18,6 +18,7 @@ use Stg\HallOfRecords\Company\Template\ListCompaniesTemplateInterface;
 use Stg\HallOfRecords\Shared\Application\Query\ListResult;
 use Stg\HallOfRecords\Shared\Application\Query\Resource;
 use Stg\HallOfRecords\Shared\Application\Query\Resources;
+use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 use Stg\HallOfRecords\Shared\Template\MediaWiki\BasicTemplate;
 use Stg\HallOfRecords\Shared\Template\MediaWiki\Routes;
 use Stg\HallOfRecords\Shared\Template\Renderer;
@@ -50,7 +51,7 @@ final class ListCompaniesTemplate implements ListCompaniesTemplateInterface
         return $response;
     }
 
-    private function createOutput(Resources $companies, string $locale): string
+    private function createOutput(Resources $companies, Locale $locale): string
     {
         return $this->wrapper->render($locale, $this->renderCompanies(
             $this->renderer->withLocale($locale),

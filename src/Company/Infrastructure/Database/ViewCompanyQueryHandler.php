@@ -52,7 +52,7 @@ final class ViewCompanyQueryHandler implements ViewCompanyQueryHandlerInterface
                 $qb->expr()->eq('locale', ':locale')
             ))
             ->setParameter('id', $query->id())
-            ->setParameter('locale', $query->locale())
+            ->setParameter('locale', $query->locale()->value())
             ->executeQuery();
 
         $row = $stmt->fetchAssociative();
@@ -75,7 +75,7 @@ final class ViewCompanyQueryHandler implements ViewCompanyQueryHandlerInterface
                 $qb->expr()->eq('locale', ':locale')
             ))
             ->setParameter('companyId', $query->id())
-            ->setParameter('locale', $query->locale())
+            ->setParameter('locale', $query->locale()->value())
             ->orderBy('name')
             ->addOrderBy('id')
             ->executeQuery();

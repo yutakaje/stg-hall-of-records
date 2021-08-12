@@ -11,20 +11,22 @@
 
 declare(strict_types=1);
 
-namespace Stg\HallOfRecords\Shared\Application\Query;
+namespace Stg\HallOfRecords\Shared\Infrastructure\Type;
 
-use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
-
-abstract class AbstractQuery
+final class Locale
 {
-    private Locale $locale;
+    private string $locale;
 
-    public function __construct(Locale $locale)
+    public function __construct(string $locale)
     {
+        if ($locale === '') {
+            throw new \InvalidArgumentException('Locale may not be empty');
+        }
+
         $this->locale = $locale;
     }
 
-    public function locale(): Locale
+    public function value(): string
     {
         return $this->locale;
     }

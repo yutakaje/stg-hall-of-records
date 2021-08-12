@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Shared\Template;
 
+use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Twig\Loader\LoaderInterface;
@@ -20,12 +21,12 @@ use Twig\Loader\LoaderInterface;
 final class Renderer
 {
     private Environment $twig;
-    private string $locale;
+    private ?Locale $locale;
 
     private function __construct(LoaderInterface $loader)
     {
         $this->twig = new Environment($loader);
-        $this->locale = '';
+        $this->locale = null;
     }
 
     public static function createWithFiles(string $path): self
@@ -35,7 +36,7 @@ final class Renderer
         );
     }
 
-    public function withLocale(string $locale): self
+    public function withLocale(Locale $locale): self
     {
         $clone = clone $this;
         $clone->locale = $locale;
@@ -48,8 +49,10 @@ final class Renderer
      */
     public function render(string $templateName, array $context = []): string
     {
+        $localeValue = $this->locale !== null ? $this->locale->value() : '';
+
         $candidates = [
-            "{$templateName}.{$this->locale}.twig",
+            "{$templateName}.{$localeValue}.twig",
             "{$templateName}.twig",
         ];
 

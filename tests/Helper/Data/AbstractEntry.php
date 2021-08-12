@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Tests\Helper\Data;
 
+use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
+
 abstract class AbstractEntry
 {
     private ?int $id;
@@ -50,13 +52,14 @@ abstract class AbstractEntry
      * @param array<string,T> $values
      * @return T
      */
-    protected function localizedValue(array $values, string $locale)
+    protected function localizedValue(array $values, locale $locale)
     {
-        $value = $values[$locale] ?? null;
+        $value = $values[$locale->value()] ?? null;
 
         if ($value === null) {
             throw new \InvalidArgumentException(
-                "No value specified for id `{$this->id()}` and locale `{$locale}`"
+                "No value specified for id `{$this->id()}`"
+                . " and locale `{$locale->value()}`"
             );
         }
 

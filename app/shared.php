@@ -22,6 +22,7 @@ use Stg\HallOfRecords\Shared\Application\Query\ListQueryCreator;
 use Stg\HallOfRecords\Shared\Application\Query\ViewQueryCreator;
 use Stg\HallOfRecords\Shared\Infrastructure\Locale\LocaleNegotiator;
 use Stg\HallOfRecords\Shared\Infrastructure\Locale\Locales;
+use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 use Stg\HallOfRecords\Shared\Template\MediaWiki\BasicTemplate;
 use Stg\HallOfRecords\Shared\Template\MediaWiki\Routes;
 
@@ -51,9 +52,9 @@ return [
     })->parameter('settings', DI\get('settings')),
 
     Locales::class => function (): Locales {
-        return new Locales([
-            'en',
-            'ja',
+        return new Locales('en', [
+            new Locale('en'),
+            new Locale('ja'),
         ]);
     },
     LocaleNegotiator::class => DI\autowire(),
