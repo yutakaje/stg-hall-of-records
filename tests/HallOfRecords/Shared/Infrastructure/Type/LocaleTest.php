@@ -22,5 +22,6 @@ class LocaleTest extends \Tests\TestCase
         $locale = new Locale('kr');
 
         self::assertSame('kr', $locale->value());
+        self::assertSame('kr', (string)$locale);
     }
 }

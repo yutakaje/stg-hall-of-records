@@ -24,7 +24,7 @@ class ListCompaniesTest extends \Tests\TestCase
     {
         $locale = $this->locale()->default();
 
-        $request = $this->http()->createServerRequest('GET', "/{$locale->value()}/companies");
+        $request = $this->http()->createServerRequest('GET', "/{$locale}/companies");
 
         $this->testWithLocale($request, $locale);
     }
@@ -33,7 +33,7 @@ class ListCompaniesTest extends \Tests\TestCase
     {
         $locale = $this->locale()->random();
 
-        $request = $this->http()->createServerRequest('GET', "/{$locale->value()}/companies")
+        $request = $this->http()->createServerRequest('GET', "/{$locale}/companies")
             ->withHeader('Accept-Language', $locale->value());
 
         $this->testWithLocale($request, $locale);
@@ -152,7 +152,7 @@ class ListCompaniesTest extends \Tests\TestCase
                 '{{ company.name }}' => $company->name($locale),
                 '{{ company.numGames }}' => $numGames,
                 "{{ company.numGames == 1 ? 'game' : 'games' }}" => $numGames === 1 ? 'game' : 'games',
-                '{{ links.company }}' => "/{$locale->value()}/companies/{$company->id()}",
+                '{{ links.company }}' => "/{$locale}/companies/{$company->id()}",
             ]
         );
     }

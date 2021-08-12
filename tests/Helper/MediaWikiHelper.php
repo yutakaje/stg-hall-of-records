@@ -43,9 +43,9 @@ final class MediaWikiHelper
             $this->loadTemplate('Shared', 'basic'),
             [
                 '{{content|raw}}' => $content,
-                '{{ links.companies }}' => "/{$locale->value()}/companies",
-                '{{ links.games }}' => "/{$locale->value()}/games",
-                '{{ links.players }}' => "/{$locale->value()}/players",
+                '{{ links.companies }}' => "/{$locale}/companies",
+                '{{ links.games }}' => "/{$locale}/games",
+                '{{ links.players }}' => "/{$locale}/players",
             ]
         );
     }

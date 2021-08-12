@@ -25,7 +25,7 @@ class ViewGameTest extends \Tests\TestCase
     {
         $locale = $this->locale()->default();
 
-        $request = $this->http()->createServerRequest('GET', "/{$locale->value()}/games/{id}");
+        $request = $this->http()->createServerRequest('GET', "/{$locale}/games/{id}");
 
         $this->testWithLocale($request, $locale);
     }
@@ -34,7 +34,7 @@ class ViewGameTest extends \Tests\TestCase
     {
         $locale = $this->locale()->random();
 
-        $request = $this->http()->createServerRequest('GET', "/{$locale->value()}/games/{id}")
+        $request = $this->http()->createServerRequest('GET', "/{$locale}/games/{id}")
             ->withHeader('Accept-Language', $locale->value());
 
         $this->testWithLocale($request, $locale);
@@ -122,8 +122,8 @@ class ViewGameTest extends \Tests\TestCase
                     $game->scores(),
                     $locale
                 ),
-                '{{ links.game }}' => "/{$locale->value()}/games/{$game->id()}",
-                '{{ links.company }}' => "/{$locale->value()}/companies/{$company->id()}",
+                '{{ links.game }}' => "/{$locale}/games/{$game->id()}",
+                '{{ links.company }}' => "/{$locale}/companies/{$company->id()}",
             ]
         );
     }
@@ -163,7 +163,7 @@ class ViewGameTest extends \Tests\TestCase
                 '{{ player.id }}' => $player->id(),
                 '{{ score.playerName }}' => $score->playerName(),
                 '{{ score.scoreValue }}' => $score->scoreValue(),
-                '{{ links.player }}' => "/{$locale->value()}/players/{$player->id()}",
+                '{{ links.player }}' => "/{$locale}/players/{$player->id()}",
             ]
         );
     }

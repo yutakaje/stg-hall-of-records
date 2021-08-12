@@ -59,7 +59,7 @@ abstract class AbstractEntry
         if ($value === null) {
             throw new \InvalidArgumentException(
                 "No value specified for id `{$this->id()}`"
-                . " and locale `{$locale->value()}`"
+                . " and locale `{$locale}`"
             );
         }
 

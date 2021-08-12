@@ -30,4 +30,9 @@ final class Locale
     {
         return $this->locale;
     }
+
+    public function __toString(): string
+    {
+        return $this->value();
+    }
 }

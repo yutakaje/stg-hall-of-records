@@ -27,7 +27,7 @@ class ViewPlayerTest extends \Tests\TestCase
         $player = $this->createPlayer();
         $locale = $this->locale()->default();
 
-        $request = $this->http()->createServerRequest('GET', "/{$locale->value()}/players/{id}");
+        $request = $this->http()->createServerRequest('GET', "/{$locale}/players/{id}");
 
         $this->executeTest($player, $request, $locale);
     }
@@ -37,7 +37,7 @@ class ViewPlayerTest extends \Tests\TestCase
         $player = $this->createPlayer();
         $locale = $this->locale()->random();
 
-        $request = $this->http()->createServerRequest('GET', "/{$locale->value()}/players/{id}")
+        $request = $this->http()->createServerRequest('GET', "/{$locale}/players/{id}")
             ->withHeader('Accept-Language', $locale->value());
 
         $this->executeTest($player, $request, $locale);
@@ -48,7 +48,7 @@ class ViewPlayerTest extends \Tests\TestCase
         $player = $this->createPlayer(['Reddo Arimaa', 'Red Arimer']);
         $locale = $this->locale()->default();
 
-        $request = $this->http()->createServerRequest('GET', "/{$locale->value()}/players/{id}");
+        $request = $this->http()->createServerRequest('GET', "/{$locale}/players/{id}");
 
         $this->executeTest($player, $request, $locale);
     }
@@ -148,7 +148,7 @@ class ViewPlayerTest extends \Tests\TestCase
                     $player->scores(),
                     $locale
                 ),
-                '{{ links.player }}' => "/{$locale->value()}/players/{$player->id()}",
+                '{{ links.player }}' => "/{$locale}/players/{$player->id()}",
             ]
         );
     }
@@ -222,7 +222,7 @@ class ViewPlayerTest extends \Tests\TestCase
                 '{{ game.name }}' => $game->name($locale),
                 '{{ score.playerName }}' => $score->playerName(),
                 '{{ score.scoreValue }}' => $score->scoreValue(),
-                '{{ links.game }}' => "/{$locale->value()}/games/{$game->id()}",
+                '{{ links.game }}' => "/{$locale}/games/{$game->id()}",
             ]
         );
     }

@@ -60,7 +60,7 @@ final class LocaleHelper
         $localized = [];
 
         foreach ($this->all() as $locale) {
-            $localized[$locale->value()] = "{$value}-{$locale->value()}";
+            $localized[$locale->value()] = "{$value}-{$locale}";
         }
 
         return $localized;
