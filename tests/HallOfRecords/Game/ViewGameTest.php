@@ -23,16 +23,18 @@ class ViewGameTest extends \Tests\TestCase
 {
     public function testWithDefaultLocale(): void
     {
-        $request = $this->http()->createServerRequest('GET', '/games/{id}');
+        $locale = $this->locale()->default();
 
-        $this->testWithLocale($request, $this->locale()->default());
+        $request = $this->http()->createServerRequest('GET', "/{$locale->value()}/games/{id}");
+
+        $this->testWithLocale($request, $locale);
     }
 
     public function testWithRandomLocale(): void
     {
         $locale = $this->locale()->random();
 
-        $request = $this->http()->createServerRequest('GET', '/games/{id}')
+        $request = $this->http()->createServerRequest('GET', "/{$locale->value()}/games/{id}")
             ->withHeader('Accept-Language', $locale->value());
 
         $this->testWithLocale($request, $locale);
@@ -117,12 +119,13 @@ class ViewGameTest extends \Tests\TestCase
             $this->mediaWiki()->loadTemplate('Game', 'view-game/main'),
             [
                 '{{ game.name }}' => $game->name($locale),
-                '{{ company.link }}' => "/companies/{$company->id()}",
                 '{{ company.name }}' => $company->name($locale),
                 '{{ scores|raw }}' => $this->createScoresOutput(
                     $game->scores(),
                     $locale
                 ),
+                '{{ links.game }}' => "/{$locale->value()}/games/{$game->id()}",
+                '{{ links.company }}' => "/{$locale->value()}/companies/{$company->id()}",
             ]
         );
     }
@@ -153,14 +156,16 @@ class ViewGameTest extends \Tests\TestCase
 
     private function createScoreOutput(ScoreEntry $score, Locale $locale): string
     {
+        $player = $score->player();
+
         return $this->data()->replace(
             $this->mediaWiki()->loadTemplate('Game', 'view-game/score-entry'),
             [
                 '{{ score.id }}' => $score->id(),
-                '{{ player.id }}' => $score->player()->id(),
-                '{{ player.link }}' => "/players/{$score->player()->id()}",
+                '{{ player.id }}' => $player->id(),
                 '{{ score.playerName }}' => $score->playerName(),
                 '{{ score.scoreValue }}' => $score->scoreValue(),
+                '{{ links.player }}' => "/{$locale->value()}/players/{$player->id()}",
             ]
         );
     }

@@ -55,17 +55,22 @@ final class ViewCompanyTemplate implements ViewCompanyTemplateInterface
     {
         return $this->wrapper->render($locale, $this->renderCompany(
             $this->renderer->withLocale($locale),
+            $this->routes->withLocale($locale),
             $company
         ));
     }
 
     private function renderCompany(
         Renderer $renderer,
+        Routes $routes,
         Resource $company
     ): string {
         return $renderer->render('main', [
             'company' => $this->createCompanyVar($company),
-            'games' => $this->renderGames($renderer, $company->games),
+            'games' => $this->renderGames($renderer, $routes, $company->games),
+            'links' => [
+                'company' => $routes->viewCompany($company->id),
+            ],
         ]);
     }
 
@@ -74,28 +79,36 @@ final class ViewCompanyTemplate implements ViewCompanyTemplateInterface
         $var = new \stdClass();
         $var->id = $company->id;
         $var->name = $company->name;
-        $var->link = $this->routes->viewCompany($company->id);
 
         return $var;
     }
 
     private function renderGames(
         Renderer $renderer,
+        Routes $routes,
         Resources $games
     ): string {
         return $renderer->render('games-list', [
             'games' => $games->map(
-                fn (Resource $game) => $this->renderGame($renderer, $game)
+                fn (Resource $game) => $this->renderGame(
+                    $renderer,
+                    $routes,
+                    $game
+                )
             ),
         ]);
     }
 
     private function renderGame(
         Renderer $renderer,
+        Routes $routes,
         Resource $game
     ): string {
         return $renderer->render('game-entry', [
             'game' => $this->createGameVar($game),
+            'links' => [
+                'game' => $routes->viewGame($game->id),
+            ],
         ]);
     }
 
@@ -104,7 +117,6 @@ final class ViewCompanyTemplate implements ViewCompanyTemplateInterface
         $var = new \stdClass();
         $var->id = $game->id;
         $var->name = $game->name;
-        $var->link = $this->routes->viewGame($game->id);
 
         return $var;
     }

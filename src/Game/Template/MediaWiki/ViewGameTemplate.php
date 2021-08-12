@@ -55,18 +55,24 @@ final class ViewGameTemplate implements ViewGameTemplateInterface
     {
         return $this->wrapper->render($locale, $this->renderGame(
             $this->renderer->withLocale($locale),
+            $this->routes->withLocale($locale),
             $game
         ));
     }
 
     private function renderGame(
         Renderer $renderer,
+        Routes $routes,
         Resource $game
     ): string {
         return $renderer->render('main', [
             'game' => $this->createGameVar($game),
             'company' => $this->createCompanyVar($game->company),
-            'scores' => $this->renderScores($renderer, $game->scores),
+            'scores' => $this->renderScores($renderer, $routes, $game->scores),
+            'links' => [
+                'game' => $routes->viewGame($game->id),
+                'company' => $routes->viewCompany($game->company->id),
+            ],
         ]);
     }
 
@@ -75,7 +81,6 @@ final class ViewGameTemplate implements ViewGameTemplateInterface
         $var = new \stdClass();
         $var->id = $game->id;
         $var->name = $game->name;
-        $var->link = $this->routes->viewGame($game->id);
 
         return $var;
     }
@@ -85,29 +90,37 @@ final class ViewGameTemplate implements ViewGameTemplateInterface
         $var = new \stdClass();
         $var->id = $company->id;
         $var->name = $company->name;
-        $var->link = $this->routes->viewCompany($company->id);
 
         return $var;
     }
 
     private function renderScores(
         Renderer $renderer,
+        Routes $routes,
         Resources $scores
     ): string {
         return $renderer->render('scores-list', [
             'scores' => $scores->map(
-                fn (Resource $score) => $this->renderScore($renderer, $score)
+                fn (Resource $score) => $this->renderScore(
+                    $renderer,
+                    $routes,
+                    $score
+                )
             ),
         ]);
     }
 
     private function renderScore(
         Renderer $renderer,
+        Routes $routes,
         Resource $score
     ): string {
         return $renderer->render('score-entry', [
             'score' => $this->createScoreVar($score),
             'player' => $this->createPlayerVar($score),
+            'links' => [
+                'player' => $routes->viewPlayer($score->playerId),
+            ],
         ]);
     }
 
@@ -126,7 +139,6 @@ final class ViewGameTemplate implements ViewGameTemplateInterface
         $var = new \stdClass();
         $var->id = $score->playerId;
         $var->name = $score->playerName;
-        $var->link = $this->routes->viewPlayer($score->playerId);
 
         return $var;
     }

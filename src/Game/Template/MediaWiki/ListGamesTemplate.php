@@ -55,27 +55,37 @@ final class ListGamesTemplate implements ListGamesTemplateInterface
     {
         return $this->wrapper->render($locale, $this->renderGames(
             $this->renderer->withLocale($locale),
+            $this->routes->withLocale($locale),
             $games
         ));
     }
 
     private function renderGames(
         Renderer $renderer,
+        Routes $routes,
         Resources $games
     ): string {
         return $renderer->render('main', [
             'games' => $games->map(
-                fn (Resource $game) => $this->renderGame($renderer, $game)
+                fn (Resource $game) => $this->renderGame(
+                    $renderer,
+                    $routes,
+                    $game
+                )
             ),
         ]);
     }
 
     private function renderGame(
         Renderer $renderer,
+        Routes $routes,
         Resource $game
     ): string {
         return $renderer->render('entry', [
             'game' => $this->createGameVar($game),
+            'links' => [
+                'game' => $routes->viewGame($game->id),
+            ],
         ]);
     }
 
@@ -84,7 +94,6 @@ final class ListGamesTemplate implements ListGamesTemplateInterface
         $var = new \stdClass();
         $var->id = $game->id;
         $var->name = $game->name;
-        $var->link = $this->routes->viewGame($game->id);
 
         return $var;
     }

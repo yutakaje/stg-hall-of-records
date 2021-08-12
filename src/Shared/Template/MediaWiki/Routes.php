@@ -13,35 +13,52 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Shared\Template\MediaWiki;
 
+use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
+
 final class Routes
 {
+    private string $locale;
+
+    public function __construct()
+    {
+        $this->locale = '{locale}';
+    }
+
+    public function withLocale(Locale $locale): self
+    {
+        $clone = clone $this;
+        $clone->locale = $locale->value();
+
+        return $clone;
+    }
+
     public function listCompanies(): string
     {
-        return '/companies';
+        return "/{$this->locale}/companies";
     }
 
     public function viewCompany(string $id = '{id}'): string
     {
-        return "/companies/{$id}";
+        return "/{$this->locale}/companies/{$id}";
     }
 
     public function listGames(): string
     {
-        return '/games';
+        return "/{$this->locale}/games";
     }
 
     public function viewGame(string $id = '{id}'): string
     {
-        return "/games/{$id}";
+        return "/{$this->locale}/games/{$id}";
     }
 
     public function listPlayers(): string
     {
-        return '/players';
+        return "/{$this->locale}/players";
     }
 
     public function viewPlayer(string $id = '{id}'): string
     {
-        return "/players/{$id}";
+        return "/{$this->locale}/players/{$id}";
     }
 }

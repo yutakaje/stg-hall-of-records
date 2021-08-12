@@ -55,27 +55,37 @@ final class ListPlayersTemplate implements ListPlayersTemplateInterface
     {
         return $this->wrapper->render($locale, $this->renderPlayers(
             $this->renderer->withLocale($locale),
+            $this->routes->withLocale($locale),
             $players
         ));
     }
 
     private function renderPlayers(
         Renderer $renderer,
+        Routes $routes,
         Resources $players
     ): string {
         return $renderer->render('main', [
             'players' => $players->map(
-                fn (Resource $player) => $this->renderPlayer($renderer, $player)
+                fn (Resource $player) => $this->renderPlayer(
+                    $renderer,
+                    $routes,
+                    $player
+                )
             ),
         ]);
     }
 
     private function renderPlayer(
         Renderer $renderer,
+        Routes $routes,
         Resource $player
     ): string {
         return $renderer->render('player-entry', [
             'player' => $this->createPlayerVar($player),
+            'links' => [
+                'player' => $routes->viewPlayer($player->id),
+            ],
         ]);
     }
 
@@ -84,7 +94,6 @@ final class ListPlayersTemplate implements ListPlayersTemplateInterface
         $var = new \stdClass();
         $var->id = $player->id;
         $var->name = $player->name;
-        $var->link = $this->routes->viewPlayer($player->id);
 
         return $var;
     }

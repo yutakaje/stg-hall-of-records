@@ -25,19 +25,19 @@ class ViewPlayerTest extends \Tests\TestCase
     public function testWithDefaultLocale(): void
     {
         $player = $this->createPlayer();
+        $locale = $this->locale()->default();
 
-        $request = $this->http()->createServerRequest('GET', '/players/{id}');
+        $request = $this->http()->createServerRequest('GET', "/{$locale->value()}/players/{id}");
 
-        $this->executeTest($player, $request, $this->locale()->default());
+        $this->executeTest($player, $request, $locale);
     }
 
     public function testWithRandomLocale(): void
     {
         $player = $this->createPlayer();
-
         $locale = $this->locale()->random();
 
-        $request = $this->http()->createServerRequest('GET', '/players/{id}')
+        $request = $this->http()->createServerRequest('GET', "/{$locale->value()}/players/{id}")
             ->withHeader('Accept-Language', $locale->value());
 
         $this->executeTest($player, $request, $locale);
@@ -46,10 +46,11 @@ class ViewPlayerTest extends \Tests\TestCase
     public function testWithAliases(): void
     {
         $player = $this->createPlayer(['Reddo Arimaa', 'Red Arimer']);
+        $locale = $this->locale()->default();
 
-        $request = $this->http()->createServerRequest('GET', '/players/{id}');
+        $request = $this->http()->createServerRequest('GET', "/{$locale->value()}/players/{id}");
 
-        $this->executeTest($player, $request, $this->locale()->default());
+        $this->executeTest($player, $request, $locale);
     }
 
     private function executeTest(
@@ -141,7 +142,6 @@ class ViewPlayerTest extends \Tests\TestCase
             [
                 '{{ player.id }}' => $player->id(),
                 '{{ player.name }}' => $player->name(),
-                '{{ player.link }}' => "/players/{$player->id()}",
                 '{{ player.aliases|raw }}' => $this->createAliasesOutput(
                     $player->aliases(),
                     $locale
@@ -150,6 +150,7 @@ class ViewPlayerTest extends \Tests\TestCase
                     $player->scores(),
                     $locale
                 ),
+                '{{ links.player }}' => "/{$locale->value()}/players/{$player->id()}",
             ]
         );
     }
@@ -213,15 +214,17 @@ class ViewPlayerTest extends \Tests\TestCase
 
     private function createScoreOutput(ScoreEntry $score, Locale $locale): string
     {
+        $game = $score->game();
+
         return $this->data()->replace(
             $this->mediaWiki()->loadTemplate('Player', 'view-player/score-entry'),
             [
                 '{{ score.id }}' => $score->id(),
-                '{{ game.id }}' => $score->game()->id(),
-                '{{ game.name }}' => $score->game()->name($locale),
-                '{{ game.link }}' => "/games/{$score->game()->id()}",
+                '{{ game.id }}' => $game->id(),
+                '{{ game.name }}' => $game->name($locale),
                 '{{ score.playerName }}' => $score->playerName(),
                 '{{ score.scoreValue }}' => $score->scoreValue(),
+                '{{ links.game }}' => "/{$locale->value()}/games/{$game->id()}",
             ]
         );
     }

@@ -55,27 +55,37 @@ final class ListCompaniesTemplate implements ListCompaniesTemplateInterface
     {
         return $this->wrapper->render($locale, $this->renderCompanies(
             $this->renderer->withLocale($locale),
+            $this->routes->withLocale($locale),
             $companies
         ));
     }
 
     private function renderCompanies(
         Renderer $renderer,
+        Routes $routes,
         Resources $companies
     ): string {
         return $renderer->render('main', [
             'companies' => $companies->map(
-                fn (Resource $company) => $this->renderCompany($renderer, $company)
+                fn (Resource $company) => $this->renderCompany(
+                    $renderer,
+                    $routes,
+                    $company
+                )
             ),
         ]);
     }
 
     private function renderCompany(
         Renderer $renderer,
+        Routes $routes,
         Resource $company
     ): string {
         return $renderer->render('company-entry', [
             'company' => $this->createCompanyVar($company),
+            'links' => [
+                'company' => $routes->viewCompany($company->id),
+            ],
         ]);
     }
 
@@ -85,7 +95,6 @@ final class ListCompaniesTemplate implements ListCompaniesTemplateInterface
         $var->id = $company->id;
         $var->name = $company->name;
         $var->numGames = $company->numGames;
-        $var->link = $this->routes->viewCompany($company->id);
 
         return $var;
     }

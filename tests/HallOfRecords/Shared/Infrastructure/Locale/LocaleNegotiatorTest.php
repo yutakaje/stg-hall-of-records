@@ -14,36 +14,96 @@ declare(strict_types=1);
 namespace Tests\HallOfRecords\Shared\Infrastructure\Locale;
 
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\UriInterface;
 use Stg\HallOfRecords\Shared\Infrastructure\Locale\LocaleNegotiator;
 use Stg\HallOfRecords\Shared\Infrastructure\Locale\Locales;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 
 class LocaleNegotiatorTest extends \Tests\TestCase
 {
-    public function testWithLocalesInHeader(): void
+    public function testWithNoLocaleSpecified(): void
     {
-        $locales = new Locales('ja', [
-            new Locale('en'),
-            new Locale('ja'),
-            new Locale('kr'),
-        ]);
+        $locales = $this->createLocales();
+
+        $negotiator = new LocaleNegotiator($locales);
+
+        self::assertSame($locales->get('ja'), $negotiator->negotiate(
+            $this->createRequest()
+        ));
+    }
+
+    public function testWithLocalesInPath(): void
+    {
+        $locales = $this->createLocales();
 
         $negotiator = new LocaleNegotiator($locales);
 
         self::assertSame($locales->get('en'), $negotiator->negotiate(
-            $this->createRequest('en-US,en;q=0.5')
+            $this->createRequest('/en/uri')
         ));
         self::assertSame($locales->get('kr'), $negotiator->negotiate(
-            $this->createRequest('kr,ja-JP,es-ES')
+            $this->createRequest('/kr/uri')
         ));
         self::assertSame($locales->get('ja'), $negotiator->negotiate(
-            $this->createRequest('fr_FR,it_IT')
+            $this->createRequest('/fr/uri')
         ));
     }
 
-    private function createRequest(string $acceptLanguage): ServerRequestInterface
+    public function testWithLocalesInHeader(): void
     {
+        $locales = $this->createLocales();
+
+        $negotiator = new LocaleNegotiator($locales);
+
+        self::assertSame($locales->get('en'), $negotiator->negotiate(
+            $this->createRequest('', 'en-US,en;q=0.5')
+        ));
+        self::assertSame($locales->get('kr'), $negotiator->negotiate(
+            $this->createRequest('', 'kr,ja-JP,es-ES')
+        ));
+        self::assertSame($locales->get('ja'), $negotiator->negotiate(
+            $this->createRequest('', 'fr_FR,it_IT')
+        ));
+    }
+
+    public function testWithLocalesInPathAndHeader(): void
+    {
+        $locales = $this->createLocales();
+
+        $negotiator = new LocaleNegotiator($locales);
+
+        // Path should have higher priority.
+        self::assertSame($locales->get('kr'), $negotiator->negotiate(
+            $this->createRequest('kr', 'ja-JP,es-ES')
+        ));
+        self::assertSame($locales->get('en'), $negotiator->negotiate(
+            $this->createRequest('/fr/uri', 'en-US,en;q=0.5')
+        ));
+        self::assertSame($locales->get('ja'), $negotiator->negotiate(
+            $this->createRequest('/fr/uri', 'it_IT')
+        ));
+    }
+
+    private function createLocales(): Locales
+    {
+        return new Locales('ja', [
+            new Locale('en'),
+            new Locale('ja'),
+            new Locale('kr'),
+        ]);
+    }
+
+    private function createRequest(
+        string $path = '',
+        string $acceptLanguage = ''
+    ): ServerRequestInterface {
+        $uri = $this->createMock(UriInterface::class);
+        $uri->method('getPath')
+            ->willReturn($path);
+
         $request = $this->createMock(ServerRequestInterface::class);
+        $request->method('getUri')
+            ->willReturn($uri);
         $request->method('getHeader')
             ->with('Accept-Language')
             ->willReturn([$acceptLanguage]);

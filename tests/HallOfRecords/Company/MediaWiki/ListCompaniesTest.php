@@ -22,16 +22,18 @@ class ListCompaniesTest extends \Tests\TestCase
 {
     public function testWithDefaultLocale(): void
     {
-        $request = $this->http()->createServerRequest('GET', '/companies');
+        $locale = $this->locale()->default();
 
-        $this->testWithLocale($request, $this->locale()->default());
+        $request = $this->http()->createServerRequest('GET', "/{$locale->value()}/companies");
+
+        $this->testWithLocale($request, $locale);
     }
 
     public function testWithRandomLocale(): void
     {
         $locale = $this->locale()->random();
 
-        $request = $this->http()->createServerRequest('GET', '/companies')
+        $request = $this->http()->createServerRequest('GET', "/{$locale->value()}/companies")
             ->withHeader('Accept-Language', $locale->value());
 
         $this->testWithLocale($request, $locale);
@@ -142,17 +144,17 @@ class ListCompaniesTest extends \Tests\TestCase
 
     private function createCompanyOutput(
         CompanyEntry $company,
-        locale $locale
+        Locale $locale
     ): string {
         $numGames = sizeof($company->games());
 
         return $this->data()->replace(
             $this->mediaWiki()->loadTemplate('Company', 'list-companies/company-entry'),
             [
-                '{{ company.link }}' => "/companies/{$company->id()}",
                 '{{ company.name }}' => $company->name($locale),
                 '{{ company.numGames }}' => $numGames,
                 "{{ company.numGames == 1 ? 'game' : 'games' }}" => $numGames === 1 ? 'game' : 'games',
+                '{{ links.company }}' => "/{$locale->value()}/companies/{$company->id()}",
             ]
         );
     }

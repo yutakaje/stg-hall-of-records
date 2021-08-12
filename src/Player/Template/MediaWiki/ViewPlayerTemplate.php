@@ -55,12 +55,14 @@ final class ViewPlayerTemplate implements ViewPlayerTemplateInterface
     {
         return $this->wrapper->render($locale, $this->renderPlayer(
             $this->renderer->withLocale($locale),
+            $this->routes->withLocale($locale),
             $player
         ));
     }
 
     private function renderPlayer(
         Renderer $renderer,
+        Routes $routes,
         Resource $player
     ): string {
         return $renderer->render('main', [
@@ -68,7 +70,10 @@ final class ViewPlayerTemplate implements ViewPlayerTemplateInterface
                 $player,
                 $this->renderAliases($renderer, $player)
             ),
-            'scores' => $this->renderScores($renderer, $player->scores),
+            'scores' => $this->renderScores($renderer, $routes, $player->scores),
+            'links' => [
+                'player' => $routes->viewPlayer($player->id),
+            ],
         ]);
     }
 
@@ -80,7 +85,6 @@ final class ViewPlayerTemplate implements ViewPlayerTemplateInterface
         $var->id = $player->id;
         $var->name = $player->name;
         $var->aliases = $renderedAliases;
-        $var->link = $this->routes->viewPlayer($player->id);
 
         return $var;
     }
@@ -96,22 +100,31 @@ final class ViewPlayerTemplate implements ViewPlayerTemplateInterface
 
     private function renderScores(
         Renderer $renderer,
+        Routes $routes,
         Resources $scores
     ): string {
         return $renderer->render('scores-list', [
             'scores' => $scores->map(
-                fn (Resource $score) => $this->renderScore($renderer, $score)
+                fn (Resource $score) => $this->renderScore(
+                    $renderer,
+                    $routes,
+                    $score
+                )
             ),
         ]);
     }
 
     private function renderScore(
         Renderer $renderer,
+        Routes $routes,
         Resource $score
     ): string {
         return $renderer->render('score-entry', [
             'game' => $this->createGameVar($score),
             'score' => $this->createScoreVar($score),
+            'links' => [
+                'game' => $routes->viewGame($score->gameId),
+            ],
         ]);
     }
 
@@ -120,7 +133,6 @@ final class ViewPlayerTemplate implements ViewPlayerTemplateInterface
         $var = new \stdClass();
         $var->id = $score->gameId;
         $var->name = $score->gameName;
-        $var->link = $this->routes->viewGame($score->gameId);
 
         return $var;
     }

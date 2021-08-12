@@ -22,16 +22,18 @@ class ListGamesTest extends \Tests\TestCase
 {
     public function testWithDefaultLocale(): void
     {
-        $request = $this->http()->createServerRequest('GET', '/games');
+        $locale = $this->locale()->default();
 
-        $this->testWithLocale($request, $this->locale()->default());
+        $request = $this->http()->createServerRequest('GET', "/{$locale->value()}/games");
+
+        $this->testWithLocale($request, $locale);
     }
 
     public function testWithRandomLocale(): void
     {
         $locale = $this->locale()->random();
 
-        $request = $this->http()->createServerRequest('GET', '/games')
+        $request = $this->http()->createServerRequest('GET', "/{$locale->value()}/games")
             ->withHeader('Accept-Language', $locale->value());
 
         $this->testWithLocale($request, $locale);
@@ -147,8 +149,8 @@ class ListGamesTest extends \Tests\TestCase
         return $this->data()->replace(
             $this->mediaWiki()->loadTemplate('Game', 'list-games/entry'),
             [
-                '{{ game.link }}' => "/games/{$game->id()}",
                 '{{ game.name }}' => $game->name($locale),
+                '{{ links.game }}' => "/{$locale->value()}/games/{$game->id()}",
             ]
         );
     }

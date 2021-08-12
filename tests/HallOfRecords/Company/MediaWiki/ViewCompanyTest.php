@@ -23,16 +23,18 @@ class ViewCompanyTest extends \Tests\TestCase
 {
     public function testWithDefaultLocale(): void
     {
-        $request = $this->http()->createServerRequest('GET', '/companies/{id}');
+        $locale = $this->locale()->default();
 
-        $this->testWithLocale($request, $this->locale()->default());
+        $request = $this->http()->createServerRequest('GET', "/{$locale->value()}/companies/{id}");
+
+        $this->testWithLocale($request, $locale);
     }
 
     public function testWithRandomLocale(): void
     {
         $locale = $this->locale()->random();
 
-        $request = $this->http()->createServerRequest('GET', '/companies/{id}')
+        $request = $this->http()->createServerRequest('GET', "/{$locale->value()}/companies/{id}")
             ->withHeader('Accept-Language', $locale->value());
 
         $this->testWithLocale($request, $locale);
@@ -104,9 +106,9 @@ class ViewCompanyTest extends \Tests\TestCase
         return $this->data()->replace(
             $this->mediaWiki()->loadTemplate('Company', 'view-company/main'),
             [
-                '{{ company.link }}' => "/companies/{$company->id()}",
                 '{{ company.name }}' => $company->name($locale),
                 '{{ games|raw }}' => $this->createGamesOutput($company->games(), $locale),
+                '{{ links.company }}' => "/{$locale->value()}/companies/{$company->id()}",
             ]
         );
     }
@@ -138,8 +140,8 @@ class ViewCompanyTest extends \Tests\TestCase
         return $this->data()->replace(
             $this->mediaWiki()->loadTemplate('Company', 'view-company/game-entry'),
             [
-                '{{ game.link }}' => "/games/{$game->id()}",
                 '{{ game.name }}' => $game->name($locale),
+                '{{ links.game }}' => "/{$locale->value()}/games/{$game->id()}",
             ]
         );
     }

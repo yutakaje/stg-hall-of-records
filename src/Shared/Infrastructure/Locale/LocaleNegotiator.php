@@ -27,6 +27,11 @@ final class LocaleNegotiator
 
     public function negotiate(ServerRequestInterface $request): Locale
     {
+        $pathLocale = $this->getPathLocale($request);
+        if ($this->locales->exists($pathLocale)) {
+            return $this->locales->get($pathLocale);
+        }
+
         foreach ($this->getAcceptedLocales($request) as $acceptedLocale) {
             if ($this->locales->exists($acceptedLocale)) {
                 return $this->locales->get($acceptedLocale);
@@ -34,6 +39,12 @@ final class LocaleNegotiator
         }
 
         return $this->locales->default();
+    }
+
+    private function getPathLocale(ServerRequestInterface $request): string
+    {
+        $path = explode('/', trim($request->getUri()->getPath(), '/'));
+        return $path[0] ?? '';
     }
 
     /**
