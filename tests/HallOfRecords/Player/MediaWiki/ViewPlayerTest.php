@@ -125,11 +125,9 @@ class ViewPlayerTest extends \Tests\TestCase
 
     private function createOutput(PlayerEntry $player, Locale $locale): string
     {
-        return $this->data()->replace(
-            $this->mediaWiki()->loadTemplate('Shared', 'basic'),
-            [
-                '{{content|raw}}' => $this->createPlayerOutput($player, $locale),
-            ]
+        return $this->mediaWiki()->loadBasicTemplate(
+            $this->createPlayerOutput($player, $locale),
+            $locale
         );
     }
 

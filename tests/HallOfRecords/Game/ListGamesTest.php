@@ -111,11 +111,9 @@ class ListGamesTest extends \Tests\TestCase
      */
     private function createOutput(array $games, Locale $locale): string
     {
-        return $this->data()->replace(
-            $this->mediaWiki()->loadTemplate('Shared', 'basic'),
-            [
-                '{{content|raw}}' => $this->createGamesOutput($games, $locale),
-            ]
+        return $this->mediaWiki()->loadBasicTemplate(
+            $this->createGamesOutput($games, $locale),
+            $locale
         );
     }
 

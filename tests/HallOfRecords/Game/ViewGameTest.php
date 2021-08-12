@@ -101,11 +101,9 @@ class ViewGameTest extends \Tests\TestCase
 
     private function createOutput(GameEntry $game, Locale $locale): string
     {
-        return $this->data()->replace(
-            $this->mediaWiki()->loadTemplate('Shared', 'basic'),
-            [
-                '{{content|raw}}' => $this->createGameOutput($game, $locale),
-            ]
+        return $this->mediaWiki()->loadBasicTemplate(
+            $this->createGameOutput($game, $locale),
+            $locale
         );
     }
 

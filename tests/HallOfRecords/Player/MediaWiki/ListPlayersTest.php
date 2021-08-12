@@ -87,11 +87,9 @@ class ListPlayersTest extends \Tests\TestCase
      */
     private function createOutput(array $players, Locale $locale): string
     {
-        return $this->data()->replace(
-            $this->mediaWiki()->loadTemplate('Shared', 'basic'),
-            [
-                '{{content|raw}}' => $this->createPlayersOutput($players, $locale),
-            ]
+        return $this->mediaWiki()->loadBasicTemplate(
+            $this->createPlayersOutput($players, $locale),
+            $locale
         );
     }
 

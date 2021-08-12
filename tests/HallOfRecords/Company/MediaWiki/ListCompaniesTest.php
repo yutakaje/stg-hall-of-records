@@ -108,14 +108,12 @@ class ListCompaniesTest extends \Tests\TestCase
      */
     private function createOutput(array $companies, Locale $locale): string
     {
-        return $this->data()->replace(
-            $this->mediaWiki()->loadTemplate('Shared', 'basic'),
-            [
-                '{{content|raw}}' => $this->createCompaniesOutput(
-                    $companies,
-                    $locale
-                ),
-            ]
+        return $this->mediaWiki()->loadBasicTemplate(
+            $this->createCompaniesOutput(
+                $companies,
+                $locale
+            ),
+            $locale
         );
     }
 

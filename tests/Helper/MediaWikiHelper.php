@@ -13,13 +13,19 @@ declare(strict_types=1);
 
 namespace Tests\Helper;
 
+use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
+
 final class MediaWikiHelper
 {
     private FilesystemHelper $filesystem;
+    private DataHelper $data;
 
-    public function __construct(FilesystemHelper $filesystem)
-    {
+    public function __construct(
+        FilesystemHelper $filesystem,
+        DataHelper $data
+    ) {
         $this->filesystem = $filesystem;
+        $this->data = $data;
     }
 
     public function loadTemplate(string $context, string $name): string
@@ -28,6 +34,19 @@ final class MediaWikiHelper
 
         return $this->filesystem->loadFile(
             "{$rootDir}/src/{$context}/Template/MediaWiki/html/{$name}.twig"
+        );
+    }
+
+    public function loadBasicTemplate(string $content, Locale $locale): string
+    {
+        return $this->data->replace(
+            $this->loadTemplate('Shared', 'basic'),
+            [
+                '{{content|raw}}' => $content,
+                '{{ links.companies }}' => "/{$locale->value()}/companies",
+                '{{ links.games }}' => "/{$locale->value()}/games",
+                '{{ links.players }}' => "/{$locale->value()}/players",
+            ]
         );
     }
 

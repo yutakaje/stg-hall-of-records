@@ -6,6 +6,15 @@
   </head>
   <body>
     <h1>STG Hall of Records</h1>
-    {{content|raw}}
+    <div>
+      <ul>
+        <li><a href="{{ links.companies }}">Companies</a></li>
+        <li><a href="{{ links.games }}">Games</a></li>
+        <li><a href="{{ links.players }}">Players</a></li>
+      </ul>
+    </div>
+    <div>
+      {{content|raw}}
+    </div>
   </body>
 </html>

@@ -146,7 +146,10 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     final protected function mediaWiki(): MediaWikiHelper
     {
         if ($this->mediaWiki === null) {
-            $this->mediaWiki = new MediaWikiHelper($this->filesystem());
+            $this->mediaWiki = new MediaWikiHelper(
+                $this->filesystem(),
+                $this->data()
+            );
         }
 
         return $this->mediaWiki;

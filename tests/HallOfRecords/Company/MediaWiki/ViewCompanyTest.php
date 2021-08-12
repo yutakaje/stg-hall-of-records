@@ -91,11 +91,9 @@ class ViewCompanyTest extends \Tests\TestCase
 
     private function createOutput(CompanyEntry $company, Locale $locale): string
     {
-        return $this->data()->replace(
-            $this->mediaWiki()->loadTemplate('Shared', 'basic'),
-            [
-                '{{content|raw}}' => $this->createCompanyOutput($company, $locale),
-            ]
+        return $this->mediaWiki()->loadBasicTemplate(
+            $this->createCompanyOutput($company, $locale),
+            $locale
         );
     }
 
