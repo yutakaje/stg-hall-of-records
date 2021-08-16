@@ -53,11 +53,13 @@ final class ListPlayersTemplate implements ListPlayersTemplateInterface
 
     private function createOutput(Resources $players, Locale $locale): string
     {
+        $routes = $this->routes->withLocale($locale);
+
         return $this->wrapper->render($locale, $this->renderPlayers(
             $this->renderer->withLocale($locale),
-            $this->routes->withLocale($locale),
+            $routes,
             $players
-        ));
+        ), ['self' => $routes->listPlayers()]);
     }
 
     private function renderPlayers(

@@ -113,7 +113,8 @@ class ListCompaniesTest extends \Tests\TestCase
                 $companies,
                 $locale
             ),
-            $locale
+            $locale,
+            '/{locale}/companies'
         );
     }
 

@@ -113,7 +113,8 @@ class ListGamesTest extends \Tests\TestCase
     {
         return $this->mediaWiki()->loadBasicTemplate(
             $this->createGamesOutput($games, $locale),
-            $locale
+            $locale,
+            '/{locale}/games'
         );
     }
 

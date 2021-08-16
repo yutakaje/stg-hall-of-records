@@ -103,7 +103,8 @@ class ViewGameTest extends \Tests\TestCase
     {
         return $this->mediaWiki()->loadBasicTemplate(
             $this->createGameOutput($game, $locale),
-            $locale
+            $locale,
+            "/{locale}/games/{$game->id()}",
         );
     }
 
@@ -122,7 +123,6 @@ class ViewGameTest extends \Tests\TestCase
                     $game->scores(),
                     $locale
                 ),
-                '{{ links.game }}' => "/{$locale}/games/{$game->id()}",
                 '{{ links.company }}' => "/{$locale}/companies/{$company->id()}",
             ]
         );

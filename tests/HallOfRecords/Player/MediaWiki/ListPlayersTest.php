@@ -89,7 +89,8 @@ class ListPlayersTest extends \Tests\TestCase
     {
         return $this->mediaWiki()->loadBasicTemplate(
             $this->createPlayersOutput($players, $locale),
-            $locale
+            $locale,
+            '/{locale}/players'
         );
     }
 

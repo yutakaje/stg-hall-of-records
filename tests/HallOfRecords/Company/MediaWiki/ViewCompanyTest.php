@@ -85,7 +85,8 @@ class ViewCompanyTest extends \Tests\TestCase
     {
         return $this->mediaWiki()->loadBasicTemplate(
             $this->createCompanyOutput($company, $locale),
-            $locale
+            $locale,
+            "/{locale}/companies/{$company->id()}"
         );
     }
 

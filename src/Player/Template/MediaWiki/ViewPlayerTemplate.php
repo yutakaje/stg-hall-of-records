@@ -53,11 +53,13 @@ final class ViewPlayerTemplate implements ViewPlayerTemplateInterface
 
     private function createOutput(Resource $player, Locale $locale): string
     {
+        $routes = $this->routes->withLocale($locale);
+
         return $this->wrapper->render($locale, $this->renderPlayer(
             $this->renderer->withLocale($locale),
-            $this->routes->withLocale($locale),
+            $routes,
             $player
-        ));
+        ), ['self' => $routes->viewPlayer($player->id)]);
     }
 
     private function renderPlayer(
@@ -71,9 +73,6 @@ final class ViewPlayerTemplate implements ViewPlayerTemplateInterface
                 $this->renderAliases($renderer, $player)
             ),
             'scores' => $this->renderScores($renderer, $routes, $player->scores),
-            'links' => [
-                'player' => $routes->viewPlayer($player->id),
-            ],
         ]);
     }
 

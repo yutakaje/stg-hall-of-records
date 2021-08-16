@@ -41,6 +41,11 @@ final class LocaleHelper
         return $this->locales->all();
     }
 
+    public function get(string $value): Locale
+    {
+        return $this->locales->get($value);
+    }
+
     public function default(): Locale
     {
         return $this->locales->default();

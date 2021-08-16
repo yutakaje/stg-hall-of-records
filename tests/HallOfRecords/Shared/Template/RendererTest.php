@@ -29,7 +29,9 @@ class RendererTest extends \Tests\TestCase
 
     public function testLocaleAwareness(): void
     {
-        $renderer = Renderer::createWithFiles(__DIR__);
+        $renderer = Renderer::createWithFiles(__DIR__)
+            ->withLocale(new Locale('en'));
+
         $context = [
             'contents' => '{{ contents }}',
         ];
@@ -52,7 +54,9 @@ class RendererTest extends \Tests\TestCase
 
     public function testRendering(): void
     {
-        $renderer = Renderer::createWithFiles(__DIR__);
+        $renderer = Renderer::createWithFiles(__DIR__)
+            ->withLocale(new Locale('en'));
+
         $contents = base64_encode(random_bytes(128));
 
         self::assertSame(

@@ -18,13 +18,16 @@ use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 final class MediaWikiHelper
 {
     private FilesystemHelper $filesystem;
+    private LocaleHelper $localizer;
     private DataHelper $data;
 
     public function __construct(
         FilesystemHelper $filesystem,
-        DataHelper $data
+        LocaleHelper $localizer,
+        DataHelper $data,
     ) {
         $this->filesystem = $filesystem;
+        $this->localizer = $localizer;
         $this->data = $data;
     }
 
@@ -37,17 +40,41 @@ final class MediaWikiHelper
         );
     }
 
-    public function loadBasicTemplate(string $content, Locale $locale): string
-    {
+    public function loadBasicTemplate(
+        string $content,
+        Locale $locale,
+        string $selfLink
+    ): string {
         return $this->data->replace(
             $this->loadTemplate('Shared', 'basic'),
-            [
-                '{{content|raw}}' => $content,
-                '{{ links.companies }}' => "/{$locale}/companies",
-                '{{ links.games }}' => "/{$locale}/games",
-                '{{ links.players }}' => "/{$locale}/players",
-            ]
+            array_merge(
+                [
+                    '{{ content|raw }}' => $content,
+                    '{{ locale }}' => (string)$locale,
+                    '{{ links.companies }}' => "/{$locale}/companies",
+                    '{{ links.games }}' => "/{$locale}/games",
+                    '{{ links.players }}' => "/{$locale}/players",
+                ],
+                $this->localizedSelfLinks($selfLink)
+            )
         );
+    }
+
+    /**
+     * @return array<string,string>
+     */
+    private function localizedSelfLinks(string $link): array
+    {
+        $links = [];
+
+        $baseSearch = '{{ links.self|replace({ ("/#{locale}/"): \'/{{locale}}/\' }) }}';
+
+        foreach ($this->localizer->all() as $locale) {
+            $search = str_replace('{{locale}}', (string)$locale, $baseSearch);
+            $links[$search] = str_replace('{locale}', (string)$locale, $link);
+        }
+
+        return $links;
     }
 
     public function canonicalizeHtml(string $html): string

@@ -28,14 +28,20 @@ final class BasicTemplate
         $this->routes = $routes;
     }
 
-    public function render(Locale $locale, string $content): string
-    {
+    /**
+     * @param array<string,string> $links
+     */
+    public function render(
+        Locale $locale,
+        string $content,
+        array $links = []
+    ): string {
         $routes = $this->routes->withLocale($locale);
 
         return $this->renderer->withLocale($locale)
             ->render('basic', [
                 'content' => $content,
-                'links' => [
+                'links' => $links + [
                     'companies' => $routes->listCompanies(),
                     'games' => $routes->listGames(),
                     'players' => $routes->listPlayers(),

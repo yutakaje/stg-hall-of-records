@@ -53,11 +53,13 @@ final class ListCompaniesTemplate implements ListCompaniesTemplateInterface
 
     private function createOutput(Resources $companies, Locale $locale): string
     {
+        $routes = $this->routes->withLocale($locale);
+
         return $this->wrapper->render($locale, $this->renderCompanies(
             $this->renderer->withLocale($locale),
-            $this->routes->withLocale($locale),
+            $routes,
             $companies
-        ));
+        ), ['self' => $routes->listCompanies()]);
     }
 
     private function renderCompanies(

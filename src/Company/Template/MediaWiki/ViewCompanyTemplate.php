@@ -53,11 +53,13 @@ final class ViewCompanyTemplate implements ViewCompanyTemplateInterface
 
     private function createOutput(Resource $company, Locale $locale): string
     {
+        $routes = $this->routes->withLocale($locale);
+
         return $this->wrapper->render($locale, $this->renderCompany(
             $this->renderer->withLocale($locale),
-            $this->routes->withLocale($locale),
+            $routes->withLocale($locale),
             $company
-        ));
+        ), ['self' => $routes->viewCompany($company->id)]);
     }
 
     private function renderCompany(
@@ -68,9 +70,6 @@ final class ViewCompanyTemplate implements ViewCompanyTemplateInterface
         return $renderer->render('main', [
             'company' => $this->createCompanyVar($company),
             'games' => $this->renderGames($renderer, $routes, $company->games),
-            'links' => [
-                'company' => $routes->viewCompany($company->id),
-            ],
         ]);
     }
 

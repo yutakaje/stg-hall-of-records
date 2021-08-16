@@ -53,11 +53,13 @@ final class ViewGameTemplate implements ViewGameTemplateInterface
 
     private function createOutput(Resource $game, Locale $locale): string
     {
+        $routes = $this->routes->withLocale($locale);
+
         return $this->wrapper->render($locale, $this->renderGame(
             $this->renderer->withLocale($locale),
-            $this->routes->withLocale($locale),
+            $routes,
             $game
-        ));
+        ), ['self' => $routes->viewGame($game->id)]);
     }
 
     private function renderGame(
@@ -70,7 +72,6 @@ final class ViewGameTemplate implements ViewGameTemplateInterface
             'company' => $this->createCompanyVar($game->company),
             'scores' => $this->renderScores($renderer, $routes, $game->scores),
             'links' => [
-                'game' => $routes->viewGame($game->id),
                 'company' => $routes->viewCompany($game->company->id),
             ],
         ]);

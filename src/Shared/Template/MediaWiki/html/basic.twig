@@ -12,9 +12,13 @@
         <li><a href="{{ links.games }}">Games</a></li>
         <li><a href="{{ links.players }}">Players</a></li>
       </ul>
+      <ul>
+        <li><a href="{{ links.self|replace({ ("/#{locale}/"): '/en/' }) }}">English</a></li>
+        <li><a href="{{ links.self|replace({ ("/#{locale}/"): '/ja/' }) }}">日本語</a></li>
+      </ul>
     </div>
     <div>
-      {{content|raw}}
+      {{ content|raw }}
     </div>
   </body>
 </html>

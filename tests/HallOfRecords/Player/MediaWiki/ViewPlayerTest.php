@@ -127,7 +127,8 @@ class ViewPlayerTest extends \Tests\TestCase
     {
         return $this->mediaWiki()->loadBasicTemplate(
             $this->createPlayerOutput($player, $locale),
-            $locale
+            $locale,
+            "/{locale}/players/{$player->id()}",
         );
     }
 
@@ -148,7 +149,6 @@ class ViewPlayerTest extends \Tests\TestCase
                     $player->scores(),
                     $locale
                 ),
-                '{{ links.player }}' => "/{$locale}/players/{$player->id()}",
             ]
         );
     }

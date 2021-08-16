@@ -148,6 +148,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         if ($this->mediaWiki === null) {
             $this->mediaWiki = new MediaWikiHelper(
                 $this->filesystem(),
+                $this->locale(),
                 $this->data()
             );
         }

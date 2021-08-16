@@ -44,21 +44,30 @@ final class Renderer
         return $clone;
     }
 
+    private function locale(): Locale
+    {
+        if ($this->locale === null) {
+            throw new \LogicException('Locale must be set before usage');
+        }
+
+        return $this->locale;
+    }
+
     /**
      * @param array<string,mixed> $context
      */
     public function render(string $templateName, array $context = []): string
     {
-        $localeValue = $this->locale !== null ? $this->locale->value() : '';
-
         $candidates = [
-            "{$templateName}.{$localeValue}.twig",
+            "{$templateName}.{$this->locale()}.twig",
             "{$templateName}.twig",
         ];
 
         foreach ($candidates as $candidate) {
             if ($this->twig->getLoader()->exists($candidate)) {
-                return $this->twig->render($candidate, $context);
+                return $this->twig->render($candidate, $context + [
+                    'locale' => $this->locale(),
+                ]);
             }
         }
 
