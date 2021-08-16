@@ -20,8 +20,11 @@ use Psr\Log\LoggerInterface;
 use Stg\HallOfRecords\Database\Database;
 use Stg\HallOfRecords\Shared\Application\Query\ListQueryCreator;
 use Stg\HallOfRecords\Shared\Application\Query\ViewQueryCreator;
+use Stg\HallOfRecords\Shared\Infrastructure\Locale\LocaleDir;
 use Stg\HallOfRecords\Shared\Infrastructure\Locale\LocaleNegotiator;
 use Stg\HallOfRecords\Shared\Infrastructure\Locale\Locales;
+use Stg\HallOfRecords\Shared\Infrastructure\Locale\Translator;
+use Stg\HallOfRecords\Shared\Infrastructure\Locale\TranslatorInterface;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 use Stg\HallOfRecords\Shared\Template\MediaWiki\BasicTemplate;
 use Stg\HallOfRecords\Shared\Template\MediaWiki\Routes;
@@ -57,7 +60,11 @@ return [
             new Locale('ja'),
         ]);
     },
+    LocaleDir::class => function (): LocaleDir {
+        return new LocaleDir(dirname(__DIR__) . '/locale');
+    },
     LocaleNegotiator::class => DI\autowire(),
+    TranslatorInterface::class => DI\autowire(Translator::class),
 
     ListQueryCreator::class => DI\autowire(),
     ViewQueryCreator::class => DI\autowire(),

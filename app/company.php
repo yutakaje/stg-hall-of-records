@@ -11,8 +11,8 @@
 
 declare(strict_types=1);
 
-use Slim\App;
 use Psr\Container\ContainerInterface;
+use Slim\App;
 use Stg\HallOfRecords\Company\Controller\ListCompaniesController;
 use Stg\HallOfRecords\Company\Controller\ViewCompanyController;
 use Stg\HallOfRecords\Company\Infrastructure\Database\ListCompaniesQueryHandler;
