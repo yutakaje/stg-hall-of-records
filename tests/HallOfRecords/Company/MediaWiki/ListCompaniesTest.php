@@ -14,38 +14,58 @@ declare(strict_types=1);
 namespace Tests\HallOfRecords\Company\MediaWiki;
 
 use Fig\Http\Message\StatusCodeInterface;
-use Psr\Http\Message\ServerRequestInterface;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 use Tests\Helper\Data\CompanyEntry;
 
 class ListCompaniesTest extends \Tests\TestCase
 {
-    public function testWithDefaultLocale(): void
+    public function testWithEnLocale(): void
     {
-        $locale = $this->locale()->default();
+        // Index represents expected sort order.
+        $companies = [
+            1 => $this->data()->createCompany('Capcom', 'capcom'),
+            0 => $this->data()->createCompany('Atlus', 'atlus'),
+            3 => $this->data()->createCompany('Coreland', 'coreland'),
+            2 => $this->data()->createCompany('CAVE', 'cave'),
+        ];
 
-        $request = $this->http()->createServerRequest('GET', "/{$locale}/companies");
+        foreach ($companies as $company) {
+            $this->addGames($company);
+        }
 
-        $this->testWithLocale($request, $locale);
+        $this->testWithLocale($companies, $this->locale()->get('en'));
     }
 
-    public function testWithRandomLocale(): void
+    public function testWithJaLocale(): void
     {
-        $locale = $this->locale()->random();
+        // Index represents expected sort order.
+        $companies = [
+            1 => $this->data()->createCompany('彩京', 'さいきょう'),
+            0 => $this->data()->createCompany('カプコン', 'かぷこん'),
+            3 => $this->data()->createCompany('四ツ羽根', 'よつばね'),
+            2 => $this->data()->createCompany('東亜プラン', 'とあぷらん'),
+        ];
 
-        $request = $this->http()->createServerRequest('GET', "/{$locale}/companies")
-            ->withHeader('Accept-Language', $locale->value());
+        foreach ($companies as $company) {
+            $this->addGames($company);
+        }
 
-        $this->testWithLocale($request, $locale);
+        $this->testWithLocale($companies, $this->locale()->get('ja'));
     }
 
+    /**
+     * @param CompanyEntry[] $companies
+     */
     private function testWithLocale(
-        ServerRequestInterface $request,
+        array $companies,
         Locale $locale
     ): void {
-        $companies = $this->createCompanies();
-
         $this->insertCompanies($companies);
+
+        $request = $this->http()->createServerRequest(
+            'GET',
+            "/{$locale}/companies"
+        );
 
         $response = $this->app()->handle($request);
 
@@ -60,36 +80,16 @@ class ListCompaniesTest extends \Tests\TestCase
         );
     }
 
-    /**
-     * @return CompanyEntry[]
-     */
-    private function createCompanies(): array
+    private function addGames(CompanyEntry $company): void
     {
-        // Index represents expected sort order.
-        return [
-            1 => $this->createCompany('彩京', 'さいきょう'),
-            0 => $this->createCompany('カプコン', 'かぷこん'),
-            3 => $this->createCompany('四ツ羽根', 'よつばね'),
-            2 => $this->createCompany('東亜プラン', 'とあぷらん'),
-        ];
-    }
-
-    private function createCompany(
-        string $name,
-        string $translitName = ''
-    ): CompanyEntry {
-        $company = $this->data()->createCompany($name, $translitName);
-
-        // Add some games for this company to ensure
-        // that the count functions work as expected.
+        // Adding games ensures that the count functions work as expected.
+        // The actual game properties are not important here.
         $numGames = random_int(1, 5);
         for ($i = 0; $i < $numGames; ++$i) {
             $company->addGame(
                 $this->data()->createGame($company, "game{$i}")
             );
         }
-
-        return $company;
     }
 
     /**

@@ -14,44 +14,41 @@ declare(strict_types=1);
 namespace Tests\HallOfRecords\Company\MediaWiki;
 
 use Fig\Http\Message\StatusCodeInterface;
-use Psr\Http\Message\ServerRequestInterface;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 use Tests\Helper\Data\CompanyEntry;
 use Tests\Helper\Data\GameEntry;
 
 class ViewCompanyTest extends \Tests\TestCase
 {
-    public function testWithDefaultLocale(): void
+    public function testWithEnLocale(): void
     {
-        $locale = $this->locale()->default();
+        $company = $this->data()->createCompany('Capcom', 'capcom');
 
-        $request = $this->http()->createServerRequest('GET', "/{$locale}/companies/{id}");
+        $this->addGames($company, [
+            $this->data()->createGame($company, "game"),
+        ]);
 
-        $this->testWithLocale($request, $locale);
+        $this->testWithLocale($company, $this->locale()->get('en'));
     }
 
-    public function testWithRandomLocale(): void
+    public function testWithJaLocale(): void
     {
-        $locale = $this->locale()->random();
+        $company = $this->data()->createCompany('彩京', 'さいきょう');
 
-        $request = $this->http()->createServerRequest('GET', "/{$locale}/companies/{id}")
-            ->withHeader('Accept-Language', $locale->value());
+        $this->addGames($company, [
+            $this->data()->createGame($company, "game"),
+        ]);
 
-        $this->testWithLocale($request, $locale);
+        $this->testWithLocale($company, $this->locale()->get('ja'));
     }
 
-    private function testWithLocale(
-        ServerRequestInterface $request,
-        Locale $locale
-    ): void {
-        $company = $this->createCompany();
-
+    private function testWithLocale(CompanyEntry $company, Locale $locale): void
+    {
         $this->insertCompany($company);
 
-        $request = $this->http()->replaceInUriPath(
-            $request,
-            '{id}',
-            (string)$company->id()
+        $request = $this->http()->createServerRequest(
+            'GET',
+            "/{$locale}/companies/{$company->id()}"
         );
 
         $response = $this->app()->handle($request);
@@ -67,20 +64,15 @@ class ViewCompanyTest extends \Tests\TestCase
         );
     }
 
-    private function createCompany(): CompanyEntry
+    /**
+     * @param GameEntry[] $games
+     */
+    private function addGames(CompanyEntry $company, array $games): void
     {
-        $company = $this->data()->createCompany('konami');
-
-        // Add some games for this company to ensure
-        // that the games are displayed as expected.
-        $numGames = random_int(1, 5);
-        for ($i = 0; $i < $numGames; ++$i) {
-            $company->addGame(
-                $this->data()->createGame($company, "game{$i}")
-            );
+        // Adding games ensures that the games are displayed as expected.
+        foreach ($games as $game) {
+            $company->addGame($game);
         }
-
-        return $company;
     }
 
     private function insertCompany(CompanyEntry $company): void
