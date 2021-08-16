@@ -30,10 +30,11 @@ final class ViewPlayerTemplate implements ViewPlayerTemplateInterface
     private Routes $routes;
 
     public function __construct(
+        Renderer $renderer,
         BasicTemplate $wrapper,
         Routes $routes
     ) {
-        $this->renderer = Renderer::createWithFiles(
+        $this->renderer = $renderer->withTemplateFiles(
             __DIR__ . '/html/view-player'
         );
         $this->wrapper = $wrapper;

@@ -13,27 +13,31 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Shared\Template;
 
+use Stg\HallOfRecords\Shared\Infrastructure\Locale\TranslatorInterface;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
-use Twig\Loader\LoaderInterface;
+use Twig\TwigFilter;
 
 final class Renderer
 {
-    private Environment $twig;
+    private TranslatorInterface $translator;
+    private ?Environment $twig;
     private ?Locale $locale;
 
-    private function __construct(LoaderInterface $loader)
+    public function __construct(TranslatorInterface $translator)
     {
-        $this->twig = new Environment($loader);
+        $this->translator = $translator;
+        $this->twig = null;
         $this->locale = null;
     }
 
-    public static function createWithFiles(string $path): self
+    public function withTemplateFiles(string $path): self
     {
-        return new self(
-            new FilesystemLoader($path)
-        );
+        $clone = clone $this;
+        $clone->twig = $this->createTwig($path);
+
+        return $clone;
     }
 
     public function withLocale(Locale $locale): self
@@ -42,6 +46,15 @@ final class Renderer
         $clone->locale = $locale;
 
         return $clone;
+    }
+
+    private function twig(): Environment
+    {
+        if ($this->twig === null) {
+            throw new \LogicException('Twig environment must be set before usage');
+        }
+
+        return $this->twig;
     }
 
     private function locale(): Locale
@@ -64,8 +77,8 @@ final class Renderer
         ];
 
         foreach ($candidates as $candidate) {
-            if ($this->twig->getLoader()->exists($candidate)) {
-                return $this->twig->render($candidate, $context + [
+            if ($this->twig()->getLoader()->exists($candidate)) {
+                return $this->twig()->render($candidate, $context + [
                     'locale' => $this->locale(),
                 ]);
             }
@@ -74,5 +87,19 @@ final class Renderer
         throw new \InvalidArgumentException(
             "Template does not exist: `{$templateName}`"
         );
+    }
+
+    private function createTwig(string $path): Environment
+    {
+        $env = new Environment(
+            new FilesystemLoader($path)
+        );
+
+        $env->addFilter(new TwigFilter(
+            'trans',
+            fn ($id) => $this->translator->trans($this->locale(), $id)
+        ));
+
+        return $env;
     }
 }

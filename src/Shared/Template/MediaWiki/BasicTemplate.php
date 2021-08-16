@@ -22,9 +22,11 @@ final class BasicTemplate
     private Renderer $renderer;
     private Routes $routes;
 
-    public function __construct(Routes $routes)
-    {
-        $this->renderer = Renderer::createWithFiles(__DIR__ . '/html');
+    public function __construct(
+        Renderer $renderer,
+        Routes $routes
+    ) {
+        $this->renderer = $renderer->withTemplateFiles(__DIR__ . '/html');
         $this->routes = $routes;
     }
 

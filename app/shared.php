@@ -28,6 +28,7 @@ use Stg\HallOfRecords\Shared\Infrastructure\Locale\TranslatorInterface;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 use Stg\HallOfRecords\Shared\Template\MediaWiki\BasicTemplate;
 use Stg\HallOfRecords\Shared\Template\MediaWiki\Routes;
+use Stg\HallOfRecords\Shared\Template\Renderer;
 
 return [
     'routes' => [],
@@ -69,6 +70,7 @@ return [
     ListQueryCreator::class => DI\autowire(),
     ViewQueryCreator::class => DI\autowire(),
 
+    Renderer::class => DI\autowire(),
     Routes::class => DI\autowire(),
     BasicTemplate::class => DI\autowire(),
 ];

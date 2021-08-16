@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Tests\HallOfRecords\Shared\Template;
 
+use Stg\HallOfRecords\Shared\Infrastructure\Locale\TranslatorInterface;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 use Stg\HallOfRecords\Shared\Template\Renderer;
 
@@ -20,8 +21,9 @@ class RendererTest extends \Tests\TestCase
 {
     public function testImmutability(): void
     {
-        $renderer = Renderer::createWithFiles(__DIR__);
+        $renderer = $this->createRenderer();
 
+        self::assertNotEquals($renderer, $renderer->withTemplateFiles(__DIR__));
         self::assertNotEquals($renderer, $renderer->withLocale(
             new Locale('en')
         ));
@@ -29,7 +31,8 @@ class RendererTest extends \Tests\TestCase
 
     public function testLocaleAwareness(): void
     {
-        $renderer = Renderer::createWithFiles(__DIR__)
+        $renderer = $this->createRenderer()
+            ->withTemplateFiles(__DIR__)
             ->withLocale(new Locale('en'));
 
         $context = [
@@ -54,7 +57,8 @@ class RendererTest extends \Tests\TestCase
 
     public function testRendering(): void
     {
-        $renderer = Renderer::createWithFiles(__DIR__)
+        $renderer = $this->createRenderer()
+            ->withTemplateFiles(__DIR__)
             ->withLocale(new Locale('en'));
 
         $contents = base64_encode(random_bytes(128));
@@ -68,6 +72,13 @@ class RendererTest extends \Tests\TestCase
             $renderer->render('template', [
                 'contents' => $contents,
             ])
+        );
+    }
+
+    private function createRenderer(): Renderer
+    {
+        return new Renderer(
+            $this->createMock(TranslatorInterface::class)
         );
     }
 }
