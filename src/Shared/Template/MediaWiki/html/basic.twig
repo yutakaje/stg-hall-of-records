@@ -8,9 +8,9 @@
     <h1>STG Hall of Records</h1>
     <div>
       <ul>
-        <li><a href="{{ links.companies }}">Companies</a></li>
-        <li><a href="{{ links.games }}">Games</a></li>
-        <li><a href="{{ links.players }}">Players</a></li>
+        <li><a href="{{ links.companies }}">{{ 'labels.companies'|trans }}</a></li>
+        <li><a href="{{ links.games }}">{{ 'labels.games'|trans }}</a></li>
+        <li><a href="{{ links.players }}">{{ 'labels.players'|trans }}</a></li>
       </ul>
       <ul>
         <li><a href="{{ links.self|replace({ ("/#{locale}/"): '/en/' }) }}">English</a></li>

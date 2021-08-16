@@ -125,10 +125,15 @@ class ViewPlayerTest extends \Tests\TestCase
 
     private function createOutput(PlayerEntry $player, Locale $locale): string
     {
-        return $this->mediaWiki()->loadBasicTemplate(
-            $this->createPlayerOutput($player, $locale),
-            $locale,
-            "/{locale}/players/{$player->id()}",
+        return $this->mediaWiki()->removePlaceholders(
+            $this->locale()->translate(
+                $locale,
+                $this->mediaWiki()->loadBasicTemplate(
+                    $this->createPlayerOutput($player, $locale),
+                    $locale,
+                    "/{locale}/players/{$player->id()}",
+                )
+            )
         );
     }
 
@@ -166,13 +171,11 @@ class ViewPlayerTest extends \Tests\TestCase
 
         sort($aliases);
 
-        return $this->mediaWiki()->removePlaceholders(
-            $this->data()->replace(
-                $this->mediaWiki()->loadTemplate('Player', 'view-player/aliases-list'),
-                [
-                    "{{ aliases|join(', ') }}" => implode(', ', $aliases),
-                ]
-            )
+        return $this->data()->replace(
+            $this->mediaWiki()->loadTemplate('Player', 'view-player/aliases-list'),
+            [
+                "{{ aliases|join(', ') }}" => implode(', ', $aliases),
+            ]
         );
     }
 
@@ -193,20 +196,18 @@ class ViewPlayerTest extends \Tests\TestCase
             }
         });
 
-        return $this->mediaWiki()->removePlaceholders(
-            $this->data()->replace(
-                $this->mediaWiki()->loadTemplate('Player', 'view-player/scores-list'),
-                [
-                    "{{ scores|length }}" => sizeof($scores),
-                    "{{ entry|raw }}" => implode(PHP_EOL, array_map(
-                        fn (ScoreEntry $score) => $this->createScoreOutput(
-                            $score,
-                            $locale
-                        ),
-                        $scores
-                    )),
-                ]
-            )
+        return $this->data()->replace(
+            $this->mediaWiki()->loadTemplate('Player', 'view-player/scores-list'),
+            [
+                "{{ scores|length }}" => sizeof($scores),
+                "{{ entry|raw }}" => implode(PHP_EOL, array_map(
+                    fn (ScoreEntry $score) => $this->createScoreOutput(
+                        $score,
+                        $locale
+                    ),
+                    $scores
+                )),
+            ]
         );
     }
 

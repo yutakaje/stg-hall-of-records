@@ -15,21 +15,27 @@ namespace Tests\Helper;
 
 use Psr\Container\ContainerInterface;
 use Stg\HallOfRecords\Shared\Infrastructure\Locale\Locales;
+use Stg\HallOfRecords\Shared\Infrastructure\Locale\TranslatorInterface;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 
 final class LocaleHelper
 {
     private Locales $locales;
+    private TranslatorInterface $translator;
 
-    public function __construct(Locales $locales)
-    {
+    public function __construct(
+        Locales $locales,
+        TranslatorInterface $translator
+    ) {
         $this->locales = $locales;
+        $this->translator = $translator;
     }
 
     public static function init(ContainerInterface $container): self
     {
         return new self(
-            $container->get(Locales::class)
+            $container->get(Locales::class),
+            $container->get(TranslatorInterface::class)
         );
     }
 
@@ -69,5 +75,16 @@ final class LocaleHelper
         }
 
         return $localized;
+    }
+
+    public function translate(Locale $locale, string $value): string
+    {
+        $translated = preg_replace_callback(
+            '/\{\{ \'([^\']+?)\'\|trans \}\}/',
+            fn (array $match) => $this->translator->trans($locale, $match[1]),
+            $value
+        );
+
+        return $translated ?? $value;
     }
 }

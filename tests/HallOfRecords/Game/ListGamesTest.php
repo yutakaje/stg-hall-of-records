@@ -111,10 +111,15 @@ class ListGamesTest extends \Tests\TestCase
      */
     private function createOutput(array $games, Locale $locale): string
     {
-        return $this->mediaWiki()->loadBasicTemplate(
-            $this->createGamesOutput($games, $locale),
-            $locale,
-            '/{locale}/games'
+        return $this->mediaWiki()->removePlaceholders(
+            $this->locale()->translate(
+                $locale,
+                $this->mediaWiki()->loadBasicTemplate(
+                    $this->createGamesOutput($games, $locale),
+                    $locale,
+                    '/{locale}/games'
+                )
+            )
         );
     }
 
@@ -125,19 +130,17 @@ class ListGamesTest extends \Tests\TestCase
     {
         ksort($games);
 
-        return $this->mediaWiki()->removePlaceholders(
-            $this->data()->replace(
-                $this->mediaWiki()->loadTemplate('Game', 'list-games/main'),
-                [
-                    '{{ entry|raw }}' => implode(PHP_EOL, array_map(
-                        fn (GameEntry $game) => $this->createGameOutput(
-                            $game,
-                            $locale
-                        ),
-                        $games
-                    )),
-                ]
-            )
+        return $this->data()->replace(
+            $this->mediaWiki()->loadTemplate('Game', 'list-games/main'),
+            [
+                '{{ entry|raw }}' => implode(PHP_EOL, array_map(
+                    fn (GameEntry $game) => $this->createGameOutput(
+                        $game,
+                        $locale
+                    ),
+                    $games
+                )),
+            ]
         );
     }
 

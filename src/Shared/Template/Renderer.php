@@ -17,6 +17,7 @@ use Stg\HallOfRecords\Shared\Infrastructure\Locale\TranslatorInterface;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
+use Twig\Loader\LoaderInterface;
 use Twig\TwigFilter;
 
 final class Renderer
@@ -35,7 +36,9 @@ final class Renderer
     public function withTemplateFiles(string $path): self
     {
         $clone = clone $this;
-        $clone->twig = $this->createTwig($path);
+        $clone->twig = $this->createTwig(
+            new FilesystemLoader($path)
+        );
 
         return $clone;
     }
@@ -44,6 +47,13 @@ final class Renderer
     {
         $clone = clone $this;
         $clone->locale = $locale;
+
+        // Locale is used in Twig filter closure which must be recreated as well.
+        if ($clone->twig !== null) {
+            $clone->twig = $clone->createTwig(
+                $clone->twig->getLoader()
+            );
+        }
 
         return $clone;
     }
@@ -89,15 +99,12 @@ final class Renderer
         );
     }
 
-    private function createTwig(string $path): Environment
+    private function createTwig(LoaderInterface $loader): Environment
     {
-        $env = new Environment(
-            new FilesystemLoader($path)
-        );
-
+        $env = new Environment($loader);
         $env->addFilter(new TwigFilter(
             'trans',
-            fn ($id) => $this->translator->trans($this->locale(), $id)
+            fn ($id) => $this->translator->trans($this->locale(), (string)$id)
         ));
 
         return $env;

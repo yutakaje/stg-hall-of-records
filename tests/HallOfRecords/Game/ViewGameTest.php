@@ -101,10 +101,15 @@ class ViewGameTest extends \Tests\TestCase
 
     private function createOutput(GameEntry $game, Locale $locale): string
     {
-        return $this->mediaWiki()->loadBasicTemplate(
-            $this->createGameOutput($game, $locale),
-            $locale,
-            "/{locale}/games/{$game->id()}",
+        return $this->mediaWiki()->removePlaceholders(
+            $this->locale()->translate(
+                $locale,
+                $this->mediaWiki()->loadBasicTemplate(
+                    $this->createGameOutput($game, $locale),
+                    $locale,
+                    "/{locale}/games/{$game->id()}",
+                )
+            )
         );
     }
 
@@ -135,20 +140,18 @@ class ViewGameTest extends \Tests\TestCase
     {
         usort($scores, fn ($lhs, $rhs) => $rhs->scoreValue() <=> $lhs->scoreValue());
 
-        return $this->mediaWiki()->removePlaceholders(
-            $this->data()->replace(
-                $this->mediaWiki()->loadTemplate('Game', 'view-game/scores-list'),
-                [
-                    "{{ scores|length }}" => sizeof($scores),
-                    "{{ entry|raw }}" => implode(PHP_EOL, array_map(
-                        fn (ScoreEntry $score) => $this->createScoreOutput(
-                            $score,
-                            $locale
-                        ),
-                        $scores
-                    )),
-                ]
-            )
+        return $this->data()->replace(
+            $this->mediaWiki()->loadTemplate('Game', 'view-game/scores-list'),
+            [
+                "{{ scores|length }}" => sizeof($scores),
+                "{{ entry|raw }}" => implode(PHP_EOL, array_map(
+                    fn (ScoreEntry $score) => $this->createScoreOutput(
+                        $score,
+                        $locale
+                    ),
+                    $scores
+                )),
+            ]
         );
     }
 

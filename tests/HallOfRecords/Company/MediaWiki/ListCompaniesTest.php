@@ -108,13 +108,18 @@ class ListCompaniesTest extends \Tests\TestCase
      */
     private function createOutput(array $companies, Locale $locale): string
     {
-        return $this->mediaWiki()->loadBasicTemplate(
-            $this->createCompaniesOutput(
-                $companies,
-                $locale
-            ),
-            $locale,
-            '/{locale}/companies'
+        return $this->mediaWiki()->removePlaceholders(
+            $this->locale()->translate(
+                $locale,
+                $this->mediaWiki()->loadBasicTemplate(
+                    $this->createCompaniesOutput(
+                        $companies,
+                        $locale
+                    ),
+                    $locale,
+                    '/{locale}/companies'
+                )
+            )
         );
     }
 
@@ -125,19 +130,17 @@ class ListCompaniesTest extends \Tests\TestCase
     {
         ksort($companies);
 
-        return $this->mediaWiki()->removePlaceholders(
-            $this->data()->replace(
-                $this->mediaWiki()->loadTemplate('Company', 'list-companies/main'),
-                [
-                    '{{ entry|raw }}' => implode(PHP_EOL, array_map(
-                        fn (CompanyEntry $company) => $this->createCompanyOutput(
-                            $company,
-                            $locale
-                        ),
-                        $companies
-                    )),
-                ]
-            )
+        return $this->data()->replace(
+            $this->mediaWiki()->loadTemplate('Company', 'list-companies/main'),
+            [
+                '{{ entry|raw }}' => implode(PHP_EOL, array_map(
+                    fn (CompanyEntry $company) => $this->createCompanyOutput(
+                        $company,
+                        $locale
+                    ),
+                    $companies
+                )),
+            ]
         );
     }
 

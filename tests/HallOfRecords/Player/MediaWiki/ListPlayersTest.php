@@ -87,10 +87,15 @@ class ListPlayersTest extends \Tests\TestCase
      */
     private function createOutput(array $players, Locale $locale): string
     {
-        return $this->mediaWiki()->loadBasicTemplate(
-            $this->createPlayersOutput($players, $locale),
-            $locale,
-            '/{locale}/players'
+        return $this->mediaWiki()->removePlaceholders(
+            $this->locale()->translate(
+                $locale,
+                $this->mediaWiki()->loadBasicTemplate(
+                    $this->createPlayersOutput($players, $locale),
+                    $locale,
+                    '/{locale}/players'
+                )
+            )
         );
     }
 
@@ -99,23 +104,21 @@ class ListPlayersTest extends \Tests\TestCase
      */
     private function createPlayersOutput(array $players, Locale $locale): string
     {
-        return $this->mediaWiki()->removePlaceholders(
-            $this->data()->replace(
-                $this->mediaWiki()->loadTemplate('Player', 'list-players/main'),
-                [
-                    '{{ entry|raw }}' => implode(PHP_EOL, array_map(
-                        fn (PlayerEntry $player) => $this->createPlayerOutput(
-                            $player,
-                            $locale
-                        ),
-                        [
-                            $players[1],
-                            $players[0],
-                            $players[2],
-                        ]
-                    )),
-                ]
-            )
+        return $this->data()->replace(
+            $this->mediaWiki()->loadTemplate('Player', 'list-players/main'),
+            [
+                '{{ entry|raw }}' => implode(PHP_EOL, array_map(
+                    fn (PlayerEntry $player) => $this->createPlayerOutput(
+                        $player,
+                        $locale
+                    ),
+                    [
+                        $players[1],
+                        $players[0],
+                        $players[2],
+                    ]
+                )),
+            ]
         );
     }
 
