@@ -1,5 +1,14 @@
 # English
 labels:
     companies: 'Companies'
+    company: 'Company'
+
     games: 'Games'
+    game: 'Games'
+
     players: 'Players'
+    player: 'Player'
+    aliases: 'Aliases'
+
+    scores: 'Scores'
+    score: 'Score'

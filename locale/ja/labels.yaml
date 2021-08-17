@@ -1,5 +1,14 @@
 # 日本語
 labels:
     companies: '開発会社'
+    company: '開発会社'
+
     games: 'ゲーム'
+    game: 'ゲーム'
+
     players: 'プレイヤー'
+    player: 'プレイヤー'
+    aliases: '別名'
+
+    scores: 'スコア'
+    score: 'スコア'
