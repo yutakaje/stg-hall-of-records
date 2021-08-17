@@ -51,6 +51,7 @@ final class MediaWikiHelper
                 [
                     '{{ content|raw }}' => $content,
                     '{{ locale }}' => (string)$locale,
+                    '{{ links.index }}' => "/{$locale}",
                     '{{ links.companies }}' => "/{$locale}/companies",
                     '{{ links.games }}' => "/{$locale}/games",
                     '{{ links.players }}' => "/{$locale}/players",

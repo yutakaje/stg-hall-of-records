@@ -1,4 +1,11 @@
 <h3>{{ 'labels.scores'|trans }} ({{ scores|length }})</h3>
+
+<table class="wikitable">
+  <tr>
+    <th>{{ 'labels.player'|trans }}</th>
+    <th>{{ 'labels.score'|trans }}</th>
+  </tr>
 {% for entry in scores %}
   {{ entry|raw }}
 {% endfor %}
+</table>

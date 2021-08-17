@@ -12,3 +12,6 @@ labels:
 
     scores: 'スコア'
     score: 'スコア'
+
+    home: 'メインページ'
+    languages: '他言語版'

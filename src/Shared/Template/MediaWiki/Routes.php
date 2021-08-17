@@ -32,6 +32,11 @@ final class Routes
         return $clone;
     }
 
+    public function index(): string
+    {
+        return "/{$this->locale}";
+    }
+
     public function listCompanies(): string
     {
         return "/{$this->locale}/companies";

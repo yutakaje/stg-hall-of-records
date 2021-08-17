@@ -1,7 +1,4 @@
-<div>
-  {{ 'labels.game'|trans }}: <a href="{{ links.game }}">{{ game.name }}</a>
-</div>
-<div>
-  {{ 'labels.score'|trans }}: {{ score.scoreValue }}
-</div>
-<hr/>
+<tr>
+  <td><a href="{{ links.game }}">{{ game.name }}</a></td>
+  <td>{{ score.scoreValue }}</td>
+</tr>

@@ -44,6 +44,7 @@ final class BasicTemplate
             ->render('basic', [
                 'content' => $content,
                 'links' => $links + [
+                    'index' => $routes->index(),
                     'companies' => $routes->listCompanies(),
                     'games' => $routes->listGames(),
                     'players' => $routes->listPlayers(),

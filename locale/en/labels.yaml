@@ -4,7 +4,7 @@ labels:
     company: 'Company'
 
     games: 'Games'
-    game: 'Games'
+    game: 'Game'
 
     players: 'Players'
     player: 'Player'
@@ -12,3 +12,6 @@ labels:
 
     scores: 'Scores'
     score: 'Score'
+
+    home: 'Main page'
+    languages: 'Languages'

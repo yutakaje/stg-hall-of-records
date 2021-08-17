@@ -1,4 +1,6 @@
 <h3>{{ 'labels.games'|trans }} ({{ games|length }})</h3>
+<ul>
 {% for entry in games %}
   {{ entry|raw }}
 {% endfor %}
+</ul>
