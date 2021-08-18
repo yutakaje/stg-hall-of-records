@@ -56,11 +56,17 @@ final class ListPlayersTemplate implements ListPlayersTemplateInterface
     {
         $routes = $this->routes->withLocale($locale);
 
-        return $this->wrapper->render($locale, $this->renderPlayers(
-            $this->renderer->withLocale($locale),
-            $routes,
-            $players
-        ), ['self' => $routes->listPlayers()]);
+        return $this->wrapper->render(
+            $locale,
+            $this->renderPlayers(
+                $this->renderer->withLocale($locale),
+                $routes,
+                $players
+            ),
+            $this->routes->forEachLocale(
+                fn ($routes) => $routes->listPlayers()
+            )
+        );
     }
 
     private function renderPlayers(

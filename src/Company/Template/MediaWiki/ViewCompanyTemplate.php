@@ -56,11 +56,17 @@ final class ViewCompanyTemplate implements ViewCompanyTemplateInterface
     {
         $routes = $this->routes->withLocale($locale);
 
-        return $this->wrapper->render($locale, $this->renderCompany(
-            $this->renderer->withLocale($locale),
-            $routes->withLocale($locale),
-            $company
-        ), ['self' => $routes->viewCompany($company->id)]);
+        return $this->wrapper->render(
+            $locale,
+            $this->renderCompany(
+                $this->renderer->withLocale($locale),
+                $routes->withLocale($locale),
+                $company
+            ),
+            $this->routes->forEachLocale(
+                fn ($routes) => $routes->viewCompany($company->id)
+            )
+        );
     }
 
     private function renderCompany(

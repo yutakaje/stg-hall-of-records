@@ -31,7 +31,7 @@ final class Translator implements TranslatorInterface
             $translator->addResource(
                 'yaml',
                 "{$localeDir->value()}/{$locale}/labels.yaml",
-                (string)$locale
+                $locale->value()
             );
         }
 
@@ -40,6 +40,6 @@ final class Translator implements TranslatorInterface
 
     public function trans(Locale $locale, string $id, array $parameters = []): string
     {
-        return $this->translator->trans($id, $parameters, null, (string)$locale);
+        return $this->translator->trans($id, $parameters, null, $locale->value());
     }
 }

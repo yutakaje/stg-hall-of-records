@@ -56,11 +56,17 @@ final class ViewGameTemplate implements ViewGameTemplateInterface
     {
         $routes = $this->routes->withLocale($locale);
 
-        return $this->wrapper->render($locale, $this->renderGame(
-            $this->renderer->withLocale($locale),
-            $routes,
-            $game
-        ), ['self' => $routes->viewGame($game->id)]);
+        return $this->wrapper->render(
+            $locale,
+            $this->renderGame(
+                $this->renderer->withLocale($locale),
+                $routes,
+                $game
+            ),
+            $this->routes->forEachLocale(
+                fn ($routes) => $routes->viewGame($game->id)
+            )
+        );
     }
 
     private function renderGame(

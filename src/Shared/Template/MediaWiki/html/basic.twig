@@ -78,8 +78,8 @@
 	  <h3 id="p-tb-label">{{ 'labels.languages'|trans }}</h3>
 	  <div class="body">
 	    <ul>
-              <li><a href="{{ links.self|replace({ ("/#{locale}/"): '/en/' }) }}">English</a></li>
-              <li><a href="{{ links.self|replace({ ("/#{locale}/"): '/ja/' }) }}">日本語</a></li>
+              <li><a href="{{ links.self.en }}">English</a></li>
+              <li><a href="{{ links.self.ja }}">日本語</a></li>
 	    </ul>
 	  </div>
 	</div>

@@ -56,11 +56,17 @@ final class ListGamesTemplate implements ListGamesTemplateInterface
     {
         $routes = $this->routes->withLocale($locale);
 
-        return $this->wrapper->render($locale, $this->renderGames(
-            $this->renderer->withLocale($locale),
-            $routes,
-            $games
-        ), ['self' => $routes->listGames()]);
+        return $this->wrapper->render(
+            $locale,
+            $this->renderGames(
+                $this->renderer->withLocale($locale),
+                $routes,
+                $games
+            ),
+            $this->routes->forEachLocale(
+                fn ($routes) => $routes->listGames()
+            )
+        );
     }
 
     private function renderGames(

@@ -31,19 +31,20 @@ final class BasicTemplate
     }
 
     /**
-     * @param array<string,string> $links
+     * @param array<string,string> $selfLinks
      */
     public function render(
         Locale $locale,
         string $content,
-        array $links = []
+        array $selfLinks
     ): string {
         $routes = $this->routes->withLocale($locale);
 
         return $this->renderer->withLocale($locale)
             ->render('basic', [
                 'content' => $content,
-                'links' => $links + [
+                'links' => [
+                    'self' => $selfLinks,
                     'index' => $routes->index(),
                     'companies' => $routes->listCompanies(),
                     'games' => $routes->listGames(),

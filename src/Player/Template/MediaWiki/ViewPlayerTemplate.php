@@ -56,11 +56,17 @@ final class ViewPlayerTemplate implements ViewPlayerTemplateInterface
     {
         $routes = $this->routes->withLocale($locale);
 
-        return $this->wrapper->render($locale, $this->renderPlayer(
-            $this->renderer->withLocale($locale),
-            $routes,
-            $player
-        ), ['self' => $routes->viewPlayer($player->id)]);
+        return $this->wrapper->render(
+            $locale,
+            $this->renderPlayer(
+                $this->renderer->withLocale($locale),
+                $routes,
+                $player
+            ),
+            $this->routes->forEachLocale(
+                fn ($routes) => $routes->viewPlayer($player->id)
+            )
+        );
     }
 
     private function renderPlayer(

@@ -50,13 +50,13 @@ final class MediaWikiHelper
             array_merge(
                 [
                     '{{ content|raw }}' => $content,
-                    '{{ locale }}' => (string)$locale,
+                    '{{ locale }}' => $locale->value(),
                     '{{ links.index }}' => "/{$locale}",
                     '{{ links.companies }}' => "/{$locale}/companies",
                     '{{ links.games }}' => "/{$locale}/games",
                     '{{ links.players }}' => "/{$locale}/players",
                 ],
-                $this->localizedSelfLinks($selfLink)
+                $this->localizeSelfLink($selfLink)
             )
         );
     }
@@ -64,15 +64,16 @@ final class MediaWikiHelper
     /**
      * @return array<string,string>
      */
-    private function localizedSelfLinks(string $link): array
+    private function localizeSelfLink(string $link): array
     {
         $links = [];
 
-        $baseSearch = '{{ links.self|replace({ ("/#{locale}/"): \'/{{locale}}/\' }) }}';
-
         foreach ($this->localizer->all() as $locale) {
-            $search = str_replace('{{locale}}', (string)$locale, $baseSearch);
-            $links[$search] = str_replace('{locale}', (string)$locale, $link);
+            $links["{{ links.self.{$locale} }}"] = str_replace(
+                '{locale}',
+                $locale->value(),
+                $link
+            );
         }
 
         return $links;

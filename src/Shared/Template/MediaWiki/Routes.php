@@ -13,14 +13,17 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Shared\Template\MediaWiki;
 
+use Stg\HallOfRecords\Shared\Infrastructure\Locale\Locales;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 
 final class Routes
 {
+    private Locales $locales;
     private string $locale;
 
-    public function __construct()
+    public function __construct(Locales $locales)
     {
+        $this->locales = $locales;
         $this->locale = '{locale}';
     }
 
@@ -65,5 +68,20 @@ final class Routes
     public function viewPlayer(string $id = '{id}'): string
     {
         return "/{$this->locale}/players/{$id}";
+    }
+
+    /**
+     * @param \Closure(Routes):string $callback
+     * @return array<string,string>
+     */
+    public function forEachLocale(\Closure $callback): array
+    {
+        $uris = [];
+
+        foreach ($this->locales->all() as $locale) {
+            $uris[$locale->value()] = $callback($this->withLocale($locale));
+        }
+
+        return $uris;
     }
 }

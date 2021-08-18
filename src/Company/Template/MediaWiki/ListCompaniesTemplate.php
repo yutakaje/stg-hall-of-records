@@ -56,11 +56,17 @@ final class ListCompaniesTemplate implements ListCompaniesTemplateInterface
     {
         $routes = $this->routes->withLocale($locale);
 
-        return $this->wrapper->render($locale, $this->renderCompanies(
-            $this->renderer->withLocale($locale),
-            $routes,
-            $companies
-        ), ['self' => $routes->listCompanies()]);
+        return $this->wrapper->render(
+            $locale,
+            $this->renderCompanies(
+                $this->renderer->withLocale($locale),
+                $routes,
+                $companies
+            ),
+            $this->routes->forEachLocale(
+                fn ($routes) => $routes->listCompanies()
+            )
+        );
     }
 
     private function renderCompanies(
