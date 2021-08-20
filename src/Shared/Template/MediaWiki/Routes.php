@@ -20,11 +20,13 @@ final class Routes
 {
     private Locales $locales;
     private string $locale;
+    private string $baseUri;
 
-    public function __construct(Locales $locales)
+    public function __construct(Locales $locales, string $baseUri = '')
     {
         $this->locales = $locales;
         $this->locale = '{locale}';
+        $this->baseUri = $this->removeTrailingSlash($baseUri);
     }
 
     public function withLocale(Locale $locale): self
@@ -37,37 +39,49 @@ final class Routes
 
     public function index(): string
     {
-        return "/{$this->locale}";
+        return $this->createUri('');
     }
 
     public function listCompanies(): string
     {
-        return "/{$this->locale}/companies";
+        return $this->createUri('/companies');
     }
 
     public function viewCompany(string $id = '{id}'): string
     {
-        return "/{$this->locale}/companies/{$id}";
+        return $this->createUri("/companies/{$id}");
     }
 
     public function listGames(): string
     {
-        return "/{$this->locale}/games";
+        return $this->createUri('/games');
     }
 
     public function viewGame(string $id = '{id}'): string
     {
-        return "/{$this->locale}/games/{$id}";
+        return $this->createUri("/games/{$id}");
     }
 
     public function listPlayers(): string
     {
-        return "/{$this->locale}/players";
+        return $this->createUri('/players');
     }
 
     public function viewPlayer(string $id = '{id}'): string
     {
-        return "/{$this->locale}/players/{$id}";
+        return $this->createUri("/players/{$id}");
+    }
+
+    private function createUri(string $uri): string
+    {
+        return $this->removeTrailingSlash(
+            "{$this->baseUri}/{$this->locale}/" . ltrim($uri, '/')
+        );
+    }
+
+    private function removeTrailingSlash(string $uri): string
+    {
+        return rtrim($uri, '/');
     }
 
     /**
