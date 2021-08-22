@@ -13,9 +13,20 @@ declare(strict_types=1);
 
 use Monolog\Logger;
 
+// Read environment variables from file if available.
+$env = [];
+
+$envFile = __DIR__ . '/.env';
+if (file_exists($envFile)) {
+    $contents = parse_ini_file($envFile, false, INI_SCANNER_TYPED);
+    if (is_array($contents)) {
+        $env = $contents;
+    }
+}
+
 return [
-    'compileContainer' => true,
-    'debugMode' => false,
+    'compileContainer' => $env['COMPILE_CONTAINER'] ?? true,
+    'debugMode' => $env['DEBUG_MODE'] ?? false,
     'logger' => [
         'name' => 'stg-hall-of-records',
         'path' => dirname(__DIR__) . '/logs/app.log',
@@ -25,5 +36,8 @@ return [
     'database' => [
         'driver' => 'pdo_sqlite',
         'path' => __DIR__ . '/stg-hor.db',
+    ],
+    'http' => [
+        'baseUri' => $env['HTTP_BASE_URI'] ?? '',
     ],
 ];
