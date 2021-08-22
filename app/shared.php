@@ -35,6 +35,8 @@ use Stg\HallOfRecords\Shared\Template\MediaWiki\Routes;
 use Stg\HallOfRecords\Shared\Template\Renderer;
 
 return [
+    'settings' => require __DIR__ . '/settings.php',
+
     'routes' => [
         static function (): \Closure {
             return static function (App $app, ContainerInterface $container): void {
@@ -44,8 +46,6 @@ return [
         }
     ],
     'middleware' => [],
-
-    'settings' => require __DIR__ . '/settings.php',
 
     LoggerInterface::class => DI\factory(function (
         array $settings
@@ -82,7 +82,12 @@ return [
     ViewQueryCreator::class => DI\autowire(),
 
     Renderer::class => DI\autowire(),
-    Routes::class => DI\autowire(),
+    Routes::class => DI\factory(function (
+        Locales $locales,
+        array $settings
+    ): Routes {
+        return new Routes($locales, $settings['http']['baseUri']);
+    })->parameter('settings', DI\get('settings')),
     BasicTemplate::class => DI\autowire(),
 
     'mediaWiki/index' => DI\autowire(IndexController::class)
