@@ -90,7 +90,7 @@ final class ListGamesTemplate implements ListGamesTemplateInterface
         Routes $routes,
         Resource $game
     ): string {
-        return $renderer->render('entry', [
+        return $renderer->render('game-entry', [
             'game' => $this->createGameVar($game),
             'links' => [
                 'game' => $routes->viewGame($game->id),
@@ -103,6 +103,7 @@ final class ListGamesTemplate implements ListGamesTemplateInterface
         $var = new \stdClass();
         $var->id = $game->id;
         $var->name = $game->name;
+        $var->numScores = $game->numScores;
 
         return $var;
     }

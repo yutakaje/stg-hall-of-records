@@ -13,6 +13,7 @@ labels:
 
     scores: 'Scores'
     score: 'Score'
+    num-of-scores: '1 score|%count% scores'
 
     home: 'Main page'
     languages: 'Languages'

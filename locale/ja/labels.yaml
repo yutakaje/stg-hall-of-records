@@ -13,6 +13,7 @@ labels:
 
     scores: 'スコア'
     score: 'スコア'
+    num-of-scores: 'スコア数: %count%'
 
     home: 'メインページ'
     languages: '他言語版'

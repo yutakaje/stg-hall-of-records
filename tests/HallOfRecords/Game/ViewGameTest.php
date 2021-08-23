@@ -14,44 +14,69 @@ declare(strict_types=1);
 namespace Tests\HallOfRecords\Game;
 
 use Fig\Http\Message\StatusCodeInterface;
-use Psr\Http\Message\ServerRequestInterface;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 use Tests\Helper\Data\GameEntry;
 use Tests\Helper\Data\ScoreEntry;
 
 class ViewGameTest extends \Tests\TestCase
 {
-    public function testWithDefaultLocale(): void
+    public function testWithEnLocale(): void
     {
-        $locale = $this->locale()->default();
+        $game = $this->data()->createGame(
+            $this->data()->createCompany('CAVE'),
+            'Akai Katana'
+        );
 
-        $request = $this->http()->createServerRequest('GET', "/{$locale}/games/{id}");
+        $this->addScores($game, [
+            $this->data()->createScore(
+                $game,
+                $this->data()->createPlayer('Player-1'),
+                'player-1',
+                '234,828,910'
+            ),
+            $this->data()->createScore(
+                $game,
+                $this->data()->createPlayer('Player-2'),
+                'player-2',
+                '992,893,110'
+            ),
+        ]);
 
-        $this->testWithLocale($request, $locale);
+        $this->testWithLocale($game, $this->locale()->get('en'));
     }
 
-    public function testWithRandomLocale(): void
+    public function testWithJaLocale(): void
     {
-        $locale = $this->locale()->random();
+        $game = $this->data()->createGame(
+            $this->data()->createCompany('CAVE'),
+            'Akai Katana'
+        );
 
-        $request = $this->http()->createServerRequest('GET', "/{$locale}/games/{id}")
-            ->withHeader('Accept-Language', $locale->value());
+        $this->addScores($game, [
+            $this->data()->createScore(
+                $game,
+                $this->data()->createPlayer('プレイヤー-1'),
+                'プレイヤーx1',
+                '234,828,910'
+            ),
+            $this->data()->createScore(
+                $game,
+                $this->data()->createPlayer('プレイヤー-2'),
+                'プレイヤーx2',
+                '992,893,110'
+            ),
+        ]);
 
-        $this->testWithLocale($request, $locale);
+        $this->testWithLocale($game, $this->locale()->get('ja'));
     }
 
-    private function testWithLocale(
-        ServerRequestInterface $request,
-        Locale $locale
-    ): void {
-        $game = $this->createGameEntry();
-
+    private function testWithLocale(GameEntry $game, Locale $locale): void
+    {
         $this->insertGame($game);
 
-        $request = $this->http()->replaceInUriPath(
-            $request,
-            '{id}',
-            (string)$game->id()
+        $request = $this->http()->createServerRequest(
+            'GET',
+            "/{$locale}/games/{$game->id()}"
         );
 
         $response = $this->app()->handle($request);
@@ -67,30 +92,15 @@ class ViewGameTest extends \Tests\TestCase
         );
     }
 
-    private function createGameEntry(): GameEntry
+    /**
+     * @param ScoreEntry[] $scores
+     */
+    private function addScores(GameEntry $game, array $scores): void
     {
-        $game = $this->data()->createGame(
-            $this->data()->createCompany('cave'),
-            'ketsui'
-        );
-
-        // Add some scores for this game to ensure
-        // that the scores are displayed as expected.
-        $numScores = random_int(1, 5);
-        for ($i = 0; $i < $numScores; ++$i) {
-            $game->addScore($this->data()->createScore(
-                $game,
-                $this->data()->createPlayer('dareka'),
-                '誰か',
-                implode(',', [
-                    random_int(100, 999),
-                    random_int(100, 999),
-                    random_int(100, 999),
-                ])
-            ));
+        // Adding scores ensures that the scores are displayed as expected.
+        foreach ($scores as $score) {
+            $game->addScore($score);
         }
-
-        return $game;
     }
 
     private function insertGame(GameEntry $game): void

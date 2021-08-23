@@ -25,7 +25,8 @@ class ViewCompanyTest extends \Tests\TestCase
         $company = $this->data()->createCompany('Capcom', 'capcom');
 
         $this->addGames($company, [
-            $this->data()->createGame($company, "game"),
+            $this->data()->createGame($company, 'game-1'),
+            $this->data()->createGame($company, 'game-2'),
         ]);
 
         $this->testWithLocale($company, $this->locale()->get('en'));
@@ -36,7 +37,8 @@ class ViewCompanyTest extends \Tests\TestCase
         $company = $this->data()->createCompany('彩京', 'さいきょう');
 
         $this->addGames($company, [
-            $this->data()->createGame($company, "game"),
+            $this->data()->createGame($company, 'ゲーム-1'),
+            $this->data()->createGame($company, 'ゲーム-2'),
         ]);
 
         $this->testWithLocale($company, $this->locale()->get('ja'));

@@ -41,8 +41,14 @@ final class ListGamesQueryHandler implements ListGamesQueryHandlerInterface
     {
         $qb = $this->connection->createQueryBuilder();
 
-        $stmt = $qb->select('id', 'name', 'company_id', 'company_name')
-            ->from('stg_query_games')
+        $stmt = $qb->select(
+            'id',
+            'name',
+            'company_id',
+            'company_name',
+            "({$this->numScoresQuery()}) AS num_scores"
+        )
+            ->from('stg_query_games', 'games')
             ->where($qb->expr()->eq('locale', ':locale'))
             ->setParameter('locale', $query->locale()->value())
             ->orderBy('name_translit')
@@ -58,6 +64,16 @@ final class ListGamesQueryHandler implements ListGamesQueryHandlerInterface
         return new Resources($games);
     }
 
+    private function numScoresQuery(): string
+    {
+        $qb = $this->connection->createQueryBuilder();
+
+        return $qb->select('count(*)')
+            ->from('stg_scores')
+            ->where($qb->expr()->eq('game_id', 'games.id'))
+            ->getSQL();
+    }
+
     /**
      * @param Row $row
      */
@@ -67,6 +83,7 @@ final class ListGamesQueryHandler implements ListGamesQueryHandlerInterface
         $game->id = $row['id'];
         $game->name = $row['name'];
         $game->company = $this->createCompany($row);
+        $game->numScores = $row['num_scores'];
 
         return $game;
     }

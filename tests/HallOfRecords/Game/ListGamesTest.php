@@ -14,38 +14,90 @@ declare(strict_types=1);
 namespace Tests\HallOfRecords\Game;
 
 use Fig\Http\Message\StatusCodeInterface;
-use Psr\Http\Message\ServerRequestInterface;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 use Tests\Helper\Data\GameEntry;
 
 class ListGamesTest extends \Tests\TestCase
 {
-    public function testWithDefaultLocale(): void
+    public function testWithEnLocale(): void
     {
-        $locale = $this->locale()->default();
+        // Index represents expected sort order.
+        $games = [
+            1 => $this->data()->createGame(
+                $this->data()->createCompany('CAVE'),
+                'Akai Katana',
+                'akai katana'
+            ),
+            0 => $this->data()->createGame(
+                $this->data()->createCompany('Tanoshimasu'),
+                'Aka to Blue Type-R',
+                'aka to blue type-r'
+            ),
+            3 => $this->data()->createGame(
+                $this->data()->createCompany('Visco'),
+                'Asuka & Asuka',
+                'asuka & asuka'
+            ),
+            2 => $this->data()->createGame(
+                $this->data()->createCompany('SNK'),
+                'ASO: Armored Scrum Object / Alpha Mission',
+                'aso: armored scrum object / alpha mission'
+            ),
+        ];
 
-        $request = $this->http()->createServerRequest('GET', "/{$locale}/games");
+        foreach ($games as $game) {
+            $this->addScores($game);
+        }
 
-        $this->testWithLocale($request, $locale);
+        $this->testWithLocale($games, $this->locale()->get('en'));
     }
 
-    public function testWithRandomLocale(): void
+    public function testWithJaLocale(): void
     {
-        $locale = $this->locale()->random();
+        // Index represents expected sort order.
+        $games = [
+            1 => $this->data()->createGame(
+                $this->data()->createCompany('ケイブ'),
+                'ケツイ〜絆地獄たち〜',
+                'けついきずなじごくたち'
+            ),
+            0 => $this->data()->createGame(
+                $this->data()->createCompany('ケイブ'),
+                'エスプレイド',
+                'えすぷれいど'
+            ),
+            3 => $this->data()->createGame(
+                $this->data()->createCompany('ライジング / エイティング'),
+                'バトルガレッガ',
+                'ばとるがれっが'
+            ),
+            2 => $this->data()->createGame(
+                $this->data()->createCompany('コナミ'),
+                '出たな!ツインビー',
+                'でたな!ついんびー',
+            ),
+        ];
 
-        $request = $this->http()->createServerRequest('GET', "/{$locale}/games")
-            ->withHeader('Accept-Language', $locale->value());
+        foreach ($games as $game) {
+            $this->addScores($game);
+        }
 
-        $this->testWithLocale($request, $locale);
+        $this->testWithLocale($games, $this->locale()->get('ja'));
     }
 
+    /**
+     * @param GameEntry[] $games
+     */
     private function testWithLocale(
-        ServerRequestInterface $request,
+        array $games,
         Locale $locale
     ): void {
-        $games = $this->createGames();
-
         $this->insertGames($games);
+
+        $request = $this->http()->createServerRequest(
+            'GET',
+            "/{$locale}/games"
+        );
 
         $response = $this->app()->handle($request);
 
@@ -60,40 +112,21 @@ class ListGamesTest extends \Tests\TestCase
         );
     }
 
-    /**
-     * @return GameEntry[]
-     */
-    private function createGames(): array
+    private function addScores(GameEntry $game): void
     {
-        $companies = [
-            $this->data()->createCompany('konami'),
-            $this->data()->createCompany('cave'),
-            $this->data()->createCompany('raizing'),
-        ];
-
-        // Index represents expected sort order.
-        return [
-            1 => $this->data()->createGame(
-                $companies[1],
-                'ケツイ〜絆地獄たち〜',
-                'けついきずなじごくたち'
-            ),
-            0 => $this->data()->createGame(
-                $companies[1],
-                'エスプレイド',
-                'えすぷれいど'
-            ),
-            3 => $this->data()->createGame(
-                $companies[2],
-                'バトルガレッガ',
-                'ばとるがれっが'
-            ),
-            2 => $this->data()->createGame(
-                $companies[0],
-                '出たな!ツインビー',
-                'でたな!ついんびー',
-            ),
-        ];
+        // Adding scores ensures that the count functions work as expected.
+        // The actual sore properties are not important here.
+        $numScores = random_int(1, 5);
+        for ($i = 0; $i < $numScores; ++$i) {
+            $game->addScore(
+                $this->data()->createScore(
+                    $game,
+                    $this->data()->createPlayer("Player{$i}"),
+                    "player{$i}",
+                    (string)random_int(1000, 99999)
+                )
+            );
+        }
     }
 
     /**
@@ -103,6 +136,7 @@ class ListGamesTest extends \Tests\TestCase
     {
         foreach ($games as $game) {
             $this->data()->insertGame($game);
+            $this->data()->insertScores($game->scores());
         }
     }
 
@@ -148,10 +182,14 @@ class ListGamesTest extends \Tests\TestCase
         GameEntry $game,
         Locale $locale
     ): string {
+        $numScores = sizeof($game->scores());
+
         return $this->data()->replace(
-            $this->mediaWiki()->loadTemplate('Game', 'list-games/entry'),
+            $this->mediaWiki()->loadTemplate('Game', 'list-games/game-entry'),
             [
-                '{{ game.name }}' => $game->name($locale),
+                '{{ game.name }}' => htmlentities($game->name($locale)),
+                '{{ game.numScores }}' => $numScores,
+                "{'%count%': game.numScores}" => "{'%count%': {$numScores}}",
                 '{{ links.game }}' => "/{$locale}/games/{$game->id()}",
             ]
         );
