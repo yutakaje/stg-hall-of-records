@@ -1,1 +1,1 @@
-<li><a href="{{ links.company }}">{{ company.name }}</a> ({{ company.numGames }} {{ company.numGames == 1 ? 'game' : 'games' }})</li>
+<li><a href="{{ links.company }}">{{ company.name }}</a> ({{ 'labels.num-of-games'|trans({'%count%': company.numGames}) }})</li>

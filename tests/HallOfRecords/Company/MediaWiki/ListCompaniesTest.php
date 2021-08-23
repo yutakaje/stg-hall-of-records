@@ -155,7 +155,7 @@ class ListCompaniesTest extends \Tests\TestCase
             [
                 '{{ company.name }}' => $company->name($locale),
                 '{{ company.numGames }}' => $numGames,
-                "{{ company.numGames == 1 ? 'game' : 'games' }}" => $numGames === 1 ? 'game' : 'games',
+                "{'%count%': company.numGames}" => "{'%count%': {$numGames}}",
                 '{{ links.company }}' => "/{$locale}/companies/{$company->id()}",
             ]
         );

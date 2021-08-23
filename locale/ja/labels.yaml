@@ -5,6 +5,7 @@ labels:
 
     games: 'ゲーム'
     game: 'ゲーム'
+    num-of-games: 'ゲーム数: %count%'
 
     players: 'プレイヤー'
     player: 'プレイヤー'

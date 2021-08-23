@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Tests\Helper;
 
+use Nette\Utils\Json;
+use Nette\Utils\JsonException;
 use Psr\Container\ContainerInterface;
 use Stg\HallOfRecords\Shared\Infrastructure\Locale\Locales;
 use Stg\HallOfRecords\Shared\Infrastructure\Locale\TranslatorInterface;
@@ -80,11 +82,36 @@ final class LocaleHelper
     public function translate(Locale $locale, string $value): string
     {
         $translated = preg_replace_callback(
-            '/\{\{ \'([^\']+?)\'\|trans \}\}/',
-            fn (array $match) => $this->translator->trans($locale, $match[1]),
+            '/\{\{ \'([^\']+?)\'\|trans(?:\((.+?)\))? \}\}/',
+            fn (array $match) => $this->translator->trans(
+                $locale,
+                $match[1],
+                $this->parseParameters($match[2] ?? '')
+            ),
             $value
         );
 
         return $translated ?? $value;
+    }
+
+    /**
+     * @return array<string,mixed>
+     */
+    private function parseParameters(string $params): array
+    {
+        if ($params === '') {
+            return [];
+        }
+
+        try {
+            return Json::decode(
+                str_replace("'", '"', $params),
+                Json::FORCE_ARRAY
+            );
+        } catch (JsonException $exception) {
+            throw new \InvalidArgumentException(
+                "Parameters for translate function cannot be decoded `{$params}`"
+            );
+        }
     }
 }

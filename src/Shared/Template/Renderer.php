@@ -104,7 +104,11 @@ final class Renderer
         $env = new Environment($loader);
         $env->addFilter(new TwigFilter(
             'trans',
-            fn ($id) => $this->translator->trans($this->locale(), (string)$id)
+            fn ($id, $parameters = []) => $this->translator->trans(
+                $this->locale(),
+                (string)$id,
+                $parameters
+            )
         ));
 
         return $env;

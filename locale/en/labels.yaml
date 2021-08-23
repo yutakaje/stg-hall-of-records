@@ -5,6 +5,7 @@ labels:
 
     games: 'Games'
     game: 'Game'
+    num-of-games: '1 game|%count% games'
 
     players: 'Players'
     player: 'Player'
