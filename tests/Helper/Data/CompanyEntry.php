@@ -26,8 +26,7 @@ final class CompanyEntry extends AbstractEntry
     /** @var Names */
     private array $translitNames;
 
-    /** @var GameEntry[] */
-    private array $games;
+    private GameEntries $games;
 
     /**
      * @param Names $names
@@ -38,7 +37,7 @@ final class CompanyEntry extends AbstractEntry
         parent::__construct();
         $this->names = $names;
         $this->translitNames = $translitNames;
-        $this->games = [];
+        $this->games = new GameEntries();
     }
 
     /**
@@ -67,17 +66,14 @@ final class CompanyEntry extends AbstractEntry
         return $this->localizedValue($this->translitNames, $locale);
     }
 
-    /**
-     * @return GameEntry[]
-     */
-    public function games(): array
+    public function games(): GameEntries
     {
         return $this->games;
     }
 
-    public function addGame(GameEntry $game): void
+    public function setGames(GameEntries $games): void
     {
-        $this->games[] = $game;
+        $this->games = $games;
     }
 
     public function insert(CompaniesTable $db): void

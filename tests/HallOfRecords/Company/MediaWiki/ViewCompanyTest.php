@@ -16,6 +16,7 @@ namespace Tests\HallOfRecords\Company\MediaWiki;
 use Fig\Http\Message\StatusCodeInterface;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 use Tests\Helper\Data\CompanyEntry;
+use Tests\Helper\Data\GameEntries;
 use Tests\Helper\Data\GameEntry;
 
 class ViewCompanyTest extends \Tests\TestCase
@@ -23,11 +24,28 @@ class ViewCompanyTest extends \Tests\TestCase
     public function testWithEnLocale(): void
     {
         $company = $this->data()->createCompany('Capcom', 'capcom');
-
-        $this->addGames($company, [
-            $this->data()->createGame($company, 'game-1'),
-            $this->data()->createGame($company, 'game-2'),
-        ]);
+        $company->setGames(new GameEntries([
+            $this->data()->createGame(
+                $company,
+                'Aka to Blue Type-R',
+                'aka to blue type-r'
+            ),
+            $this->data()->createGame(
+                $company,
+                'Akai Katana',
+                'akai katana'
+            ),
+            $this->data()->createGame(
+                $company,
+                'ASO: Armored Scrum Object / Alpha Mission',
+                'aso: armored scrum object / alpha mission'
+            ),
+            $this->data()->createGame(
+                $company,
+                'Asuka & Asuka',
+                'asuka & asuka'
+            ),
+        ]));
 
         $this->testWithLocale($company, $this->locale()->get('en'));
     }
@@ -35,11 +53,28 @@ class ViewCompanyTest extends \Tests\TestCase
     public function testWithJaLocale(): void
     {
         $company = $this->data()->createCompany('彩京', 'さいきょう');
-
-        $this->addGames($company, [
-            $this->data()->createGame($company, 'ゲーム-1'),
-            $this->data()->createGame($company, 'ゲーム-2'),
-        ]);
+        $company->setGames(new GameEntries([
+            $this->data()->createGame(
+                $company,
+                'エスプレイド',
+                'えすぷれいど'
+            ),
+            $this->data()->createGame(
+                $company,
+                'ケツイ〜絆地獄たち〜',
+                'けついきずなじごくたち'
+            ),
+            $this->data()->createGame(
+                $company,
+                '出たな!ツインビー',
+                'でたな!ついんびー',
+            ),
+            $this->data()->createGame(
+                $company,
+                'バトルガレッガ',
+                'ばとるがれっが'
+            ),
+        ]));
 
         $this->testWithLocale($company, $this->locale()->get('ja'));
     }
@@ -66,21 +101,10 @@ class ViewCompanyTest extends \Tests\TestCase
         );
     }
 
-    /**
-     * @param GameEntry[] $games
-     */
-    private function addGames(CompanyEntry $company, array $games): void
-    {
-        // Adding games ensures that the games are displayed as expected.
-        foreach ($games as $game) {
-            $company->addGame($game);
-        }
-    }
-
     private function insertCompany(CompanyEntry $company): void
     {
         $this->data()->insertCompany($company);
-        $this->data()->insertGames($company->games());
+        $this->data()->insertGames($company->games()->entries());
     }
 
     private function createOutput(CompanyEntry $company, Locale $locale): string
@@ -105,27 +129,29 @@ class ViewCompanyTest extends \Tests\TestCase
             $this->mediaWiki()->loadTemplate('Company', 'view-company/main'),
             [
                 '{{ company.name }}' => $company->name($locale),
-                '{{ games|raw }}' => $this->createGamesOutput($company->games(), $locale),
+                '{{ games|raw }}' => $this->createGamesOutput(
+                    $company->games(),
+                    $locale
+                ),
                 '{{ links.company }}' => "/{$locale}/companies/{$company->id()}",
             ]
         );
     }
 
-    /**
-     * @param GameEntry[] $games
-     */
-    private function createGamesOutput(array $games, Locale $locale): string
-    {
+    private function createGamesOutput(
+        GameEntries $games,
+        Locale $locale
+    ): string {
         return $this->data()->replace(
             $this->mediaWiki()->loadTemplate('Company', 'view-company/games-list'),
             [
-                "{{ games|length }}" => sizeof($games),
+                "{{ games|length }}" => $games->numEntries(),
                 "{{ entry|raw }}" => implode(PHP_EOL, array_map(
                     fn (GameEntry $game) => $this->createGameOutput(
                         $game,
                         $locale
                     ),
-                    $games
+                    $games->sorted()
                 )),
             ]
         );
@@ -136,7 +162,7 @@ class ViewCompanyTest extends \Tests\TestCase
         return $this->data()->replace(
             $this->mediaWiki()->loadTemplate('Company', 'view-company/game-entry'),
             [
-                '{{ game.name }}' => $game->name($locale),
+                '{{ game.name }}' => htmlentities($game->name($locale)),
                 '{{ links.game }}' => "/{$locale}/games/{$game->id()}",
             ]
         );

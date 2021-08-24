@@ -17,96 +17,131 @@ use Fig\Http\Message\StatusCodeInterface;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 use Tests\Helper\Data\GameEntry;
 use Tests\Helper\Data\PlayerEntry;
+use Tests\Helper\Data\ScoreEntries;
 use Tests\Helper\Data\ScoreEntry;
 
 class ViewPlayerTest extends \Tests\TestCase
 {
     public function testWithEnLocale(): void
     {
-        $companies = [
-            $this->data()->createCompany('company1'),
-            $this->data()->createCompany('company2'),
-        ];
-
         $games = [
-            $this->data()->createGame($companies[0], 'game1'),
-            $this->data()->createGame($companies[1], 'game2'),
-            $this->data()->createGame($companies[1], 'game3'),
+            $this->data()->createGame(
+                $this->data()->createCompany('Tanoshimasu'),
+                'Aka to Blue Type-R',
+                'aka to blue type-r'
+            ),
+            $this->data()->createGame(
+                $this->data()->createCompany('CAVE'),
+                'Akai Katana',
+                'akai katana'
+            ),
+            $this->data()->createGame(
+                $this->data()->createCompany('SNK'),
+                'ASO: Armored Scrum Object / Alpha Mission',
+                'aso: armored scrum object / alpha mission'
+            ),
+            $this->data()->createGame(
+                $this->data()->createCompany('Visco'),
+                'Asuka & Asuka',
+                'asuka & asuka'
+            ),
         ];
 
-        $player = $this->data()->createPlayer('Player-1');
-
-        $this->addScores($player, [
-            $this->data()->createScore(
-                $games[2],
-                $player,
-                'player-1',
-                '234,828,910'
-            ),
-            $this->data()->createScore(
-                $games[2],
-                $player,
-                'player-1',
-                '992,893,110'
-            ),
+        $player = $this->data()->createPlayer('player1');
+        $player->setScores(new ScoreEntries([
             $this->data()->createScore(
                 $games[0],
                 $player,
-                'player-1',
+                "[{$player->name()}]",
                 '834,883,500'
             ),
             $this->data()->createScore(
                 $games[1],
                 $player,
-                'player-1',
+                "[{$player->name()}]",
                 '873,456,489'
             ),
-        ]);
+            $this->data()->createScore(
+                $games[2],
+                $player,
+                "[{$player->name()}]",
+                '992,893,110'
+            ),
+            $this->data()->createScore(
+                $games[2],
+                $player,
+                "[{$player->name()}]",
+                '234,828,910'
+            ),
+            $this->data()->createScore(
+                $games[3],
+                $player,
+                "[{$player->name()}]",
+                '503,384,100'
+            ),
+        ]));
 
         $this->executeTest($player, $this->locale()->get('en'));
     }
 
     public function testWithJaLocale(): void
     {
-        $companies = [
-            $this->data()->createCompany('company1'),
-            $this->data()->createCompany('company2'),
-        ];
-
         $games = [
-            $this->data()->createGame($companies[0], 'game1'),
-            $this->data()->createGame($companies[1], 'game2'),
-            $this->data()->createGame($companies[1], 'game3'),
+            $this->data()->createGame(
+                $this->data()->createCompany('ケイブ'),
+                'エスプレイド',
+                'えすぷれいど'
+            ),
+            $this->data()->createGame(
+                $this->data()->createCompany('ケイブ'),
+                'ケツイ〜絆地獄たち〜',
+                'けついきずなじごくたち'
+            ),
+            $this->data()->createGame(
+                $this->data()->createCompany('コナミ'),
+                '出たな!ツインビー',
+                'でたな!ついんびー',
+            ),
+            $this->data()->createGame(
+                $this->data()->createCompany('ライジング / エイティング'),
+                'バトルガレッガ',
+                'ばとるがれっが'
+            ),
         ];
 
         $player = $this->data()->createPlayer('プレイヤー-1');
-
-        $this->addScores($player, [
-            $this->data()->createScore(
-                $games[2],
-                $player,
-                'player-1',
-                '234,828,910'
-            ),
-            $this->data()->createScore(
-                $games[2],
-                $player,
-                'player-1',
-                '992,893,110'
-            ),
+        $player->setScores(new ScoreEntries([
             $this->data()->createScore(
                 $games[0],
                 $player,
-                'player-1',
+                "[{$player->name()}]",
                 '834,883,500'
             ),
             $this->data()->createScore(
                 $games[1],
                 $player,
-                'player-1',
+                "[{$player->name()}]",
                 '873,456,489'
             ),
-        ]);
+            $this->data()->createScore(
+                $games[2],
+                $player,
+                "[{$player->name()}]",
+                '992,893,110'
+            ),
+            $this->data()->createScore(
+                $games[2],
+                $player,
+                "[{$player->name()}]",
+                '234,828,910'
+            ),
+            $this->data()->createScore(
+                $games[3],
+                $player,
+                "[{$player->name()}]",
+                '503,384,100'
+            ),
+        ]));
 
         $this->executeTest($player, $this->locale()->get('ja'));
     }
@@ -146,21 +181,10 @@ class ViewPlayerTest extends \Tests\TestCase
         );
     }
 
-    /**
-     * @param ScoreEntry[] $scores
-     */
-    private function addScores(PlayerEntry $player, array $scores): void
-    {
-        // Adding scores ensures that the scores are displayed as expected.
-        foreach ($scores as $score) {
-            $player->addScore($score);
-        }
-    }
-
     private function insertPlayer(PlayerEntry $player): void
     {
         $this->data()->insertPlayer($player);
-        $this->data()->insertScores($player->scores());
+        $this->data()->insertScores($player->scores()->entries());
     }
 
     private function createOutput(PlayerEntry $player, Locale $locale): string
@@ -219,33 +243,20 @@ class ViewPlayerTest extends \Tests\TestCase
         );
     }
 
-    /**
-     * @param ScoreEntry[] $scores
-     */
-    private function createScoresOutput(array $scores, Locale $locale): string
-    {
-        usort($scores, function (ScoreEntry $lhs, ScoreEntry $rhs) use ($locale): int {
-            if ($lhs->game()->name($locale) !== $rhs->game()->name($locale)) {
-                return $lhs->game()->name($locale) <=> $rhs->game()->name($locale);
-            } elseif ($lhs->game()->id() !== $rhs->game()->id()) {
-                return $lhs->game()->id() <=> $rhs->game()->id();
-            } elseif ($lhs->scoreValue() !== $rhs->scoreValue()) {
-                return $rhs->scoreValue() <=> $lhs->scoreValue();
-            } else {
-                return $lhs->id() <=> $rhs->id();
-            }
-        });
-
+    private function createScoresOutput(
+        ScoreEntries $scores,
+        Locale $locale
+    ): string {
         return $this->data()->replace(
             $this->mediaWiki()->loadTemplate('Player', 'view-player/scores-list'),
             [
-                "{{ scores|length }}" => sizeof($scores),
+                "{{ scores|length }}" => $scores->numEntries(),
                 "{{ entry|raw }}" => implode(PHP_EOL, array_map(
                     fn (ScoreEntry $score) => $this->createScoreOutput(
                         $score,
                         $locale
                     ),
-                    $scores
+                    $scores->sorted()
                 )),
             ]
         );
@@ -260,7 +271,7 @@ class ViewPlayerTest extends \Tests\TestCase
             [
                 '{{ score.id }}' => $score->id(),
                 '{{ game.id }}' => $game->id(),
-                '{{ game.name }}' => $game->name($locale),
+                '{{ game.name }}' => htmlentities($game->name($locale)),
                 '{{ score.playerName }}' => $score->playerName(),
                 '{{ score.scoreValue }}' => $score->scoreValue(),
                 '{{ links.game }}' => "/{$locale}/games/{$game->id()}",

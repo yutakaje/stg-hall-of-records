@@ -16,6 +16,7 @@ namespace Tests\HallOfRecords\Game;
 use Fig\Http\Message\StatusCodeInterface;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 use Tests\Helper\Data\GameEntry;
+use Tests\Helper\Data\ScoreEntries;
 use Tests\Helper\Data\ScoreEntry;
 
 class ViewGameTest extends \Tests\TestCase
@@ -26,21 +27,26 @@ class ViewGameTest extends \Tests\TestCase
             $this->data()->createCompany('CAVE'),
             'Akai Katana'
         );
-
-        $this->addScores($game, [
+        $game->setScores(new ScoreEntries([
             $this->data()->createScore(
                 $game,
-                $this->data()->createPlayer('Player-1'),
-                'player-1',
-                '234,828,910'
-            ),
-            $this->data()->createScore(
-                $game,
-                $this->data()->createPlayer('Player-2'),
-                'player-2',
+                $this->data()->createPlayer('player2'),
+                'player2',
                 '992,893,110'
             ),
-        ]);
+            $this->data()->createScore(
+                $game,
+                $this->data()->createPlayer('player3'),
+                'player3',
+                '503,434,050'
+            ),
+            $this->data()->createScore(
+                $game,
+                $this->data()->createPlayer('player1'),
+                'player1',
+                '234,828,910'
+            ),
+        ]));
 
         $this->testWithLocale($game, $this->locale()->get('en'));
     }
@@ -48,24 +54,29 @@ class ViewGameTest extends \Tests\TestCase
     public function testWithJaLocale(): void
     {
         $game = $this->data()->createGame(
-            $this->data()->createCompany('CAVE'),
-            'Akai Katana'
+            $this->data()->createCompany('ケイブ'),
+            'エスプレイド'
         );
-
-        $this->addScores($game, [
+        $game->setScores(new ScoreEntries([
             $this->data()->createScore(
                 $game,
-                $this->data()->createPlayer('プレイヤー-1'),
-                'プレイヤーx1',
-                '234,828,910'
-            ),
-            $this->data()->createScore(
-                $game,
-                $this->data()->createPlayer('プレイヤー-2'),
-                'プレイヤーx2',
+                $this->data()->createPlayer('プレイヤー2'),
+                'プレイヤー2',
                 '992,893,110'
             ),
-        ]);
+            $this->data()->createScore(
+                $game,
+                $this->data()->createPlayer('プレイヤー3'),
+                'プレイヤー3',
+                '503,434,050'
+            ),
+            $this->data()->createScore(
+                $game,
+                $this->data()->createPlayer('プレイヤー1'),
+                'プレイヤー1',
+                '234,828,910'
+            ),
+        ]));
 
         $this->testWithLocale($game, $this->locale()->get('ja'));
     }
@@ -92,21 +103,10 @@ class ViewGameTest extends \Tests\TestCase
         );
     }
 
-    /**
-     * @param ScoreEntry[] $scores
-     */
-    private function addScores(GameEntry $game, array $scores): void
-    {
-        // Adding scores ensures that the scores are displayed as expected.
-        foreach ($scores as $score) {
-            $game->addScore($score);
-        }
-    }
-
     private function insertGame(GameEntry $game): void
     {
         $this->data()->insertGame($game);
-        $this->data()->insertScores($game->scores());
+        $this->data()->insertScores($game->scores()->entries());
     }
 
     private function createOutput(GameEntry $game, Locale $locale): string
@@ -143,23 +143,20 @@ class ViewGameTest extends \Tests\TestCase
         );
     }
 
-    /**
-     * @param ScoreEntry[] $scores
-     */
-    private function createScoresOutput(array $scores, Locale $locale): string
-    {
-        usort($scores, fn ($lhs, $rhs) => $rhs->scoreValue() <=> $lhs->scoreValue());
-
+    private function createScoresOutput(
+        ScoreEntries $scores,
+        Locale $locale
+    ): string {
         return $this->data()->replace(
             $this->mediaWiki()->loadTemplate('Game', 'view-game/scores-list'),
             [
-                "{{ scores|length }}" => sizeof($scores),
+                "{{ scores|length }}" => $scores->numEntries(),
                 "{{ entry|raw }}" => implode(PHP_EOL, array_map(
                     fn (ScoreEntry $score) => $this->createScoreOutput(
                         $score,
                         $locale
                     ),
-                    $scores
+                    $scores->sorted()
                 )),
             ]
         );

@@ -64,8 +64,10 @@ final class ScoresTable
             'scores.game_id',
             'games.locale',
             'games.name AS game_name',
+            'games.name_translit AS game_name_translit',
             'games.company_id',
             'games.company_name',
+            'games.company_name_translit',
             'scores.player_id',
             'scores.player_name',
             'scores.score_value'

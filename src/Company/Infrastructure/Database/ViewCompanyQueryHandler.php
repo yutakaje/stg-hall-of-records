@@ -76,7 +76,7 @@ final class ViewCompanyQueryHandler implements ViewCompanyQueryHandlerInterface
             ))
             ->setParameter('companyId', $query->id())
             ->setParameter('locale', $query->locale()->value())
-            ->orderBy('name')
+            ->orderBy('name_translit')
             ->addOrderBy('id')
             ->executeQuery();
 

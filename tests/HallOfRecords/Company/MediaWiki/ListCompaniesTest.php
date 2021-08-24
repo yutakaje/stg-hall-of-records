@@ -15,21 +15,22 @@ namespace Tests\HallOfRecords\Company\MediaWiki;
 
 use Fig\Http\Message\StatusCodeInterface;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
+use Tests\Helper\Data\CompanyEntries;
 use Tests\Helper\Data\CompanyEntry;
+use Tests\Helper\Data\GameEntries;
 
 class ListCompaniesTest extends \Tests\TestCase
 {
     public function testWithEnLocale(): void
     {
-        // Index represents expected sort order.
-        $companies = [
-            1 => $this->data()->createCompany('Capcom', 'capcom'),
-            0 => $this->data()->createCompany('Atlus', 'atlus'),
-            3 => $this->data()->createCompany('Coreland', 'coreland'),
-            2 => $this->data()->createCompany('CAVE', 'cave'),
-        ];
+        $companies = new CompanyEntries([
+            $this->data()->createCompany('Atlus', 'atlus'),
+            $this->data()->createCompany('Capcom', 'capcom'),
+            $this->data()->createCompany('CAVE', 'cave'),
+            $this->data()->createCompany('Coreland', 'coreland'),
+        ]);
 
-        foreach ($companies as $company) {
+        foreach ($companies->entries() as $company) {
             $this->addGames($company);
         }
 
@@ -38,26 +39,22 @@ class ListCompaniesTest extends \Tests\TestCase
 
     public function testWithJaLocale(): void
     {
-        // Index represents expected sort order.
-        $companies = [
-            1 => $this->data()->createCompany('彩京', 'さいきょう'),
-            0 => $this->data()->createCompany('カプコン', 'かぷこん'),
-            3 => $this->data()->createCompany('四ツ羽根', 'よつばね'),
-            2 => $this->data()->createCompany('東亜プラン', 'とあぷらん'),
-        ];
+        $companies = new CompanyEntries([
+            $this->data()->createCompany('カプコン', 'かぷこん'),
+            $this->data()->createCompany('彩京', 'さいきょう'),
+            $this->data()->createCompany('東亜プラン', 'とあぷらん'),
+            $this->data()->createCompany('四ツ羽根', 'よつばね'),
+        ]);
 
-        foreach ($companies as $company) {
+        foreach ($companies->entries() as $company) {
             $this->addGames($company);
         }
 
         $this->testWithLocale($companies, $this->locale()->get('ja'));
     }
 
-    /**
-     * @param CompanyEntry[] $companies
-     */
     private function testWithLocale(
-        array $companies,
+        CompanyEntries $companies,
         Locale $locale
     ): void {
         $this->insertCompanies($companies);
@@ -84,30 +81,26 @@ class ListCompaniesTest extends \Tests\TestCase
     {
         // Adding games ensures that the count functions work as expected.
         // The actual game properties are not important here.
-        $numGames = random_int(1, 5);
-        for ($i = 0; $i < $numGames; ++$i) {
-            $company->addGame(
-                $this->data()->createGame($company, "game{$i}")
-            );
-        }
+        $games = array_map(
+            fn (int $i) => $this->data()->createGame($company, "game{$i}"),
+            range(1, random_int(1, 5))
+        );
+
+        $company->setGames(new GameEntries($games));
     }
 
-    /**
-     * @param CompanyEntry[] $companies
-     */
-    private function insertCompanies(array $companies): void
+    private function insertCompanies(CompanyEntries $companies): void
     {
-        foreach ($companies as $company) {
+        foreach ($companies->entries() as $company) {
             $this->data()->insertCompany($company);
-            $this->data()->insertGames($company->games());
+            $this->data()->insertGames($company->games()->entries());
         }
     }
 
-    /**
-     * @param CompanyEntry[] $companies
-     */
-    private function createOutput(array $companies, Locale $locale): string
-    {
+    private function createOutput(
+        CompanyEntries $companies,
+        Locale $locale
+    ): string {
         return $this->mediaWiki()->removePlaceholders(
             $this->locale()->translate(
                 $locale,
@@ -123,13 +116,10 @@ class ListCompaniesTest extends \Tests\TestCase
         );
     }
 
-    /**
-     * @param CompanyEntry[] $companies
-     */
-    private function createCompaniesOutput(array $companies, Locale $locale): string
-    {
-        ksort($companies);
-
+    private function createCompaniesOutput(
+        CompanyEntries $companies,
+        Locale $locale
+    ): string {
         return $this->data()->replace(
             $this->mediaWiki()->loadTemplate('Company', 'list-companies/main'),
             [
@@ -138,7 +128,7 @@ class ListCompaniesTest extends \Tests\TestCase
                         $company,
                         $locale
                     ),
-                    $companies
+                    $companies->sorted()
                 )),
             ]
         );
@@ -148,7 +138,7 @@ class ListCompaniesTest extends \Tests\TestCase
         CompanyEntry $company,
         Locale $locale
     ): string {
-        $numGames = sizeof($company->games());
+        $numGames = $company->games()->numEntries();
 
         return $this->data()->replace(
             $this->mediaWiki()->loadTemplate('Company', 'list-companies/company-entry'),

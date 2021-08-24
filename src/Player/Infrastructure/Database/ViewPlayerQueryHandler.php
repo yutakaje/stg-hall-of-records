@@ -103,7 +103,7 @@ final class ViewPlayerQueryHandler implements ViewPlayerQueryHandlerInterface
             ))
             ->setParameter('playerId', $query->id())
             ->setParameter('locale', $query->locale()->value())
-            ->orderBy('game_name')
+            ->orderBy('game_name_translit')
             ->addOrderBy('game_id')
             ->addOrderBy('score_value', 'desc')
             ->addOrderBy('id')

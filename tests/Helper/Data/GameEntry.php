@@ -27,8 +27,7 @@ final class GameEntry extends AbstractEntry
     /** @var Names */
     private array $translitNames;
 
-    /** @var ScoreEntry[] */
-    private array $scores;
+    private ScoreEntries $scores;
 
     /**
      * @param Names $names
@@ -43,7 +42,7 @@ final class GameEntry extends AbstractEntry
         $this->company = $company;
         $this->names = $names;
         $this->translitNames = $translitNames;
-        $this->scores = [];
+        $this->scores = new ScoreEntries();
     }
 
     public function company(): CompanyEntry
@@ -77,17 +76,14 @@ final class GameEntry extends AbstractEntry
         return $this->localizedValue($this->translitNames, $locale);
     }
 
-    /**
-     * @return ScoreEntry[]
-     */
-    public function scores(): array
+    public function scores(): ScoreEntries
     {
         return $this->scores;
     }
 
-    public function addScore(ScoreEntry $score): void
+    public function setScores(ScoreEntries $scores): void
     {
-        $this->scores[] = $score;
+        $this->scores = $scores;
     }
 
     public function insert(GamesTable $db): void

@@ -15,37 +15,38 @@ namespace Tests\HallOfRecords\Game;
 
 use Fig\Http\Message\StatusCodeInterface;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
+use Tests\Helper\Data\GameEntries;
 use Tests\Helper\Data\GameEntry;
+use Tests\Helper\Data\ScoreEntries;
 
 class ListGamesTest extends \Tests\TestCase
 {
     public function testWithEnLocale(): void
     {
-        // Index represents expected sort order.
-        $games = [
-            1 => $this->data()->createGame(
-                $this->data()->createCompany('CAVE'),
-                'Akai Katana',
-                'akai katana'
-            ),
-            0 => $this->data()->createGame(
+        $games = new GameEntries([
+            $this->data()->createGame(
                 $this->data()->createCompany('Tanoshimasu'),
                 'Aka to Blue Type-R',
                 'aka to blue type-r'
             ),
-            3 => $this->data()->createGame(
-                $this->data()->createCompany('Visco'),
-                'Asuka & Asuka',
-                'asuka & asuka'
+            $this->data()->createGame(
+                $this->data()->createCompany('CAVE'),
+                'Akai Katana',
+                'akai katana'
             ),
-            2 => $this->data()->createGame(
+            $this->data()->createGame(
                 $this->data()->createCompany('SNK'),
                 'ASO: Armored Scrum Object / Alpha Mission',
                 'aso: armored scrum object / alpha mission'
             ),
-        ];
+            $this->data()->createGame(
+                $this->data()->createCompany('Visco'),
+                'Asuka & Asuka',
+                'asuka & asuka'
+            ),
+        ]);
 
-        foreach ($games as $game) {
+        foreach ($games->entries() as $game) {
             $this->addScores($game);
         }
 
@@ -54,42 +55,38 @@ class ListGamesTest extends \Tests\TestCase
 
     public function testWithJaLocale(): void
     {
-        // Index represents expected sort order.
-        $games = [
-            1 => $this->data()->createGame(
-                $this->data()->createCompany('ケイブ'),
-                'ケツイ〜絆地獄たち〜',
-                'けついきずなじごくたち'
-            ),
-            0 => $this->data()->createGame(
+        $games = new GameEntries([
+            $this->data()->createGame(
                 $this->data()->createCompany('ケイブ'),
                 'エスプレイド',
                 'えすぷれいど'
             ),
-            3 => $this->data()->createGame(
-                $this->data()->createCompany('ライジング / エイティング'),
-                'バトルガレッガ',
-                'ばとるがれっが'
+            $this->data()->createGame(
+                $this->data()->createCompany('ケイブ'),
+                'ケツイ〜絆地獄たち〜',
+                'けついきずなじごくたち'
             ),
-            2 => $this->data()->createGame(
+            $this->data()->createGame(
                 $this->data()->createCompany('コナミ'),
                 '出たな!ツインビー',
                 'でたな!ついんびー',
             ),
-        ];
+            $this->data()->createGame(
+                $this->data()->createCompany('ライジング / エイティング'),
+                'バトルガレッガ',
+                'ばとるがれっが'
+            ),
+        ]);
 
-        foreach ($games as $game) {
+        foreach ($games->entries() as $game) {
             $this->addScores($game);
         }
 
         $this->testWithLocale($games, $this->locale()->get('ja'));
     }
 
-    /**
-     * @param GameEntry[] $games
-     */
     private function testWithLocale(
-        array $games,
+        GameEntries $games,
         Locale $locale
     ): void {
         $this->insertGames($games);
@@ -116,35 +113,31 @@ class ListGamesTest extends \Tests\TestCase
     {
         // Adding scores ensures that the count functions work as expected.
         // The actual score properties are not important here.
-        $numScores = random_int(1, 5);
-        for ($i = 0; $i < $numScores; ++$i) {
-            $game->addScore(
-                $this->data()->createScore(
-                    $game,
-                    $this->data()->createPlayer("Player{$i}"),
-                    "player{$i}",
-                    (string)random_int(1000, 99999)
-                )
-            );
-        }
+        $scores = array_map(
+            fn (int $i) => $this->data()->createScore(
+                $game,
+                $this->data()->createPlayer("player{$i}"),
+                "player{$i}",
+                (string)random_int(1000, 99999)
+            ),
+            range(1, random_int(1, 5))
+        );
+
+        $game->setScores(new ScoreEntries($scores));
     }
 
-    /**
-     * @param GameEntry[] $games
-     */
-    private function insertGames(array $games): void
+    private function insertGames(GameEntries $games): void
     {
-        foreach ($games as $game) {
+        foreach ($games->entries() as $game) {
             $this->data()->insertGame($game);
-            $this->data()->insertScores($game->scores());
+            $this->data()->insertScores($game->scores()->entries());
         }
     }
 
-    /**
-     * @param GameEntry[] $games
-     */
-    private function createOutput(array $games, Locale $locale): string
-    {
+    private function createOutput(
+        GameEntries $games,
+        Locale $locale
+    ): string {
         return $this->mediaWiki()->removePlaceholders(
             $this->locale()->translate(
                 $locale,
@@ -157,13 +150,10 @@ class ListGamesTest extends \Tests\TestCase
         );
     }
 
-    /**
-     * @param GameEntry[] $games
-     */
-    private function createGamesOutput(array $games, Locale $locale): string
-    {
-        ksort($games);
-
+    private function createGamesOutput(
+        GameEntries $games,
+        Locale $locale
+    ): string {
         return $this->data()->replace(
             $this->mediaWiki()->loadTemplate('Game', 'list-games/main'),
             [
@@ -172,7 +162,7 @@ class ListGamesTest extends \Tests\TestCase
                         $game,
                         $locale
                     ),
-                    $games
+                    $games->sorted()
                 )),
             ]
         );
@@ -182,7 +172,7 @@ class ListGamesTest extends \Tests\TestCase
         GameEntry $game,
         Locale $locale
     ): string {
-        $numScores = sizeof($game->scores());
+        $numScores = $game->scores()->numEntries();
 
         return $this->data()->replace(
             $this->mediaWiki()->loadTemplate('Game', 'list-games/game-entry'),
