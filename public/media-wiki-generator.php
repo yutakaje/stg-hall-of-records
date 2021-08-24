@@ -21,6 +21,8 @@ use Stg\HallOfRecords\MediaWikiPageFetcher;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
+ini_set('memory_limit', '128M');
+
 $rootDir = dirname(__DIR__);
 require "{$rootDir}/vendor/autoload.php";
 
