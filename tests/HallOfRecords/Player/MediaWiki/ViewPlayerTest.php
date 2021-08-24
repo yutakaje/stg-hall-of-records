@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Tests\HallOfRecords\Player\MediaWiki;
 
 use Fig\Http\Message\StatusCodeInterface;
-use Psr\Http\Message\ServerRequestInterface;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 use Tests\Helper\Data\GameEntry;
 use Tests\Helper\Data\PlayerEntry;
@@ -22,48 +21,116 @@ use Tests\Helper\Data\ScoreEntry;
 
 class ViewPlayerTest extends \Tests\TestCase
 {
-    public function testWithDefaultLocale(): void
+    public function testWithEnLocale(): void
     {
-        $player = $this->createPlayer();
-        $locale = $this->locale()->default();
+        $companies = [
+            $this->data()->createCompany('company1'),
+            $this->data()->createCompany('company2'),
+        ];
 
-        $request = $this->http()->createServerRequest('GET', "/{$locale}/players/{id}");
+        $games = [
+            $this->data()->createGame($companies[0], 'game1'),
+            $this->data()->createGame($companies[1], 'game2'),
+            $this->data()->createGame($companies[1], 'game3'),
+        ];
 
-        $this->executeTest($player, $request, $locale);
+        $player = $this->data()->createPlayer('Player-1');
+
+        $this->addScores($player, [
+            $this->data()->createScore(
+                $games[2],
+                $player,
+                'player-1',
+                '234,828,910'
+            ),
+            $this->data()->createScore(
+                $games[2],
+                $player,
+                'player-1',
+                '992,893,110'
+            ),
+            $this->data()->createScore(
+                $games[0],
+                $player,
+                'player-1',
+                '834,883,500'
+            ),
+            $this->data()->createScore(
+                $games[1],
+                $player,
+                'player-1',
+                '873,456,489'
+            ),
+        ]);
+
+        $this->executeTest($player, $this->locale()->get('en'));
     }
 
-    public function testWithRandomLocale(): void
+    public function testWithJaLocale(): void
     {
-        $player = $this->createPlayer();
-        $locale = $this->locale()->random();
+        $companies = [
+            $this->data()->createCompany('company1'),
+            $this->data()->createCompany('company2'),
+        ];
 
-        $request = $this->http()->createServerRequest('GET', "/{$locale}/players/{id}")
-            ->withHeader('Accept-Language', $locale->value());
+        $games = [
+            $this->data()->createGame($companies[0], 'game1'),
+            $this->data()->createGame($companies[1], 'game2'),
+            $this->data()->createGame($companies[1], 'game3'),
+        ];
 
-        $this->executeTest($player, $request, $locale);
+        $player = $this->data()->createPlayer('プレイヤー-1');
+
+        $this->addScores($player, [
+            $this->data()->createScore(
+                $games[2],
+                $player,
+                'player-1',
+                '234,828,910'
+            ),
+            $this->data()->createScore(
+                $games[2],
+                $player,
+                'player-1',
+                '992,893,110'
+            ),
+            $this->data()->createScore(
+                $games[0],
+                $player,
+                'player-1',
+                '834,883,500'
+            ),
+            $this->data()->createScore(
+                $games[1],
+                $player,
+                'player-1',
+                '873,456,489'
+            ),
+        ]);
+
+        $this->executeTest($player, $this->locale()->get('ja'));
     }
 
     public function testWithAliases(): void
     {
-        $player = $this->createPlayer(['Reddo Arimaa', 'Red Arimer']);
-        $locale = $this->locale()->default();
+        // Index represents expected sort order.
+        $player =  $this->data()->createPlayer('Akuma', [
+            1 => 'Reddo Arimaa',
+            0 => 'Red Arimer'
+        ]);
 
-        $request = $this->http()->createServerRequest('GET', "/{$locale}/players/{id}");
-
-        $this->executeTest($player, $request, $locale);
+        $this->executeTest($player, $this->locale()->get('en'));
     }
 
     private function executeTest(
         PlayerEntry $player,
-        ServerRequestInterface $request,
         Locale $locale
     ): void {
         $this->insertPlayer($player);
 
-        $request = $this->http()->replaceInUriPath(
-            $request,
-            '{id}',
-            (string)$player->id()
+        $request = $this->http()->createServerRequest(
+            'GET',
+            "/{$locale}/players/{$player->id()}"
         );
 
         $response = $this->app()->handle($request);
@@ -80,41 +147,14 @@ class ViewPlayerTest extends \Tests\TestCase
     }
 
     /**
-     * @param string[] $aliases
+     * @param ScoreEntry[] $scores
      */
-    private function createPlayer(array $aliases = []): PlayerEntry
+    private function addScores(PlayerEntry $player, array $scores): void
     {
-        $player =  $this->data()->createPlayer('Akuma', $aliases);
-
-        $companies = [
-            $this->data()->createCompany('konami'),
-            $this->data()->createCompany('cave'),
-        ];
-
-        $games = [
-            $this->data()->createGame($companies[1], 'Ketsui'),
-            $this->data()->createGame($companies[1], 'Esprade'),
-            $this->data()->createGame($companies[0], 'Detana! TwinBee'),
-        ];
-        $randomGame = fn () => $games[random_int(0, 2)];
-
-        // Add some scores for this game to ensure
-        // that the scores are displayed as expected.
-        $numScores = random_int(1, 5);
-        for ($i = 0; $i < $numScores; ++$i) {
-            $player->addScore($this->data()->createScore(
-                $randomGame(),
-                $player,
-                '誰か' . random_int(10, 99),
-                implode(',', [
-                    random_int(100, 999),
-                    random_int(100, 999),
-                    random_int(100, 999),
-                ])
-            ));
+        // Adding scores ensures that the scores are displayed as expected.
+        foreach ($scores as $score) {
+            $player->addScore($score);
         }
-
-        return $player;
     }
 
     private function insertPlayer(PlayerEntry $player): void
@@ -169,7 +209,7 @@ class ViewPlayerTest extends \Tests\TestCase
             return '';
         }
 
-        sort($aliases);
+        ksort($aliases);
 
         return $this->data()->replace(
             $this->mediaWiki()->loadTemplate('Player', 'view-player/aliases-list'),

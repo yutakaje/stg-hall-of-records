@@ -115,7 +115,7 @@ class ListGamesTest extends \Tests\TestCase
     private function addScores(GameEntry $game): void
     {
         // Adding scores ensures that the count functions work as expected.
-        // The actual sore properties are not important here.
+        // The actual score properties are not important here.
         $numScores = random_int(1, 5);
         for ($i = 0; $i < $numScores; ++$i) {
             $game->addScore(

@@ -103,6 +103,7 @@ final class ListPlayersTemplate implements ListPlayersTemplateInterface
         $var = new \stdClass();
         $var->id = $player->id;
         $var->name = $player->name;
+        $var->numScores = $player->numScores;
 
         return $var;
     }

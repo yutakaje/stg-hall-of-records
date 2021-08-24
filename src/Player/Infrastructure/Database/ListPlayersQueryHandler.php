@@ -41,7 +41,11 @@ final class ListPlayersQueryHandler implements ListPlayersQueryHandlerInterface
     {
         $qb = $this->connection->createQueryBuilder();
 
-        $stmt = $qb->select('id', 'name')
+        $stmt = $qb->select(
+            'id',
+            'name',
+            "({$this->numScoresQuery()}) AS num_scores"
+        )
             ->from('stg_players', 'players')
             ->orderBy('name')
             ->addOrderBy('id')
@@ -56,6 +60,16 @@ final class ListPlayersQueryHandler implements ListPlayersQueryHandlerInterface
         return new Resources($players);
     }
 
+    private function numScoresQuery(): string
+    {
+        $qb = $this->connection->createQueryBuilder();
+
+        return $qb->select('count(*)')
+            ->from('stg_scores')
+            ->where($qb->expr()->eq('player_id', 'players.id'))
+            ->getSQL();
+    }
+
     /**
      * @param Row $row
      */
@@ -64,6 +78,7 @@ final class ListPlayersQueryHandler implements ListPlayersQueryHandlerInterface
         $player = new Resource();
         $player->id = $row['id'];
         $player->name = $row['name'];
+        $player->numScores = $row['num_scores'];
 
         return $player;
     }

@@ -14,38 +14,56 @@ declare(strict_types=1);
 namespace Tests\HallOfRecords\Player\MediaWiki;
 
 use Fig\Http\Message\StatusCodeInterface;
-use Psr\Http\Message\ServerRequestInterface;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 use Tests\Helper\Data\PlayerEntry;
 
 class ListPlayersTest extends \Tests\TestCase
 {
-    public function testWithDefaultLocale(): void
+    public function testWithEnLocale(): void
     {
-        $locale = $this->locale()->default();
+        // Index represents expected sort order.
+        $players = [
+            1 => $this->data()->createPlayer('Player-2'),
+            0 => $this->data()->createPlayer('Player-1'),
+            2 => $this->data()->createPlayer('プレイヤー-3'),
+        ];
 
-        $request = $this->http()->createServerRequest('GET', "/{$locale}/players");
+        foreach ($players as $player) {
+            $this->addScores($player);
+        }
 
-        $this->testWithLocale($request, $locale);
+        $this->testWithLocale($players, $this->locale()->get('en'));
     }
 
-    public function testWithRandomLocale(): void
+    public function testWithJaLocale(): void
     {
-        $locale = $this->locale()->random();
+        // Index represents expected sort order.
+        $players = [
+            1 => $this->data()->createPlayer('Player-2'),
+            0 => $this->data()->createPlayer('Player-1'),
+            2 => $this->data()->createPlayer('プレイヤー-3'),
+        ];
 
-        $request = $this->http()->createServerRequest('GET', "/{$locale}/players")
-            ->withHeader('Accept-Language', $locale->value());
+        foreach ($players as $player) {
+            $this->addScores($player);
+        }
 
-        $this->testWithLocale($request, $locale);
+        $this->testWithLocale($players, $this->locale()->get('ja'));
     }
 
+    /**
+     * @param PlayerEntry[] $players
+     */
     private function testWithLocale(
-        ServerRequestInterface $request,
+        array $players,
         Locale $locale
     ): void {
-        $players = $this->createPlayers();
-
         $this->insertPlayers($players);
+
+        $request = $this->http()->createServerRequest(
+            'GET',
+            "/{$locale}/players"
+        );
 
         $response = $this->app()->handle($request);
 
@@ -60,16 +78,24 @@ class ListPlayersTest extends \Tests\TestCase
         );
     }
 
-    /**
-     * @return PlayerEntry[]
-     */
-    private function createPlayers(): array
+    private function addScores(PlayerEntry $player): void
     {
-        return [
-            $this->data()->createPlayer('WTN'),
-            $this->data()->createPlayer('KTL-NAL'),
-            $this->data()->createPlayer('こいずみ'),
-        ];
+        // Adding scores ensures that the count functions work as expected.
+        // The actual score properties are not important here.
+        $numScores = random_int(1, 5);
+        for ($i = 0; $i < $numScores; ++$i) {
+            $player->addScore(
+                $this->data()->createScore(
+                    $this->data()->createGame(
+                        $this->data()->createCompany("company{$i}"),
+                        "game{$i}"
+                    ),
+                    $player,
+                    "player{$i}",
+                    (string)random_int(1000, 99999)
+                )
+            );
+        }
     }
 
     /**
@@ -79,6 +105,7 @@ class ListPlayersTest extends \Tests\TestCase
     {
         foreach ($players as $player) {
             $this->data()->insertPlayer($player);
+            $this->data()->insertScores($player->scores());
         }
     }
 
@@ -104,6 +131,8 @@ class ListPlayersTest extends \Tests\TestCase
      */
     private function createPlayersOutput(array $players, Locale $locale): string
     {
+        ksort($players);
+
         return $this->data()->replace(
             $this->mediaWiki()->loadTemplate('Player', 'list-players/main'),
             [
@@ -112,11 +141,7 @@ class ListPlayersTest extends \Tests\TestCase
                         $player,
                         $locale
                     ),
-                    [
-                        $players[1],
-                        $players[0],
-                        $players[2],
-                    ]
+                    $players
                 )),
             ]
         );
@@ -126,10 +151,14 @@ class ListPlayersTest extends \Tests\TestCase
         PlayerEntry $player,
         Locale $locale
     ): string {
+        $numScores = sizeof($player->scores());
+
         return $this->data()->replace(
             $this->mediaWiki()->loadTemplate('Player', 'list-players/player-entry'),
             [
                 '{{ player.name }}' => $player->name(),
+                '{{ player.numScores }}' => $numScores,
+                "{'%count%': player.numScores}" => "{'%count%': {$numScores}}",
                 '{{ links.player }}' => "/{$locale}/players/{$player->id()}",
             ]
         );
