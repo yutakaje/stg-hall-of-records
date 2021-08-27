@@ -32,8 +32,7 @@ final class ListCompaniesQueryHandler implements ListCompaniesQueryHandlerInterf
     public function execute(ListQuery $query): ListResult
     {
         return new ListResult(
-            $this->readCompanies($query),
-            $query->locale()
+            $this->readCompanies($query)
         );
     }
 

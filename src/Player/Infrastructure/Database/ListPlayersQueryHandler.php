@@ -32,8 +32,7 @@ final class ListPlayersQueryHandler implements ListPlayersQueryHandlerInterface
     public function execute(ListQuery $query): ListResult
     {
         return new ListResult(
-            $this->readPlayers($query),
-            $query->locale()
+            $this->readPlayers($query)
         );
     }
 

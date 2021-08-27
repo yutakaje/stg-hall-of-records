@@ -36,10 +36,7 @@ final class ViewPlayerQueryHandler implements ViewPlayerQueryHandlerInterface
         $player->aliases = $this->readAliases($query);
         $player->scores = $this->readScores($query);
 
-        return new ViewResult(
-            $player,
-            $query->locale()
-        );
+        return new ViewResult($player);
     }
 
     private function readPlayer(ViewQuery $query): Resource

@@ -35,10 +35,7 @@ final class ViewGameQueryHandler implements ViewGameQueryHandlerInterface
         $game = $this->readGame($query);
         $game->scores = $this->readScores($query);
 
-        return new ViewResult(
-            $game,
-            $query->locale()
-        );
+        return new ViewResult($game);
     }
 
     private function readGame(ViewQuery $query): Resource

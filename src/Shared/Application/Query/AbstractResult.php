@@ -13,19 +13,6 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Shared\Application\Query;
 
-use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
-
 abstract class AbstractResult
 {
-    private Locale $locale;
-
-    public function __construct(Locale $locale)
-    {
-        $this->locale = $locale;
-    }
-
-    public function locale(): Locale
-    {
-        return $this->locale;
-    }
 }

@@ -35,10 +35,7 @@ final class ViewCompanyQueryHandler implements ViewCompanyQueryHandlerInterface
         $company = $this->readCompany($query);
         $company->games = $this->readGames($query);
 
-        return new ViewResult(
-            $company,
-            $query->locale()
-        );
+        return new ViewResult($company);
     }
 
     private function readCompany(ViewQuery $query): Resource
