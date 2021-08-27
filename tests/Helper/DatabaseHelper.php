@@ -54,4 +54,13 @@ final class DatabaseHelper
             'memory' => true,
         ]);
     }
+
+    public function fakeConnection(): Connection
+    {
+        // Use database in memory.
+        return DriverManager::getConnection([
+            'driver' => 'pdo_sqlite',
+            'memory' => true,
+        ]);
+    }
 }

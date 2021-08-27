@@ -98,13 +98,18 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         return $this->data;
     }
 
-    final protected function database(): Database
+    final protected function db(): DatabaseHelper
     {
         if ($this->database === null) {
             $this->database = DatabaseHelper::init($this->container());
         }
 
-        return $this->database->database();
+        return $this->database;
+    }
+
+    final protected function database(): Database
+    {
+        return $this->db()->database();
     }
 
     final protected function filesystem(): FilesystemHelper
