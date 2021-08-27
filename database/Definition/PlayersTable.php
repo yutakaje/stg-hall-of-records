@@ -18,17 +18,21 @@ use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Schema\Table;
 use Doctrine\DBAL\Schema\View;
+use Stg\HallOfRecords\Shared\Infrastructure\Locale\Locales;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\DateTime;
 
 /**
  * @phpstan-import-type Aliases from PlayerRecord
  */
-final class PlayersTable
+final class PlayersTable extends AbstractTable
 {
     private Connection $connection;
 
-    public function __construct(Connection $connection)
-    {
+    public function __construct(
+        Connection $connection,
+        Locales $locales
+    ) {
+        parent::__construct($locales);
         $this->connection = $connection;
     }
 

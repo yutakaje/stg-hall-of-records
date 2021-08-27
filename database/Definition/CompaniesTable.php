@@ -25,17 +25,16 @@ use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 /**
  * @phpstan-import-type Names from CompanyRecord
  */
-final class CompaniesTable
+final class CompaniesTable extends AbstractTable
 {
     private Connection $connection;
-    private Locales $locales;
 
     public function __construct(
         Connection $connection,
         Locales $locales
     ) {
+        parent::__construct($locales);
         $this->connection = $connection;
-        $this->locales = $locales;
     }
 
     public function createObjects(
@@ -66,8 +65,26 @@ final class CompaniesTable
     private function createView(): View
     {
         $qb = $this->connection->createQueryBuilder();
+        $alias = 'x';
 
         return new View('stg_query_companies', $qb->select(
+            'id',
+            'created_date',
+            'last_modified_date',
+            'locale',
+            'name',
+            'name_translit',
+            "({$this->nameFilterSql($alias)}) AS name_filter"
+        )
+            ->from("({$this->companySql()})", $alias)
+            ->getSQL());
+    }
+
+    private function companySql(): string
+    {
+        $qb = $this->connection->createQueryBuilder();
+
+        return $qb->select(
             'companies.id',
             'companies.created_date',
             'companies.last_modified_date',
@@ -82,7 +99,25 @@ final class CompaniesTable
                 'companies',
                 $qb->expr()->eq('companies.id', 'localized.company_id')
             )
-            ->getSQL());
+            ->getSQL();
+    }
+
+    private function nameFilterSql(string $alias): string
+    {
+        $expr = $this->connection->createQueryBuilder()->expr();
+        $separator = '|';
+
+        return $this->concatQueries($separator, array_map(
+            fn (Locale $locale) => $this->connection->createQueryBuilder()
+                ->select("name || '{$separator}' || name_translit")
+                ->from('stg_companies_locale')
+                ->where($expr->and(
+                    $expr->eq('company_id', "{$alias}.id"),
+                    $expr->eq('locale', $expr->literal((string)$locale))
+                ))
+                ->getSQL(),
+            $this->locales()->all()
+        ));
     }
 
     /**
@@ -117,7 +152,7 @@ final class CompaniesTable
 
         $record->setId((int)$this->connection->lastInsertId());
 
-        foreach ($this->locales->all() as $locale) {
+        foreach ($this->locales()->all() as $locale) {
             $this->insertLocalizedRecord($record, $locale);
         }
     }
@@ -149,21 +184,5 @@ final class CompaniesTable
             ->setParameter('name', $record->name($locale))
             ->setParameter('translitName', $record->translitName($locale))
             ->executeStatement();
-    }
-
-    /**
-     * @template T
-     * @param array<string,T> $values
-     * @return array<string,T>
-     */
-    private function localizeValues(array $values): array
-    {
-        $localized = [];
-
-        foreach ($this->locales->all() as $locale) {
-            $localized[$locale->value()] = $values[$locale->value()];
-        }
-
-        return $localized;
     }
 }

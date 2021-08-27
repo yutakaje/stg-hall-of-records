@@ -25,17 +25,16 @@ use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 /**
  * @phpstan-import-type Names from GameRecord
  */
-final class GamesTable
+final class GamesTable extends AbstractTable
 {
     private Connection $connection;
-    private Locales $locales;
 
     public function __construct(
         Connection $connection,
         Locales $locales
     ) {
+        parent::__construct($locales);
         $this->connection = $connection;
-        $this->locales = $locales;
     }
 
     public function createObjects(
@@ -69,8 +68,30 @@ final class GamesTable
     private function createView(): View
     {
         $qb = $this->connection->createQueryBuilder();
+        $alias = 'x';
 
         return new View('stg_query_games', $qb->select(
+            'id',
+            'created_date',
+            'last_modified_date',
+            'locale',
+            'name',
+            'name_translit',
+            "({$this->nameFilterSql($alias)}) AS name_filter",
+            'company_id',
+            'company_name',
+            'company_name_translit',
+            'company_name_filter'
+        )
+            ->from("({$this->gameSql()})", $alias)
+            ->getSQL());
+    }
+
+    private function gameSql(): string
+    {
+        $qb = $this->connection->createQueryBuilder();
+
+        return $qb->select(
             'games.id',
             'games.created_date',
             'games.last_modified_date',
@@ -79,7 +100,8 @@ final class GamesTable
             'localized.name_translit',
             'games.company_id',
             'companies.name AS company_name',
-            'companies.name_translit AS company_name_translit'
+            'companies.name_translit AS company_name_translit',
+            'companies.name_filter AS company_name_filter'
         )
             ->from('stg_games_locale', 'localized')
             ->join(
@@ -97,7 +119,25 @@ final class GamesTable
                     $qb->expr()->eq('companies.locale', 'localized.locale')
                 )
             )
-            ->getSQL());
+            ->getSQL();
+    }
+
+    private function nameFilterSql(string $alias): string
+    {
+        $expr = $this->connection->createQueryBuilder()->expr();
+        $separator = '|';
+
+        return $this->concatQueries($separator, array_map(
+            fn (Locale $locale) => $this->connection->createQueryBuilder()
+                ->select("name || '{$separator}' || name_translit")
+                ->from('stg_games_locale')
+                ->where($expr->and(
+                    $expr->eq('game_id', "{$alias}.id"),
+                    $expr->eq('locale', $expr->literal((string)$locale))
+                ))
+                ->getSQL(),
+            $this->locales()->all()
+        ));
     }
 
     /**
@@ -136,7 +176,7 @@ final class GamesTable
 
         $record->setId((int)$this->connection->lastInsertId());
 
-        foreach ($this->locales->all() as $locale) {
+        foreach ($this->locales()->all() as $locale) {
             $this->insertLocalizedRecord($record, $locale);
         }
     }
@@ -168,21 +208,5 @@ final class GamesTable
             ->setParameter('name', $record->name($locale))
             ->setParameter('translitName', $record->translitName($locale))
             ->executeStatement();
-    }
-
-    /**
-     * @template T
-     * @param array<string,T> $values
-     * @return array<string,T>
-     */
-    private function localizeValues(array $values): array
-    {
-        $localized = [];
-
-        foreach ($this->locales->all() as $locale) {
-            $localized[$locale->value()] = $values[$locale->value()];
-        }
-
-        return $localized;
     }
 }

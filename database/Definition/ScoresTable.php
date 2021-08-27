@@ -18,14 +18,18 @@ use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Schema\Table;
 use Doctrine\DBAL\Schema\View;
+use Stg\HallOfRecords\Shared\Infrastructure\Locale\Locales;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\DateTime;
 
-final class ScoresTable
+final class ScoresTable extends AbstractTable
 {
     private Connection $connection;
 
-    public function __construct(Connection $connection)
-    {
+    public function __construct(
+        Connection $connection,
+        Locales $locales
+    ) {
+        parent::__construct($locales);
         $this->connection = $connection;
     }
 
@@ -65,9 +69,11 @@ final class ScoresTable
             'games.locale',
             'games.name AS game_name',
             'games.name_translit AS game_name_translit',
+            'games.name_translit AS game_name_filter',
             'games.company_id',
             'games.company_name',
             'games.company_name_translit',
+            'games.company_name_filter',
             'scores.player_id',
             'scores.player_name',
             'scores.score_value'

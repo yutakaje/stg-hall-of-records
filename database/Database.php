@@ -35,8 +35,8 @@ final class Database
         $this->connection = $connection;
         $this->companies = new CompaniesTable($this->connection, $locales);
         $this->games = new GamesTable($this->connection, $locales);
-        $this->players = new PlayersTable($this->connection);
-        $this->scores = new ScoresTable($this->connection);
+        $this->players = new PlayersTable($this->connection, $locales);
+        $this->scores = new ScoresTable($this->connection, $locales);
     }
 
     public function createObjects(): void
