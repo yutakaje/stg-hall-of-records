@@ -17,6 +17,7 @@ use Psr\Http\Message\ResponseInterface;
 use Stg\HallOfRecords\Game\Template\ViewGameTemplateInterface;
 use Stg\HallOfRecords\Shared\Application\Query\Resource;
 use Stg\HallOfRecords\Shared\Application\Query\Resources;
+use Stg\HallOfRecords\Shared\Application\Query\ViewQuery;
 use Stg\HallOfRecords\Shared\Application\Query\ViewResult;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 use Stg\HallOfRecords\Shared\Template\MediaWiki\BasicTemplate;
@@ -43,11 +44,12 @@ final class ViewGameTemplate implements ViewGameTemplateInterface
 
     public function respond(
         ResponseInterface $response,
+        ViewQuery $query,
         ViewResult $result
     ): ResponseInterface {
         $response->getBody()->write($this->createOutput(
             $result->resource(),
-            $result->locale()
+            $query->locale()
         ));
         return $response;
     }

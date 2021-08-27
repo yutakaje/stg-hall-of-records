@@ -47,12 +47,12 @@ final class ListPlayersController
         ResponseInterface $response,
         array $args = []
     ): ResponseInterface {
-        $result = $this->queryHandler->execute(
-            $this->queryCreator->create($request)
-        );
+        $query = $this->queryCreator->create($request);
+
+        $result = $this->queryHandler->execute($query);
 
         $this->logger->info('Players listed.');
 
-        return $this->template->respond($response, $result);
+        return $this->template->respond($response, $query, $result);
     }
 }

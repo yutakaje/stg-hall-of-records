@@ -14,12 +14,14 @@ declare(strict_types=1);
 namespace Stg\HallOfRecords\Player\Template;
 
 use Psr\Http\Message\ResponseInterface;
+use Stg\HallOfRecords\Shared\Application\Query\ListQuery;
 use Stg\HallOfRecords\Shared\Application\Query\ListResult;
 
 interface ListPlayersTemplateInterface
 {
     public function respond(
         ResponseInterface $response,
+        ListQuery $query,
         ListResult $result
     ): ResponseInterface;
 }

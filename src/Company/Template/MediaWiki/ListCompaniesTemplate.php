@@ -15,6 +15,7 @@ namespace Stg\HallOfRecords\Company\Template\MediaWiki;
 
 use Psr\Http\Message\ResponseInterface;
 use Stg\HallOfRecords\Company\Template\ListCompaniesTemplateInterface;
+use Stg\HallOfRecords\Shared\Application\Query\ListQuery;
 use Stg\HallOfRecords\Shared\Application\Query\ListResult;
 use Stg\HallOfRecords\Shared\Application\Query\Resource;
 use Stg\HallOfRecords\Shared\Application\Query\Resources;
@@ -43,11 +44,12 @@ final class ListCompaniesTemplate implements ListCompaniesTemplateInterface
 
     public function respond(
         ResponseInterface $response,
+        ListQuery $query,
         ListResult $result
     ): ResponseInterface {
         $response->getBody()->write($this->createOutput(
             $result->resources(),
-            $result->locale()
+            $query->locale()
         ));
         return $response;
     }

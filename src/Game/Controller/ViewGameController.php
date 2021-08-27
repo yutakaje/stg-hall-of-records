@@ -50,14 +50,14 @@ final class ViewGameController
     ): ResponseInterface {
         $id = Validator::id($args['id'] ?? null);
 
-        $result = $this->queryHandler->execute(
-            $this->queryCreator->create($id, $request)
-        );
+        $query = $this->queryCreator->create($id, $request);
+
+        $result = $this->queryHandler->execute($query);
 
         $this->logger->info('Game viewed.', [
             'game_id' => $id,
         ]);
 
-        return $this->template->respond($response, $result);
+        return $this->template->respond($response, $query, $result);
     }
 }
