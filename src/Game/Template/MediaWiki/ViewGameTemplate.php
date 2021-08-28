@@ -19,27 +19,16 @@ use Stg\HallOfRecords\Shared\Application\Query\Resource;
 use Stg\HallOfRecords\Shared\Application\Query\Resources;
 use Stg\HallOfRecords\Shared\Application\Query\ViewQuery;
 use Stg\HallOfRecords\Shared\Application\Query\ViewResult;
-use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
+use Stg\HallOfRecords\Shared\Template\MediaWiki\AbstractTemplate;
 use Stg\HallOfRecords\Shared\Template\MediaWiki\Routes;
-use Stg\HallOfRecords\Shared\Template\MediaWiki\SharedTemplates;
 use Stg\HallOfRecords\Shared\Template\Renderer;
 
-final class ViewGameTemplate implements ViewGameTemplateInterface
+final class ViewGameTemplate extends AbstractTemplate implements
+    ViewGameTemplateInterface
 {
-    private Renderer $renderer;
-    private SharedTemplates $sharedTemplates;
-    private Routes $routes;
-
-    public function __construct(
-        Renderer $renderer,
-        SharedTemplates $sharedTemplates,
-        Routes $routes
-    ) {
-        $this->renderer = $renderer->withTemplateFiles(
-            __DIR__ . '/html/view-game'
-        );
-        $this->sharedTemplates = $sharedTemplates;
-        $this->routes = $routes;
+    protected function initRenderer(Renderer $renderer): Renderer
+    {
+        return $renderer->withTemplateFiles(__DIR__ . '/html/view-game');
     }
 
     public function respond(
@@ -47,40 +36,32 @@ final class ViewGameTemplate implements ViewGameTemplateInterface
         ViewQuery $query,
         ViewResult $result
     ): ResponseInterface {
-        $response->getBody()->write($this->createOutput(
-            $result->resource(),
-            $query->locale()
-        ));
+        $response->getBody()->write(
+            $this->withLocale($query->locale())->createOutput(
+                $result->resource()
+            )
+        );
         return $response;
     }
 
-    private function createOutput(Resource $game, Locale $locale): string
+    private function createOutput(Resource $game): string
     {
-        $routes = $this->routes->withLocale($locale);
-
-        return $this->sharedTemplates->withLocale($locale)->main(
-            $this->renderGame(
-                $this->renderer->withLocale($locale),
-                $routes,
-                $game
-            ),
-            $this->routes->forEachLocale(
+        return $this->sharedTemplates()->main(
+            $this->renderGame($game),
+            $this->routes()->forEachLocale(
                 fn ($routes) => $routes->viewGame($game->id)
             )
         );
     }
 
-    private function renderGame(
-        Renderer $renderer,
-        Routes $routes,
-        Resource $game
-    ): string {
-        return $renderer->render('main', [
+    private function renderGame(Resource $game): string
+    {
+        return $this->renderer()->render('main', [
             'game' => $this->createGameVar($game),
             'company' => $this->createCompanyVar($game->company),
-            'scores' => $this->renderScores($renderer, $routes, $game->scores),
+            'scores' => $this->renderScores($game->scores),
             'links' => [
-                'company' => $routes->viewCompany($game->company->id),
+                'company' => $this->routes()->viewCompany($game->company->id),
             ],
         ]);
     }
@@ -103,32 +84,22 @@ final class ViewGameTemplate implements ViewGameTemplateInterface
         return $var;
     }
 
-    private function renderScores(
-        Renderer $renderer,
-        Routes $routes,
-        Resources $scores
-    ): string {
-        return $renderer->render('scores-list', [
+    private function renderScores(Resources $scores): string
+    {
+        return $this->renderer()->render('scores-list', [
             'scores' => $scores->map(
-                fn (Resource $score) => $this->renderScore(
-                    $renderer,
-                    $routes,
-                    $score
-                )
+                fn (Resource $score) => $this->renderScore($score)
             ),
         ]);
     }
 
-    private function renderScore(
-        Renderer $renderer,
-        Routes $routes,
-        Resource $score
-    ): string {
-        return $renderer->render('score-entry', [
+    private function renderScore(Resource $score): string
+    {
+        return $this->renderer()->render('score-entry', [
             'score' => $this->createScoreVar($score),
             'player' => $this->createPlayerVar($score),
             'links' => [
-                'player' => $routes->viewPlayer($score->playerId),
+                'player' => $this->routes()->viewPlayer($score->playerId),
             ],
         ]);
     }

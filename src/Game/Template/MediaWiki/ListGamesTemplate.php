@@ -19,27 +19,16 @@ use Stg\HallOfRecords\Shared\Application\Query\ListQuery;
 use Stg\HallOfRecords\Shared\Application\Query\ListResult;
 use Stg\HallOfRecords\Shared\Application\Query\Resource;
 use Stg\HallOfRecords\Shared\Application\Query\Resources;
-use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
+use Stg\HallOfRecords\Shared\Template\MediaWiki\AbstractTemplate;
 use Stg\HallOfRecords\Shared\Template\MediaWiki\Routes;
-use Stg\HallOfRecords\Shared\Template\MediaWiki\SharedTemplates;
 use Stg\HallOfRecords\Shared\Template\Renderer;
 
-final class ListGamesTemplate implements ListGamesTemplateInterface
+final class ListGamesTemplate extends AbstractTemplate implements
+    ListGamesTemplateInterface
 {
-    private Renderer $renderer;
-    private SharedTemplates $sharedTemplates;
-    private Routes $routes;
-
-    public function __construct(
-        Renderer $renderer,
-        SharedTemplates $sharedTemplates,
-        Routes $routes
-    ) {
-        $this->renderer = $renderer->withTemplateFiles(
-            __DIR__ . '/html/list-games'
-        );
-        $this->sharedTemplates = $sharedTemplates;
-        $this->routes = $routes;
+    protected function initRenderer(Renderer $renderer): Renderer
+    {
+        return $renderer->withTemplateFiles(__DIR__ . '/html/list-games');
     }
 
     public function respond(
@@ -47,54 +36,39 @@ final class ListGamesTemplate implements ListGamesTemplateInterface
         ListQuery $query,
         ListResult $result
     ): ResponseInterface {
-        $response->getBody()->write($this->createOutput(
-            $result->resources(),
-            $query->locale()
-        ));
+        $response->getBody()->write(
+            $this->withLocale($query->locale())->createOutput(
+                $result->resources()
+            )
+        );
         return $response;
     }
 
-    private function createOutput(Resources $games, Locale $locale): string
+    private function createOutput(Resources $games): string
     {
-        $routes = $this->routes->withLocale($locale);
-
-        return $this->sharedTemplates->withLocale($locale)->main(
-            $this->renderGames(
-                $this->renderer->withLocale($locale),
-                $routes,
-                $games
-            ),
-            $this->routes->forEachLocale(
+        return $this->sharedTemplates()->main(
+            $this->renderGames($games),
+            $this->routes()->forEachLocale(
                 fn ($routes) => $routes->listGames()
             )
         );
     }
 
-    private function renderGames(
-        Renderer $renderer,
-        Routes $routes,
-        Resources $games
-    ): string {
-        return $renderer->render('main', [
+    private function renderGames(Resources $games): string
+    {
+        return $this->renderer()->render('main', [
             'games' => $games->map(
-                fn (Resource $game) => $this->renderGame(
-                    $renderer,
-                    $routes,
-                    $game
-                )
+                fn (Resource $game) => $this->renderGame($game)
             ),
         ]);
     }
 
-    private function renderGame(
-        Renderer $renderer,
-        Routes $routes,
-        Resource $game
-    ): string {
-        return $renderer->render('game-entry', [
+    private function renderGame(Resource $game): string
+    {
+        return $this->renderer()->render('game-entry', [
             'game' => $this->createGameVar($game),
             'links' => [
-                'game' => $routes->viewGame($game->id),
+                'game' => $this->routes()->viewGame($game->id),
             ],
         ]);
     }

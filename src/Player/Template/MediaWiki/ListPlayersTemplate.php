@@ -19,27 +19,16 @@ use Stg\HallOfRecords\Shared\Application\Query\ListQuery;
 use Stg\HallOfRecords\Shared\Application\Query\ListResult;
 use Stg\HallOfRecords\Shared\Application\Query\Resource;
 use Stg\HallOfRecords\Shared\Application\Query\Resources;
-use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
+use Stg\HallOfRecords\Shared\Template\MediaWiki\AbstractTemplate;
 use Stg\HallOfRecords\Shared\Template\MediaWiki\Routes;
-use Stg\HallOfRecords\Shared\Template\MediaWiki\SharedTemplates;
 use Stg\HallOfRecords\Shared\Template\Renderer;
 
-final class ListPlayersTemplate implements ListPlayersTemplateInterface
+final class ListPlayersTemplate extends AbstractTemplate implements
+    ListPlayersTemplateInterface
 {
-    private Renderer $renderer;
-    private SharedTemplates $sharedTemplates;
-    private Routes $routes;
-
-    public function __construct(
-        Renderer $renderer,
-        SharedTemplates $sharedTemplates,
-        Routes $routes
-    ) {
-        $this->renderer = $renderer->withTemplateFiles(
-            __DIR__ . '/html/list-players'
-        );
-        $this->sharedTemplates = $sharedTemplates;
-        $this->routes = $routes;
+    protected function initRenderer(Renderer $renderer): Renderer
+    {
+        return $renderer->withTemplateFiles(__DIR__ . '/html/list-players');
     }
 
     public function respond(
@@ -47,54 +36,39 @@ final class ListPlayersTemplate implements ListPlayersTemplateInterface
         ListQuery $query,
         ListResult $result
     ): ResponseInterface {
-        $response->getBody()->write($this->createOutput(
-            $result->resources(),
-            $query->locale()
-        ));
+        $response->getBody()->write(
+            $this->withLocale($query->locale())->createOutput(
+                $result->resources()
+            )
+        );
         return $response;
     }
 
-    private function createOutput(Resources $players, Locale $locale): string
+    private function createOutput(Resources $players): string
     {
-        $routes = $this->routes->withLocale($locale);
-
-        return $this->sharedTemplates->withLocale($locale)->main(
-            $this->renderPlayers(
-                $this->renderer->withLocale($locale),
-                $routes,
-                $players
-            ),
-            $this->routes->forEachLocale(
+        return $this->sharedTemplates()->main(
+            $this->renderPlayers($players),
+            $this->routes()->forEachLocale(
                 fn ($routes) => $routes->listPlayers()
             )
         );
     }
 
-    private function renderPlayers(
-        Renderer $renderer,
-        Routes $routes,
-        Resources $players
-    ): string {
-        return $renderer->render('main', [
+    private function renderPlayers(Resources $players): string
+    {
+        return $this->renderer()->render('main', [
             'players' => $players->map(
-                fn (Resource $player) => $this->renderPlayer(
-                    $renderer,
-                    $routes,
-                    $player
-                )
+                fn (Resource $player) => $this->renderPlayer($player)
             ),
         ]);
     }
 
-    private function renderPlayer(
-        Renderer $renderer,
-        Routes $routes,
-        Resource $player
-    ): string {
-        return $renderer->render('player-entry', [
+    private function renderPlayer(Resource $player): string
+    {
+        return $this->renderer()->render('player-entry', [
             'player' => $this->createPlayerVar($player),
             'links' => [
-                'player' => $routes->viewPlayer($player->id),
+                'player' => $this->routes()->viewPlayer($player->id),
             ],
         ]);
     }

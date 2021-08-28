@@ -19,27 +19,15 @@ use Stg\HallOfRecords\Shared\Application\Query\ListQuery;
 use Stg\HallOfRecords\Shared\Application\Query\ListResult;
 use Stg\HallOfRecords\Shared\Application\Query\Resource;
 use Stg\HallOfRecords\Shared\Application\Query\Resources;
-use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
-use Stg\HallOfRecords\Shared\Template\MediaWiki\Routes;
-use Stg\HallOfRecords\Shared\Template\MediaWiki\SharedTemplates;
+use Stg\HallOfRecords\Shared\Template\MediaWiki\AbstractTemplate;
 use Stg\HallOfRecords\Shared\Template\Renderer;
 
-final class ListCompaniesTemplate implements ListCompaniesTemplateInterface
+final class ListCompaniesTemplate extends AbstractTemplate implements
+    ListCompaniesTemplateInterface
 {
-    private Renderer $renderer;
-    private SharedTemplates $sharedTemplates;
-    private Routes $routes;
-
-    public function __construct(
-        Renderer $renderer,
-        SharedTemplates $sharedTemplates,
-        Routes $routes
-    ) {
-        $this->renderer = $renderer->withTemplateFiles(
-            __DIR__ . '/html/list-companies'
-        );
-        $this->sharedTemplates = $sharedTemplates;
-        $this->routes = $routes;
+    protected function initRenderer(Renderer $renderer): Renderer
+    {
+        return $renderer->withTemplateFiles(__DIR__ . '/html/list-companies');
     }
 
     public function respond(
@@ -47,54 +35,39 @@ final class ListCompaniesTemplate implements ListCompaniesTemplateInterface
         ListQuery $query,
         ListResult $result
     ): ResponseInterface {
-        $response->getBody()->write($this->createOutput(
-            $result->resources(),
-            $query->locale()
-        ));
+        $response->getBody()->write(
+            $this->withLocale($query->locale())->createOutput(
+                $result->resources()
+            )
+        );
         return $response;
     }
 
-    private function createOutput(Resources $companies, Locale $locale): string
+    private function createOutput(Resources $companies): string
     {
-        $routes = $this->routes->withLocale($locale);
-
-        return $this->sharedTemplates->withLocale($locale)->main(
-            $this->renderCompanies(
-                $this->renderer->withLocale($locale),
-                $routes,
-                $companies
-            ),
-            $this->routes->forEachLocale(
+        return $this->sharedTemplates()->main(
+            $this->renderCompanies($companies),
+            $this->routes()->forEachLocale(
                 fn ($routes) => $routes->listCompanies()
             )
         );
     }
 
-    private function renderCompanies(
-        Renderer $renderer,
-        Routes $routes,
-        Resources $companies
-    ): string {
-        return $renderer->render('main', [
+    private function renderCompanies(Resources $companies): string
+    {
+        return $this->renderer()->render('main', [
             'companies' => $companies->map(
-                fn (Resource $company) => $this->renderCompany(
-                    $renderer,
-                    $routes,
-                    $company
-                )
+                fn (Resource $company) => $this->renderCompany($company)
             ),
         ]);
     }
 
-    private function renderCompany(
-        Renderer $renderer,
-        Routes $routes,
-        Resource $company
-    ): string {
-        return $renderer->render('company-entry', [
+    private function renderCompany(Resource $company): string
+    {
+        return $this->renderer()->render('company-entry', [
             'company' => $this->createCompanyVar($company),
             'links' => [
-                'company' => $routes->viewCompany($company->id),
+                'company' => $this->routes()->viewCompany($company->id),
             ],
         ]);
     }
