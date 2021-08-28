@@ -13,6 +13,22 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Shared\Application\Query;
 
+use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
+
 final class ListQuery extends AbstractQuery
 {
+    private Filter $filter;
+
+    public function __construct(
+        Locale $locale,
+        ?Filter $filter = null
+    ) {
+        parent::__construct($locale);
+        $this->filter = $filter ?? new Filter();
+    }
+
+    public function filter(): Filter
+    {
+        return $this->filter;
+    }
 }

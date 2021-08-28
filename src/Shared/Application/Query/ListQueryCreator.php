@@ -27,6 +27,11 @@ final class ListQueryCreator
 
     public function create(ServerRequestInterface $request): ListQuery
     {
-        return new ListQuery($this->localeNegotiator->negotiate($request));
+        $params = $request->getQueryParams();
+
+        return new ListQuery(
+            $this->localeNegotiator->negotiate($request),
+            new Filter($params['q'] ?? '')
+        );
     }
 }
