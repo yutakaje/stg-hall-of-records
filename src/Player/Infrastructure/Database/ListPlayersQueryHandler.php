@@ -14,19 +14,28 @@ declare(strict_types=1);
 namespace Stg\HallOfRecords\Player\Infrastructure\Database;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Query\QueryBuilder;
 use Stg\HallOfRecords\Player\Application\Query\ListPlayersQueryHandlerInterface;
 use Stg\HallOfRecords\Shared\Application\Query\ListQuery;
 use Stg\HallOfRecords\Shared\Application\Query\ListResult;
 use Stg\HallOfRecords\Shared\Application\Query\Resource;
 use Stg\HallOfRecords\Shared\Application\Query\Resources;
+use Stg\HallOfRecords\Shared\Infrastructure\Database\QueryApplier;
+use Stg\HallOfRecords\Shared\Infrastructure\Database\QueryColumn;
 
 final class ListPlayersQueryHandler implements ListPlayersQueryHandlerInterface
 {
     private Connection $connection;
+    private QueryApplier $applier;
 
     public function __construct(Connection $connection)
     {
         $this->connection = $connection;
+        $this->applier = new QueryApplier([
+            'id' => QueryColumn::int('id'),
+            'name' => QueryColumn::string('name'),
+            'numScores' => QueryColumn::int('num_scores'),
+        ]);
     }
 
     public function execute(ListQuery $query): ListResult
@@ -40,12 +49,17 @@ final class ListPlayersQueryHandler implements ListPlayersQueryHandlerInterface
     {
         $qb = $this->connection->createQueryBuilder();
 
-        $stmt = $qb->select(
-            'id',
-            'name',
-            "({$this->numScoresQuery()}) AS num_scores"
+        $sql = $this->readPlayersSql($qb, $query);
+
+        $stmt = $this->applier->applyFilter(
+            $qb->from("({$sql})")
+                ->select(
+                    'id',
+                    'name',
+                    'num_scores'
+                ),
+            $query->filter()
         )
-            ->from('stg_players', 'players')
             ->orderBy('name')
             ->addOrderBy('id')
             ->executeQuery();
@@ -59,7 +73,22 @@ final class ListPlayersQueryHandler implements ListPlayersQueryHandlerInterface
         return new Resources($players);
     }
 
-    private function numScoresQuery(): string
+    private function readPlayersSql(
+        QueryBuilder $wrapper,
+        ListQuery $query
+    ): string {
+        $qb = $this->connection->createQueryBuilder();
+
+        return $qb->select(
+            'id',
+            'name',
+            "({$this->numScoresSql()}) AS num_scores"
+        )
+            ->from('stg_players', 'players')
+            ->getSQL();
+    }
+
+    private function numScoresSql(): string
     {
         $qb = $this->connection->createQueryBuilder();
 

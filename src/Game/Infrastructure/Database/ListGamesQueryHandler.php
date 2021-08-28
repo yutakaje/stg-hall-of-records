@@ -14,19 +14,30 @@ declare(strict_types=1);
 namespace Stg\HallOfRecords\Game\Infrastructure\Database;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Query\QueryBuilder;
 use Stg\HallOfRecords\Game\Application\Query\ListGamesQueryHandlerInterface;
 use Stg\HallOfRecords\Shared\Application\Query\ListQuery;
 use Stg\HallOfRecords\Shared\Application\Query\ListResult;
 use Stg\HallOfRecords\Shared\Application\Query\Resource;
 use Stg\HallOfRecords\Shared\Application\Query\Resources;
+use Stg\HallOfRecords\Shared\Infrastructure\Database\QueryApplier;
+use Stg\HallOfRecords\Shared\Infrastructure\Database\QueryColumn;
 
 final class ListGamesQueryHandler implements ListGamesQueryHandlerInterface
 {
     private Connection $connection;
+    private QueryApplier $applier;
 
     public function __construct(Connection $connection)
     {
         $this->connection = $connection;
+        $this->applier = new QueryApplier([
+            'id' => QueryColumn::int('id'),
+            'name' => QueryColumn::string('name_filter'),
+            'company.id' => QueryColumn::int('company_id'),
+            'company.name' => QueryColumn::string('company_name_filter'),
+            'numScores' => QueryColumn::int('num_scores'),
+        ]);
     }
 
     public function execute(ListQuery $query): ListResult
@@ -40,16 +51,19 @@ final class ListGamesQueryHandler implements ListGamesQueryHandlerInterface
     {
         $qb = $this->connection->createQueryBuilder();
 
-        $stmt = $qb->select(
-            'id',
-            'name',
-            'company_id',
-            'company_name',
-            "({$this->numScoresQuery()}) AS num_scores"
+        $sql = $this->readGamesSql($qb, $query);
+
+        $stmt = $this->applier->applyFilter(
+            $qb->from("({$sql})")
+                ->select(
+                    'id',
+                    'name',
+                    'company_id',
+                    'company_name',
+                    'num_scores'
+                ),
+            $query->filter()
         )
-            ->from('stg_query_games', 'games')
-            ->where($qb->expr()->eq('locale', ':locale'))
-            ->setParameter('locale', $query->locale()->value())
             ->orderBy('name_translit')
             ->addOrderBy('id')
             ->executeQuery();
@@ -61,6 +75,30 @@ final class ListGamesQueryHandler implements ListGamesQueryHandlerInterface
         }
 
         return new Resources($games);
+    }
+
+    private function readGamesSql(
+        QueryBuilder $wrapper,
+        ListQuery $query
+    ): string {
+        $qb = $this->connection->createQueryBuilder();
+
+        $wrapper->setParameter('locale', $query->locale()->value());
+
+        return $qb->from('stg_query_games', 'games')
+            ->select(
+                'id',
+                'name',
+                'name_translit',
+                'name_filter',
+                'company_id',
+                'company_name',
+                'company_name_translit',
+                'company_name_filter',
+                "({$this->numScoresQuery()}) AS num_scores"
+            )
+            ->where($qb->expr()->eq('locale', ':locale'))
+            ->getSQL();
     }
 
     private function numScoresQuery(): string
