@@ -40,7 +40,7 @@ final class MediaWikiHelper
         );
     }
 
-    public function loadBasicTemplate(
+    public function loadMainTemplate(
         string $content,
         Locale $locale,
         string $selfLink

@@ -141,7 +141,7 @@ class ListGamesTest extends \Tests\TestCase
         return $this->mediaWiki()->removePlaceholders(
             $this->locale()->translate(
                 $locale,
-                $this->mediaWiki()->loadBasicTemplate(
+                $this->mediaWiki()->loadMainTemplate(
                     $this->createGamesOutput($games, $locale),
                     $locale,
                     '/{locale}/games'

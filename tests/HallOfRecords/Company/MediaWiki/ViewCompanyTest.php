@@ -112,7 +112,7 @@ class ViewCompanyTest extends \Tests\TestCase
         return $this->mediaWiki()->removePlaceholders(
             $this->locale()->translate(
                 $locale,
-                $this->mediaWiki()->loadBasicTemplate(
+                $this->mediaWiki()->loadMainTemplate(
                     $this->createCompanyOutput($company, $locale),
                     $locale,
                     "/{locale}/companies/{$company->id()}"

@@ -104,7 +104,7 @@ class ListCompaniesTest extends \Tests\TestCase
         return $this->mediaWiki()->removePlaceholders(
             $this->locale()->translate(
                 $locale,
-                $this->mediaWiki()->loadBasicTemplate(
+                $this->mediaWiki()->loadMainTemplate(
                     $this->createCompaniesOutput(
                         $companies,
                         $locale

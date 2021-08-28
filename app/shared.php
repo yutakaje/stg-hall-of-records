@@ -32,6 +32,7 @@ use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 use Stg\HallOfRecords\Shared\Template\MediaWiki\BasicTemplate;
 use Stg\HallOfRecords\Shared\Template\MediaWiki\IndexTemplate;
 use Stg\HallOfRecords\Shared\Template\MediaWiki\Routes;
+use Stg\HallOfRecords\Shared\Template\MediaWiki\SharedTemplates;
 use Stg\HallOfRecords\Shared\Template\Renderer;
 
 return [
@@ -88,6 +89,7 @@ return [
     ): Routes {
         return new Routes($locales, $settings['http']['baseUri']);
     })->parameter('settings', DI\get('settings')),
+    SharedTemplates::class => DI\autowire(),
     BasicTemplate::class => DI\autowire(),
 
     'mediaWiki/index' => DI\autowire(IndexController::class)

@@ -20,25 +20,25 @@ use Stg\HallOfRecords\Shared\Application\Query\ListResult;
 use Stg\HallOfRecords\Shared\Application\Query\Resource;
 use Stg\HallOfRecords\Shared\Application\Query\Resources;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
-use Stg\HallOfRecords\Shared\Template\MediaWiki\BasicTemplate;
 use Stg\HallOfRecords\Shared\Template\MediaWiki\Routes;
+use Stg\HallOfRecords\Shared\Template\MediaWiki\SharedTemplates;
 use Stg\HallOfRecords\Shared\Template\Renderer;
 
 final class ListPlayersTemplate implements ListPlayersTemplateInterface
 {
     private Renderer $renderer;
-    private BasicTemplate $wrapper;
+    private SharedTemplates $sharedTemplates;
     private Routes $routes;
 
     public function __construct(
         Renderer $renderer,
-        BasicTemplate $wrapper,
+        SharedTemplates $sharedTemplates,
         Routes $routes
     ) {
         $this->renderer = $renderer->withTemplateFiles(
             __DIR__ . '/html/list-players'
         );
-        $this->wrapper = $wrapper;
+        $this->sharedTemplates = $sharedTemplates;
         $this->routes = $routes;
     }
 
@@ -58,8 +58,7 @@ final class ListPlayersTemplate implements ListPlayersTemplateInterface
     {
         $routes = $this->routes->withLocale($locale);
 
-        return $this->wrapper->render(
-            $locale,
+        return $this->sharedTemplates->withLocale($locale)->main(
             $this->renderPlayers(
                 $this->renderer->withLocale($locale),
                 $routes,

@@ -114,7 +114,7 @@ class ViewGameTest extends \Tests\TestCase
         return $this->mediaWiki()->removePlaceholders(
             $this->locale()->translate(
                 $locale,
-                $this->mediaWiki()->loadBasicTemplate(
+                $this->mediaWiki()->loadMainTemplate(
                     $this->createGameOutput($game, $locale),
                     $locale,
                     "/{locale}/games/{$game->id()}",
