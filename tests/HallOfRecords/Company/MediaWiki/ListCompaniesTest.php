@@ -123,6 +123,7 @@ class ListCompaniesTest extends \Tests\TestCase
         return $this->data()->replace(
             $this->mediaWiki()->loadTemplate('Company', 'list-companies/main'),
             [
+                '{{ companies|length }}' => $companies->numEntries(),
                 '{{ entry|raw }}' => implode(PHP_EOL, array_map(
                     fn (CompanyEntry $company) => $this->createCompanyOutput(
                         $company,

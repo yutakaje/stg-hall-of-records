@@ -1,4 +1,5 @@
-<h2>{{ 'labels.companies'|trans }}</h2>
+<h2>{{ 'labels.companies'|trans }} ({{ companies|length }})</h2>
+
 <ul>
 {% for entry in companies %}
   {{ entry|raw }}

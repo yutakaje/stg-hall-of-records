@@ -157,6 +157,7 @@ class ListGamesTest extends \Tests\TestCase
         return $this->data()->replace(
             $this->mediaWiki()->loadTemplate('Game', 'list-games/main'),
             [
+                '{{ games|length }}' => $games->numEntries(),
                 '{{ entry|raw }}' => implode(PHP_EOL, array_map(
                     fn (GameEntry $game) => $this->createGameOutput(
                         $game,

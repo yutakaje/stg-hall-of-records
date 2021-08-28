@@ -126,6 +126,7 @@ class ListPlayersTest extends \Tests\TestCase
         return $this->data()->replace(
             $this->mediaWiki()->loadTemplate('Player', 'list-players/main'),
             [
+                '{{ players|length }}' => $players->numEntries(),
                 '{{ entry|raw }}' => implode(PHP_EOL, array_map(
                     fn (PlayerEntry $player) => $this->createPlayerOutput(
                         $player,
