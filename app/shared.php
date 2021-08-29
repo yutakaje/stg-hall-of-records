@@ -30,6 +30,7 @@ use Stg\HallOfRecords\Shared\Infrastructure\Locale\Translator;
 use Stg\HallOfRecords\Shared\Infrastructure\Locale\TranslatorInterface;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 use Stg\HallOfRecords\Shared\Template\MediaWiki\BasicTemplate;
+use Stg\HallOfRecords\Shared\Template\MediaWiki\FilterBoxTemplate;
 use Stg\HallOfRecords\Shared\Template\MediaWiki\IndexTemplate;
 use Stg\HallOfRecords\Shared\Template\MediaWiki\Routes;
 use Stg\HallOfRecords\Shared\Template\MediaWiki\SharedTemplates;
@@ -91,6 +92,7 @@ return [
     })->parameter('settings', DI\get('settings')),
     SharedTemplates::class => DI\autowire(),
     BasicTemplate::class => DI\autowire(),
+    FilterBoxTemplate::class => DI\autowire(),
 
     'mediaWiki/index' => DI\autowire(IndexController::class)
         ->constructorParameter('template', DI\get(IndexTemplate::class)),
