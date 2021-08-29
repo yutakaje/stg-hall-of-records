@@ -1,4 +1,7 @@
 <h2>{{ 'labels.players'|trans }} ({{ players|length }})</h2>
+
+{{ filterBox|raw }}
+
 <ul>
 {% for entry in players %}
   {{ entry|raw }}

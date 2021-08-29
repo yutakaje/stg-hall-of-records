@@ -37,27 +37,32 @@ final class ListCompaniesTemplate extends AbstractTemplate implements
     ): ResponseInterface {
         $response->getBody()->write(
             $this->withLocale($query->locale())->createOutput(
-                $result->resources()
+                $result->resources(),
+                $query
             )
         );
         return $response;
     }
 
-    private function createOutput(Resources $companies): string
+    private function createOutput(Resources $companies, ListQuery $query): string
     {
         return $this->sharedTemplates()->main(
-            $this->renderCompanies($companies),
+            $this->renderCompanies($companies, $query),
             $this->routes()->forEachLocale(
                 fn ($routes) => $routes->listCompanies()
             )
         );
     }
 
-    private function renderCompanies(Resources $companies): string
+    private function renderCompanies(Resources $companies, ListQuery $query): string
     {
         return $this->renderer()->render('main', [
             'companies' => $companies->map(
                 fn (Resource $company) => $this->renderCompany($company)
+            ),
+            'filterBox' => $this->sharedTemplates()->filterBox(
+                $query->filter(),
+                'list-companies'
             ),
         ]);
     }

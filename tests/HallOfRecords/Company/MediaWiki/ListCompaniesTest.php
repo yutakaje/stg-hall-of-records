@@ -99,7 +99,8 @@ class ListCompaniesTest extends \Tests\TestCase
 
     private function createOutput(
         CompanyEntries $companies,
-        Locale $locale
+        Locale $locale,
+        string $filterValue = ''
     ): string {
         return $this->mediaWiki()->removePlaceholders(
             $this->locale()->translate(
@@ -107,7 +108,8 @@ class ListCompaniesTest extends \Tests\TestCase
                 $this->mediaWiki()->loadMainTemplate(
                     $this->createCompaniesOutput(
                         $companies,
-                        $locale
+                        $locale,
+                        $filterValue
                     ),
                     $locale,
                     '/{locale}/companies'
@@ -118,7 +120,8 @@ class ListCompaniesTest extends \Tests\TestCase
 
     private function createCompaniesOutput(
         CompanyEntries $companies,
-        Locale $locale
+        Locale $locale,
+        string $filterValue
     ): string {
         return $this->data()->replace(
             $this->mediaWiki()->loadTemplate('Company', 'list-companies/main'),
@@ -131,6 +134,10 @@ class ListCompaniesTest extends \Tests\TestCase
                     ),
                     $companies->sorted()
                 )),
+                '{{ filterBox|raw }}' => $this->mediaWiki()->loadFilterBoxTemplate(
+                    $filterValue,
+                    'list-companies'
+                ),
             ]
         );
     }

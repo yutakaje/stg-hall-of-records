@@ -136,13 +136,14 @@ class ListGamesTest extends \Tests\TestCase
 
     private function createOutput(
         GameEntries $games,
-        Locale $locale
+        Locale $locale,
+        string $filterValue = ''
     ): string {
         return $this->mediaWiki()->removePlaceholders(
             $this->locale()->translate(
                 $locale,
                 $this->mediaWiki()->loadMainTemplate(
-                    $this->createGamesOutput($games, $locale),
+                    $this->createGamesOutput($games, $locale, $filterValue),
                     $locale,
                     '/{locale}/games'
                 )
@@ -152,7 +153,8 @@ class ListGamesTest extends \Tests\TestCase
 
     private function createGamesOutput(
         GameEntries $games,
-        Locale $locale
+        Locale $locale,
+        string $filterValue
     ): string {
         return $this->data()->replace(
             $this->mediaWiki()->loadTemplate('Game', 'list-games/main'),
@@ -165,6 +167,10 @@ class ListGamesTest extends \Tests\TestCase
                     ),
                     $games->sorted()
                 )),
+                '{{ filterBox|raw }}' => $this->mediaWiki()->loadFilterBoxTemplate(
+                    $filterValue,
+                    'list-games'
+                ),
             ]
         );
     }

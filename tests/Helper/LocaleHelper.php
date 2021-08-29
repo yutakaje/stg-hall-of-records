@@ -81,8 +81,26 @@ final class LocaleHelper
 
     public function translate(Locale $locale, string $value): string
     {
+        // Both ' and " can be used as string delimiter.
+        return array_reduce(
+            ["'", '"'],
+            fn (string $value, string $delim) => $this->translateWithDelimiter(
+                $delim,
+                $locale,
+                $value
+            ),
+            $value
+        );
+    }
+
+    private function translateWithDelimiter(
+        string $delim,
+        Locale $locale,
+        string $value
+    ): string {
+        $label = "{$delim}([^{$delim}]+?){$delim}";
         $translated = preg_replace_callback(
-            '/\{\{ \'([^\']+?)\'\|trans(?:\((.+?)\))? \}\}/',
+            '/\{\{ ' . $label . '\|trans(?:\((.+?)\))? \}\}/',
             fn (array $match) => $this->translator->trans(
                 $locale,
                 $match[1],

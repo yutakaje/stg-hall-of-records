@@ -105,13 +105,14 @@ class ListPlayersTest extends \Tests\TestCase
 
     private function createOutput(
         PlayerEntries $players,
-        Locale $locale
+        Locale $locale,
+        string $filterValue = ''
     ): string {
         return $this->mediaWiki()->removePlaceholders(
             $this->locale()->translate(
                 $locale,
                 $this->mediaWiki()->loadMainTemplate(
-                    $this->createPlayersOutput($players, $locale),
+                    $this->createPlayersOutput($players, $locale, $filterValue),
                     $locale,
                     '/{locale}/players'
                 )
@@ -121,7 +122,8 @@ class ListPlayersTest extends \Tests\TestCase
 
     private function createPlayersOutput(
         PlayerEntries $players,
-        Locale $locale
+        Locale $locale,
+        string $filterValue
     ): string {
         return $this->data()->replace(
             $this->mediaWiki()->loadTemplate('Player', 'list-players/main'),
@@ -134,6 +136,10 @@ class ListPlayersTest extends \Tests\TestCase
                     ),
                     $players->sorted()
                 )),
+                '{{ filterBox|raw }}' => $this->mediaWiki()->loadFilterBoxTemplate(
+                    $filterValue,
+                    'list-players'
+                ),
             ]
         );
     }

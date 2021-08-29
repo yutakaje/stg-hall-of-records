@@ -13,18 +13,22 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Shared\Template\MediaWiki;
 
+use Stg\HallOfRecords\Shared\Application\Query\Filter;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 
 final class SharedTemplates
 {
     private ?Locale $locale;
     private BasicTemplate $basic;
+    private FilterBoxTemplate $filterBox;
 
     public function __construct(
-        BasicTemplate $basic
+        BasicTemplate $basic,
+        FilterBoxTemplate $filterBox
     ) {
         $this->locale = null;
         $this->basic = $basic;
+        $this->filterBox = $filterBox;
     }
 
     public function withLocale(Locale $locale): self
@@ -50,5 +54,10 @@ final class SharedTemplates
     public function main(string $content, array $selfLinks): string
     {
         return $this->basic->render($this->locale(), $content, $selfLinks);
+    }
+
+    public function filterBox(Filter $filter, string $example): string
+    {
+        return $this->filterBox->render($this->locale(), $filter, $example);
     }
 }

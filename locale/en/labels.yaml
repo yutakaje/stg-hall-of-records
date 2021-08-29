@@ -17,3 +17,11 @@ labels:
 
     home: 'Main page'
     languages: 'Languages'
+
+    filter:
+        label: 'Filter'
+        search: 'Search'
+        placeholder:
+            list-companies: 'Example: name like nam'
+            list-games: 'Example: name like pachi'
+            list-players: 'Example: name like ktl'

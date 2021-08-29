@@ -17,3 +17,11 @@ labels:
 
     home: 'メインページ'
     languages: '他言語版'
+
+    filter:
+        label: '条件指定'
+        search: '検索'
+        placeholder:
+            list-companies: '例: name like ソフト'
+            list-games: '例: name like 蜂'
+            list-players: '例: name like ktl'

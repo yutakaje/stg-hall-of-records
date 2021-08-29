@@ -1,5 +1,7 @@
 <h2>{{ 'labels.companies'|trans }} ({{ companies|length }})</h2>
 
+{{ filterBox|raw }}
+
 <ul>
 {% for entry in companies %}
   {{ entry|raw }}

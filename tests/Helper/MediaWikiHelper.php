@@ -61,6 +61,20 @@ final class MediaWikiHelper
         );
     }
 
+    public function loadFilterBoxTemplate(
+        string $filterValue,
+        string $example
+    ): string {
+        return $this->data->replace(
+            $this->loadTemplate('Shared', 'filter-box'),
+            [
+                '{{ filterValue }}' => $filterValue,
+                '{{ example }}' => $example,
+                '#{example}' => $example,
+            ]
+        );
+    }
+
     /**
      * @return array<string,string>
      */
