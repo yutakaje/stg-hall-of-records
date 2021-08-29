@@ -32,20 +32,30 @@ class LocaleNegotiatorTest extends \Tests\TestCase
         ));
     }
 
-    public function testWithLocalesInPath(): void
+    public function testWithLocalesInPathWithoutBaseUri(): void
+    {
+        $this->testWithLocalesInPath('');
+    }
+
+    public function testWithLocalesInPathAndBaseUri(): void
+    {
+        $this->testWithLocalesInPath('/some/path');
+    }
+
+    private function testWithLocalesInPath(string $baseUri): void
     {
         $locales = $this->createLocales();
 
-        $negotiator = new LocaleNegotiator($locales);
+        $negotiator = new LocaleNegotiator($locales, $baseUri);
 
         self::assertSame($locales->get('en'), $negotiator->negotiate(
-            $this->createRequest('/en/uri')
+            $this->createRequest("{$baseUri}/en/uri")
         ));
         self::assertSame($locales->get('kr'), $negotiator->negotiate(
-            $this->createRequest('/kr/uri')
+            $this->createRequest("{$baseUri}/kr/uri")
         ));
         self::assertSame($locales->get('ja'), $negotiator->negotiate(
-            $this->createRequest('/fr/uri')
+            $this->createRequest("{$baseUri}/fr/uri")
         ));
     }
 

@@ -77,7 +77,13 @@ return [
     LocaleDir::class => function (): LocaleDir {
         return new LocaleDir(dirname(__DIR__) . '/locale');
     },
-    LocaleNegotiator::class => DI\autowire(),
+    LocaleNegotiator::class => DI\factory(function (
+        Locales $locales,
+        array $settings
+    ): LocaleNegotiator {
+        return new LocaleNegotiator($locales, $settings['http']['baseUri']);
+    })->parameter('settings', DI\get('settings')),
+
     TranslatorInterface::class => DI\autowire(Translator::class),
 
     ListQueryCreator::class => DI\autowire(),

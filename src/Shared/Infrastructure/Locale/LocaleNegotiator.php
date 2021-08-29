@@ -19,10 +19,12 @@ use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 final class LocaleNegotiator
 {
     private Locales $locales;
+    private string $baseUri;
 
-    public function __construct(Locales $locales)
+    public function __construct(Locales $locales, string $baseUri = '')
     {
         $this->locales = $locales;
+        $this->baseUri = $baseUri;
     }
 
     public function negotiate(ServerRequestInterface $request): Locale
@@ -43,8 +45,9 @@ final class LocaleNegotiator
 
     private function getPathLocale(ServerRequestInterface $request): string
     {
-        $path = explode('/', trim($request->getUri()->getPath(), '/'));
-        return $path[0] ?? '';
+        $path = substr($request->getUri()->getPath(), strlen($this->baseUri));
+        $parts = explode('/', trim($path, '/'));
+        return $parts[0] ?? '';
     }
 
     /**
