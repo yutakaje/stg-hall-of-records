@@ -18,6 +18,7 @@ use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Schema\Table;
 use Doctrine\DBAL\Schema\View;
+use Nette\Utils\Json;
 use Stg\HallOfRecords\Shared\Infrastructure\Locale\Locales;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\DateTime;
 
@@ -45,16 +46,9 @@ final class PlayersTable extends AbstractTable
         $players->addColumn('created_date', 'datetime');
         $players->addColumn('last_modified_date', 'datetime');
         $players->addColumn('name', 'string', ['length' => 100]);
+        $players->addColumn('aliases', 'string', ['length' => 500]);
         $players->setPrimaryKey(['id']);
         $schemaManager->createTable($players);
-
-        $playerAliases = $schema->createTable('stg_player_aliases');
-        $playerAliases->addColumn('id', 'integer', ['autoincrement' => true]);
-        $playerAliases->addColumn('player_id', 'integer');
-        $playerAliases->addColumn('alias', 'string', ['length' => 100]);
-        $playerAliases->setPrimaryKey(['id']);
-        $playerAliases->addForeignKeyConstraint($players, ['player_id'], ['id']);
-        $schemaManager->createTable($playerAliases);
 
         return $players;
     }
@@ -80,17 +74,17 @@ final class PlayersTable extends AbstractTable
                 'created_date' => ':createdDate',
                 'last_modified_date' => ':lastModifiedDate',
                 'name' => ':name',
+                'aliases' => ':aliases',
             ])
             ->setParameter('createdDate', DateTime::now())
             ->setParameter('lastModifiedDate', DateTime::now())
             ->setParameter('name', $record->name())
+            ->setParameter('aliases', Json::encode(
+                array_values($record->aliases())
+            ))
             ->executeStatement();
 
         $record->setId((int)$this->connection->lastInsertId());
-
-        foreach ($record->aliases() as $alias) {
-            $this->insertAliasRecord($record, $alias);
-        }
     }
 
     /**
@@ -101,20 +95,5 @@ final class PlayersTable extends AbstractTable
         foreach ($records as $record) {
             $this->insertRecord($record);
         }
-    }
-
-    private function insertAliasRecord(
-        PlayerRecord $record,
-        string $alias
-    ): void {
-        $qb = $this->connection->createQueryBuilder();
-        $qb->insert('stg_player_aliases')
-            ->values([
-                'player_id' => ':playerId',
-                'alias' => ':alias',
-            ])
-            ->setParameter('playerId', $record->id())
-            ->setParameter('alias', $alias)
-            ->executeStatement();
     }
 }

@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Stg\HallOfRecords\Player\Infrastructure\Database;
 
 use Doctrine\DBAL\Connection;
+use Nette\Utils\Json;
 use Stg\HallOfRecords\Player\Application\Query\ViewPlayerQueryHandlerInterface;
 use Stg\HallOfRecords\Shared\Application\Query\Resource;
 use Stg\HallOfRecords\Shared\Application\Query\Resources;
@@ -33,7 +34,6 @@ final class ViewPlayerQueryHandler implements ViewPlayerQueryHandlerInterface
     public function execute(ViewQuery $query): ViewResult
     {
         $player = $this->readPlayer($query);
-        $player->aliases = $this->readAliases($query);
         $player->scores = $this->readScores($query);
 
         return new ViewResult($player);
@@ -43,7 +43,7 @@ final class ViewPlayerQueryHandler implements ViewPlayerQueryHandlerInterface
     {
         $qb = $this->connection->createQueryBuilder();
 
-        $stmt = $qb->select('id', 'name')
+        $stmt = $qb->select('id', 'name', 'aliases')
             ->from('stg_players')
             ->where($qb->expr()->eq('id', ':id'))
             ->setParameter('id', $query->id())
@@ -56,30 +56,6 @@ final class ViewPlayerQueryHandler implements ViewPlayerQueryHandlerInterface
         }
 
         return $this->createPlayer($row);
-    }
-
-    /**
-     * @return string[]
-     */
-    private function readAliases(ViewQuery $query): array
-    {
-        $qb = $this->connection->createQueryBuilder();
-
-        $stmt = $qb->select('alias')
-            ->from('stg_player_aliases')
-            ->where($qb->expr()->eq('player_id', ':playerId'))
-            ->setParameter('playerId', $query->id())
-            ->orderBy('alias')
-            ->addOrderBy('id')
-            ->executeQuery();
-
-        $aliases = [];
-
-        while (($row = $stmt->fetchAssociative()) !== false) {
-            $aliases[] = $row['alias'];
-        }
-
-        return $aliases;
     }
 
     private function readScores(ViewQuery $query): Resources
@@ -123,6 +99,7 @@ final class ViewPlayerQueryHandler implements ViewPlayerQueryHandlerInterface
         $player = new Resource();
         $player->id = $row['id'];
         $player->name = $row['name'];
+        $player->aliases = Json::decode($row['aliases']);
 
         return $player;
     }

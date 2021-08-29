@@ -148,10 +148,9 @@ class ViewPlayerTest extends \Tests\TestCase
 
     public function testWithAliases(): void
     {
-        // Index represents expected sort order.
         $player =  $this->data()->createPlayer('Akuma', [
-            1 => 'Reddo Arimaa',
-            0 => 'Red Arimer'
+            'Reddo Arimaa',
+            'Red Arimer',
         ]);
 
         $this->executeTest($player, $this->locale()->get('en'));
