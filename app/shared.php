@@ -23,6 +23,7 @@ use Stg\HallOfRecords\Database\Database;
 use Stg\HallOfRecords\Shared\Application\Query\ListQueryCreator;
 use Stg\HallOfRecords\Shared\Application\Query\ViewQueryCreator;
 use Stg\HallOfRecords\Shared\Controller\IndexController;
+use Stg\HallOfRecords\Shared\Infrastructure\Http\BaseUri;
 use Stg\HallOfRecords\Shared\Infrastructure\Locale\LocaleDir;
 use Stg\HallOfRecords\Shared\Infrastructure\Locale\LocaleNegotiator;
 use Stg\HallOfRecords\Shared\Infrastructure\Locale\Locales;
@@ -68,6 +69,10 @@ return [
         return DriverManager::getConnection($settings['database']);
     })->parameter('settings', DI\get('settings')),
 
+    BaseUri::class => DI\factory(function (array $settings): BaseUri {
+        return new BaseUri($settings['http']['baseUri']);
+    })->parameter('settings', DI\get('settings')),
+
     Locales::class => function (): Locales {
         return new Locales('en', [
             new Locale('en'),
@@ -77,12 +82,7 @@ return [
     LocaleDir::class => function (): LocaleDir {
         return new LocaleDir(dirname(__DIR__) . '/locale');
     },
-    LocaleNegotiator::class => DI\factory(function (
-        Locales $locales,
-        array $settings
-    ): LocaleNegotiator {
-        return new LocaleNegotiator($locales, $settings['http']['baseUri']);
-    })->parameter('settings', DI\get('settings')),
+    LocaleNegotiator::class => DI\autowire(),
 
     TranslatorInterface::class => DI\autowire(Translator::class),
 
@@ -90,12 +90,7 @@ return [
     ViewQueryCreator::class => DI\autowire(),
 
     Renderer::class => DI\autowire(),
-    Routes::class => DI\factory(function (
-        Locales $locales,
-        array $settings
-    ): Routes {
-        return new Routes($locales, $settings['http']['baseUri']);
-    })->parameter('settings', DI\get('settings')),
+    Routes::class => DI\autowire(),
     SharedTemplates::class => DI\autowire(),
     BasicTemplate::class => DI\autowire(),
     FilterBoxTemplate::class => DI\autowire(),

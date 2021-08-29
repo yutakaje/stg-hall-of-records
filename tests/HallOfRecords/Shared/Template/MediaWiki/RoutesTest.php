@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Tests\HallOfRecords\Shared\Template\MediaWiki;
 
+use Stg\HallOfRecords\Shared\Infrastructure\Http\BaseUri;
 use Stg\HallOfRecords\Shared\Infrastructure\Locale\Locales;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 use Stg\HallOfRecords\Shared\Template\MediaWiki\Routes;
@@ -86,7 +87,7 @@ class RoutesTest extends \Tests\TestCase
             new Locale('en'),
             new Locale('ja'),
             new Locale('kr'),
-        ]), $inputBaseUri);
+        ]), new BaseUri($inputBaseUri));
 
         self::assertSame("{$expectedBaseUri}/{locale}", $routes->index());
         self::assertSame("{$expectedBaseUri}/{locale}/companies", $routes->listCompanies());

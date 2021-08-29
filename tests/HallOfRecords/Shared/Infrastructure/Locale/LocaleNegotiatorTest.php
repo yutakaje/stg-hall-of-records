@@ -15,6 +15,7 @@ namespace Tests\HallOfRecords\Shared\Infrastructure\Locale;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UriInterface;
+use Stg\HallOfRecords\Shared\Infrastructure\Http\BaseUri;
 use Stg\HallOfRecords\Shared\Infrastructure\Locale\LocaleNegotiator;
 use Stg\HallOfRecords\Shared\Infrastructure\Locale\Locales;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
@@ -46,7 +47,7 @@ class LocaleNegotiatorTest extends \Tests\TestCase
     {
         $locales = $this->createLocales();
 
-        $negotiator = new LocaleNegotiator($locales, $baseUri);
+        $negotiator = new LocaleNegotiator($locales, new BaseUri($baseUri));
 
         self::assertSame($locales->get('en'), $negotiator->negotiate(
             $this->createRequest("{$baseUri}/en/uri")

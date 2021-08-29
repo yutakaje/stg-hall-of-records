@@ -13,20 +13,23 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Shared\Template\MediaWiki;
 
+use Stg\HallOfRecords\Shared\Infrastructure\Http\BaseUri;
 use Stg\HallOfRecords\Shared\Infrastructure\Locale\Locales;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 
 final class Routes
 {
     private Locales $locales;
-    private string $locale;
     private string $baseUri;
+    private string $locale;
 
-    public function __construct(Locales $locales, string $baseUri = '')
+    public function __construct(Locales $locales, ?BaseUri $baseUri = null)
     {
         $this->locales = $locales;
+        $this->baseUri = $this->removeTrailingSlash(
+            $baseUri !== null ? $baseUri->value() : ''
+        );
         $this->locale = '{locale}';
-        $this->baseUri = $this->removeTrailingSlash($baseUri);
     }
 
     public function withLocale(Locale $locale): self

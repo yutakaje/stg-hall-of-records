@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Stg\HallOfRecords\Shared\Infrastructure\Locale;
 
 use Psr\Http\Message\ServerRequestInterface;
+use Stg\HallOfRecords\Shared\Infrastructure\Http\BaseUri;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 
 final class LocaleNegotiator
@@ -21,10 +22,10 @@ final class LocaleNegotiator
     private Locales $locales;
     private string $baseUri;
 
-    public function __construct(Locales $locales, string $baseUri = '')
+    public function __construct(Locales $locales, ?BaseUri $baseUri = null)
     {
         $this->locales = $locales;
-        $this->baseUri = $baseUri;
+        $this->baseUri = $baseUri !== null ? $baseUri->value() : '';
     }
 
     public function negotiate(ServerRequestInterface $request): Locale
