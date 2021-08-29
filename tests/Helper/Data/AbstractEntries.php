@@ -30,6 +30,14 @@ abstract class AbstractEntries
     }
 
     /**
+     * @return T
+     */
+    public function entryAt(int $index)
+    {
+        return $this->entries[$index];
+    }
+
+    /**
      * @return T[]
      */
     public function entries(): array

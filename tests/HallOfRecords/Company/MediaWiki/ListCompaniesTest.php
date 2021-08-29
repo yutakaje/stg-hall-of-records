@@ -34,7 +34,9 @@ class ListCompaniesTest extends \Tests\TestCase
             $this->addGames($company);
         }
 
-        $this->testWithLocale($companies, $this->locale()->get('en'));
+        $this->insertCompanies($companies);
+
+        $this->executeTest($companies, $this->locale()->get('en'));
     }
 
     public function testWithJaLocale(): void
@@ -50,26 +52,70 @@ class ListCompaniesTest extends \Tests\TestCase
             $this->addGames($company);
         }
 
-        $this->testWithLocale($companies, $this->locale()->get('ja'));
-    }
-
-    private function testWithLocale(
-        CompanyEntries $companies,
-        Locale $locale
-    ): void {
         $this->insertCompanies($companies);
 
+        $this->executeTest($companies, $this->locale()->get('ja'));
+    }
+
+    public function testFiltering(): void
+    {
+        $companies = new CompanyEntries([
+            $this->data()->createCompany('Atlus', 'atlus'),
+            $this->data()->createCompany('Capcom', 'capcom'),
+            $this->data()->createCompany('CAVE', 'cave'),
+            $this->data()->createCompany('Coreland', 'coreland'),
+            $this->data()->createCompany('カプコン', 'かぷこん'),
+            $this->data()->createCompany('彩京', 'さいきょう'),
+            $this->data()->createCompany('東亜プラン', 'とあぷらん'),
+            $this->data()->createCompany('四ツ羽根', 'よつばね'),
+        ]);
+
+        foreach ($companies->entries() as $company) {
+            $this->addGames($company);
+        }
+
+        $this->insertCompanies($companies);
+
+        $this->executeTest(
+            new CompanyEntries([
+                $companies->entryAt(1),
+                $companies->entryAt(2),
+            ]),
+            $this->locale()->get('en'),
+            'name like ca'
+        );
+        $this->executeTest(
+            new CompanyEntries([
+                $companies->entryAt(4),
+                $companies->entryAt(6),
+            ]),
+            $this->locale()->get('ja'),
+            'name like ん'
+        );
+    }
+
+    private function executeTest(
+        CompanyEntries $companies,
+        Locale $locale,
+        string $filterValue = ''
+    ): void {
         $request = $this->http()->createServerRequest(
             'GET',
             "/{$locale}/companies"
         );
+
+        if ($filterValue !== '') {
+            $request = $request->withQueryParams([
+                'q' => $filterValue,
+            ]);
+        }
 
         $response = $this->app()->handle($request);
 
         self::assertSame(StatusCodeInterface::STATUS_OK, $response->getStatusCode());
         self::assertSame(
             $this->mediaWiki()->canonicalizeHtml(
-                $this->createOutput($companies, $locale)
+                $this->createOutput($companies, $locale, $filterValue)
             ),
             $this->mediaWiki()->canonicalizeHtml(
                 (string)$response->getBody()
@@ -100,7 +146,7 @@ class ListCompaniesTest extends \Tests\TestCase
     private function createOutput(
         CompanyEntries $companies,
         Locale $locale,
-        string $filterValue = ''
+        string $filterValue
     ): string {
         return $this->mediaWiki()->removePlaceholders(
             $this->locale()->translate(

@@ -50,7 +50,9 @@ class ListGamesTest extends \Tests\TestCase
             $this->addScores($game);
         }
 
-        $this->testWithLocale($games, $this->locale()->get('en'));
+        $this->insertGames($games);
+
+        $this->executeTest($games, $this->locale()->get('en'));
     }
 
     public function testWithJaLocale(): void
@@ -82,26 +84,102 @@ class ListGamesTest extends \Tests\TestCase
             $this->addScores($game);
         }
 
-        $this->testWithLocale($games, $this->locale()->get('ja'));
-    }
-
-    private function testWithLocale(
-        GameEntries $games,
-        Locale $locale
-    ): void {
         $this->insertGames($games);
 
+        $this->executeTest($games, $this->locale()->get('ja'));
+    }
+
+    public function testFiltering(): void
+    {
+        $games = new GameEntries([
+            $this->data()->createGame(
+                $this->data()->createCompany('Tanoshimasu'),
+                'Aka to Blue Type-R',
+                'aka to blue type-r'
+            ),
+            $this->data()->createGame(
+                $this->data()->createCompany('CAVE'),
+                'Akai Katana',
+                'akai katana'
+            ),
+            $this->data()->createGame(
+                $this->data()->createCompany('SNK'),
+                'ASO: Armored Scrum Object / Alpha Mission',
+                'aso: armored scrum object / alpha mission'
+            ),
+            $this->data()->createGame(
+                $this->data()->createCompany('Visco'),
+                'Asuka & Asuka',
+                'asuka & asuka'
+            ),
+            $this->data()->createGame(
+                $this->data()->createCompany('ケイブ'),
+                'エスプレイド',
+                'えすぷれいど'
+            ),
+            $this->data()->createGame(
+                $this->data()->createCompany('ケイブ'),
+                'ケツイ〜絆地獄たち〜',
+                'けついきずなじごくたち'
+            ),
+            $this->data()->createGame(
+                $this->data()->createCompany('コナミ'),
+                '出たな!ツインビー',
+                'でたな!ついんびー',
+            ),
+            $this->data()->createGame(
+                $this->data()->createCompany('ライジング / エイティング'),
+                'バトルガレッガ',
+                'ばとるがれっが'
+            ),
+        ]);
+
+        foreach ($games->entries() as $game) {
+            $this->addScores($game);
+        }
+
+        $this->insertGames($games);
+
+        $this->executeTest(
+            new GameEntries([
+                $games->entryAt(0),
+                $games->entryAt(1),
+            ]),
+            $this->locale()->get('en'),
+            'name like aka'
+        );
+        $this->executeTest(
+            new GameEntries([
+                $games->entryAt(4),
+                $games->entryAt(7),
+            ]),
+            $this->locale()->get('ja'),
+            'name like れ'
+        );
+    }
+
+    private function executeTest(
+        GameEntries $games,
+        Locale $locale,
+        string $filterValue = ''
+    ): void {
         $request = $this->http()->createServerRequest(
             'GET',
             "/{$locale}/games"
         );
+
+        if ($filterValue !== '') {
+            $request = $request->withQueryParams([
+                'q' => $filterValue,
+            ]);
+        }
 
         $response = $this->app()->handle($request);
 
         self::assertSame(StatusCodeInterface::STATUS_OK, $response->getStatusCode());
         self::assertSame(
             $this->mediaWiki()->canonicalizeHtml(
-                $this->createOutput($games, $locale)
+                $this->createOutput($games, $locale, $filterValue)
             ),
             $this->mediaWiki()->canonicalizeHtml(
                 (string)$response->getBody()
@@ -137,7 +215,7 @@ class ListGamesTest extends \Tests\TestCase
     private function createOutput(
         GameEntries $games,
         Locale $locale,
-        string $filterValue = ''
+        string $filterValue
     ): string {
         return $this->mediaWiki()->removePlaceholders(
             $this->locale()->translate(

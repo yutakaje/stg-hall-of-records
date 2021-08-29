@@ -33,7 +33,9 @@ class ListPlayersTest extends \Tests\TestCase
             $this->addScores($player);
         }
 
-        $this->testWithLocale($players, $this->locale()->get('en'));
+        $this->insertPlayers($players);
+
+        $this->executeTest($players, $this->locale()->get('en'));
     }
 
     public function testWithJaLocale(): void
@@ -48,26 +50,76 @@ class ListPlayersTest extends \Tests\TestCase
             $this->addScores($player);
         }
 
-        $this->testWithLocale($players, $this->locale()->get('ja'));
-    }
-
-    private function testWithLocale(
-        PlayerEntries $players,
-        Locale $locale
-    ): void {
         $this->insertPlayers($players);
 
+        $this->executeTest($players, $this->locale()->get('ja'));
+    }
+
+    public function testFiltering(): void
+    {
+        $players = new PlayerEntries([
+            $this->data()->createPlayer('player1'),
+            $this->data()->createPlayer('player2'),
+            $this->data()->createPlayer('player3'),
+            $this->data()->createPlayer('プレイヤー1'),
+            $this->data()->createPlayer('プレイヤー2'),
+            $this->data()->createPlayer('プレイヤー3'),
+        ]);
+
+        foreach ($players->entries() as $player) {
+            $this->addScores($player);
+        }
+
+        $this->insertPlayers($players);
+
+        $this->executeTest(
+            new PlayerEntries([
+                $players->entryAt(0),
+                $players->entryAt(3),
+            ]),
+            $this->locale()->get('en'),
+            'name like 1'
+        );
+        $this->executeTest(
+            new PlayerEntries([
+                $players->entryAt(1),
+                $players->entryAt(4),
+            ]),
+            $this->locale()->get('ja'),
+            'name like 2'
+        );
+        $this->executeTest(
+            new PlayerEntries([
+                $players->entryAt(2),
+                $players->entryAt(5),
+            ]),
+            $this->locale()->get('en'),
+            'name like 3'
+        );
+    }
+
+    private function executeTest(
+        PlayerEntries $players,
+        Locale $locale,
+        string $filterValue = ''
+    ): void {
         $request = $this->http()->createServerRequest(
             'GET',
             "/{$locale}/players"
         );
+
+        if ($filterValue !== '') {
+            $request = $request->withQueryParams([
+                'q' => $filterValue,
+            ]);
+        }
 
         $response = $this->app()->handle($request);
 
         self::assertSame(StatusCodeInterface::STATUS_OK, $response->getStatusCode());
         self::assertSame(
             $this->mediaWiki()->canonicalizeHtml(
-                $this->createOutput($players, $locale)
+                $this->createOutput($players, $locale, $filterValue)
             ),
             $this->mediaWiki()->canonicalizeHtml(
                 (string)$response->getBody()
@@ -106,7 +158,7 @@ class ListPlayersTest extends \Tests\TestCase
     private function createOutput(
         PlayerEntries $players,
         Locale $locale,
-        string $filterValue = ''
+        string $filterValue
     ): string {
         return $this->mediaWiki()->removePlaceholders(
             $this->locale()->translate(
