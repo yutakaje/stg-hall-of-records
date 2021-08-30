@@ -47,6 +47,7 @@ final class GamesTable extends AbstractTable
         $games->addColumn('created_date', 'datetime');
         $games->addColumn('last_modified_date', 'datetime');
         $games->addColumn('company_id', 'integer');
+        $games->addColumn('name_filter', 'string', ['length' => 500]);
         $games->setPrimaryKey(['id']);
         $games->addForeignKeyConstraint($companies, ['company_id'], ['id']);
         $schemaManager->createTable($games);
@@ -77,7 +78,7 @@ final class GamesTable extends AbstractTable
             'locale',
             'name',
             'name_translit',
-            "({$this->nameFilterSql($alias)}) AS name_filter",
+            'name_filter',
             'company_id',
             'company_name',
             'company_name_translit',
@@ -98,6 +99,7 @@ final class GamesTable extends AbstractTable
             'localized.locale',
             'localized.name',
             'localized.name_translit',
+            'games.name_filter',
             'games.company_id',
             'companies.name AS company_name',
             'companies.name_translit AS company_name_translit',
@@ -120,24 +122,6 @@ final class GamesTable extends AbstractTable
                 )
             )
             ->getSQL();
-    }
-
-    private function nameFilterSql(string $alias): string
-    {
-        $expr = $this->connection->createQueryBuilder()->expr();
-        $separator = '|';
-
-        return $this->concatQueries($separator, array_map(
-            fn (Locale $locale) => $this->connection->createQueryBuilder()
-                ->select("name || '{$separator}' || name_translit")
-                ->from('stg_games_locale')
-                ->where($expr->and(
-                    $expr->eq('game_id', "{$alias}.id"),
-                    $expr->eq('locale', $expr->literal((string)$locale))
-                ))
-                ->getSQL(),
-            $this->locales()->all()
-        ));
     }
 
     /**
@@ -168,10 +152,12 @@ final class GamesTable extends AbstractTable
                 'created_date' => ':createdDate',
                 'last_modified_date' => ':lastModifiedDate',
                 'company_id' => ':companyId',
+                'name_filter' => ':nameFilter',
             ])
             ->setParameter('createdDate', DateTime::now())
             ->setParameter('lastModifiedDate', DateTime::now())
             ->setParameter('companyId', $record->companyId())
+            ->setParameter('nameFilter', $this->makeNameFilter($record))
             ->executeStatement();
 
         $record->setId((int)$this->connection->lastInsertId());
@@ -208,5 +194,17 @@ final class GamesTable extends AbstractTable
             ->setParameter('name', $record->name($locale))
             ->setParameter('translitName', $record->translitName($locale))
             ->executeStatement();
+    }
+
+    private function makeNameFilter(GameRecord $record): string
+    {
+        return implode('|', array_reduce(
+            $this->locales()->all(),
+            fn (array $entries, Locale $locale) => array_merge($entries, [
+                $record->name($locale),
+                $record->translitName($locale),
+            ]),
+            []
+        ));
     }
 }

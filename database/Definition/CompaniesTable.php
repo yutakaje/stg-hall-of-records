@@ -45,6 +45,7 @@ final class CompaniesTable extends AbstractTable
         $companies->addColumn('id', 'integer', ['autoincrement' => true]);
         $companies->addColumn('created_date', 'datetime');
         $companies->addColumn('last_modified_date', 'datetime');
+        $companies->addColumn('name_filter', 'string', ['length' => 500]);
         $companies->setPrimaryKey(['id']);
         $schemaManager->createTable($companies);
 
@@ -74,7 +75,7 @@ final class CompaniesTable extends AbstractTable
             'locale',
             'name',
             'name_translit',
-            "({$this->nameFilterSql($alias)}) AS name_filter"
+            'name_filter'
         )
             ->from("({$this->companySql()})", $alias)
             ->getSQL());
@@ -90,7 +91,8 @@ final class CompaniesTable extends AbstractTable
             'companies.last_modified_date',
             'localized.locale',
             'localized.name',
-            'localized.name_translit'
+            'localized.name_translit',
+            'companies.name_filter'
         )
             ->from('stg_companies_locale', 'localized')
             ->join(
@@ -100,24 +102,6 @@ final class CompaniesTable extends AbstractTable
                 $qb->expr()->eq('companies.id', 'localized.company_id')
             )
             ->getSQL();
-    }
-
-    private function nameFilterSql(string $alias): string
-    {
-        $expr = $this->connection->createQueryBuilder()->expr();
-        $separator = '|';
-
-        return $this->concatQueries($separator, array_map(
-            fn (Locale $locale) => $this->connection->createQueryBuilder()
-                ->select("name || '{$separator}' || name_translit")
-                ->from('stg_companies_locale')
-                ->where($expr->and(
-                    $expr->eq('company_id', "{$alias}.id"),
-                    $expr->eq('locale', $expr->literal((string)$locale))
-                ))
-                ->getSQL(),
-            $this->locales()->all()
-        ));
     }
 
     /**
@@ -145,9 +129,11 @@ final class CompaniesTable extends AbstractTable
             ->values([
                 'created_date' => ':createdDate',
                 'last_modified_date' => ':lastModifiedDate',
+                'name_filter' => ':nameFilter',
             ])
             ->setParameter('createdDate', DateTime::now())
             ->setParameter('lastModifiedDate', DateTime::now())
+            ->setParameter('nameFilter', $this->makeNameFilter($record))
             ->executeStatement();
 
         $record->setId((int)$this->connection->lastInsertId());
@@ -184,5 +170,17 @@ final class CompaniesTable extends AbstractTable
             ->setParameter('name', $record->name($locale))
             ->setParameter('translitName', $record->translitName($locale))
             ->executeStatement();
+    }
+
+    private function makeNameFilter(CompanyRecord $record): string
+    {
+        return implode('|', array_reduce(
+            $this->locales()->all(),
+            fn (array $entries, Locale $locale) => array_merge($entries, [
+                $record->name($locale),
+                $record->translitName($locale),
+            ]),
+            []
+        ));
     }
 }

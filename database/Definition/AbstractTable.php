@@ -30,16 +30,6 @@ abstract class AbstractTable
     }
 
     /**
-     * @param string[] $queries
-     */
-    final protected function concatQueries(
-        string $separator,
-        array $queries
-    ): string {
-        return implode(") || '{$separator}' || (", $queries);
-    }
-
-    /**
      * @template T
      * @param array<string,T> $values
      * @return array<string,T>
