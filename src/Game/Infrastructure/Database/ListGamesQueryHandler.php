@@ -33,7 +33,10 @@ final class ListGamesQueryHandler implements ListGamesQueryHandlerInterface
         $this->connection = $connection;
         $this->applier = new QueryApplier([
             'id' => QueryColumn::int('id'),
-            'name' => QueryColumn::string('name_filter'),
+            'name' => QueryColumn::oneOf(
+                QueryColumn::string('name'),
+                QueryColumn::string('name_filter'),
+            ),
             'company.id' => QueryColumn::int('company_id'),
             'company.name' => QueryColumn::string('company_name_filter'),
             'numScores' => QueryColumn::int('num_scores'),

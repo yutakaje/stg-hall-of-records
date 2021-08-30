@@ -33,7 +33,10 @@ final class ListCompaniesQueryHandler implements ListCompaniesQueryHandlerInterf
         $this->connection = $connection;
         $this->applier = new QueryApplier([
             'id' => QueryColumn::int('id'),
-            'name' => QueryColumn::string('name_filter'),
+            'name' => QueryColumn::oneOf(
+                QueryColumn::string('name'),
+                QueryColumn::string('name_filter'),
+            ),
             'numGames' => QueryColumn::int('num_games'),
         ]);
     }
