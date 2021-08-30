@@ -33,7 +33,10 @@ final class ListPlayersQueryHandler implements ListPlayersQueryHandlerInterface
         $this->connection = $connection;
         $this->applier = new QueryApplier([
             'id' => QueryColumn::int('id'),
-            'name' => QueryColumn::string('name'),
+            'name' => QueryColumn::oneOf(
+                QueryColumn::string('name'),
+                QueryColumn::string('name_filter'),
+            ),
             'numScores' => QueryColumn::int('num_scores'),
         ]);
     }
@@ -82,6 +85,7 @@ final class ListPlayersQueryHandler implements ListPlayersQueryHandlerInterface
         return $qb->select(
             'id',
             'name',
+            'name_filter',
             "({$this->numScoresSql()}) AS num_scores"
         )
             ->from('stg_players', 'players')

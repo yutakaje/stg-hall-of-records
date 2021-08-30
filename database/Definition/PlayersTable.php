@@ -46,7 +46,8 @@ final class PlayersTable extends AbstractTable
         $players->addColumn('created_date', 'datetime');
         $players->addColumn('last_modified_date', 'datetime');
         $players->addColumn('name', 'string', ['length' => 100]);
-        $players->addColumn('aliases', 'string', ['length' => 500]);
+        $players->addColumn('aliases', 'string', ['length' => 300]);
+        $players->addColumn('name_filter', 'string', ['length' => 500]);
         $players->setPrimaryKey(['id']);
         $schemaManager->createTable($players);
 
@@ -75,13 +76,13 @@ final class PlayersTable extends AbstractTable
                 'last_modified_date' => ':lastModifiedDate',
                 'name' => ':name',
                 'aliases' => ':aliases',
+                'name_filter' => ':nameFilter',
             ])
             ->setParameter('createdDate', DateTime::now())
             ->setParameter('lastModifiedDate', DateTime::now())
             ->setParameter('name', $record->name())
-            ->setParameter('aliases', Json::encode(
-                array_values($record->aliases())
-            ))
+            ->setParameter('aliases', $this->makeAliases($record))
+            ->setParameter('nameFilter', $this->makeNameFilter($record))
             ->executeStatement();
 
         $record->setId((int)$this->connection->lastInsertId());
@@ -95,5 +96,20 @@ final class PlayersTable extends AbstractTable
         foreach ($records as $record) {
             $this->insertRecord($record);
         }
+    }
+
+    private function makeAliases(PlayerRecord $record): string
+    {
+        return Json::encode(
+            array_values($record->aliases())
+        );
+    }
+
+    private function makeNameFilter(PlayerRecord $record): string
+    {
+        return implode('|', array_merge(
+            [$record->name()],
+            $record->aliases(),
+        ));
     }
 }

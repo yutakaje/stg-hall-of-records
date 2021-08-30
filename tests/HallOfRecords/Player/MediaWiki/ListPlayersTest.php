@@ -59,7 +59,7 @@ class ListPlayersTest extends \Tests\TestCase
     {
         $players = new PlayerEntries([
             $this->data()->createPlayer('player1'),
-            $this->data()->createPlayer('player2'),
+            $this->data()->createPlayer('player2', ['alias1']),
             $this->data()->createPlayer('player3'),
             $this->data()->createPlayer('プレイヤー1'),
             $this->data()->createPlayer('プレイヤー2'),
@@ -75,6 +75,7 @@ class ListPlayersTest extends \Tests\TestCase
         $this->executeTest(
             new PlayerEntries([
                 $players->entryAt(0),
+                $players->entryAt(1),
                 $players->entryAt(3),
             ]),
             $this->locale()->get('en'),
