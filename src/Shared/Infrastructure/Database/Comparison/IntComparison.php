@@ -49,7 +49,7 @@ final class IntComparison implements ComparisonInterface
 
         $qb->setParameter($placeholder, $this->value, ParameterType::INTEGER);
 
-        return $qb->andWhere($this->comparison(
+        return $qb->andWhere($this->compare(
             $qb->expr(),
             $this->columnName,
             $this->operator->value(),
@@ -57,7 +57,7 @@ final class IntComparison implements ComparisonInterface
         ));
     }
 
-    private function comparison(
+    private function compare(
         ExpressionBuilder $expr,
         string $column,
         string $operator,

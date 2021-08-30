@@ -16,39 +16,55 @@ namespace Stg\HallOfRecords\Shared\Infrastructure\Database;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Stg\HallOfRecords\Shared\Application\Query\Filter\Condition;
 use Stg\HallOfRecords\Shared\Infrastructure\Database\Comparison\IntComparison;
+use Stg\HallOfRecords\Shared\Infrastructure\Database\Comparison\OneOfComparison;
 use Stg\HallOfRecords\Shared\Infrastructure\Database\Comparison\StringComparison;
 
 /**
- * @phpstan-type DataType self::TYPE_*
+ * @phpstan-type DataType self::*
+ * @phpstan-type Parameters array<string,mixed>
  */
 final class QueryColumn
 {
-    private const TYPE_INT = 'int';
-    private const TYPE_STRING = 'string';
+    private const INT = 'int';
+    private const STRING = 'string';
+    private const ONE_OF = 'oneOf';
 
     /** @var DataType */
     private string $dataType;
-    private string $columnName;
+    /** @var Parameters */
+    private array $parameters;
 
     /**
      * @param DataType $dataType
+     * @param Parameters $parameters
      */
     private function __construct(
         string $dataType,
-        string $columnName
+        array $parameters
     ) {
         $this->dataType = $dataType;
-        $this->columnName = $columnName;
+        $this->parameters = $parameters;
     }
 
     public static function int(string $columnName): self
     {
-        return new self(self::TYPE_INT, $columnName);
+        return new self(self::INT, [
+            'columnName' => $columnName,
+        ]);
     }
 
     public static function string(string $columnName): self
     {
-        return new self(self::TYPE_STRING, $columnName);
+        return new self(self::STRING, [
+            'columnName' => $columnName,
+        ]);
+    }
+
+    public static function oneOf(QueryColumn ...$columns): self
+    {
+        return new self(self::ONE_OF, [
+            'columns' => $columns,
+        ]);
     }
 
     public function apply(QueryBuilder $qb, Condition $condition): QueryBuilder
@@ -59,26 +75,53 @@ final class QueryColumn
     private function createComparison(Condition $condition): ComparisonInterface
     {
         switch ($this->dataType) {
-            case self::TYPE_INT:
+            case self::INT:
                 return new IntComparison(
                     $condition->id(),
-                    $this->columnName,
+                    $this->columnName(),
                     $condition->operator(),
                     $condition->value()
                 );
 
-            case self::TYPE_STRING:
+            case self::STRING:
                 return new StringComparison(
                     $condition->id(),
-                    $this->columnName,
+                    $this->columnName(),
                     $condition->operator(),
                     $condition->value()
                 );
+
+            case self::ONE_OF:
+                return new OneOfComparison(array_map(
+                    // We create a new condition for each comparison because
+                    // we do not want them to share the same condition id.
+                    fn (QueryColumn $column) => $column->createComparison(
+                        new Condition(
+                            $condition->name(),
+                            $condition->operator()->value(),
+                            $condition->value()
+                        )
+                    ),
+                    $this->columns()
+                ));
 
             default:
                 throw new \LogicException(
                     "Invalid data type `{$this->dataType}`"
                 );
         }
+    }
+
+    private function columnName(): string
+    {
+        return $this->parameters['columnName'];
+    }
+
+    /**
+     * @return QueryColumn[]
+     */
+    private function columns(): array
+    {
+        return $this->parameters['columns'];
     }
 }

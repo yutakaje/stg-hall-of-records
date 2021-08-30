@@ -65,12 +65,19 @@ class QueryColumnTest extends \Tests\TestCase
 
         $column = QueryColumn::int($columnName);
 
-        self::assertEquals(
-            $this->db()->fakeConnection()->createQueryBuilder()
-                ->where("{$columnName} {$this->mapOperator($operator)} :{$condition->id()}")
-                ->setParameter($condition->id(), $value, ParameterType::INTEGER),
-            $column->apply($qb, $condition)
-        );
+        $appliedQb = $column->apply($qb, $condition);
+
+        $parameterNames = array_keys($appliedQb->getParameters());
+        self::assertCount(1, $parameterNames);
+
+        $expectedOperator = $this->mapOperator($operator);
+        $expectedQb = $this->db()->fakeConnection()->createQueryBuilder()
+            ->where("{$columnName} {$expectedOperator} :{$parameterNames[0]}")
+            ->setParameter($parameterNames[0], $value, ParameterType::INTEGER);
+
+        self::assertSame($expectedQb->getSQL(), $appliedQb->getSQL());
+        self::assertSame($expectedQb->getParameters(), $appliedQb->getParameters());
+        self::assertSame($expectedQb->getParameterTypes(), $appliedQb->getParameterTypes());
     }
 
     public function testStringColumnEquals(): void
@@ -122,13 +129,118 @@ class QueryColumnTest extends \Tests\TestCase
 
         $column = QueryColumn::string($columnName);
 
+        $appliedQb = $column->apply($qb, $condition);
+
+        $parameterNames = array_keys($appliedQb->getParameters());
+        self::assertCount(1, $parameterNames);
+
         $expectedOperator = $this->mapOperator($operator);
-        self::assertEquals(
-            $this->db()->fakeConnection()->createQueryBuilder()
-                ->where("LOWER({$columnName}) {$expectedOperator} LOWER(:{$condition->id()})")
-                ->setParameter($condition->id(), $expectedValue, ParameterType::STRING),
-            $column->apply($qb, $condition)
+        $expectedQb = $this->db()->fakeConnection()->createQueryBuilder()
+            ->where("LOWER({$columnName}) {$expectedOperator} LOWER(:{$parameterNames[0]})")
+            ->setParameter($parameterNames[0], $expectedValue, ParameterType::STRING);
+
+        self::assertSame($expectedQb->getSQL(), $appliedQb->getSQL());
+        self::assertSame($expectedQb->getParameters(), $appliedQb->getParameters());
+        self::assertSame($expectedQb->getParameterTypes(), $appliedQb->getParameterTypes());
+    }
+
+    public function testOneOfColumnWithInt(): void
+    {
+        $columnNames = [
+            $this->randomColumnName(),
+            $this->randomColumnName(),
+        ];
+        $passedValue = $this->randomValue();
+        $expectedValue = $passedValue;
+
+        $condition = new Condition(
+            $this->randomName(),
+            Operator::OP_GT,
+            $passedValue
         );
+
+        $qb = $this->db()->fakeConnection()->createQueryBuilder();
+
+        $column = QueryColumn::oneOf(
+            QueryColumn::int($columnNames[0]),
+            QueryColumn::int($columnNames[1]),
+        );
+
+        $appliedQb = $column->apply($qb, $condition);
+
+        $parameterNames = array_keys($appliedQb->getParameters());
+        self::assertCount(2, $parameterNames);
+
+        $expectedOperator = $this->mapOperator($condition->operator()->value());
+        $expectedQb = $this->db()->fakeConnection()->createQueryBuilder()
+            ->where(
+                "{$columnNames[0]} {$expectedOperator} :{$parameterNames[0]}"
+                . " OR {$columnNames[1]} {$expectedOperator} :{$parameterNames[1]}"
+            )
+            ->setParameter($parameterNames[0], $expectedValue, ParameterType::INTEGER)
+            ->setParameter($parameterNames[1], $expectedValue, ParameterType::INTEGER);
+
+        self::assertSame($expectedQb->getSQL(), $appliedQb->getSQL());
+        self::assertSame($expectedQb->getParameters(), $appliedQb->getParameters());
+        self::assertSame($expectedQb->getParameterTypes(), $appliedQb->getParameterTypes());
+    }
+
+    public function testOneOfColumnWithStringNonFuzzy(): void
+    {
+        $passedValue = $this->randomValue();
+        $expectedValue = $passedValue;
+
+        $this->testOneOfColumnWithString(Operator::OP_EQ, $passedValue, $expectedValue);
+    }
+
+    public function testOneOfColumnWithStringFuzzy(): void
+    {
+        $passedValue = $this->randomValue();
+        $expectedValue = "%{$passedValue}%";
+
+        $this->testOneOfColumnWithString(Operator::OP_LIKE, $passedValue, $expectedValue);
+    }
+
+    private function testOneOfColumnWithString(
+        string $operator,
+        string $passedValue,
+        string $expectedValue
+    ): void {
+        $columnNames = [
+            $this->randomColumnName(),
+            $this->randomColumnName(),
+        ];
+
+        $condition = new Condition(
+            $this->randomName(),
+            $operator,
+            $passedValue
+        );
+
+        $qb = $this->db()->fakeConnection()->createQueryBuilder();
+
+        $column = QueryColumn::oneOf(
+            QueryColumn::string($columnNames[0]),
+            QueryColumn::string($columnNames[1]),
+        );
+
+        $appliedQb = $column->apply($qb, $condition);
+
+        $parameterNames = array_keys($appliedQb->getParameters());
+        self::assertCount(2, $parameterNames);
+
+        $expectedOperator = $this->mapOperator($condition->operator()->value());
+        $expectedQb = $this->db()->fakeConnection()->createQueryBuilder()
+            ->where(
+                "LOWER({$columnNames[0]}) {$expectedOperator} LOWER(:{$parameterNames[0]})"
+                . " OR LOWER({$columnNames[1]}) {$expectedOperator} LOWER(:{$parameterNames[1]})"
+            )
+            ->setParameter($parameterNames[0], $expectedValue, ParameterType::STRING)
+            ->setParameter($parameterNames[1], $expectedValue, ParameterType::STRING);
+
+        self::assertSame($expectedQb->getSQL(), $appliedQb->getSQL());
+        self::assertSame($expectedQb->getParameters(), $appliedQb->getParameters());
+        self::assertSame($expectedQb->getParameterTypes(), $appliedQb->getParameterTypes());
     }
 
     private function randomColumnName(): string

@@ -54,7 +54,7 @@ final class StringComparison implements ComparisonInterface
             ParameterType::STRING
         );
 
-        return $qb->andWhere($this->comparison(
+        return $qb->andWhere($this->compare(
             $qb->expr(),
             $this->columnName,
             $operator,
@@ -62,7 +62,7 @@ final class StringComparison implements ComparisonInterface
         ));
     }
 
-    private function comparison(
+    private function compare(
         ExpressionBuilder $expr,
         string $column,
         string $operator,
