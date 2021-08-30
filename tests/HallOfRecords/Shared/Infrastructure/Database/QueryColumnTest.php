@@ -22,32 +22,32 @@ class QueryColumnTest extends \Tests\TestCase
 {
     public function testIntColumnEquals(): void
     {
-        $this->testIntColumn(Operator::OP_EQ);
+        $this->testIntColumn(Operator::EQ);
     }
 
     public function testIntColumnNotEquals(): void
     {
-        $this->testIntColumn(Operator::OP_NEQ);
+        $this->testIntColumn(Operator::NEQ);
     }
 
     public function testIntColumnGreaterThan(): void
     {
-        $this->testIntColumn(Operator::OP_GT);
+        $this->testIntColumn(Operator::GT);
     }
 
     public function testIntColumnGreaterThanOrEquals(): void
     {
-        $this->testIntColumn(Operator::OP_GTE);
+        $this->testIntColumn(Operator::GTE);
     }
 
     public function testIntColumnLessThan(): void
     {
-        $this->testIntColumn(Operator::OP_LT);
+        $this->testIntColumn(Operator::LT);
     }
 
     public function testIntColumnLessThanOrEquals(): void
     {
-        $this->testIntColumn(Operator::OP_LTE);
+        $this->testIntColumn(Operator::LTE);
     }
 
     private function testIntColumn(string $operator): void
@@ -85,7 +85,7 @@ class QueryColumnTest extends \Tests\TestCase
         $passedValue = $this->randomValue();
         $expectedValue = $passedValue;
 
-        $this->testStringColumn(Operator::OP_EQ, $passedValue, $expectedValue);
+        $this->testStringColumn(Operator::EQ, $passedValue, $expectedValue);
     }
 
     public function testStringColumnNotEquals(): void
@@ -93,7 +93,7 @@ class QueryColumnTest extends \Tests\TestCase
         $passedValue = $this->randomValue();
         $expectedValue = $passedValue;
 
-        $this->testStringColumn(Operator::OP_NEQ, $passedValue, $expectedValue);
+        $this->testStringColumn(Operator::NEQ, $passedValue, $expectedValue);
     }
 
     public function testStringColumnLike(): void
@@ -101,7 +101,7 @@ class QueryColumnTest extends \Tests\TestCase
         $passedValue = $this->randomValue();
         $expectedValue = "%{$passedValue}%";
 
-        $this->testStringColumn(Operator::OP_LIKE, $passedValue, $expectedValue);
+        $this->testStringColumn(Operator::LIKE, $passedValue, $expectedValue);
     }
 
     public function testStringColumnNotLike(): void
@@ -109,7 +109,7 @@ class QueryColumnTest extends \Tests\TestCase
         $passedValue = $this->randomValue();
         $expectedValue = "%{$passedValue}%";
 
-        $this->testStringColumn(Operator::OP_NLIKE, $passedValue, $expectedValue);
+        $this->testStringColumn(Operator::NLIKE, $passedValue, $expectedValue);
     }
 
     private function testStringColumn(
@@ -155,7 +155,7 @@ class QueryColumnTest extends \Tests\TestCase
 
         $condition = new Condition(
             $this->randomName(),
-            Operator::OP_GT,
+            Operator::GT,
             $passedValue
         );
 
@@ -190,7 +190,7 @@ class QueryColumnTest extends \Tests\TestCase
         $passedValue = $this->randomValue();
         $expectedValue = $passedValue;
 
-        $this->testOneOfColumnWithString(Operator::OP_EQ, $passedValue, $expectedValue);
+        $this->testOneOfColumnWithString(Operator::EQ, $passedValue, $expectedValue);
     }
 
     public function testOneOfColumnWithStringFuzzy(): void
@@ -198,7 +198,7 @@ class QueryColumnTest extends \Tests\TestCase
         $passedValue = $this->randomValue();
         $expectedValue = "%{$passedValue}%";
 
-        $this->testOneOfColumnWithString(Operator::OP_LIKE, $passedValue, $expectedValue);
+        $this->testOneOfColumnWithString(Operator::LIKE, $passedValue, $expectedValue);
     }
 
     private function testOneOfColumnWithString(
@@ -261,14 +261,14 @@ class QueryColumnTest extends \Tests\TestCase
     private function mapOperator(string $operator): string
     {
         $mapping = [
-            Operator::OP_EQ => '=',
-            Operator::OP_NEQ => '<>',
-            Operator::OP_LIKE => 'LIKE',
-            Operator::OP_NLIKE => 'NOT LIKE',
-            Operator::OP_GT => '>',
-            Operator::OP_GTE => '>=',
-            Operator::OP_LT => '<',
-            Operator::OP_LTE => '<=',
+            Operator::EQ => '=',
+            Operator::NEQ => '<>',
+            Operator::LIKE => 'LIKE',
+            Operator::NLIKE => 'NOT LIKE',
+            Operator::GT => '>',
+            Operator::GTE => '>=',
+            Operator::LT => '<',
+            Operator::LTE => '<=',
         ];
 
         return $mapping[$operator] ?? '';

@@ -101,14 +101,14 @@ class FilterTest extends \Tests\TestCase
     private function randomOperator(): string
     {
         $candidates = [
-            Operator::OP_EQ,
-            Operator::OP_NEQ,
-            Operator::OP_LIKE,
-            Operator::OP_NLIKE,
-            Operator::OP_GT,
-            Operator::OP_GTE,
-            Operator::OP_LT,
-            Operator::OP_LTE,
+            Operator::EQ,
+            Operator::NEQ,
+            Operator::LIKE,
+            Operator::NLIKE,
+            Operator::GT,
+            Operator::GTE,
+            Operator::LT,
+            Operator::LTE,
         ];
 
         return $candidates[array_rand($candidates)];

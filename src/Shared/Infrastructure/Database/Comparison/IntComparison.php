@@ -66,26 +66,26 @@ final class IntComparison implements ComparisonInterface
         $placeholder = ":{$placeholder}";
 
         switch ($operator) {
-            case Operator::OP_EQ:
+            case Operator::EQ:
                 return $expr->eq($column, $placeholder);
 
-            case Operator::OP_NEQ:
+            case Operator::NEQ:
                 return $expr->neq($column, $placeholder);
 
-            case Operator::OP_GT:
+            case Operator::GT:
                 return $expr->gt($column, $placeholder);
 
-            case Operator::OP_GTE:
+            case Operator::GTE:
                 return $expr->gte($column, $placeholder);
 
-            case Operator::OP_LT:
+            case Operator::LT:
                 return $expr->lt($column, $placeholder);
 
-            case Operator::OP_LTE:
+            case Operator::LTE:
                 return $expr->lte($column, $placeholder);
 
-            case Operator::OP_LIKE:
-            case Operator::OP_NLIKE:
+            case Operator::LIKE:
+            case Operator::NLIKE:
             default:
                 throw FilterException::invalidComparison('integer', $operator);
         }

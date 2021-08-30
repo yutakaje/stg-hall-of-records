@@ -20,42 +20,42 @@ class OperatorTest extends \Tests\TestCase
 {
     public function testEquals(): void
     {
-        $this->testWithValidValue(Operator::OP_EQ);
+        $this->testWithValidValue(Operator::EQ);
     }
 
     public function testNotEquals(): void
     {
-        $this->testWithValidValue(Operator::OP_NEQ);
+        $this->testWithValidValue(Operator::NEQ);
     }
 
     public function testLike(): void
     {
-        $this->testWithValidValue(Operator::OP_LIKE);
+        $this->testWithValidValue(Operator::LIKE);
     }
 
     public function testNotLike(): void
     {
-        $this->testWithValidValue(Operator::OP_NLIKE);
+        $this->testWithValidValue(Operator::NLIKE);
     }
 
     public function testGreaterThan(): void
     {
-        $this->testWithValidValue(Operator::OP_GT);
+        $this->testWithValidValue(Operator::GT);
     }
 
     public function testGreaterThanOrEquals(): void
     {
-        $this->testWithValidValue(Operator::OP_GTE);
+        $this->testWithValidValue(Operator::GTE);
     }
 
     public function testLessThan(): void
     {
-        $this->testWithValidValue(Operator::OP_LT);
+        $this->testWithValidValue(Operator::LT);
     }
 
     public function testLessThanOrEquals(): void
     {
-        $this->testWithValidValue(Operator::OP_LTE);
+        $this->testWithValidValue(Operator::LTE);
     }
 
     private function testWithValidValue(string $value): void

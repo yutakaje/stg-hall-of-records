@@ -14,18 +14,18 @@ declare(strict_types=1);
 namespace Stg\HallOfRecords\Shared\Application\Query\Filter;
 
 /**
- * @phpstan-type Value self::OP_*
+ * @phpstan-type Value self::*
  */
 final class Operator
 {
-    public const OP_EQ = 'eq';
-    public const OP_NEQ = 'neq';
-    public const OP_LIKE = 'like';
-    public const OP_NLIKE = 'nlike';
-    public const OP_GT = 'gt';
-    public const OP_GTE = 'gte';
-    public const OP_LT = 'lt';
-    public const OP_LTE = 'lte';
+    public const EQ = 'eq';
+    public const NEQ = 'neq';
+    public const LIKE = 'like';
+    public const NLIKE = 'nlike';
+    public const GT = 'gt';
+    public const GTE = 'gte';
+    public const LT = 'lt';
+    public const LTE = 'lte';
 
     /** @var Value */
     private string $value;
@@ -46,14 +46,14 @@ final class Operator
     private function validate(string $value)
     {
         if (
-            $value === self::OP_EQ
-            || $value === self::OP_NEQ
-            || $value === self::OP_LIKE
-            || $value === self::OP_NLIKE
-            || $value === self::OP_GT
-            || $value === self::OP_GTE
-            || $value === self::OP_LT
-            || $value === self::OP_LTE
+            $value === self::EQ
+            || $value === self::NEQ
+            || $value === self::LIKE
+            || $value === self::NLIKE
+            || $value === self::GT
+            || $value === self::GTE
+            || $value === self::LT
+            || $value === self::LTE
         ) {
             return $value;
         }

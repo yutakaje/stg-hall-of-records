@@ -72,22 +72,22 @@ final class StringComparison implements ComparisonInterface
         $placeholder = $this->lower(":{$placeholder}");
 
         switch ($operator) {
-            case Operator::OP_EQ:
+            case Operator::EQ:
                 return $expr->eq($column, $placeholder);
 
-            case Operator::OP_NEQ:
+            case Operator::NEQ:
                 return $expr->neq($column, $placeholder);
 
-            case Operator::OP_LIKE:
+            case Operator::LIKE:
                 return $expr->like($column, $placeholder);
 
-            case Operator::OP_NLIKE:
+            case Operator::NLIKE:
                 return $expr->notLike($column, $placeholder);
 
-            case Operator::OP_GT:
-            case Operator::OP_GTE:
-            case Operator::OP_LT:
-            case Operator::OP_LTE:
+            case Operator::GT:
+            case Operator::GTE:
+            case Operator::LT:
+            case Operator::LTE:
             default:
                 throw FilterException::invalidComparison('string', $operator);
         }
@@ -96,18 +96,18 @@ final class StringComparison implements ComparisonInterface
     private function getParameterValue(string $operator): string
     {
         switch ($operator) {
-            case Operator::OP_EQ:
-            case Operator::OP_NEQ:
+            case Operator::EQ:
+            case Operator::NEQ:
                 return $this->value;
 
-            case Operator::OP_LIKE:
-            case Operator::OP_NLIKE:
+            case Operator::LIKE:
+            case Operator::NLIKE:
                 return "%{$this->value}%";
 
-            case Operator::OP_GT:
-            case Operator::OP_GTE:
-            case Operator::OP_LT:
-            case Operator::OP_LTE:
+            case Operator::GT:
+            case Operator::GTE:
+            case Operator::LT:
+            case Operator::LTE:
             default:
                 throw FilterException::invalidComparison('string', $operator);
         }
