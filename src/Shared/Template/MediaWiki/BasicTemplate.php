@@ -36,7 +36,8 @@ final class BasicTemplate extends AbstractSimpleTemplate
         return $this->withLocale($locale)->doRender(
             $content,
             $selfLinks,
-            $message
+            $message,
+            $locale
         );
     }
 
@@ -46,7 +47,8 @@ final class BasicTemplate extends AbstractSimpleTemplate
     private function doRender(
         string $content,
         array $selfLinks,
-        ResultMessage $message
+        ResultMessage $message,
+        Locale $locale
     ): string {
         return $this->renderer()->render('basic', [
             'content' => $content,
@@ -57,15 +59,21 @@ final class BasicTemplate extends AbstractSimpleTemplate
                 'games' => $this->routes()->listGames(),
                 'players' => $this->routes()->listPlayers(),
             ],
-            'message' => $this->renderMessage($message),
+            'message' => $this->renderMessage($message, $locale),
         ]);
     }
 
-    private function renderMessage(ResultMessage $message): string
-    {
+    private function renderMessage(
+        ResultMessage $message,
+        Locale $locale
+    ): string {
         return $this->renderer()->render('message', [
             'type' => $message->type(),
-            'message' => $message->message(),
+            'message' => $this->translator()->trans(
+                $locale,
+                $message->message(),
+                $message->attributes()
+            ),
         ]);
     }
 }

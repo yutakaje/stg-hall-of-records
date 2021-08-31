@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Shared\Template\MediaWiki;
 
+use Stg\HallOfRecords\Shared\Infrastructure\Locale\TranslatorInterface;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 use Stg\HallOfRecords\Shared\Template\Renderer;
 
@@ -20,25 +21,33 @@ abstract class AbstractSimpleTemplate
 {
     private Renderer $renderer;
     private Routes $routes;
+    private TranslatorInterface $translator;
 
     public function __construct(
         Renderer $renderer,
-        Routes $routes
+        Routes $routes,
+        TranslatorInterface $translator
     ) {
         $this->renderer = $this->initRenderer($renderer);
         $this->routes = $routes;
+        $this->translator = $translator;
     }
 
     abstract protected function initRenderer(Renderer $renderer): Renderer;
 
-    public function renderer(): Renderer
+    protected function renderer(): Renderer
     {
         return $this->renderer;
     }
 
-    public function routes(): Routes
+    protected function routes(): Routes
     {
         return $this->routes;
+    }
+
+    protected function translator(): TranslatorInterface
+    {
+        return $this->translator;
     }
 
     /**

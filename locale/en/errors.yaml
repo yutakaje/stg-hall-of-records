@@ -1,0 +1,8 @@
+# English
+errors:
+    filter:
+        invalid-operator: 'Invalid operator `%operator%`'
+        invalid-conjunction: 'Invalid operator `%operator%`'
+        invalid-field-name: 'Invalid field name `%name%`'
+        invalid-comparison.integer: 'Invalid operator `%operator%` for integer comparison'
+        invalid-comparison.string: 'Invalid operator `%operator%` for string comparison'

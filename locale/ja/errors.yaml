@@ -1,0 +1,8 @@
+# 日本語
+errors:
+    filter:
+        invalid-operator: '無効オペレーター `%operator%`'
+        invalid-conjunction: '無効オペレーター `%operator%`'
+        invalid-field-name: '無効フィールド `%name%`'
+        invalid-comparison.integer: '無効オペレーター `%operator%` (整数比較)'
+        invalid-comparison.string: '無効オペレーター `%operator%` (文字列比較)'

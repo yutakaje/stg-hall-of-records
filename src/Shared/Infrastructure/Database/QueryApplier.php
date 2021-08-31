@@ -36,21 +36,9 @@ final class QueryApplier
         $this->exception = null;
     }
 
-    public function containsError(): bool
+    public function exception(): ?FilterException
     {
-        return $this->exception !== null;
-    }
-
-    public function errorMessage(): string
-    {
-        if ($this->exception === null) {
-            throw new \LogicException(
-                'Function may only be called in case of an error,'
-                . ' use `containsError` to check'
-            );
-        }
-
-        return $this->exception->getMessage();
+        return $this->exception;
     }
 
     public function applyFilter(QueryBuilder $qb, Filter $filter): QueryBuilder

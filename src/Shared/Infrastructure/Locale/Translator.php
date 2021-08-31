@@ -30,6 +30,11 @@ final class Translator implements TranslatorInterface
         foreach ($locales->all() as $locale) {
             $translator->addResource(
                 'yaml',
+                "{$localeDir->value()}/{$locale}/errors.yaml",
+                $locale->value()
+            );
+            $translator->addResource(
+                'yaml',
                 "{$localeDir->value()}/{$locale}/labels.yaml",
                 $locale->value()
             );

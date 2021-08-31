@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Shared\Template\MediaWiki;
 
+use Stg\HallOfRecords\Shared\Infrastructure\Locale\TranslatorInterface;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 use Stg\HallOfRecords\Shared\Template\Renderer;
 
@@ -22,14 +23,15 @@ abstract class AbstractTemplate extends AbstractSimpleTemplate
 
     public function __construct(
         Renderer $renderer,
+        Routes $routes,
+        TranslatorInterface $translator,
         SharedTemplates $sharedTemplates,
-        Routes $routes
     ) {
-        parent::__construct($renderer, $routes);
+        parent::__construct($renderer, $routes, $translator);
         $this->sharedTemplates = $sharedTemplates;
     }
 
-    public function sharedTemplates(): SharedTemplates
+    protected function sharedTemplates(): SharedTemplates
     {
         return $this->sharedTemplates;
     }

@@ -125,10 +125,15 @@ final class ListCompaniesQueryHandler implements ListCompaniesQueryHandlerInterf
 
     private function createResultMessage(): ?ResultMessage
     {
-        if (!$this->applier->containsError()) {
+        $exception = $this->applier->exception();
+
+        if ($exception === null) {
             return null;
         }
 
-        return ResultMessage::warning($this->applier->errorMessage());
+        return ResultMessage::warning(
+            $exception->getMessage(),
+            $exception->getParameters()
+        );
     }
 }
