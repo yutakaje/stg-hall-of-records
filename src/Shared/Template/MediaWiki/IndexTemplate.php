@@ -16,60 +16,43 @@ namespace Stg\HallOfRecords\Shared\Template\MediaWiki;
 use Psr\Http\Message\ResponseInterface;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 use Stg\HallOfRecords\Shared\Template\IndexTemplateInterface;
-use Stg\HallOfRecords\Shared\Template\MediaWiki\Routes;
+use Stg\HallOfRecords\Shared\Template\MediaWiki\AbstractTemplate;
 use Stg\HallOfRecords\Shared\Template\Renderer;
 
-final class IndexTemplate implements IndexTemplateInterface
+final class IndexTemplate extends AbstractTemplate implements IndexTemplateInterface
 {
-    private Renderer $renderer;
-    private BasicTemplate $wrapper;
-    private Routes $routes;
-
-    public function __construct(
-        Renderer $renderer,
-        BasicTemplate $wrapper,
-        Routes $routes
-    ) {
-        $this->renderer = $renderer->withTemplateFiles(
-            __DIR__ . '/html/index'
-        );
-        $this->wrapper = $wrapper;
-        $this->routes = $routes;
+    protected function initRenderer(Renderer $renderer): Renderer
+    {
+        return $renderer->withTemplateFiles(__DIR__ . '/html/index');
     }
 
     public function respond(
         ResponseInterface $response,
         Locale $locale
     ): ResponseInterface {
-        $response->getBody()->write($this->createOutput($locale));
+        $response->getBody()->write(
+            $this->withLocale($locale)->createOutput()
+        );
         return $response;
     }
 
-    private function createOutput(Locale $locale): string
+    private function createOutput(): string
     {
-        $routes = $this->routes->withLocale($locale);
-
-        return $this->wrapper->render(
-            $locale,
-            $this->renderIndex(
-                $this->renderer->withLocale($locale),
-                $routes->withLocale($locale)
-            ),
-            $this->routes->forEachLocale(
+        return $this->sharedTemplates()->main(
+            $this->renderIndex(),
+            $this->routes()->forEachLocale(
                 fn ($routes) => $routes->index()
             )
         );
     }
 
-    private function renderIndex(
-        Renderer $renderer,
-        Routes $routes
-    ): string {
-        return $renderer->render('main', [
+    private function renderIndex(): string
+    {
+        return $this->renderer()->render('main', [
             'links' => [
-                'companies' => $routes->listCompanies(),
-                'games' => $routes->listGames(),
-                'players' => $routes->listPlayers(),
+                'companies' => $this->routes()->listCompanies(),
+                'games' => $this->routes()->listGames(),
+                'players' => $this->routes()->listPlayers(),
             ],
         ]);
     }
