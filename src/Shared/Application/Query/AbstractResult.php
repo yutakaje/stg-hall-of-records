@@ -13,6 +13,19 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Shared\Application\Query;
 
+use Stg\HallOfRecords\Shared\Application\ResultMessage;
+
 abstract class AbstractResult
 {
+    private ResultMessage $message;
+
+    public function __construct(ResultMessage $message)
+    {
+        $this->message = $message;
+    }
+
+    public function message(): ResultMessage
+    {
+        return $this->message;
+    }
 }

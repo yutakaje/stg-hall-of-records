@@ -13,12 +13,17 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Shared\Application\Query;
 
+use Stg\HallOfRecords\Shared\Application\ResultMessage;
+
 final class ListResult extends AbstractResult
 {
     private Resources $resources;
 
-    public function __construct(Resources $resources)
-    {
+    public function __construct(
+        Resources $resources,
+        ?ResultMessage $message = null
+    ) {
+        parent::__construct($message ?? ResultMessage::none());
         $this->resources = $resources;
     }
 
