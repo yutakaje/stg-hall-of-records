@@ -15,20 +15,13 @@ namespace Stg\HallOfRecords\Shared\Template\MediaWiki;
 
 use Stg\HallOfRecords\Shared\Application\ResultMessage;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
-use Stg\HallOfRecords\Shared\Template\MediaWiki\Routes;
 use Stg\HallOfRecords\Shared\Template\Renderer;
 
-final class BasicTemplate
+final class BasicTemplate extends AbstractSimpleTemplate
 {
-    private Renderer $renderer;
-    private Routes $routes;
-
-    public function __construct(
-        Renderer $renderer,
-        Routes $routes
-    ) {
-        $this->renderer = $renderer->withTemplateFiles(__DIR__ . '/html');
-        $this->routes = $routes;
+    protected function initRenderer(Renderer $renderer): Renderer
+    {
+        return $renderer->withTemplateFiles(__DIR__ . '/html');
     }
 
     /**
@@ -40,17 +33,29 @@ final class BasicTemplate
         array $selfLinks,
         ResultMessage $message
     ): string {
-        $routes = $this->routes->withLocale($locale);
+        return $this->withLocale($locale)->doRender(
+            $content,
+            $selfLinks,
+            $message
+        );
+    }
 
-        return $this->renderer->withLocale($locale)
-            ->render('basic', [
+    /**
+     * @param array<string,string> $selfLinks
+     */
+    private function doRender(
+        string $content,
+        array $selfLinks,
+        ResultMessage $message
+    ): string {
+        return $this->renderer()->render('basic', [
                 'content' => $content,
                 'links' => [
                     'self' => $selfLinks,
-                    'index' => $routes->index(),
-                    'companies' => $routes->listCompanies(),
-                    'games' => $routes->listGames(),
-                    'players' => $routes->listPlayers(),
+                    'index' => $this->routes()->index(),
+                    'companies' => $this->routes()->listCompanies(),
+                    'games' => $this->routes()->listGames(),
+                    'players' => $this->routes()->listPlayers(),
                 ],
                 'message' => [
                     'type' => $message->type(),

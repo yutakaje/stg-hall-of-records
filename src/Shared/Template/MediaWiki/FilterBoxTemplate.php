@@ -17,13 +17,11 @@ use Stg\HallOfRecords\Shared\Application\Query\Filter;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 use Stg\HallOfRecords\Shared\Template\Renderer;
 
-final class FilterBoxTemplate
+final class FilterBoxTemplate extends AbstractSimpleTemplate
 {
-    private Renderer $renderer;
-
-    public function __construct(Renderer $renderer)
+    protected function initRenderer(Renderer $renderer): Renderer
     {
-        $this->renderer = $renderer->withTemplateFiles(__DIR__ . '/html');
+        return $renderer->withTemplateFiles(__DIR__ . '/html');
     }
 
     public function render(
@@ -31,10 +29,15 @@ final class FilterBoxTemplate
         Filter $filter,
         string $example
     ): string {
-        return $this->renderer->withLocale($locale)
-            ->render('filter-box', [
-                'filterValue' => $filter->query(),
-                'example' => $example,
-            ]);
+        return $this->withLocale($locale)
+            ->doRender($filter, $example);
+    }
+
+    private function doRender(Filter $filter, string $example): string
+    {
+        return $this->renderer()->render('filter-box', [
+            'filterValue' => $filter->query(),
+            'example' => $example,
+        ]);
     }
 }

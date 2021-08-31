@@ -16,22 +16,29 @@ namespace Stg\HallOfRecords\Shared\Template\MediaWiki;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 use Stg\HallOfRecords\Shared\Template\Renderer;
 
-abstract class AbstractTemplate extends AbstractSimpleTemplate
+abstract class AbstractSimpleTemplate
 {
-    private SharedTemplates $sharedTemplates;
+    private Renderer $renderer;
+    private Routes $routes;
 
     public function __construct(
         Renderer $renderer,
-        SharedTemplates $sharedTemplates,
         Routes $routes
     ) {
-        parent::__construct($renderer, $routes);
-        $this->sharedTemplates = $sharedTemplates;
+        $this->renderer = $this->initRenderer($renderer);
+        $this->routes = $routes;
     }
 
-    public function sharedTemplates(): SharedTemplates
+    abstract protected function initRenderer(Renderer $renderer): Renderer;
+
+    public function renderer(): Renderer
     {
-        return $this->sharedTemplates;
+        return $this->renderer;
+    }
+
+    public function routes(): Routes
+    {
+        return $this->routes;
     }
 
     /**
@@ -39,8 +46,9 @@ abstract class AbstractTemplate extends AbstractSimpleTemplate
      */
     protected function withLocale(Locale $locale): self
     {
-        $clone = parent::withLocale($locale);
-        $clone->sharedTemplates = $this->sharedTemplates->withLocale($locale);
+        $clone = clone $this;
+        $clone->renderer = $this->renderer->withLocale($locale);
+        $clone->routes = $this->routes->withLocale($locale);
 
         return $clone;
     }
