@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Stg\HallOfRecords\Shared\Template\MediaWiki;
 
 use Stg\HallOfRecords\Shared\Application\Query\Filter;
+use Stg\HallOfRecords\Shared\Application\ResultMessage;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 
 final class SharedTemplates
@@ -51,9 +52,17 @@ final class SharedTemplates
     /**
      * @param array<string,string> $selfLinks
      */
-    public function main(string $content, array $selfLinks): string
-    {
-        return $this->basic->render($this->locale(), $content, $selfLinks);
+    public function main(
+        string $content,
+        array $selfLinks,
+        ?ResultMessage $message = null
+    ): string {
+        return $this->basic->render(
+            $this->locale(),
+            $content,
+            $selfLinks,
+            $message ?? ResultMessage::none()
+        );
     }
 
     public function filterBox(Filter $filter, string $example): string

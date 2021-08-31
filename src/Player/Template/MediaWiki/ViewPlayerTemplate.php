@@ -37,20 +37,19 @@ final class ViewPlayerTemplate extends AbstractTemplate implements
         ViewResult $result
     ): ResponseInterface {
         $response->getBody()->write(
-            $this->withLocale($query->locale())->createOutput(
-                $result->resource()
-            )
+            $this->withLocale($query->locale())->createOutput($result)
         );
         return $response;
     }
 
-    private function createOutput(Resource $player): string
+    private function createOutput(ViewResult $result): string
     {
         return $this->sharedTemplates()->main(
-            $this->renderPlayer($player),
+            $this->renderPlayer($result->resource()),
             $this->routes()->forEachLocale(
-                fn ($routes) => $routes->viewPlayer($player->id)
-            )
+                fn ($routes) => $routes->viewPlayer($result->resource()->id)
+            ),
+            $result->message()
         );
     }
 

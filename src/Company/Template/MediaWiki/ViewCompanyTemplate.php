@@ -37,20 +37,19 @@ final class ViewCompanyTemplate extends AbstractTemplate implements
         ViewResult $result
     ): ResponseInterface {
         $response->getBody()->write(
-            $this->withLocale($query->locale())->createOutput(
-                $result->resource()
-            )
+            $this->withLocale($query->locale())->createOutput($result)
         );
         return $response;
     }
 
-    private function createOutput(Resource $company): string
+    private function createOutput(ViewResult $result): string
     {
         return $this->sharedTemplates()->main(
-            $this->renderCompany($company),
+            $this->renderCompany($result->resource()),
             $this->routes()->forEachLocale(
-                fn ($routes) => $routes->viewCompany($company->id)
-            )
+                fn ($routes) => $routes->viewCompany($result->resource()->id)
+            ),
+            $result->message()
         );
     }
 

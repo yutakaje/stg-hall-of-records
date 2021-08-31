@@ -37,21 +37,19 @@ final class ListPlayersTemplate extends AbstractTemplate implements
         ListResult $result
     ): ResponseInterface {
         $response->getBody()->write(
-            $this->withLocale($query->locale())->createOutput(
-                $result->resources(),
-                $query
-            )
+            $this->withLocale($query->locale())->createOutput($query, $result)
         );
         return $response;
     }
 
-    private function createOutput(Resources $players, ListQuery $query): string
+    private function createOutput(ListQuery $query, ListResult $result): string
     {
         return $this->sharedTemplates()->main(
-            $this->renderPlayers($players, $query),
+            $this->renderPlayers($result->resources(), $query),
             $this->routes()->forEachLocale(
                 fn ($routes) => $routes->listPlayers()
-            )
+            ),
+            $result->message()
         );
     }
 

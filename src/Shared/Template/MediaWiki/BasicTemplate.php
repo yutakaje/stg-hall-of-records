@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Shared\Template\MediaWiki;
 
+use Stg\HallOfRecords\Shared\Application\ResultMessage;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 use Stg\HallOfRecords\Shared\Template\MediaWiki\Routes;
 use Stg\HallOfRecords\Shared\Template\Renderer;
@@ -36,7 +37,8 @@ final class BasicTemplate
     public function render(
         Locale $locale,
         string $content,
-        array $selfLinks
+        array $selfLinks,
+        ResultMessage $message
     ): string {
         $routes = $this->routes->withLocale($locale);
 
@@ -49,6 +51,10 @@ final class BasicTemplate
                     'companies' => $routes->listCompanies(),
                     'games' => $routes->listGames(),
                     'players' => $routes->listPlayers(),
+                ],
+                'message' => [
+                    'type' => $message->type(),
+                    'value' => $message->message(),
                 ],
             ]);
     }

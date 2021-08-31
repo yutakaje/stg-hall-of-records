@@ -37,20 +37,19 @@ final class ViewGameTemplate extends AbstractTemplate implements
         ViewResult $result
     ): ResponseInterface {
         $response->getBody()->write(
-            $this->withLocale($query->locale())->createOutput(
-                $result->resource()
-            )
+            $this->withLocale($query->locale())->createOutput($result)
         );
         return $response;
     }
 
-    private function createOutput(Resource $game): string
+    private function createOutput(ViewResult $result): string
     {
         return $this->sharedTemplates()->main(
-            $this->renderGame($game),
+            $this->renderGame($result->resource()),
             $this->routes()->forEachLocale(
-                fn ($routes) => $routes->viewGame($game->id)
-            )
+                fn ($routes) => $routes->viewGame($result->resource()->id)
+            ),
+            $result->message()
         );
     }
 

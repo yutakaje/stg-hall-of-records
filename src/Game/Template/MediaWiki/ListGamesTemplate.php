@@ -37,21 +37,19 @@ final class ListGamesTemplate extends AbstractTemplate implements
         ListResult $result
     ): ResponseInterface {
         $response->getBody()->write(
-            $this->withLocale($query->locale())->createOutput(
-                $result->resources(),
-                $query
-            )
+            $this->withLocale($query->locale())->createOutput($query, $result)
         );
         return $response;
     }
 
-    private function createOutput(Resources $games, ListQuery $query): string
+    private function createOutput(ListQuery $query, ListResult $result): string
     {
         return $this->sharedTemplates()->main(
-            $this->renderGames($games, $query),
+            $this->renderGames($result->resources(), $query),
             $this->routes()->forEachLocale(
                 fn ($routes) => $routes->listGames()
-            )
+            ),
+            $result->message()
         );
     }
 
