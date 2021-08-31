@@ -20,6 +20,7 @@ use Stg\HallOfRecords\Shared\Application\Query\ListQuery;
 use Stg\HallOfRecords\Shared\Application\Query\ListResult;
 use Stg\HallOfRecords\Shared\Application\Query\Resource;
 use Stg\HallOfRecords\Shared\Application\Query\Resources;
+use Stg\HallOfRecords\Shared\Application\ResultMessage;
 use Stg\HallOfRecords\Shared\Infrastructure\Database\QueryApplier;
 use Stg\HallOfRecords\Shared\Infrastructure\Database\QueryColumn;
 
@@ -43,8 +44,11 @@ final class ListPlayersQueryHandler implements ListPlayersQueryHandlerInterface
 
     public function execute(ListQuery $query): ListResult
     {
+        $players = $this->readPlayers($query);
+
         return new ListResult(
-            $this->readPlayers($query)
+            $players,
+            $this->createResultMessage()
         );
     }
 
@@ -113,5 +117,14 @@ final class ListPlayersQueryHandler implements ListPlayersQueryHandlerInterface
         $player->numScores = $row['num_scores'];
 
         return $player;
+    }
+
+    private function createResultMessage(): ?ResultMessage
+    {
+        if (!$this->applier->containsError()) {
+            return null;
+        }
+
+        return ResultMessage::warning($this->applier->errorMessage());
     }
 }

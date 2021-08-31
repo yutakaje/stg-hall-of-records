@@ -25,6 +25,7 @@ final class QueryApplier
 {
     /** @var array<FieldName,QueryColumn> */
     private array $columns;
+    private ?FilterException $exception;
 
     /**
      * @param array<FieldName,QueryColumn> $columns
@@ -32,18 +33,45 @@ final class QueryApplier
     public function __construct(array $columns)
     {
         $this->columns = $columns;
+        $this->exception = null;
+    }
+
+    public function containsError(): bool
+    {
+        return $this->exception !== null;
+    }
+
+    public function errorMessage(): string
+    {
+        if ($this->exception === null) {
+            throw new \LogicException(
+                'Function may only be called in case of an error,'
+                . ' use `containsError` to check'
+            );
+        }
+
+        return $this->exception->getMessage();
     }
 
     public function applyFilter(QueryBuilder $qb, Filter $filter): QueryBuilder
     {
-        return array_reduce(
-            $filter->conditions(),
-            fn (QueryBuilder $qb, Condition $condition) => $this->applyCondition(
-                $qb,
-                $condition
-            ),
-            $qb
-        );
+        $this->exception = null;
+
+        try {
+            return array_reduce(
+                $filter->conditions(),
+                fn (
+                    QueryBuilder $qb,
+                    Condition $condition
+                ) => $this->applyCondition($qb, $condition),
+                $qb
+            );
+        } catch (FilterException $exception) {
+            // Caller can decide whether he wants to throw the exception
+            // in case the filter could not be applied.
+            $this->exception = $exception;
+            return $qb;
+        }
     }
 
     private function applyCondition(

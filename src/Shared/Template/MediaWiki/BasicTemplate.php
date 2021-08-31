@@ -49,18 +49,23 @@ final class BasicTemplate extends AbstractSimpleTemplate
         ResultMessage $message
     ): string {
         return $this->renderer()->render('basic', [
-                'content' => $content,
-                'links' => [
-                    'self' => $selfLinks,
-                    'index' => $this->routes()->index(),
-                    'companies' => $this->routes()->listCompanies(),
-                    'games' => $this->routes()->listGames(),
-                    'players' => $this->routes()->listPlayers(),
-                ],
-                'message' => [
-                    'type' => $message->type(),
-                    'value' => $message->message(),
-                ],
-            ]);
+            'content' => $content,
+            'links' => [
+                'self' => $selfLinks,
+                'index' => $this->routes()->index(),
+                'companies' => $this->routes()->listCompanies(),
+                'games' => $this->routes()->listGames(),
+                'players' => $this->routes()->listPlayers(),
+            ],
+            'message' => $this->renderMessage($message),
+        ]);
+    }
+
+    private function renderMessage(ResultMessage $message): string
+    {
+        return $this->renderer()->render('message', [
+            'type' => $message->type(),
+            'message' => $message->message(),
+        ]);
     }
 }
