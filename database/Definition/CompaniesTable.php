@@ -23,7 +23,7 @@ use Stg\HallOfRecords\Shared\Infrastructure\Type\DateTime;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 
 /**
- * @phpstan-import-type Names from CompanyRecord
+ * @phpstan-import-type LocalizedValues from CompanyRecord
  */
 final class CompaniesTable extends AbstractTable
 {
@@ -105,8 +105,8 @@ final class CompaniesTable extends AbstractTable
     }
 
     /**
-     * @param Names $names
-     * @param Names $translitNames
+     * @param LocalizedValues $names
+     * @param LocalizedValues $translitNames
      */
     public function createRecord(
         array $names,

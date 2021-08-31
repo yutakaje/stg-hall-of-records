@@ -44,4 +44,20 @@ abstract class AbstractTable
 
         return $localized;
     }
+
+    /**
+     * @template T
+     * @param T $emptyValue
+     * @return array<string,T>
+     */
+    final protected function emptyLocalizedValues($emptyValue): array
+    {
+        $localized = [];
+
+        foreach ($this->locales->all() as $locale) {
+            $localized[$locale->value()] = $emptyValue;
+        }
+
+        return $localized;
+    }
 }

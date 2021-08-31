@@ -18,12 +18,14 @@ use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Schema\Table;
 use Doctrine\DBAL\Schema\View;
+use Nette\Utils\Json;
 use Stg\HallOfRecords\Shared\Infrastructure\Locale\Locales;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\DateTime;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 
 /**
- * @phpstan-import-type Names from GameRecord
+ * @phpstan-import-type LocalizedValues from GameRecord
+ * @phpstan-import-type LocalizedLinks from GameRecord
  */
 final class GamesTable extends AbstractTable
 {
@@ -57,6 +59,8 @@ final class GamesTable extends AbstractTable
         $localeGames->addColumn('locale', 'string', ['length' => 16]);
         $localeGames->addColumn('name', 'string', ['length' => 100]);
         $localeGames->addColumn('name_translit', 'string', ['length' => 100]);
+        $localeGames->addColumn('description', 'string', ['length' => 250]);
+        $localeGames->addColumn('links', 'string', ['length' => 1000]);
         $localeGames->setPrimaryKey(['game_id', 'locale']);
         $localeGames->addForeignKeyConstraint($games, ['game_id'], ['id']);
         $schemaManager->createTable($localeGames);
@@ -82,7 +86,9 @@ final class GamesTable extends AbstractTable
             'company_id',
             'company_name',
             'company_name_translit',
-            'company_name_filter'
+            'company_name_filter',
+            'description',
+            'links'
         )
             ->from("({$this->gameSql()})", $alias)
             ->getSQL());
@@ -103,7 +109,9 @@ final class GamesTable extends AbstractTable
             'games.company_id',
             'companies.name AS company_name',
             'companies.name_translit AS company_name_translit',
-            'companies.name_filter AS company_name_filter'
+            'companies.name_filter AS company_name_filter',
+            'localized.description',
+            'localized.links'
         )
             ->from('stg_games_locale', 'localized')
             ->join(
@@ -125,22 +133,34 @@ final class GamesTable extends AbstractTable
     }
 
     /**
-     * @param Names $names
-     * @param Names $translitNames
+     * @param LocalizedValues $names
+     * @param LocalizedValues $translitNames
+     * @param LocalizedValues $descriptions
+     * @param LocalizedLinks $links
      */
     public function createRecord(
         int $companyId,
         array $names,
-        array $translitNames = []
+        array $translitNames = [],
+        array $descriptions = [],
+        array $links = []
     ): GameRecord {
         if ($translitNames == null) {
             $translitNames = $names;
+        }
+        if ($descriptions == null) {
+            $descriptions = $this->emptyLocalizedValues('');
+        }
+        if ($links == null) {
+            $links = $this->emptyLocalizedValues([]);
         }
 
         return new GameRecord(
             $companyId,
             $this->localizeValues($names),
-            $this->localizeValues($translitNames)
+            $this->localizeValues($translitNames),
+            $this->localizeValues($descriptions),
+            $this->localizeValues($links)
         );
     }
 
@@ -188,11 +208,15 @@ final class GamesTable extends AbstractTable
                 'locale' => ':locale',
                 'name' => ':name',
                 'name_translit' => ':translitName',
+                'description' => ':description',
+                'links' => ':links',
             ])
             ->setParameter('gameId', $record->id())
             ->setParameter('locale', $locale->value())
             ->setParameter('name', $record->name($locale))
             ->setParameter('translitName', $record->translitName($locale))
+            ->setParameter('description', $record->description($locale))
+            ->setParameter('links', $this->makeLinks($record, $locale))
             ->executeStatement();
     }
 
@@ -206,5 +230,12 @@ final class GamesTable extends AbstractTable
             ]),
             []
         ));
+    }
+
+    private function makeLinks(GameRecord $record, Locale $locale): string
+    {
+        return Json::encode(
+            $record->links($locale)
+        );
     }
 }

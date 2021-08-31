@@ -16,18 +16,18 @@ namespace Stg\HallOfRecords\Database\Definition;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 
 /**
- * @phpstan-type Names array<string,string>
+ * @phpstan-type LocalizedValues array<string,string>
  */
 final class CompanyRecord extends AbstractRecord
 {
-    /** @var Names */
+    /** @var LocalizedValues */
     private array $names;
-    /** @var Names */
+    /** @var LocalizedValues */
     private array $translitNames;
 
     /**
-     * @param Names $names
-     * @param Names $translitNames
+     * @param LocalizedValues $names
+     * @param LocalizedValues $translitNames
      */
     public function __construct(array $names, array $translitNames)
     {
