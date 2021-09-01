@@ -40,6 +40,8 @@ final class ListGamesQueryHandler implements ListGamesQueryHandlerInterface
             ),
             'company.id' => QueryColumn::int('company_id'),
             'company.name' => QueryColumn::string('company_name_filter'),
+            'description' => QueryColumn::string('description'),
+            'links' => QueryColumn::string('links'),
             'numScores' => QueryColumn::int('num_scores'),
         ]);
     }
@@ -102,6 +104,8 @@ final class ListGamesQueryHandler implements ListGamesQueryHandlerInterface
                 'company_name',
                 'company_name_translit',
                 'company_name_filter',
+                'description',
+                'links',
                 "({$this->numScoresQuery()}) AS num_scores"
             )
             ->where($qb->expr()->eq('locale', ':locale'))
