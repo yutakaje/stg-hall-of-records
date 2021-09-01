@@ -26,6 +26,8 @@ use Symfony\Component\Yaml\Yaml;
 /**
  * @phpstan-import-type LocalizedValues from GameRecord
  * @phpstan-import-type LocalizedLinks from GameRecord
+ * @phpstan-import-type LocalizedTranslations from GameRecord
+ * @phpstan-import-type Counterstops from GameRecord
  */
 final class GamesTable extends AbstractTable
 {
@@ -50,6 +52,7 @@ final class GamesTable extends AbstractTable
         $games->addColumn('last_modified_date', 'datetime');
         $games->addColumn('company_id', 'integer');
         $games->addColumn('name_filter', 'string', ['length' => 500]);
+        $games->addColumn('counterstops', 'string', ['length' => 100]);
         $games->setPrimaryKey(['id']);
         $games->addForeignKeyConstraint($companies, ['company_id'], ['id']);
         $schemaManager->createTable($games);
@@ -61,6 +64,7 @@ final class GamesTable extends AbstractTable
         $localeGames->addColumn('name_translit', 'string', ['length' => 100]);
         $localeGames->addColumn('description', 'string', ['length' => 250]);
         $localeGames->addColumn('links', 'string', ['length' => 1000]);
+        $localeGames->addColumn('translations', 'string', ['length' => 500]);
         $localeGames->setPrimaryKey(['game_id', 'locale']);
         $localeGames->addForeignKeyConstraint($games, ['game_id'], ['id']);
         $schemaManager->createTable($localeGames);
@@ -88,7 +92,9 @@ final class GamesTable extends AbstractTable
             'company_name_translit',
             'company_name_filter',
             'description',
-            'links'
+            'links',
+            'counterstops',
+            'translations'
         )
             ->from("({$this->gameSql()})", $alias)
             ->getSQL());
@@ -111,7 +117,9 @@ final class GamesTable extends AbstractTable
             'companies.name_translit AS company_name_translit',
             'companies.name_filter AS company_name_filter',
             'localized.description',
-            'localized.links'
+            'localized.links',
+            'games.counterstops',
+            'localized.translations'
         )
             ->from('stg_games_locale', 'localized')
             ->join(
@@ -137,13 +145,17 @@ final class GamesTable extends AbstractTable
      * @param LocalizedValues $translitNames
      * @param LocalizedValues $descriptions
      * @param LocalizedLinks $links
+     * @param LocalizedTranslations $translations
+     * @param Counterstops $counterstops
      */
     public function createRecord(
         int $companyId,
         array $names,
         array $translitNames = [],
         array $descriptions = [],
-        array $links = []
+        array $links = [],
+        array $translations = [],
+        array $counterstops = []
     ): GameRecord {
         if ($translitNames == null) {
             $translitNames = $names;
@@ -154,13 +166,18 @@ final class GamesTable extends AbstractTable
         if ($links == null) {
             $links = $this->emptyLocalizedValues([]);
         }
+        if ($translations == null) {
+            $translations = $this->emptyLocalizedValues([]);
+        }
 
         return new GameRecord(
             $companyId,
             $this->localizeValues($names),
             $this->localizeValues($translitNames),
             $this->localizeValues($descriptions),
-            $this->localizeValues($links)
+            $this->localizeValues($links),
+            $this->localizeValues($translations),
+            $counterstops
         );
     }
 
@@ -173,11 +190,13 @@ final class GamesTable extends AbstractTable
                 'last_modified_date' => ':lastModifiedDate',
                 'company_id' => ':companyId',
                 'name_filter' => ':nameFilter',
+                'counterstops' => ':counterstops',
             ])
             ->setParameter('createdDate', DateTime::now())
             ->setParameter('lastModifiedDate', DateTime::now())
             ->setParameter('companyId', $record->companyId())
             ->setParameter('nameFilter', $this->makeNameFilter($record))
+            ->setParameter('counterstops', $this->makeCounterstops($record))
             ->executeStatement();
 
         $record->setId((int)$this->connection->lastInsertId());
@@ -210,6 +229,7 @@ final class GamesTable extends AbstractTable
                 'name_translit' => ':translitName',
                 'description' => ':description',
                 'links' => ':links',
+                'translations' => ':translations',
             ])
             ->setParameter('gameId', $record->id())
             ->setParameter('locale', $locale->value())
@@ -217,6 +237,7 @@ final class GamesTable extends AbstractTable
             ->setParameter('translitName', $record->translitName($locale))
             ->setParameter('description', $record->description($locale))
             ->setParameter('links', $this->makeLinks($record, $locale))
+            ->setParameter('translations', $this->makeTranslations($record, $locale))
             ->executeStatement();
     }
 
@@ -236,6 +257,20 @@ final class GamesTable extends AbstractTable
     {
         return Yaml::dump(
             $record->links($locale)
+        );
+    }
+
+    private function makeTranslations(GameRecord $record, Locale $locale): string
+    {
+        return Yaml::dump(
+            $record->translations($locale)
+        );
+    }
+
+    private function makeCounterstops(GameRecord $record): string
+    {
+        return Yaml::dump(
+            $record->counterstops()
         );
     }
 }
