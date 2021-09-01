@@ -1,0 +1,15 @@
+{% if links %}
+  <style>
+    links {
+        display: block;
+    }
+    link {
+        display: block;
+    }
+  </style>
+  <links>
+    {% for entry in links %}
+        {{ entry|raw }}
+    {% endfor %}
+  </links>
+{% endif %}

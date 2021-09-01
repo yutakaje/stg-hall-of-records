@@ -59,6 +59,7 @@ final class ViewGameTemplate extends AbstractTemplate implements
             'game' => $this->createGameVar($game),
             'company' => $this->createCompanyVar($game->company),
             'scores' => $this->renderScores($game->scores),
+            'gameLinks' => $this->renderGameLinks($game->links),
             'links' => [
                 'company' => $this->routes()->viewCompany($game->company->id),
             ],
@@ -70,6 +71,7 @@ final class ViewGameTemplate extends AbstractTemplate implements
         $var = new \stdClass();
         $var->id = $game->id;
         $var->name = $game->name;
+        $var->description = $game->description;
 
         return $var;
     }
@@ -118,6 +120,31 @@ final class ViewGameTemplate extends AbstractTemplate implements
         $var = new \stdClass();
         $var->id = $score->playerId;
         $var->name = $score->playerName;
+
+        return $var;
+    }
+
+    private function renderGameLinks(Resources $links): string
+    {
+        return $this->renderer()->render('links-list', [
+            'links' => $links->map(
+                fn (Resource $link) => $this->renderGameLink($link)
+            ),
+        ]);
+    }
+
+    private function renderGameLink(Resource $link): string
+    {
+        return $this->renderer()->render('link-entry', [
+            'link' => $this->createGameLinkVar($link),
+        ]);
+    }
+
+    private function createGameLinkVar(Resource $link): \stdClass
+    {
+        $var = new \stdClass();
+        $var->url = $link->url;
+        $var->title = $link->title;
 
         return $var;
     }

@@ -20,6 +20,7 @@ use Stg\HallOfRecords\Shared\Application\Query\Resources;
 use Stg\HallOfRecords\Shared\Application\Query\ViewQuery;
 use Stg\HallOfRecords\Shared\Application\Query\ViewResult;
 use Stg\HallOfRecords\Shared\Infrastructure\Error\ResourceNotFoundException;
+use Symfony\Component\Yaml\Yaml;
 
 final class ViewGameQueryHandler implements ViewGameQueryHandlerInterface
 {
@@ -42,7 +43,14 @@ final class ViewGameQueryHandler implements ViewGameQueryHandlerInterface
     {
         $qb = $this->connection->createQueryBuilder();
 
-        $stmt = $qb->select('id', 'name', 'company_id', 'company_name')
+        $stmt = $qb->select(
+            'id',
+            'name',
+            'company_id',
+            'company_name',
+            'description',
+            'links'
+        )
             ->from('stg_query_games')
             ->where($qb->expr()->and(
                 $qb->expr()->eq('id', ':id'),
@@ -95,6 +103,8 @@ final class ViewGameQueryHandler implements ViewGameQueryHandlerInterface
         $game->id = $row['id'];
         $game->name = $row['name'];
         $game->company = $this->createCompany($row);
+        $game->description = $row['description'];
+        $game->links = $this->createLinks($row['links']);
 
         return $game;
     }
@@ -123,5 +133,25 @@ final class ViewGameQueryHandler implements ViewGameQueryHandlerInterface
         $score->scoreValue = $row['score_value'];
 
         return $score;
+    }
+
+    private function createLinks(string $links): Resources
+    {
+        return new Resources(array_map(
+            fn (array $link) => $this->createLink($link),
+            Yaml::parse($links)
+        ));
+    }
+
+    /**
+     * @param array<string,string> $link
+     */
+    private function createLink(array $link): Resource
+    {
+        $resource = new Resource();
+        $resource->url = $link['url'];
+        $resource->title = $link['title'];
+
+        return $resource;
     }
 }
