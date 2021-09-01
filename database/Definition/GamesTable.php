@@ -18,10 +18,10 @@ use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Schema\Table;
 use Doctrine\DBAL\Schema\View;
-use Nette\Utils\Json;
 use Stg\HallOfRecords\Shared\Infrastructure\Locale\Locales;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\DateTime;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * @phpstan-import-type LocalizedValues from GameRecord
@@ -234,7 +234,7 @@ final class GamesTable extends AbstractTable
 
     private function makeLinks(GameRecord $record, Locale $locale): string
     {
-        return Json::encode(
+        return Yaml::dump(
             $record->links($locale)
         );
     }

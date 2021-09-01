@@ -14,13 +14,13 @@ declare(strict_types=1);
 namespace Stg\HallOfRecords\Player\Infrastructure\Database;
 
 use Doctrine\DBAL\Connection;
-use Nette\Utils\Json;
 use Stg\HallOfRecords\Player\Application\Query\ViewPlayerQueryHandlerInterface;
 use Stg\HallOfRecords\Shared\Application\Query\Resource;
 use Stg\HallOfRecords\Shared\Application\Query\Resources;
 use Stg\HallOfRecords\Shared\Application\Query\ViewQuery;
 use Stg\HallOfRecords\Shared\Application\Query\ViewResult;
 use Stg\HallOfRecords\Shared\Infrastructure\Error\ResourceNotFoundException;
+use Symfony\Component\Yaml\Yaml;
 
 final class ViewPlayerQueryHandler implements ViewPlayerQueryHandlerInterface
 {
@@ -99,7 +99,7 @@ final class ViewPlayerQueryHandler implements ViewPlayerQueryHandlerInterface
         $player = new Resource();
         $player->id = $row['id'];
         $player->name = $row['name'];
-        $player->aliases = Json::decode($row['aliases']);
+        $player->aliases = Yaml::parse($row['aliases']);
 
         return $player;
     }

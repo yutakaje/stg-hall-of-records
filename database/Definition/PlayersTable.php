@@ -18,9 +18,9 @@ use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Schema\Table;
 use Doctrine\DBAL\Schema\View;
-use Nette\Utils\Json;
 use Stg\HallOfRecords\Shared\Infrastructure\Locale\Locales;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\DateTime;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * @phpstan-import-type Aliases from PlayerRecord
@@ -100,7 +100,7 @@ final class PlayersTable extends AbstractTable
 
     private function makeAliases(PlayerRecord $record): string
     {
-        return Json::encode(
+        return Yaml::dump(
             array_values($record->aliases())
         );
     }
