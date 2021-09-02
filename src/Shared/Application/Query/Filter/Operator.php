@@ -40,6 +40,12 @@ final class Operator
         return $this->value;
     }
 
+    public function isInverted(): bool
+    {
+        return $this->value === self::NEQ
+            || $this->value === self::NLIKE;
+    }
+
     /**
      * @return Value
      */

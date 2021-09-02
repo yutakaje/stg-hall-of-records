@@ -79,4 +79,16 @@ class OperatorTest extends \Tests\TestCase
             );
         }
     }
+
+    public function testIsInverted(): void
+    {
+        self::assertFalse((new Operator(Operator::EQ))->isInverted());
+        self::assertTrue((new Operator(Operator::NEQ))->isInverted());
+        self::assertFalse((new Operator(Operator::LIKE))->isInverted());
+        self::assertTrue((new Operator(Operator::NLIKE))->isInverted());
+        self::assertFalse((new Operator(Operator::GT))->isInverted());
+        self::assertFalse((new Operator(Operator::GTE))->isInverted());
+        self::assertFalse((new Operator(Operator::LT))->isInverted());
+        self::assertFalse((new Operator(Operator::LTE))->isInverted());
+    }
 }
