@@ -1,0 +1,22 @@
+message {
+    display: block;
+}
+
+
+filterBox {
+    display: none;
+}
+#filterBoxToggle {
+    display: none;
+}
+#filterBoxToggle:checked ~ filterBox {
+    display: block;
+}
+
+
+game links {
+    display: block;
+}
+game link {
+    display: block;
+}

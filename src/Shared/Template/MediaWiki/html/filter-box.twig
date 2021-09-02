@@ -1,19 +1,8 @@
-<style>
-#filterBox {
-    display: none;
-}
-#filterBoxToggle {
-    display: none;
-}
-#filterBoxToggle:checked ~ #filterBox {
-    display: block;
-}
-</style>
 <label for="filterBoxToggle"><small>{{ 'labels.filter.label'|trans }}</small></label>
 <input type="checkbox" id="filterBoxToggle"/>
-<div id="filterBox">
+<filterBox>
   <form>
     <input type="text" name="q" placeholder="{{ "labels.filter.placeholder.#{example}"|trans }}" value="{{ filterValue }}"/>
     <input type="submit" value="{{ 'labels.filter.search'|trans }}"/>
   </form>
-</div>
+</filterBox>

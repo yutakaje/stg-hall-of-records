@@ -1,12 +1,16 @@
 <h2>{{ game.name }}</h2>
 <game>
+
   {{ 'labels.company'|trans }}: <a href="{{ links.company }}">{{ company.name }}</a>
+
+  {{ scores|raw }}
+
+  <description>
+      {{ game.description }}
+  </description>
+
+  {{ gameLinks|raw }}
+
 </game>
 
-{{ scores|raw }}
 
-<description>
-  {{ game.description }}
-</description>
-
-{{ gameLinks|raw }}

@@ -2,12 +2,20 @@
   RewriteEngine on
 
   # Route everything to the public directory.
+  RewriteRule ^public/.* - [L]
+
+  RewriteCond %{DOCUMENT_ROOT}/public%{REQUEST_URI} -f [OR]
+  RewriteCond %{DOCUMENT_ROOT}/public%{REQUEST_URI} -d
+  RewriteRule .* public/$0 [L]
+
   RewriteRule ^$ public/index.html [L]
-  RewriteRule public/index.html$ public/index.html [L]
-  RewriteRule media-wiki-generator.php$ public/media-wiki-generator.php [QSA,L]
-  RewriteRule media-wiki-page-fetcher.php$ public/media-wiki-page-fetcher.php [QSA,L]
-  RewriteRule media-wiki-database-populator.php$ public/media-wiki-database-populator.php [QSA,L]
-  RewriteRule image-scraper/(.*) public/image-scraper/$1 [QSA,L]
+
+  # @deprecated
+  #RewriteRule public/index.html$ public/index.html [L]
+  #RewriteRule media-wiki-generator.php$ public/media-wiki-generator.php [QSA,L]
+  #RewriteRule media-wiki-page-fetcher.php$ public/media-wiki-page-fetcher.php [QSA,L]
+  #RewriteRule media-wiki-database-populator.php$ public/media-wiki-database-populator.php [QSA,L]
+  #RewriteRule image-scraper/(.*) public/image-scraper/$1 [QSA,L]
   
   RewriteRule (.*) public/index.php [QSA,L]
 </IfModule>
