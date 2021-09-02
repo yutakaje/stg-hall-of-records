@@ -243,6 +243,47 @@ class QueryColumnTest extends \Tests\TestCase
         self::assertSame($expectedQb->getParameterTypes(), $appliedQb->getParameterTypes());
     }
 
+    public function testOneOfColumnWithInvertedOperator(): void
+    {
+        $columnNames = [
+            $this->randomColumnName(),
+            $this->randomColumnName(),
+        ];
+        $passedValue = $this->randomValue();
+        $expectedValue = $passedValue;
+
+        $condition = new Condition(
+            $this->randomName(),
+            Operator::NEQ,
+            $passedValue
+        );
+
+        $qb = $this->db()->fakeConnection()->createQueryBuilder();
+
+        $column = QueryColumn::oneOf(
+            QueryColumn::string($columnNames[0]),
+            QueryColumn::string($columnNames[1]),
+        );
+
+        $appliedQb = $column->apply($qb, $condition);
+
+        $parameterNames = array_keys($appliedQb->getParameters());
+        self::assertCount(2, $parameterNames);
+
+        $expectedOperator = $this->mapOperator($condition->operator()->value());
+        $expectedQb = $this->db()->fakeConnection()->createQueryBuilder()
+            ->where(
+                "LOWER({$columnNames[0]}) {$expectedOperator} LOWER(:{$parameterNames[0]})"
+                . " AND LOWER({$columnNames[1]}) {$expectedOperator} LOWER(:{$parameterNames[1]})"
+            )
+            ->setParameter($parameterNames[0], $expectedValue, ParameterType::STRING)
+            ->setParameter($parameterNames[1], $expectedValue, ParameterType::STRING);
+
+        self::assertSame($expectedQb->getSQL(), $appliedQb->getSQL());
+        self::assertSame($expectedQb->getParameters(), $appliedQb->getParameters());
+        self::assertSame($expectedQb->getParameterTypes(), $appliedQb->getParameterTypes());
+    }
+
     private function randomColumnName(): string
     {
         return md5(random_bytes(16));

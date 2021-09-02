@@ -92,7 +92,7 @@ final class QueryColumn
                 );
 
             case self::ONE_OF:
-                return new OneOfComparison(array_map(
+                return new OneOfComparison($condition->operator(), array_map(
                     // We create a new condition for each comparison because
                     // we do not want them to share the same condition id.
                     fn (QueryColumn $column) => $column->createComparison(

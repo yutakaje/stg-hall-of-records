@@ -14,11 +14,13 @@ declare(strict_types=1);
 namespace Stg\HallOfRecords\Shared\Infrastructure\Database\Comparison;
 
 use Doctrine\DBAL\Query\QueryBuilder;
+use Stg\HallOfRecords\Shared\Application\Query\Filter\Operator;
 use Stg\HallOfRecords\Shared\Infrastructure\Database\ComparisonInterface;
 use Stg\HallOfRecords\Shared\Infrastructure\Database\ParameterMerger;
 
 final class OneOfComparison implements ComparisonInterface
 {
+    private Operator $operator;
     /** @var ComparisonInterface[] */
     private array $comparisons;
     private ParameterMerger $parameterMerger;
@@ -26,8 +28,9 @@ final class OneOfComparison implements ComparisonInterface
     /**
      * @param ComparisonInterface[] $comparisons
      */
-    public function __construct(array $comparisons)
+    public function __construct(Operator $operator, array $comparisons)
     {
+        $this->operator = $operator;
         $this->comparisons = $comparisons;
         $this->parameterMerger = new ParameterMerger();
     }
@@ -49,9 +52,22 @@ final class OneOfComparison implements ComparisonInterface
     {
         $this->parameterMerger->merge($wrapper, ...$qbs);
 
-        return $wrapper->andWhere(implode(' OR ', array_map(
+        return $wrapper->andWhere($this->join(array_map(
             fn (QueryBuilder $qb) => (string)$qb->getQueryPart('where'),
             $qbs
         )));
+    }
+
+    /**
+     * @param string[] $where
+     */
+    private function join(array $where): string
+    {
+        return implode(" {$this->joinOperator()} ", $where);
+    }
+
+    private function joinOperator(): string
+    {
+        return $this->operator->isInverted() ? 'AND' : 'OR';
     }
 }
