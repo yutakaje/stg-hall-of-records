@@ -32,6 +32,18 @@ final class ScoreRepository extends AbstractRepository implements ScoreRepositor
         $this->scores = [];
     }
 
+    public function all(): Scores
+    {
+        return new Scores(array_reduce(
+            $this->scores,
+            fn ($scores, $gameScores) => array_merge(
+                $scores,
+                array_values($gameScores)
+            ),
+            []
+        ));
+    }
+
     public function filterByGame(int $gameId): Scores
     {
         return new Scores(array_values(

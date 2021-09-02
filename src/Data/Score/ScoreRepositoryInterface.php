@@ -15,6 +15,8 @@ namespace Stg\HallOfRecords\Data\Score;
 
 interface ScoreRepositoryInterface
 {
+    public function all(): Scores;
+
     public function filterByGame(int $gameId): Scores;
 
     public function add(Score $score): void;
