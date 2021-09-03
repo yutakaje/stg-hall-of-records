@@ -19,6 +19,10 @@ use Stg\HallOfRecords\Database\Definition\ScoreRecord;
 use Stg\HallOfRecords\Data\Score\Score;
 use Stg\HallOfRecords\Data\Score\ScoreRepositoryInterface;
 
+/**
+ * @phpstan-import-type Source from ScoreRecord
+ * @phpstan-import-type Sources from ScoreRecord
+ */
 final class Scores
 {
     private Database $database;
@@ -87,6 +91,15 @@ final class Scores
         $playerName = (string)$playerName;
 
         $scoreValue = $properties->consume('score');
+        $realScoreValue = $properties->consume('score-real', $scoreValue);
+        $sortScoreValue =  $properties->consume(
+            'score-sort',
+            $this->createSortScoreValue($realScoreValue)
+        );
+
+        $sources = $properties->consume('sources', []);
+
+        $properties->remove('id', 'game-id');
 
         if ($this->checkForUnhandledProperties) {
             $properties->assertEmpty();
@@ -96,7 +109,53 @@ final class Scores
             $this->games->find($score->gameId())->id(),
             $this->players->find($playerName)->id(),
             $playerName,
-            $scoreValue
+            $scoreValue,
+            $realScoreValue,
+            $sortScoreValue,
+            [
+                'en' => $this->createSources('en', $sources),
+                'ja' => $this->createSources('jp', $sources),
+            ]
         );
+    }
+
+    private function createSortScoreValue(string $scoreValue): string
+    {
+        return str_replace(',', '', $scoreValue);
+    }
+
+    /**
+     * @param array<string,mixed>[] $sources
+     * @return Sources
+     */
+    private function createSources(string $locale, array $sources): array
+    {
+        return array_map(
+            fn (array $source) => $this->createSource($locale, $source),
+            $sources
+        );
+    }
+
+    /**
+     * @param array<string,mixed> $source
+     * @return Source
+     */
+    private function createSource(string $locale, array $source): array
+    {
+        $properties = new Properties($source);
+
+        $name = $properties->consume('name');
+        $date = $properties->consume('date', '');
+        $url = $properties->consume('url', '');
+
+        if (!$this->checkForUnhandledProperties) {
+            $properties->assertEmpty();
+        }
+
+        return [
+            'name' => $name,
+            'date' => $date,
+            'url' => $url,
+        ];
     }
 }

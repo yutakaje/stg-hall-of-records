@@ -22,8 +22,11 @@ use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 
 /**
  * @phpstan-import-type Link from GameRecord
+ * @phpstan-import-type Links from GameRecord
  * @phpstan-import-type Translation from GameRecord
+ * @phpstan-import-type Translations from GameRecord
  * @phpstan-import-type Counterstop from GameRecord
+ * @phpstan-import-type Counterstops from GameRecord
  */
 final class Games
 {
@@ -147,8 +150,8 @@ final class Games
     }
 
     /**
-     * @param Link[] $links
-     * @return Link[]
+     * @param array<string,mixed>[] $links
+     * @return Links
      */
     private function createLinks(string $locale, array $links): array
     {
@@ -159,7 +162,7 @@ final class Games
     }
 
     /**
-     * @param Link $link
+     * @param array<string,mixed> $link
      * @return Link
      */
     private function createLink(string $locale, array $link): array
@@ -180,8 +183,8 @@ final class Games
     }
 
     /**
-     * @param Translation[] $translations
-     * @return Translation[]
+     * @param array<string,mixed>[] $translations
+     * @return Translations
      */
     private function createTranslations(string $locale, array $translations): array
     {
@@ -192,7 +195,7 @@ final class Games
     }
 
     /**
-     * @param Translation $translation
+     * @param array<string,mixed> $translation
      * @return Translation
      */
     private function createTranslation(string $locale, array $translation): array
@@ -218,7 +221,7 @@ final class Games
 
     /**
      * @param array<string,mixed>|array<string,mixed>[] $counterstops
-     * @return Counterstop[]
+     * @return Counterstops
      */
     private function createCounterstops(array $counterstops): array
     {

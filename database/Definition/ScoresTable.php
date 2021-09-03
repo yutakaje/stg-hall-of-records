@@ -20,7 +20,12 @@ use Doctrine\DBAL\Schema\Table;
 use Doctrine\DBAL\Schema\View;
 use Stg\HallOfRecords\Shared\Infrastructure\Locale\Locales;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\DateTime;
+use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
+use Symfony\Component\Yaml\Yaml;
 
+/**
+ * @phpstan-import-type LocalizedSources from ScoreRecord
+ */
 final class ScoresTable extends AbstractTable
 {
     private Connection $connection;
@@ -46,11 +51,21 @@ final class ScoresTable extends AbstractTable
         $scores->addColumn('game_id', 'integer');
         $scores->addColumn('player_id', 'integer');
         $scores->addColumn('player_name', 'string', ['length' => 100]);
-        $scores->addColumn('score_value', 'string', ['length' => 100]);
+        $scores->addColumn('score_value', 'string', ['length' => 50]);
+        $scores->addColumn('score_value_real', 'string', ['length' => 50]);
+        $scores->addColumn('score_value_sort', 'integer');
         $scores->setPrimaryKey(['id']);
         $scores->addForeignKeyConstraint($games, ['game_id'], ['id']);
         $scores->addForeignKeyConstraint($players, ['player_id'], ['id']);
         $schemaManager->createTable($scores);
+
+        $localeScores = $schema->createTable('stg_scores_locale');
+        $localeScores->addColumn('score_id', 'integer');
+        $localeScores->addColumn('locale', 'string', ['length' => 16]);
+        $localeScores->addColumn('sources', 'string', ['length' => 1000]);
+        $localeScores->setPrimaryKey(['score_id', 'locale']);
+        $localeScores->addForeignKeyConstraint($scores, ['score_id'], ['id']);
+        $schemaManager->createTable($localeScores);
 
         $schemaManager->createView($this->createView());
 
@@ -60,45 +75,105 @@ final class ScoresTable extends AbstractTable
     private function createView(): View
     {
         $qb = $this->connection->createQueryBuilder();
+        $alias = 'x';
 
         return new View('stg_query_scores', $qb->select(
+            'id',
+            'created_date',
+            'last_modified_date',
+            'game_id',
+            'locale',
+            'game_name',
+            'game_name_translit',
+            'game_name_filter',
+            'company_id',
+            'company_name',
+            'company_name_translit',
+            'company_name_filter',
+            'player_id',
+            'player_name',
+            'score_value',
+            'score_value_real',
+            'score_value_sort',
+            'sources'
+        )
+            ->from("({$this->scoreSql()})", $alias)
+            ->getSQL());
+    }
+
+    private function scoreSql(): string
+    {
+        $qb = $this->connection->createQueryBuilder();
+
+        return $qb->select(
             'scores.id',
             'scores.created_date',
             'scores.last_modified_date',
+            'localized.locale',
             'scores.game_id',
-            'games.locale',
             'games.name AS game_name',
             'games.name_translit AS game_name_translit',
-            'games.name_translit AS game_name_filter',
+            'games.name_filter AS game_name_filter',
             'games.company_id',
             'games.company_name',
             'games.company_name_translit',
             'games.company_name_filter',
             'scores.player_id',
             'scores.player_name',
-            'scores.score_value'
+            'scores.score_value',
+            'scores.score_value_real',
+            'scores.score_value_sort',
+            'localized.sources'
         )
-            ->from('stg_scores', 'scores')
+            ->from('stg_scores_locale', 'localized')
+            ->join(
+                'localized',
+                'stg_scores',
+                'scores',
+                $qb->expr()->eq('scores.id', 'localized.score_id')
+            )
             ->join(
                 'scores',
                 'stg_query_games',
                 'games',
-                $qb->expr()->eq('games.id', 'scores.game_id')
+                (string)$qb->expr()->and(
+                    $qb->expr()->eq('games.id', 'scores.game_id'),
+                    $qb->expr()->eq('games.locale', 'localized.locale')
+                )
             )
-            ->getSQL());
+            ->getSQL();
     }
 
+    /**
+     * @param LocalizedSources $sources
+     */
     public function createRecord(
         int $gameId,
         int $playerId,
         string $playerName,
-        string $scoreValue
+        string $scoreValue,
+        string $realScoreValue = '',
+        string $sortScoreValue = '',
+        array $sources = []
     ): ScoreRecord {
+        if ($realScoreValue === '') {
+            $realScoreValue = $scoreValue;
+        }
+        if ($sortScoreValue === '') {
+            $sortScoreValue = $this->convertScoreValueToNumber($realScoreValue);
+        }
+        if ($sources == null) {
+            $sources = $this->emptyLocalizedValues([]);
+        }
+
         return new ScoreRecord(
             $gameId,
             $playerId,
             $playerName,
-            $scoreValue
+            $scoreValue,
+            $realScoreValue,
+            $sortScoreValue,
+            $this->localizeValues($sources)
         );
     }
 
@@ -113,6 +188,8 @@ final class ScoresTable extends AbstractTable
                 'player_id' => ':playerId',
                 'player_name' => ':playerName',
                 'score_value' => ':scoreValue',
+                'score_value_real' => ':realScoreValue',
+                'score_value_sort' => ':sortScoreValue',
             ])
             ->setParameter('createdDate', DateTime::now())
             ->setParameter('lastModifiedDate', DateTime::now())
@@ -120,9 +197,15 @@ final class ScoresTable extends AbstractTable
             ->setParameter('playerId', $record->playerId())
             ->setParameter('playerName', $record->playerName())
             ->setParameter('scoreValue', $record->scoreValue())
+            ->setParameter('realScoreValue', $record->realScoreValue())
+            ->setParameter('sortScoreValue', $record->sortScoreValue())
             ->executeStatement();
 
         $record->setId((int)$this->connection->lastInsertId());
+
+        foreach ($this->locales()->all() as $locale) {
+            $this->insertLocalizedRecord($record, $locale);
+        }
     }
 
     /**
@@ -133,5 +216,34 @@ final class ScoresTable extends AbstractTable
         foreach ($records as $record) {
             $this->insertRecord($record);
         }
+    }
+
+    private function insertLocalizedRecord(
+        ScoreRecord $record,
+        Locale $locale
+    ): void {
+        $qb = $this->connection->createQueryBuilder();
+        $qb->insert('stg_scores_locale')
+            ->values([
+                'score_id' => ':scoreId',
+                'locale' => ':locale',
+                'sources' => ':sources',
+            ])
+            ->setParameter('scoreId', $record->id())
+            ->setParameter('locale', $locale->value())
+            ->setParameter('sources', $this->makeSources($record, $locale))
+            ->executeStatement();
+    }
+
+    private function makeSources(ScoreRecord $record, Locale $locale): string
+    {
+        return Yaml::dump(
+            $record->sources($locale)
+        );
+    }
+
+    private function convertScoreValueToNumber(string $scoreValue): string
+    {
+        return str_replace(',', '', $scoreValue);
     }
 }
