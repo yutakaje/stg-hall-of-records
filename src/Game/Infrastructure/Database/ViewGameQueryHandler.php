@@ -73,7 +73,14 @@ final class ViewGameQueryHandler implements ViewGameQueryHandlerInterface
     {
         $qb = $this->connection->createQueryBuilder();
 
-        $stmt = $qb->select('id', 'player_id', 'player_name', 'score_value')
+        $stmt = $qb->select(
+            'id',
+            'player_id',
+            'player_name',
+            'score_value',
+            'score_value_real',
+            'sources'
+        )
             ->from('stg_query_scores')
             ->where($qb->expr()->and(
                 $qb->expr()->eq('game_id', ':gameId'),
@@ -81,7 +88,7 @@ final class ViewGameQueryHandler implements ViewGameQueryHandlerInterface
             ))
             ->setParameter('gameId', $query->id())
             ->setParameter('locale', $query->locale()->value())
-            ->orderBy('score_value', 'desc')
+            ->orderBy('score_value_sort', 'desc')
             ->addOrderBy('id')
             ->executeQuery();
 
@@ -131,6 +138,8 @@ final class ViewGameQueryHandler implements ViewGameQueryHandlerInterface
         $score->playerId = $row['player_id'];
         $score->playerName = $row['player_name'];
         $score->scoreValue = $row['score_value'];
+        $score->realScoreValue = $row['score_value_real'];
+        $score->sources = $this->createSources($row['sources']);
 
         return $score;
     }
@@ -151,6 +160,27 @@ final class ViewGameQueryHandler implements ViewGameQueryHandlerInterface
         $resource = new Resource();
         $resource->url = $link['url'];
         $resource->title = $link['title'];
+
+        return $resource;
+    }
+
+    private function createSources(string $sources): Resources
+    {
+        return new Resources(array_map(
+            fn (array $source) => $this->createSource($source),
+            Yaml::parse($sources)
+        ));
+    }
+
+    /**
+     * @param array<string,string> $source
+     */
+    private function createSource(array $source): Resource
+    {
+        $resource = new Resource();
+        $resource->name = $source['name'];
+        $resource->date = $source['date'];
+        $resource->url = $source['url'];
 
         return $resource;
     }

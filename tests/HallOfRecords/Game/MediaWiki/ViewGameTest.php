@@ -173,7 +173,20 @@ class ViewGameTest extends \Tests\TestCase
                 '{{ player.id }}' => $player->id(),
                 '{{ score.playerName }}' => $score->playerName(),
                 '{{ score.scoreValue }}' => $score->scoreValue(),
+                '{{ scoreValue|raw }}' => $this->createScoreValueOutput($score),
                 '{{ links.player }}' => "/{$locale}/players/{$player->id()}",
+            ]
+        );
+    }
+
+    private function createScoreValueOutput(ScoreEntry $score): string
+    {
+        return $this->data()->replace(
+            $this->mediaWiki()->loadTemplate('Game', 'view-game/score-value'),
+            [
+                '{{ score.value }}' => $score->scoreValue(),
+                '{{ score.realValue }}' => '',
+                '{% if score.realValue != score.value %} []{% endif %}' => '',
             ]
         );
     }

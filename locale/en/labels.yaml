@@ -14,6 +14,7 @@ labels:
     scores: 'Scores'
     score: 'Score'
     num-of-scores: '1 score|%count% scores'
+    sources: 'Source'
 
     home: 'Main page'
     languages: 'Languages'

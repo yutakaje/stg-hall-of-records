@@ -99,6 +99,8 @@ final class ViewGameTemplate extends AbstractTemplate implements
         return $this->renderer()->render('score-entry', [
             'score' => $this->createScoreVar($score),
             'player' => $this->createPlayerVar($score),
+            'scoreValue' => $this->renderScoreValue($score),
+            'sources' => $this->renderSources($score->sources),
             'links' => [
                 'player' => $this->routes()->viewPlayer($score->playerId),
             ],
@@ -110,7 +112,6 @@ final class ViewGameTemplate extends AbstractTemplate implements
         $var = new \stdClass();
         $var->id = $score->id;
         $var->playerName = $score->playerName;
-        $var->scoreValue = $score->scoreValue;
 
         return $var;
     }
@@ -145,6 +146,48 @@ final class ViewGameTemplate extends AbstractTemplate implements
         $var = new \stdClass();
         $var->url = $link->url;
         $var->title = $link->title;
+
+        return $var;
+    }
+
+    private function renderScoreValue(Resource $source): string
+    {
+        return $this->renderer()->render('score-value', [
+            'score' => $this->createScoreValueVar($source),
+        ]);
+    }
+
+    private function createScoreValueVar(Resource $score): \stdClass
+    {
+        $var = new \stdClass();
+        $var->value = $score->scoreValue;
+        $var->realValue = $score->realScoreValue;
+
+        return $var;
+    }
+
+    private function renderSources(Resources $sources): string
+    {
+        return $this->renderer()->render('sources-list', [
+            'sources' => $sources->map(
+                fn (Resource $source) => $this->renderSource($source)
+            ),
+        ]);
+    }
+
+    private function renderSource(Resource $source): string
+    {
+        return $this->renderer()->render('source-entry', [
+            'source' => $this->createSourceVar($source),
+        ]);
+    }
+
+    private function createSourceVar(Resource $source): \stdClass
+    {
+        $var = new \stdClass();
+        $var->name = $source->name;
+        $var->date = $source->date;
+        $var->url = $source->url;
 
         return $var;
     }

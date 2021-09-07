@@ -1,0 +1,7 @@
+{% if sources %}
+  <sources>
+    {% for entry in sources %}
+        {{ entry|raw }}
+    {% endfor %}
+  </sources>
+{% endif %}

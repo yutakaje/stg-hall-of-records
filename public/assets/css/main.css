@@ -20,3 +20,15 @@ game links {
 game link {
     display: block;
 }
+
+scores scoreValue {
+    display: block;
+    text-align: center;
+}
+scores sources {
+    display: block;
+    text-align: center;
+}
+scores source {
+    display: block;
+}
