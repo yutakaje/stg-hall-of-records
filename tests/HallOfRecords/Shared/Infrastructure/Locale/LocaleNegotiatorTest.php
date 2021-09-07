@@ -26,7 +26,7 @@ class LocaleNegotiatorTest extends \Tests\TestCase
     {
         $locales = $this->createLocales();
 
-        $negotiator = new LocaleNegotiator($locales);
+        $negotiator = $this->createNegotiator($locales);
 
         self::assertSame($locales->get('ja'), $negotiator->negotiate(
             $this->createRequest()
@@ -47,7 +47,7 @@ class LocaleNegotiatorTest extends \Tests\TestCase
     {
         $locales = $this->createLocales();
 
-        $negotiator = new LocaleNegotiator($locales, new BaseUri($baseUri));
+        $negotiator = $this->createNegotiator($locales, new BaseUri($baseUri));
 
         self::assertSame($locales->get('en'), $negotiator->negotiate(
             $this->createRequest("{$baseUri}/en/uri")
@@ -64,7 +64,7 @@ class LocaleNegotiatorTest extends \Tests\TestCase
     {
         $locales = $this->createLocales();
 
-        $negotiator = new LocaleNegotiator($locales);
+        $negotiator = $this->createNegotiator($locales);
 
         self::assertSame($locales->get('en'), $negotiator->negotiate(
             $this->createRequest('', 'en-US,en;q=0.5')
@@ -81,7 +81,7 @@ class LocaleNegotiatorTest extends \Tests\TestCase
     {
         $locales = $this->createLocales();
 
-        $negotiator = new LocaleNegotiator($locales);
+        $negotiator = $this->createNegotiator($locales);
 
         // Path should have higher priority.
         self::assertSame($locales->get('kr'), $negotiator->negotiate(
@@ -93,6 +93,16 @@ class LocaleNegotiatorTest extends \Tests\TestCase
         self::assertSame($locales->get('ja'), $negotiator->negotiate(
             $this->createRequest('/fr/uri', 'it_IT')
         ));
+    }
+
+    private function createNegotiator(
+        Locales $locales,
+        ?BaseUri $baseUri = null
+    ): LocaleNegotiator {
+        return new LocaleNegotiator(
+            $locales,
+            $baseUri ?? new BaseUri()
+        );
     }
 
     private function createLocales(): Locales

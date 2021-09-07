@@ -23,12 +23,10 @@ final class Routes
     private string $baseUri;
     private string $locale;
 
-    public function __construct(Locales $locales, ?BaseUri $baseUri = null)
+    public function __construct(Locales $locales, BaseUri $baseUri)
     {
         $this->locales = $locales;
-        $this->baseUri = $this->removeTrailingSlash(
-            $baseUri !== null ? $baseUri->value() : ''
-        );
+        $this->baseUri = $this->removeTrailingSlash($baseUri->value());
         $this->locale = '{locale}';
     }
 

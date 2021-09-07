@@ -22,10 +22,10 @@ final class LocaleNegotiator
     private Locales $locales;
     private string $baseUri;
 
-    public function __construct(Locales $locales, ?BaseUri $baseUri = null)
+    public function __construct(Locales $locales, BaseUri $baseUri)
     {
         $this->locales = $locales;
-        $this->baseUri = $baseUri !== null ? $baseUri->value() : '';
+        $this->baseUri = $baseUri->value();
     }
 
     public function negotiate(ServerRequestInterface $request): Locale

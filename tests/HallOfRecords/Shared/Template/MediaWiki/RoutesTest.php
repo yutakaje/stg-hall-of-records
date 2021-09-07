@@ -20,13 +20,13 @@ use Stg\HallOfRecords\Shared\Template\MediaWiki\Routes;
 
 class RoutesTest extends \Tests\TestCase
 {
-    public function testWithDefaultBaseUri(): void
+    public function testWithEmptyBaseUri(): void
     {
         $routes = new Routes(new Locales('en', [
             new Locale('en'),
             new Locale('ja'),
             new Locale('kr'),
-        ]));
+        ]), new BaseUri());
 
         self::assertSame('/{locale}', $routes->index());
         self::assertSame('/{locale}/companies', $routes->listCompanies());
