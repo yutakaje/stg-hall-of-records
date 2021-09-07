@@ -25,7 +25,7 @@ abstract class AbstractTemplate extends AbstractSimpleTemplate
         Renderer $renderer,
         Routes $routes,
         TranslatorInterface $translator,
-        SharedTemplates $sharedTemplates,
+        SharedTemplates $sharedTemplates
     ) {
         parent::__construct($renderer, $routes, $translator);
         $this->sharedTemplates = $sharedTemplates;
