@@ -13,23 +13,21 @@ declare(strict_types=1);
 
 namespace Stg\HallOfRecords\Export;
 
+use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
+use Stg\HallOfRecords\Shared\Template\DateFormatter;
+
 final class Formatter
 {
-    public const DATE_FORMAT_SHORT = 'short';
-    public const DATE_FORMAT_LONG = 'long';
+    public const DATE_FORMAT_SHORT = DateFormatter::FORMAT_SHORT;
+    public const DATE_FORMAT_LONG = DateFormatter::FORMAT_LONG;
 
-    private string $locale;
-    /**
-     * @see DATE_FORMAT_*
-     */
-    private string $dateFormat;
+    private Locale $locale;
+    private DateFormatter $formatter;
 
     public function __construct(string $locale = '', string $dateFormat = '')
     {
-        $this->locale = $locale;
-        $this->dateFormat = $dateFormat === self::DATE_FORMAT_SHORT
-            ? self::DATE_FORMAT_SHORT
-            : self::DATE_FORMAT_LONG;
+        $this->locale = $this->mapLocale($locale);
+        $this->formatter = new DateFormatter($dateFormat);
     }
 
     /**
@@ -38,138 +36,20 @@ final class Formatter
      */
     public function formatDate($date)
     {
-        if (!is_string($date)) {
-            return $date;
-        }
-
-        $pattern = '/'
-            . '(?<year>[1-9][0-9]{3})'
-            . '(?:-(?<month>[0-1][0-9])'
-            . '(?:-(?<day>[0-3][0-9])'
-            . ')?)?'
-            . '/';
-
-        if ($this->locale === 'en') {
-            $callback = function (array $match): string {
-                $date = $match['year'];
-                if (isset($match['month'])) {
-                    if (isset($match['day'])) {
-                        $date = $this->dayNameEn($match['day']) . ", {$date}";
-                    }
-                    $date = $this->monthNameEn($match['month']) . " {$date}";
-                }
-                return $date;
-            };
-        } elseif ($this->locale === 'jp') {
-            $callback = function (array $match): string {
-                $date = "{$match['year']}年";
-                if (isset($match['month'])) {
-                    $date .= "{$match['month']}月";
-                    if (isset($match['day'])) {
-                        $date .= "{$match['day']}日";
-                    }
-                }
-                return $date;
-            };
-        } else {
-            $callback = function (array $match): string {
-                $date = $match['year'];
-                if (isset($match['month'])) {
-                    $date .= "-{$match['month']}";
-                    if (isset($match['day'])) {
-                        $date .= "-{$match['day']}";
-                    }
-                }
-                return $date;
-            };
-        }
-
-        $formatted = preg_replace_callback($pattern, $callback, $date);
-
-        return $formatted ?? $date;
+        return $this->formatter->format($this->locale, $date);
     }
 
-    private function monthNameEn(string $month): string
+    private function mapLocale(string $locale): Locale
     {
-        if ($this->dateFormat === self::DATE_FORMAT_SHORT) {
-            return $this->monthNameEnShort($month);
-        } else {
-            return $this->monthNameEnLong($month);
-        };
-    }
+        switch ($locale) {
+            case 'jp':
+                return new Locale('ja');
 
-    private function monthNameEnLong(string $month): string
-    {
-        switch ($month) {
-            case '01':
-                return 'January';
-            case '02':
-                return 'February';
-            case '03':
-                return 'March';
-            case '04':
-                return 'April';
-            case '05':
-                return 'May';
-            case '06':
-                return 'June';
-            case '07':
-                return 'July';
-            case '08':
-                return 'August';
-            case '09':
-                return 'September';
-            case '10':
-                return 'October';
-            case '11':
-                return 'November';
-            case '12':
-                return 'December';
+            case '':
+                return new Locale('none');
+
             default:
-                return '';
+                return new Locale($locale);
         }
-    }
-
-    private function monthNameEnShort(string $month): string
-    {
-        return substr($this->monthNameEnLong($month), 0, 3);
-    }
-
-    private function dayNameEn(string $day): string
-    {
-        if ($this->dateFormat === self::DATE_FORMAT_SHORT) {
-            return $this->dayNameEnShort($day);
-        } else {
-            return $this->dayNameEnLong($day);
-        };
-    }
-
-    private function dayNameEnLong(string $day): string
-    {
-        $day = $this->dayNameEnShort($day);
-
-        switch ($day) {
-            case '1':
-                return '1st';
-            case '2':
-                return '2nd';
-            case '3':
-                return '3rd';
-            case '21':
-                return '21st';
-            case '22':
-                return '22nd';
-            case '23':
-                return '23rd';
-            case '31':
-                return '31st';
-            default:
-                return "{$day}th";
-        }
-    }
-
-    private function dayNameEnShort(string $day): string
-    {
-        return ltrim($day, '0');
     }
 }

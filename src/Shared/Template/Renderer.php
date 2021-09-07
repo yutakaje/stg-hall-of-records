@@ -23,12 +23,14 @@ use Twig\TwigFilter;
 final class Renderer
 {
     private TranslatorInterface $translator;
+    private DateFormatter $dateFormatter;
     private ?Environment $twig;
     private ?Locale $locale;
 
     public function __construct(TranslatorInterface $translator)
     {
         $this->translator = $translator;
+        $this->dateFormatter = new DateFormatter(DateFormatter::FORMAT_SHORT);
         $this->twig = null;
         $this->locale = null;
     }
@@ -108,6 +110,13 @@ final class Renderer
                 $this->locale(),
                 (string)$id,
                 $parameters
+            )
+        ));
+        $env->addFilter(new TwigFilter(
+            'formatDate',
+            fn ($date) => $this->dateFormatter->format(
+                $this->locale(),
+                $date
             )
         ));
 
