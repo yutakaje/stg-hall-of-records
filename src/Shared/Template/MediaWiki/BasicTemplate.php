@@ -14,11 +14,25 @@ declare(strict_types=1);
 namespace Stg\HallOfRecords\Shared\Template\MediaWiki;
 
 use Stg\HallOfRecords\Shared\Application\ResultMessage;
+use Stg\HallOfRecords\Shared\Infrastructure\Http\BaseUri;
+use Stg\HallOfRecords\Shared\Infrastructure\Locale\TranslatorInterface;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 use Stg\HallOfRecords\Shared\Template\Renderer;
 
 final class BasicTemplate extends AbstractSimpleTemplate
 {
+    private BaseUri $baseUri;
+
+    public function __construct(
+        BaseUri $baseUri,
+        Renderer $renderer,
+        Routes $routes,
+        TranslatorInterface $translator
+    ) {
+        parent::__construct($renderer, $routes, $translator);
+        $this->baseUri = $baseUri;
+    }
+
     protected function initRenderer(Renderer $renderer): Renderer
     {
         return $renderer->withTemplateFiles(__DIR__ . '/html');
@@ -52,6 +66,7 @@ final class BasicTemplate extends AbstractSimpleTemplate
     ): string {
         return $this->renderer()->render('basic', [
             'content' => $content,
+            'baseUri' => $this->baseUri->value(),
             'links' => [
                 'self' => $selfLinks,
                 'index' => $this->routes()->index(),
