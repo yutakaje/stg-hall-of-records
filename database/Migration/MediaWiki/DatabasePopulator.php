@@ -113,6 +113,7 @@ final class DatabasePopulator
             $games,
             $players,
             $this->scores,
+            $this->settings,
             $this->checkForUnhandledProperties
         );
         $scores->insert();

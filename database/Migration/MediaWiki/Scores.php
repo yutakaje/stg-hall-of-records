@@ -18,10 +18,13 @@ use Stg\HallOfRecords\Database\Database;
 use Stg\HallOfRecords\Database\Definition\ScoreRecord;
 use Stg\HallOfRecords\Data\Score\Score;
 use Stg\HallOfRecords\Data\Score\ScoreRepositoryInterface;
+use Stg\HallOfRecords\Data\Setting\SettingRepositoryInterface;
 
 /**
  * @phpstan-import-type Source from ScoreRecord
  * @phpstan-import-type Sources from ScoreRecord
+ * @phpstan-type SourceTranslation array{en:string, ja:string}
+ * @phpstan-type SourceTranslations array<string,SourceTranslation>
  */
 final class Scores
 {
@@ -30,7 +33,10 @@ final class Scores
     private Games $games;
     private Players $players;
     private ScoreRepositoryInterface $sourceScores;
+    private SettingRepositoryInterface $sourceSettings;
     private bool $checkForUnhandledProperties;
+    /** @var SourceTranslations */
+    private array $sourceTranslations;
     /** @var ScoreRecord[] */
     private array $records;
 
@@ -40,6 +46,7 @@ final class Scores
         Games $games,
         Players $players,
         ScoreRepositoryInterface $sourceScores,
+        SettingRepositoryInterface $sourceSettings,
         bool $checkForUnhandledProperties
     ) {
         $this->database = $database;
@@ -47,7 +54,9 @@ final class Scores
         $this->games = $games;
         $this->players = $players;
         $this->sourceScores = $sourceScores;
+        $this->sourceSettings = $sourceSettings;
         $this->checkForUnhandledProperties = $checkForUnhandledProperties;
+        $this->sourceTranslations = [];
         $this->records = [];
     }
 
@@ -57,6 +66,7 @@ final class Scores
 
         $start = microtime(true);
 
+        $this->sourceTranslations = $this->createSourceTranslations();
         $this->records = $this->createRecords();
 
         $this->database->scores()->insertRecords($this->records);
@@ -65,6 +75,52 @@ final class Scores
             'total' => sizeof($this->records),
             'elapsed' => microtime(true) - $start,
         ]);
+    }
+
+    /**
+     * @return SourceTranslations
+     */
+    private function createSourceTranslations(): array
+    {
+        $translations = array_filter(
+            $this->sourceSettings->filterGlobal()->get('translations'),
+            fn (array $entry) => $entry['property'] === 'sources'
+        );
+
+        return array_reduce(
+            $translations,
+            fn (array $all, array $translation) => array_merge(
+                $all,
+                $this->createSourceTranslation($translation)
+            ),
+            []
+        );
+    }
+
+    /**
+     * @param array<string,mixed> $translation
+     * @return SourceTranslations
+     */
+    private function createSourceTranslation(array $translation): array
+    {
+        $properties = new Properties($translation);
+
+        $value = (string)$properties->consume('value');
+        $enTranslation = (string)$properties->consume('value-en', $value);
+        $jaTranslation = (string)$properties->consume('value-jp', $value);
+
+        $properties->remove('property', 'fuzzy-match');
+
+        if (!$this->checkForUnhandledProperties) {
+            $properties->assertEmpty();
+        }
+
+        return [
+            strtolower($value) => [
+                'en' => $enTranslation,
+                'ja' => $jaTranslation,
+            ],
+        ];
     }
 
     /**
@@ -114,7 +170,7 @@ final class Scores
             $sortScoreValue,
             [
                 'en' => $this->createSources('en', $sources),
-                'ja' => $this->createSources('jp', $sources),
+                'ja' => $this->createSources('ja', $sources),
             ]
         );
     }
@@ -144,7 +200,7 @@ final class Scores
     {
         $properties = new Properties($source);
 
-        $name = $properties->consume('name');
+        $name = $this->translateSource($properties->consume('name'), $locale);
         $date = $properties->consume('date', '');
         $url = $properties->consume('url', '');
 
@@ -157,5 +213,16 @@ final class Scores
             'date' => $date,
             'url' => $url,
         ];
+    }
+
+    private function translateSource(string $name, string $locale): string
+    {
+        $lookup = strtolower($name);
+
+        if (!isset($this->sourceTranslations[$lookup][$locale])) {
+            return $name;
+        }
+
+        return $this->sourceTranslations[$lookup][$locale];
     }
 }
