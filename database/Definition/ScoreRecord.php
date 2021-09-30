@@ -19,6 +19,7 @@ use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
  * @phpstan-type Source array{name:string, date:string, url:string}
  * @phpstan-type Sources Source[]
  * @phpstan-type LocalizedSources array<string,Sources>
+ * @phpstan-type Attributes ScoreAttributeRecord[]
  */
 final class ScoreRecord extends AbstractRecord
 {
@@ -30,9 +31,12 @@ final class ScoreRecord extends AbstractRecord
     private string $sortScoreValue;
     /** @var LocalizedSources */
     private array $sources;
+    /** @var Attributes */
+    private array $attributes;
 
     /**
      * @param LocalizedSources $sources
+     * @param Attributes $attributes
      */
     public function __construct(
         int $gameId,
@@ -41,7 +45,8 @@ final class ScoreRecord extends AbstractRecord
         string $scoreValue,
         string $realScoreValue,
         string $sortScoreValue,
-        array $sources
+        array $sources,
+        array $attributes
     ) {
         parent::__construct();
         $this->gameId = $gameId;
@@ -51,6 +56,7 @@ final class ScoreRecord extends AbstractRecord
         $this->realScoreValue = $realScoreValue;
         $this->sortScoreValue = $sortScoreValue;
         $this->sources = $sources;
+        $this->attributes = $attributes;
     }
 
     public function gameId(): int
@@ -89,5 +95,13 @@ final class ScoreRecord extends AbstractRecord
     public function sources(Locale $locale): array
     {
         return $this->localizedValue($this->sources, $locale);
+    }
+
+    /**
+     * @return Attributes
+     */
+    public function attributes(): array
+    {
+        return $this->attributes;
     }
 }

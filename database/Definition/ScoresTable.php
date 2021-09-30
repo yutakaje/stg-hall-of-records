@@ -25,10 +25,12 @@ use Symfony\Component\Yaml\Yaml;
 
 /**
  * @phpstan-import-type LocalizedSources from ScoreRecord
+ * @phpstan-import-type Attributes from ScoreRecord
  */
 final class ScoresTable extends AbstractTable
 {
     private Connection $connection;
+    private ScoreAttributesTable $attributes;
 
     public function __construct(
         Connection $connection,
@@ -36,6 +38,12 @@ final class ScoresTable extends AbstractTable
     ) {
         parent::__construct($locales);
         $this->connection = $connection;
+        $this->attributes = new ScoreAttributesTable($this->connection, $locales);
+    }
+
+    public function attributes(): ScoreAttributesTable
+    {
+        return $this->attributes;
     }
 
     public function createObjects(
@@ -68,6 +76,8 @@ final class ScoresTable extends AbstractTable
         $schemaManager->createTable($localeScores);
 
         $schemaManager->createView($this->createView());
+
+        $this->attributes->createObjects($schemaManager, $schema, $scores);
 
         return $scores;
     }
@@ -146,6 +156,7 @@ final class ScoresTable extends AbstractTable
 
     /**
      * @param LocalizedSources $sources
+     * @param Attributes $attributes
      */
     public function createRecord(
         int $gameId,
@@ -154,7 +165,8 @@ final class ScoresTable extends AbstractTable
         string $scoreValue,
         string $realScoreValue = '',
         string $sortScoreValue = '',
-        array $sources = []
+        array $sources = [],
+        array $attributes = []
     ): ScoreRecord {
         if ($realScoreValue === '') {
             $realScoreValue = $scoreValue;
@@ -173,7 +185,8 @@ final class ScoresTable extends AbstractTable
             $scoreValue,
             $realScoreValue,
             $sortScoreValue,
-            $this->localizeValues($sources)
+            $this->localizeValues($sources),
+            $attributes
         );
     }
 
@@ -205,6 +218,11 @@ final class ScoresTable extends AbstractTable
 
         foreach ($this->locales()->all() as $locale) {
             $this->insertLocalizedRecord($record, $locale);
+        }
+
+        foreach ($record->attributes() as $attributeRecord) {
+            $attributeRecord->setScoreId($record->id());
+            $this->attributes->insertRecord($attributeRecord);
         }
     }
 

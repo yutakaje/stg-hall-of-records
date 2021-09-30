@@ -15,6 +15,7 @@ namespace Stg\HallOfRecords\Database\Migration\MediaWiki;
 
 use Psr\Log\LoggerInterface;
 use Stg\HallOfRecords\Database\Database;
+use Stg\HallOfRecords\Database\Definition\ScoreAttributeRecord;
 use Stg\HallOfRecords\Database\Definition\ScoreRecord;
 use Stg\HallOfRecords\Data\Score\Score;
 use Stg\HallOfRecords\Data\Score\ScoreRepositoryInterface;
@@ -152,10 +153,31 @@ final class Scores
             'score-sort',
             $this->createSortScoreValue($realScoreValue)
         );
-
         $sources = $properties->consume('sources', []);
 
+        $attributes = array_filter([
+            'ship' => $properties->consume('ship', null),
+            'mode' => $properties->consume('mode', null),
+            'weapon' => $properties->consume('weapon', null),
+            'loop' => $properties->consume('loop', null),
+            'version' => $properties->consume('version', null),
+            'autofire' => $properties->consume('autofire', null),
+        ], fn ($value) => $value !== null);
+
         $properties->remove('id', 'game-id');
+
+        /* @TODO Handle remaining properties */
+        $properties->remove(
+            'is-current-record',
+            'comments',
+            'comments-jp',
+            'attributes',
+            'platform',
+            'image-urls',
+            'manual-sort',
+            'difficulty',
+            'game',
+        );
 
         if ($this->checkForUnhandledProperties) {
             $properties->assertEmpty();
@@ -171,7 +193,29 @@ final class Scores
             [
                 'en' => $this->createSources('en', $sources),
                 'ja' => $this->createSources('ja', $sources),
-            ]
+            ],
+            array_map(
+                fn (string $name, string $value) => $this->createAttributeRecord(
+                    $name,
+                    $value
+                ),
+                array_keys($attributes),
+                $attributes
+            )
+        );
+    }
+
+    private function createAttributeRecord(
+        string $name,
+        string $value
+    ): ScoreAttributeRecord {
+        return $this->database->scores()->attributes()->createRecord(
+            $name,
+            $value,
+            [
+                'en' => $this->translateAttribute('en', $name, $value),
+                'ja' => $this->translateAttribute('ja', $name, $value),
+            ],
         );
     }
 
@@ -224,5 +268,14 @@ final class Scores
         }
 
         return $this->sourceTranslations[$lookup][$locale];
+    }
+
+    private function translateAttribute(
+        string $locale,
+        string $name,
+        string $value
+    ): string {
+        /* @TODO translate attribute */
+        return $value;
     }
 }
