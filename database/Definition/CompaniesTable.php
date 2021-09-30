@@ -148,9 +148,13 @@ final class CompaniesTable extends AbstractTable
      */
     public function insertRecords(array $records): void
     {
-        foreach ($records as $record) {
-            $this->insertRecord($record);
-        }
+        $this->connection->transactional(
+            function () use ($records): void {
+                foreach ($records as $record) {
+                    $this->insertRecord($record);
+                }
+            }
+        );
     }
 
     private function insertLocalizedRecord(
