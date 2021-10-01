@@ -24,7 +24,7 @@ use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 final class ScoreRecord extends AbstractRecord
 {
     private int $gameId;
-    private int $playerId;
+    private ?int $playerId;
     private string $playerName;
     private string $scoreValue;
     private string $realScoreValue;
@@ -40,7 +40,7 @@ final class ScoreRecord extends AbstractRecord
      */
     public function __construct(
         int $gameId,
-        int $playerId,
+        ?int $playerId,
         string $playerName,
         string $scoreValue,
         string $realScoreValue,
@@ -64,7 +64,7 @@ final class ScoreRecord extends AbstractRecord
         return $this->gameId;
     }
 
-    public function playerId(): int
+    public function playerId(): ?int
     {
         return $this->playerId;
     }

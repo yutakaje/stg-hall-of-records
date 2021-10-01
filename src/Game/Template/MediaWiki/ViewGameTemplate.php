@@ -98,12 +98,9 @@ final class ViewGameTemplate extends AbstractTemplate implements
     {
         return $this->renderer()->render('score-entry', [
             'score' => $this->createScoreVar($score),
-            'player' => $this->createPlayerVar($score),
+            'player' => $this->renderPlayer($score),
             'scoreValue' => $this->renderScoreValue($score),
             'sources' => $this->renderSources($score->sources),
-            'links' => [
-                'player' => $this->routes()->viewPlayer($score->playerId),
-            ],
         ]);
     }
 
@@ -116,13 +113,18 @@ final class ViewGameTemplate extends AbstractTemplate implements
         return $var;
     }
 
-    private function createPlayerVar(Resource $score): \stdClass
+    private function renderPlayer(Resource $score): string
     {
-        $var = new \stdClass();
-        $var->id = $score->playerId;
-        $var->name = $score->playerName;
+        $links = [];
 
-        return $var;
+        if ($score->playerId !== null) {
+            $links['player'] = $this->routes()->viewPlayer($score->playerId);
+        }
+
+        return trim($this->renderer()->render('player', [
+            'playerName' => $score->playerName,
+            'links' => $links,
+        ]));
     }
 
     private function renderGameLinks(Resources $links): string

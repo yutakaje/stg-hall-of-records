@@ -46,6 +46,12 @@ class ViewGameTest extends \Tests\TestCase
                 'player1',
                 '234,828,910'
             ),
+            $this->data()->createScore(
+                $game,
+                null,
+                '[unknown]',
+                '234,828,910'
+            ),
         ]));
 
         $this->testWithLocale($game, $this->locale()->get('en'));
@@ -164,19 +170,41 @@ class ViewGameTest extends \Tests\TestCase
 
     private function createScoreOutput(ScoreEntry $score, Locale $locale): string
     {
-        $player = $score->player();
-
         return $this->data()->replace(
             $this->mediaWiki()->loadTemplate('Game', 'view-game/score-entry'),
             [
                 '{{ score.id }}' => $score->id(),
-                '{{ player.id }}' => $player->id(),
                 '{{ score.playerName }}' => $score->playerName(),
                 '{{ score.scoreValue }}' => $score->scoreValue(),
+                '{{ player|raw }}' => $this->createPlayerOutput($score, $locale),
                 '{{ scoreValue|raw }}' => $this->createScoreValueOutput($score),
-                '{{ links.player }}' => "/{$locale}/players/{$player->id()}",
             ]
         );
+    }
+
+    private function createPlayerOutput(ScoreEntry $score, Locale $locale): string
+    {
+        $player = $score->player();
+
+        if ($player === null) {
+            $replacements = [
+                '<a href="{{ links.player }}">{{ playerName }}</a>' => '',
+                '{{ playerName }}' => $score->playerName(),
+            ];
+        } else {
+            $replacements = [
+                ' {{ playerName }}' => '',
+                '{{ links.player }}' => "/{$locale}/players/{$player->id()}",
+                '{{ playerName }}' => $score->playerName(),
+            ];
+        }
+
+        return trim($this->mediaWiki()->removePlaceholders(
+            $this->data()->replace(
+                $this->mediaWiki()->loadTemplate('Game', 'view-game/player'),
+                $replacements
+            )
+        ));
     }
 
     private function createScoreValueOutput(ScoreEntry $score): string

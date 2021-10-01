@@ -64,7 +64,10 @@ final class Players
 
         return array_map(
             fn (string $name) => $this->createRecord($name),
-            array_unique($playerNames)
+            array_filter(
+                array_unique($playerNames),
+                fn ($name) => $name !== null
+            )
         );
     }
 

@@ -18,13 +18,13 @@ use Stg\HallOfRecords\Database\Definition\ScoresTable;
 final class ScoreEntry extends AbstractEntry
 {
     private GameEntry $game;
-    private PlayerEntry $player;
+    private ?PlayerEntry $player;
     private string $playerName;
     private string $scoreValue;
 
     public function __construct(
         GameEntry $game,
-        PlayerEntry $player,
+        ?PlayerEntry $player,
         string $playerName,
         string $scoreValue
     ) {
@@ -40,7 +40,7 @@ final class ScoreEntry extends AbstractEntry
         return $this->game;
     }
 
-    public function player(): PlayerEntry
+    public function player(): ?PlayerEntry
     {
         return $this->player;
     }
@@ -63,7 +63,7 @@ final class ScoreEntry extends AbstractEntry
 
         $record = $db->createRecord(
             $this->game->id(),
-            $this->player->id(),
+            $this->player !== null ? $this->player->id() : null,
             $this->playerName,
             $this->scoreValue
         );

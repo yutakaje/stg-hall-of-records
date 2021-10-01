@@ -57,7 +57,7 @@ final class ScoresTable extends AbstractTable
         $scores->addColumn('created_date', 'datetime');
         $scores->addColumn('last_modified_date', 'datetime');
         $scores->addColumn('game_id', 'integer');
-        $scores->addColumn('player_id', 'integer');
+        $scores->addColumn('player_id', 'integer', ['notnull' => false]);
         $scores->addColumn('player_name', 'string', ['length' => 100]);
         $scores->addColumn('score_value', 'string', ['length' => 50]);
         $scores->addColumn('score_value_real', 'string', ['length' => 50]);
@@ -160,7 +160,7 @@ final class ScoresTable extends AbstractTable
      */
     public function createRecord(
         int $gameId,
-        int $playerId,
+        ?int $playerId,
         string $playerName,
         string $scoreValue,
         string $realScoreValue = '',

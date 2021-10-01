@@ -112,7 +112,7 @@ final class DataHelper
 
     public function createScore(
         GameEntry $game,
-        PlayerEntry $player,
+        ?PlayerEntry $player,
         string $playerName,
         string $scoreValue
     ): ScoreEntry {
@@ -127,7 +127,9 @@ final class DataHelper
     public function insertScore(ScoreEntry $score): void
     {
         $this->insertGame($score->game());
-        $this->insertPlayer($score->player());
+        if ($score->player() !== null) {
+            $this->insertPlayer($score->player());
+        }
         $score->insert(
             $this->database->scores()
         );

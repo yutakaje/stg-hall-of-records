@@ -139,14 +139,7 @@ final class Scores
 
         $properties = new Properties($score->properties());
 
-        $playerName = $properties->consume('player');
-        if ($playerName === '') {
-            throw new \InvalidArgumentException(
-                'Player name should not be empty'
-            );
-        }
-        $playerName = (string)$playerName;
-
+        $player = $properties->consume('player');
         $scoreValue = $properties->consume('score');
         $realScoreValue = $properties->consume('score-real', $scoreValue);
         $sortScoreValue =  $properties->consume(
@@ -185,8 +178,8 @@ final class Scores
 
         return $this->database->scores()->createRecord(
             $this->games->find($score->gameId())->id(),
-            $this->players->find($playerName)->id(),
-            $playerName,
+            $player !== null ? $this->players->find($player)->id() : null,
+            $this->createPlayerName($player),
             $scoreValue,
             $realScoreValue,
             $sortScoreValue,
@@ -217,6 +210,24 @@ final class Scores
                 'ja' => $this->translateAttribute('ja', $name, $value),
             ],
         );
+    }
+
+    /**
+     * @param mixed $player
+     */
+    private function createPlayerName($player): string
+    {
+        if ($player === null) {
+            return '';
+        }
+
+        if (!is_string($player)) {
+            throw new \InvalidArgumentException(
+                'Player name should be a string'
+            );
+        }
+
+        return $player;
     }
 
     private function createSortScoreValue(string $scoreValue): string
