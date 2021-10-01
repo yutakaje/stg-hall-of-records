@@ -70,13 +70,6 @@ final class Companies
             fn (array $entry) => $entry['property'] === 'company'
         );
 
-        // For some companies romaji is used for Japanese name as well,
-        // those won't show up in the translations.
-        $translations[] = [
-            'value' => 'exA-Arcadia',
-            'value-jp' => 'exA-Arcadia',
-        ];
-
         return array_map(
             fn (array $company) => $this->createRecord($company),
             $translations
