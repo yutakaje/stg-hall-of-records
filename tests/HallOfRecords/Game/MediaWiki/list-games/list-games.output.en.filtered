@@ -1,0 +1,18 @@
+<h2>Games (2)</h2>
+
+<label for="filterBoxToggle"><small>Filter</small></label>
+<input type="checkbox" id="filterBoxToggle"/>
+<filterBox>
+  <form>
+    <input type="text" name="q" placeholder="Example: name like pachi" value="name like aka"/>
+    <input type="submit" value="Search"/>
+  </form>
+</filterBox>
+
+
+<ul>
+  <li><a href="/en/games/1">Aka to Blue Type-R-en</a> <small>(1 score)</small></li>
+
+  <li><a href="/en/games/2">Akai Katana-en</a> <small>(2 scores)</small></li>
+
+</ul>

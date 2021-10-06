@@ -1,0 +1,22 @@
+<h2>Games (4)</h2>
+
+<label for="filterBoxToggle"><small>Filter</small></label>
+<input type="checkbox" id="filterBoxToggle"/>
+<filterBox>
+  <form>
+    <input type="text" name="q" placeholder="Example: name like pachi" value=""/>
+    <input type="submit" value="Search"/>
+  </form>
+</filterBox>
+
+
+<ul>
+  <li><a href="/en/games/1">Aka to Blue Type-R-en</a> <small>(21 scores)</small></li>
+
+  <li><a href="/en/games/2">Akai Katana-en</a> <small>(14 scores)</small></li>
+
+  <li><a href="/en/games/3">ASO: Armored Scrum Object / Alpha Mission-en</a> <small>(44 scores)</small></li>
+
+  <li><a href="/en/games/4">Asuka &amp; Asuka-en</a> <small>(16 scores)</small></li>
+
+</ul>

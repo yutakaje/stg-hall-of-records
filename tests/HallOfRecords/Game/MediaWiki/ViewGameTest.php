@@ -17,7 +17,6 @@ use Fig\Http\Message\StatusCodeInterface;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 use Tests\Helper\Data\GameEntry;
 use Tests\Helper\Data\ScoreEntries;
-use Tests\Helper\Data\ScoreEntry;
 
 class ViewGameTest extends \Tests\TestCase
 {
@@ -54,7 +53,13 @@ class ViewGameTest extends \Tests\TestCase
             ),
         ]));
 
-        $this->testWithLocale($game, $this->locale()->get('en'));
+        $this->insertGame($game);
+
+        $this->executeTest(
+            'view-game.output.en',
+            $this->locale()->get('en'),
+            $game->id()
+        );
     }
 
     public function testWithJaLocale(): void
@@ -84,27 +89,53 @@ class ViewGameTest extends \Tests\TestCase
             ),
         ]));
 
-        $this->testWithLocale($game, $this->locale()->get('ja'));
-    }
-
-    private function testWithLocale(GameEntry $game, Locale $locale): void
-    {
         $this->insertGame($game);
 
+        $this->executeTest(
+            'view-game.output.ja',
+            $this->locale()->get('ja'),
+            $game->id()
+        );
+    }
+
+    private function executeTest(
+        string $expectedOutputFile,
+        Locale $locale,
+        int $gameId
+    ): void {
         $request = $this->http()->createServerRequest(
             'GET',
-            "/{$locale}/games/{$game->id()}"
+            "/{$locale}/games/{$gameId}"
         );
 
         $response = $this->app()->handle($request);
 
         self::assertSame(StatusCodeInterface::STATUS_OK, $response->getStatusCode());
         self::assertSame(
-            $this->mediaWiki()->canonicalizeHtml(
-                $this->createOutput($game, $locale)
+            $this->createOutput(
+                $this->filesystem()->loadFile(
+                    __DIR__ . "/view-game/{$expectedOutputFile}"
+                ),
+                $locale,
+                $gameId
             ),
-            $this->mediaWiki()->canonicalizeHtml(
-                (string)$response->getBody()
+            (string)$response->getBody()
+        );
+    }
+
+    private function createOutput(
+        string $content,
+        Locale $locale,
+        int $gameId
+    ): string {
+        return $this->mediaWiki()->removePlaceholders(
+            $this->locale()->translate(
+                $locale,
+                $this->mediaWiki()->loadMainTemplate(
+                    $content,
+                    $locale,
+                    "/{locale}/games/{$gameId}",
+                )
             )
         );
     }
@@ -113,109 +144,5 @@ class ViewGameTest extends \Tests\TestCase
     {
         $this->data()->insertGame($game);
         $this->data()->insertScores($game->scores()->entries());
-    }
-
-    private function createOutput(GameEntry $game, Locale $locale): string
-    {
-        return $this->mediaWiki()->removePlaceholders(
-            $this->locale()->translate(
-                $locale,
-                $this->mediaWiki()->loadMainTemplate(
-                    $this->createGameOutput($game, $locale),
-                    $locale,
-                    "/{locale}/games/{$game->id()}",
-                )
-            )
-        );
-    }
-
-    private function createGameOutput(
-        GameEntry $game,
-        Locale $locale
-    ): string {
-        $company = $game->company();
-
-        return $this->data()->replace(
-            $this->mediaWiki()->loadTemplate('Game', 'view-game/main'),
-            [
-                '{{ game.name }}' => $game->name($locale),
-                '{{ company.name }}' => $company->name($locale),
-                '{{ scores|raw }}' => $this->createScoresOutput(
-                    $game->scores(),
-                    $locale
-                ),
-                '{{ links.company }}' => "/{$locale}/companies/{$company->id()}",
-            ]
-        );
-    }
-
-    private function createScoresOutput(
-        ScoreEntries $scores,
-        Locale $locale
-    ): string {
-        return $this->data()->replace(
-            $this->mediaWiki()->loadTemplate('Game', 'view-game/scores-list'),
-            [
-                "{{ scores|length }}" => $scores->numEntries(),
-                "{{ entry|raw }}" => implode(PHP_EOL, array_map(
-                    fn (ScoreEntry $score) => $this->createScoreOutput(
-                        $score,
-                        $locale
-                    ),
-                    $scores->sorted()
-                )),
-            ]
-        );
-    }
-
-    private function createScoreOutput(ScoreEntry $score, Locale $locale): string
-    {
-        return $this->data()->replace(
-            $this->mediaWiki()->loadTemplate('Game', 'view-game/score-entry'),
-            [
-                '{{ score.id }}' => $score->id(),
-                '{{ score.playerName }}' => $score->playerName(),
-                '{{ score.scoreValue }}' => $score->scoreValue(),
-                '{{ player|raw }}' => $this->createPlayerOutput($score, $locale),
-                '{{ scoreValue|raw }}' => $this->createScoreValueOutput($score),
-            ]
-        );
-    }
-
-    private function createPlayerOutput(ScoreEntry $score, Locale $locale): string
-    {
-        $player = $score->player();
-
-        if ($player === null) {
-            $replacements = [
-                '<a href="{{ links.player }}">{{ playerName }}</a>' => '',
-                '{{ playerName }}' => $score->playerName(),
-            ];
-        } else {
-            $replacements = [
-                ' {{ playerName }}' => '',
-                '{{ links.player }}' => "/{$locale}/players/{$player->id()}",
-                '{{ playerName }}' => $score->playerName(),
-            ];
-        }
-
-        return trim($this->mediaWiki()->removePlaceholders(
-            $this->data()->replace(
-                $this->mediaWiki()->loadTemplate('Game', 'view-game/player'),
-                $replacements
-            )
-        ));
-    }
-
-    private function createScoreValueOutput(ScoreEntry $score): string
-    {
-        return $this->data()->replace(
-            $this->mediaWiki()->loadTemplate('Game', 'view-game/score-value'),
-            [
-                '{{ score.value }}' => $score->scoreValue(),
-                '{{ score.realValue }}' => '',
-                '{% if score.realValue != score.value %} []{% endif %}' => '',
-            ]
-        );
     }
 }

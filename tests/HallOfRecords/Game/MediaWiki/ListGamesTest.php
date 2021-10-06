@@ -23,6 +23,8 @@ class ListGamesTest extends \Tests\TestCase
 {
     public function testWithEnLocale(): void
     {
+        $locale = $this->locale()->get('en');
+
         $games = new GameEntries([
             $this->data()->createGame(
                 $this->data()->createCompany('Tanoshimasu'),
@@ -47,16 +49,18 @@ class ListGamesTest extends \Tests\TestCase
         ]);
 
         foreach ($games->entries() as $game) {
-            $this->addScores($game);
+            $this->addScores($game, strlen($game->name($locale)));
         }
 
         $this->insertGames($games);
 
-        $this->executeTest($games, $this->locale()->get('en'));
+        $this->executeTest('list-games.output.en', $locale);
     }
 
     public function testWithJaLocale(): void
     {
+        $locale = $this->locale()->get('ja');
+
         $games = new GameEntries([
             $this->data()->createGame(
                 $this->data()->createCompany('ケイブ'),
@@ -81,12 +85,12 @@ class ListGamesTest extends \Tests\TestCase
         ]);
 
         foreach ($games->entries() as $game) {
-            $this->addScores($game);
+            $this->addScores($game, strlen($game->name($locale)));
         }
 
         $this->insertGames($games);
 
-        $this->executeTest($games, $this->locale()->get('ja'));
+        $this->executeTest('list-games.output.ja', $locale);
     }
 
     public function testFiltering(): void
@@ -134,32 +138,26 @@ class ListGamesTest extends \Tests\TestCase
             ),
         ]);
 
-        foreach ($games->entries() as $game) {
-            $this->addScores($game);
+        foreach ($games->entries() as $i => $game) {
+            $this->addScores($game, $i + 1);
         }
 
         $this->insertGames($games);
 
         $this->executeTest(
-            new GameEntries([
-                $games->entryAt(0),
-                $games->entryAt(1),
-            ]),
+            'list-games.output.en.filtered',
             $this->locale()->get('en'),
             'name like aka'
         );
         $this->executeTest(
-            new GameEntries([
-                $games->entryAt(4),
-                $games->entryAt(7),
-            ]),
+            'list-games.output.ja.filtered',
             $this->locale()->get('ja'),
             'name like れ'
         );
     }
 
     private function executeTest(
-        GameEntries $games,
+        string $expectedOutputFile,
         Locale $locale,
         string $filterValue = ''
     ): void {
@@ -178,16 +176,31 @@ class ListGamesTest extends \Tests\TestCase
 
         self::assertSame(StatusCodeInterface::STATUS_OK, $response->getStatusCode());
         self::assertSame(
-            $this->mediaWiki()->canonicalizeHtml(
-                $this->createOutput($games, $locale, $filterValue)
+            $this->createOutput(
+                $this->filesystem()->loadFile(
+                    __DIR__ . "/list-games/{$expectedOutputFile}"
+                ),
+                $locale
             ),
-            $this->mediaWiki()->canonicalizeHtml(
-                (string)$response->getBody()
+            (string)$response->getBody()
+        );
+    }
+
+    private function createOutput(string $content, Locale $locale): string
+    {
+        return $this->mediaWiki()->removePlaceholders(
+            $this->locale()->translate(
+                $locale,
+                $this->mediaWiki()->loadMainTemplate(
+                    $content,
+                    $locale,
+                    '/{locale}/games'
+                )
             )
         );
     }
 
-    private function addScores(GameEntry $game): void
+    private function addScores(GameEntry $game, int $numScores = 3): void
     {
         // Adding scores ensures that the count functions work as expected.
         // The actual score properties are not important here.
@@ -198,7 +211,7 @@ class ListGamesTest extends \Tests\TestCase
                 "player{$i}",
                 (string)random_int(1000, 99999)
             ),
-            range(1, random_int(1, 5))
+            range(1, $numScores)
         );
 
         $game->setScores(new ScoreEntries($scores));
@@ -210,63 +223,5 @@ class ListGamesTest extends \Tests\TestCase
             $this->data()->insertGame($game);
             $this->data()->insertScores($game->scores()->entries());
         }
-    }
-
-    private function createOutput(
-        GameEntries $games,
-        Locale $locale,
-        string $filterValue
-    ): string {
-        return $this->mediaWiki()->removePlaceholders(
-            $this->locale()->translate(
-                $locale,
-                $this->mediaWiki()->loadMainTemplate(
-                    $this->createGamesOutput($games, $locale, $filterValue),
-                    $locale,
-                    '/{locale}/games'
-                )
-            )
-        );
-    }
-
-    private function createGamesOutput(
-        GameEntries $games,
-        Locale $locale,
-        string $filterValue
-    ): string {
-        return $this->data()->replace(
-            $this->mediaWiki()->loadTemplate('Game', 'list-games/main'),
-            [
-                '{{ games|length }}' => $games->numEntries(),
-                '{{ entry|raw }}' => implode(PHP_EOL, array_map(
-                    fn (GameEntry $game) => $this->createGameOutput(
-                        $game,
-                        $locale
-                    ),
-                    $games->sorted()
-                )),
-                '{{ filterBox|raw }}' => $this->mediaWiki()->loadFilterBoxTemplate(
-                    $filterValue,
-                    'list-games'
-                ),
-            ]
-        );
-    }
-
-    private function createGameOutput(
-        GameEntry $game,
-        Locale $locale
-    ): string {
-        $numScores = $game->scores()->numEntries();
-
-        return $this->data()->replace(
-            $this->mediaWiki()->loadTemplate('Game', 'list-games/game-entry'),
-            [
-                '{{ game.name }}' => htmlentities($game->name($locale)),
-                '{{ game.numScores }}' => $numScores,
-                "{'%count%': game.numScores}" => "{'%count%': {$numScores}}",
-                '{{ links.game }}' => "/{$locale}/games/{$game->id()}",
-            ]
-        );
     }
 }

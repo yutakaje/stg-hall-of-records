@@ -1,0 +1,22 @@
+<h2>ゲーム (4)</h2>
+
+<label for="filterBoxToggle"><small>条件指定</small></label>
+<input type="checkbox" id="filterBoxToggle"/>
+<filterBox>
+  <form>
+    <input type="text" name="q" placeholder="例: name like 蜂" value=""/>
+    <input type="submit" value="検索"/>
+  </form>
+</filterBox>
+
+
+<ul>
+  <li><a href="/ja/games/1">エスプレイド-ja</a> <small>(スコア数: 21)</small></li>
+
+  <li><a href="/ja/games/2">ケツイ〜絆地獄たち〜-ja</a> <small>(スコア数: 33)</small></li>
+
+  <li><a href="/ja/games/3">出たな!ツインビー-ja</a> <small>(スコア数: 28)</small></li>
+
+  <li><a href="/ja/games/4">バトルガレッガ-ja</a> <small>(スコア数: 24)</small></li>
+
+</ul>

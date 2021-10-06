@@ -1,0 +1,48 @@
+<h2>エスプレイド-ja</h2>
+<game>
+
+  開発会社: <a href="/ja/companies/1">ケイブ-ja</a>
+
+  <h3>スコア (3)</h3>
+
+<scores>
+<table class="wikitable">
+  <tr>
+    <th>プレイヤー</th>
+    <th>スコア</th>
+    <th>情報元</th>
+  </tr>
+  <tr>
+  <td><a href="/ja/players/1">プレイヤー2</a></td>
+  <td><scoreValue>992,893,110</scoreValue>
+</td>
+  <td></td>
+</tr>
+
+  <tr>
+  <td><a href="/ja/players/2">プレイヤー3</a></td>
+  <td><scoreValue>503,434,050</scoreValue>
+</td>
+  <td></td>
+</tr>
+
+  <tr>
+  <td><a href="/ja/players/3">プレイヤー1</a></td>
+  <td><scoreValue>234,828,910</scoreValue>
+</td>
+  <td></td>
+</tr>
+
+</table>
+</scores>
+
+
+  <description>
+      
+  </description>
+
+  
+
+</game>
+
+
