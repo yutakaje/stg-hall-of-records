@@ -1,0 +1,18 @@
+<h2>Companies (2)</h2>
+
+<label for="filterBoxToggle"><small>Filter</small></label>
+<input type="checkbox" id="filterBoxToggle"/>
+<filterBox>
+  <form>
+    <input type="text" name="q" placeholder="Example: name like nam" value="name like ca"/>
+    <input type="submit" value="Search"/>
+  </form>
+</filterBox>
+
+
+<ul>
+  <li><a href="/en/companies/4">Capcom-en</a> <small>(4 games)</small></li>
+
+  <li><a href="/en/companies/7">CAVE-en</a> <small>(7 games)</small></li>
+
+</ul>

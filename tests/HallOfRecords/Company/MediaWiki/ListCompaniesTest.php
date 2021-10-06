@@ -23,79 +23,77 @@ class ListCompaniesTest extends \Tests\TestCase
 {
     public function testWithEnLocale(): void
     {
+        $locale = $this->locale()->get('en');
+
         $companies = new CompanyEntries([
-            $this->data()->createCompany('Atlus', 'atlus'),
             $this->data()->createCompany('Capcom', 'capcom'),
-            $this->data()->createCompany('CAVE', 'cave'),
             $this->data()->createCompany('Coreland', 'coreland'),
+            $this->data()->createCompany('CAVE', 'cave'),
+            $this->data()->createCompany('Atlus', 'atlus'),
         ]);
 
         foreach ($companies->entries() as $company) {
-            $this->addGames($company);
+            $this->addGames($company, strlen($company->name($locale)));
         }
 
         $this->insertCompanies($companies);
 
-        $this->executeTest($companies, $this->locale()->get('en'));
+        $this->executeTest('list-companies.output.en', $locale);
     }
 
     public function testWithJaLocale(): void
     {
+        $locale = $this->locale()->get('ja');
+
         $companies = new CompanyEntries([
-            $this->data()->createCompany('カプコン', 'かぷこん'),
             $this->data()->createCompany('彩京', 'さいきょう'),
             $this->data()->createCompany('東亜プラン', 'とあぷらん'),
+            $this->data()->createCompany('カプコン', 'かぷこん'),
             $this->data()->createCompany('四ツ羽根', 'よつばね'),
         ]);
 
         foreach ($companies->entries() as $company) {
-            $this->addGames($company);
+            $this->addGames($company, strlen($company->name($locale)));
         }
 
         $this->insertCompanies($companies);
 
-        $this->executeTest($companies, $this->locale()->get('ja'));
+        $this->executeTest('list-companies.output.ja', $locale);
     }
 
     public function testFiltering(): void
     {
         $companies = new CompanyEntries([
-            $this->data()->createCompany('Atlus', 'atlus'),
-            $this->data()->createCompany('Capcom', 'capcom'),
-            $this->data()->createCompany('CAVE', 'cave'),
             $this->data()->createCompany('Coreland', 'coreland'),
-            $this->data()->createCompany('カプコン', 'かぷこん'),
-            $this->data()->createCompany('彩京', 'さいきょう'),
             $this->data()->createCompany('東亜プラン', 'とあぷらん'),
+            $this->data()->createCompany('カプコン', 'かぷこん'),
+            $this->data()->createCompany('Capcom', 'capcom'),
+            $this->data()->createCompany('彩京', 'さいきょう'),
+            $this->data()->createCompany('Atlus', 'atlus'),
+            $this->data()->createCompany('CAVE', 'cave'),
             $this->data()->createCompany('四ツ羽根', 'よつばね'),
         ]);
 
-        foreach ($companies->entries() as $company) {
-            $this->addGames($company);
+        foreach ($companies->entries() as $i => $company) {
+            $this->addGames($company, $i + 1);
         }
 
         $this->insertCompanies($companies);
 
         $this->executeTest(
-            new CompanyEntries([
-                $companies->entryAt(1),
-                $companies->entryAt(2),
-            ]),
+            'list-companies.output.en.filtered',
             $this->locale()->get('en'),
             'name like ca'
         );
         $this->executeTest(
-            new CompanyEntries([
-                $companies->entryAt(4),
-                $companies->entryAt(6),
-            ]),
+            'list-companies.output.ja.filtered',
             $this->locale()->get('ja'),
             'name like ん'
         );
     }
 
     private function executeTest(
-        CompanyEntries $companies,
+        string $expectedOutputFile,
         Locale $locale,
         string $filterValue = ''
     ): void {
@@ -114,22 +112,37 @@ class ListCompaniesTest extends \Tests\TestCase
 
         self::assertSame(StatusCodeInterface::STATUS_OK, $response->getStatusCode());
         self::assertSame(
-            $this->mediaWiki()->canonicalizeHtml(
-                $this->createOutput($companies, $locale, $filterValue)
+            $this->createOutput(
+                $this->filesystem()->loadFile(
+                    __DIR__ . "/list-companies/{$expectedOutputFile}"
+                ),
+                $locale
             ),
-            $this->mediaWiki()->canonicalizeHtml(
-                (string)$response->getBody()
+            (string)$response->getBody()
+        );
+    }
+
+    private function createOutput(string $content, Locale $locale): string
+    {
+        return $this->mediaWiki()->removePlaceholders(
+            $this->locale()->translate(
+                $locale,
+                $this->mediaWiki()->loadMainTemplate(
+                    $content,
+                    $locale,
+                    '/{locale}/companies'
+                )
             )
         );
     }
 
-    private function addGames(CompanyEntry $company): void
+    private function addGames(CompanyEntry $company, int $numGames): void
     {
         // Adding games ensures that the count functions work as expected.
         // The actual game properties are not important here.
         $games = array_map(
             fn (int $i) => $this->data()->createGame($company, "game{$i}"),
-            range(1, random_int(1, 5))
+            range(1, $numGames)
         );
 
         $company->setGames(new GameEntries($games));
@@ -141,67 +154,5 @@ class ListCompaniesTest extends \Tests\TestCase
             $this->data()->insertCompany($company);
             $this->data()->insertGames($company->games()->entries());
         }
-    }
-
-    private function createOutput(
-        CompanyEntries $companies,
-        Locale $locale,
-        string $filterValue
-    ): string {
-        return $this->mediaWiki()->removePlaceholders(
-            $this->locale()->translate(
-                $locale,
-                $this->mediaWiki()->loadMainTemplate(
-                    $this->createCompaniesOutput(
-                        $companies,
-                        $locale,
-                        $filterValue
-                    ),
-                    $locale,
-                    '/{locale}/companies'
-                )
-            )
-        );
-    }
-
-    private function createCompaniesOutput(
-        CompanyEntries $companies,
-        Locale $locale,
-        string $filterValue
-    ): string {
-        return $this->data()->replace(
-            $this->mediaWiki()->loadTemplate('Company', 'list-companies/main'),
-            [
-                '{{ companies|length }}' => $companies->numEntries(),
-                '{{ entry|raw }}' => implode(PHP_EOL, array_map(
-                    fn (CompanyEntry $company) => $this->createCompanyOutput(
-                        $company,
-                        $locale
-                    ),
-                    $companies->sorted()
-                )),
-                '{{ filterBox|raw }}' => $this->mediaWiki()->loadFilterBoxTemplate(
-                    $filterValue,
-                    'list-companies'
-                ),
-            ]
-        );
-    }
-
-    private function createCompanyOutput(
-        CompanyEntry $company,
-        Locale $locale
-    ): string {
-        $numGames = $company->games()->numEntries();
-
-        return $this->data()->replace(
-            $this->mediaWiki()->loadTemplate('Company', 'list-companies/company-entry'),
-            [
-                '{{ company.name }}' => $company->name($locale),
-                '{{ company.numGames }}' => $numGames,
-                "{'%count%': company.numGames}" => "{'%count%': {$numGames}}",
-                '{{ links.company }}' => "/{$locale}/companies/{$company->id()}",
-            ]
-        );
     }
 }

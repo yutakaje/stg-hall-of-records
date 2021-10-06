@@ -1,0 +1,22 @@
+<h2>Companies (4)</h2>
+
+<label for="filterBoxToggle"><small>Filter</small></label>
+<input type="checkbox" id="filterBoxToggle"/>
+<filterBox>
+  <form>
+    <input type="text" name="q" placeholder="Example: name like nam" value=""/>
+    <input type="submit" value="Search"/>
+  </form>
+</filterBox>
+
+
+<ul>
+  <li><a href="/en/companies/4">Atlus-en</a> <small>(8 games)</small></li>
+
+  <li><a href="/en/companies/1">Capcom-en</a> <small>(9 games)</small></li>
+
+  <li><a href="/en/companies/3">CAVE-en</a> <small>(7 games)</small></li>
+
+  <li><a href="/en/companies/2">Coreland-en</a> <small>(11 games)</small></li>
+
+</ul>

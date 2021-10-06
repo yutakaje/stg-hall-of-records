@@ -42,10 +42,7 @@ abstract class AbstractEntries
      */
     public function entries(): array
     {
-        // We shuffle to avoid any unexpected dependency on its initial sorting.
-        $entries = $this->entries;
-        shuffle($entries);
-        return $entries;
+        return $this->entries;
     }
 
     public function numEntries(): int
@@ -59,5 +56,15 @@ abstract class AbstractEntries
     public function sorted(): array
     {
         return $this->entries;
+    }
+
+    /**
+     * @return T[]
+     */
+    public function shuffle(): array
+    {
+        $entries = $this->entries;
+        shuffle($entries);
+        return $entries;
     }
 }

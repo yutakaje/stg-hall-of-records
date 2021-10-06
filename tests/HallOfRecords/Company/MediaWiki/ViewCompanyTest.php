@@ -17,7 +17,6 @@ use Fig\Http\Message\StatusCodeInterface;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 use Tests\Helper\Data\CompanyEntry;
 use Tests\Helper\Data\GameEntries;
-use Tests\Helper\Data\GameEntry;
 
 class ViewCompanyTest extends \Tests\TestCase
 {
@@ -47,7 +46,13 @@ class ViewCompanyTest extends \Tests\TestCase
             ),
         ]));
 
-        $this->testWithLocale($company, $this->locale()->get('en'));
+        $this->insertCompany($company);
+
+        $this->executeTest(
+            'view-company.output.en',
+            $this->locale()->get('en'),
+            $company->id()
+        );
     }
 
     public function testWithJaLocale(): void
@@ -76,27 +81,53 @@ class ViewCompanyTest extends \Tests\TestCase
             ),
         ]));
 
-        $this->testWithLocale($company, $this->locale()->get('ja'));
-    }
-
-    private function testWithLocale(CompanyEntry $company, Locale $locale): void
-    {
         $this->insertCompany($company);
 
+        $this->executeTest(
+            'view-company.output.ja',
+            $this->locale()->get('ja'),
+            $company->id()
+        );
+    }
+
+    private function executeTest(
+        string $expectedOutputFile,
+        Locale $locale,
+        int $companyId
+    ): void {
         $request = $this->http()->createServerRequest(
             'GET',
-            "/{$locale}/companies/{$company->id()}"
+            "/{$locale}/companies/{$companyId}"
         );
 
         $response = $this->app()->handle($request);
 
         self::assertSame(StatusCodeInterface::STATUS_OK, $response->getStatusCode());
         self::assertSame(
-            $this->mediaWiki()->canonicalizeHtml(
-                $this->createOutput($company, $locale)
+            $this->createOutput(
+                $this->filesystem()->loadFile(
+                    __DIR__ . "/view-company/{$expectedOutputFile}"
+                ),
+                $locale,
+                $companyId
             ),
-            $this->mediaWiki()->canonicalizeHtml(
-                (string)$response->getBody()
+            (string)$response->getBody()
+        );
+    }
+
+    private function createOutput(
+        string $content,
+        Locale $locale,
+        int $companyId
+    ): string {
+        return $this->mediaWiki()->removePlaceholders(
+            $this->locale()->translate(
+                $locale,
+                $this->mediaWiki()->loadMainTemplate(
+                    $content,
+                    $locale,
+                    "/{locale}/companies/{$companyId}"
+                )
             )
         );
     }
@@ -105,66 +136,5 @@ class ViewCompanyTest extends \Tests\TestCase
     {
         $this->data()->insertCompany($company);
         $this->data()->insertGames($company->games()->entries());
-    }
-
-    private function createOutput(CompanyEntry $company, Locale $locale): string
-    {
-        return $this->mediaWiki()->removePlaceholders(
-            $this->locale()->translate(
-                $locale,
-                $this->mediaWiki()->loadMainTemplate(
-                    $this->createCompanyOutput($company, $locale),
-                    $locale,
-                    "/{locale}/companies/{$company->id()}"
-                )
-            )
-        );
-    }
-
-    private function createCompanyOutput(
-        CompanyEntry $company,
-        Locale $locale
-    ): string {
-        return $this->data()->replace(
-            $this->mediaWiki()->loadTemplate('Company', 'view-company/main'),
-            [
-                '{{ company.name }}' => $company->name($locale),
-                '{{ games|raw }}' => $this->createGamesOutput(
-                    $company->games(),
-                    $locale
-                ),
-                '{{ links.company }}' => "/{$locale}/companies/{$company->id()}",
-            ]
-        );
-    }
-
-    private function createGamesOutput(
-        GameEntries $games,
-        Locale $locale
-    ): string {
-        return $this->data()->replace(
-            $this->mediaWiki()->loadTemplate('Company', 'view-company/games-list'),
-            [
-                "{{ games|length }}" => $games->numEntries(),
-                "{{ entry|raw }}" => implode(PHP_EOL, array_map(
-                    fn (GameEntry $game) => $this->createGameOutput(
-                        $game,
-                        $locale
-                    ),
-                    $games->sorted()
-                )),
-            ]
-        );
-    }
-
-    private function createGameOutput(GameEntry $game, Locale $locale): string
-    {
-        return $this->data()->replace(
-            $this->mediaWiki()->loadTemplate('Company', 'view-company/game-entry'),
-            [
-                '{{ game.name }}' => htmlentities($game->name($locale)),
-                '{{ links.game }}' => "/{$locale}/games/{$game->id()}",
-            ]
-        );
     }
 }

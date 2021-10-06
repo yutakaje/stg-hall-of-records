@@ -1,0 +1,22 @@
+<h2>開発会社 (4)</h2>
+
+<label for="filterBoxToggle"><small>条件指定</small></label>
+<input type="checkbox" id="filterBoxToggle"/>
+<filterBox>
+  <form>
+    <input type="text" name="q" placeholder="例: name like ソフト" value=""/>
+    <input type="submit" value="検索"/>
+  </form>
+</filterBox>
+
+
+<ul>
+  <li><a href="/ja/companies/3">カプコン-ja</a> <small>(ゲーム数: 15)</small></li>
+
+  <li><a href="/ja/companies/1">彩京-ja</a> <small>(ゲーム数: 9)</small></li>
+
+  <li><a href="/ja/companies/2">東亜プラン-ja</a> <small>(ゲーム数: 18)</small></li>
+
+  <li><a href="/ja/companies/4">四ツ羽根-ja</a> <small>(ゲーム数: 15)</small></li>
+
+</ul>
