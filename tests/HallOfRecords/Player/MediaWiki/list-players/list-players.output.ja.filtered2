@@ -1,0 +1,18 @@
+<h2>プレイヤー (2)</h2>
+
+<label for="filterBoxToggle"><small>条件指定</small></label>
+<input type="checkbox" id="filterBoxToggle"/>
+<filterBox>
+  <form>
+    <input type="text" name="q" placeholder="例: name like ktl" value="name like 2"/>
+    <input type="submit" value="検索"/>
+  </form>
+</filterBox>
+
+
+<ul>
+  <li><a href="/ja/players/2">player2</a> <small>(スコア数: 1)</small></li>
+
+  <li><a href="/ja/players/5">プレイヤー2</a> <small>(スコア数: 4)</small></li>
+
+</ul>

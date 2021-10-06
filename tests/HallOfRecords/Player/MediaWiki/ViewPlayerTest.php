@@ -15,10 +15,8 @@ namespace Tests\HallOfRecords\Player\MediaWiki;
 
 use Fig\Http\Message\StatusCodeInterface;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
-use Tests\Helper\Data\GameEntry;
 use Tests\Helper\Data\PlayerEntry;
 use Tests\Helper\Data\ScoreEntries;
-use Tests\Helper\Data\ScoreEntry;
 
 class ViewPlayerTest extends \Tests\TestCase
 {
@@ -81,7 +79,13 @@ class ViewPlayerTest extends \Tests\TestCase
             ),
         ]));
 
-        $this->executeTest($player, $this->locale()->get('en'));
+        $this->insertPlayer($player);
+
+        $this->executeTest(
+            'view-player.output.en',
+            $this->locale()->get('en'),
+            $player->id()
+        );
     }
 
     public function testWithJaLocale(): void
@@ -143,7 +147,13 @@ class ViewPlayerTest extends \Tests\TestCase
             ),
         ]));
 
-        $this->executeTest($player, $this->locale()->get('ja'));
+        $this->insertPlayer($player);
+
+        $this->executeTest(
+            'view-player.output.ja',
+            $this->locale()->get('ja'),
+            $player->id()
+        );
     }
 
     public function testWithAliases(): void
@@ -153,29 +163,53 @@ class ViewPlayerTest extends \Tests\TestCase
             'Red Arimer',
         ]);
 
-        $this->executeTest($player, $this->locale()->get('en'));
+        $this->insertPlayer($player);
+
+        $this->executeTest(
+            'view-player.output.en.alias',
+            $this->locale()->get('en'),
+            $player->id()
+        );
     }
 
     private function executeTest(
-        PlayerEntry $player,
-        Locale $locale
+        string $expectedOutputFile,
+        Locale $locale,
+        int $playerId
     ): void {
-        $this->insertPlayer($player);
-
         $request = $this->http()->createServerRequest(
             'GET',
-            "/{$locale}/players/{$player->id()}"
+            "/{$locale}/players/{$playerId}"
         );
 
         $response = $this->app()->handle($request);
 
         self::assertSame(StatusCodeInterface::STATUS_OK, $response->getStatusCode());
         self::assertSame(
-            $this->mediaWiki()->canonicalizeHtml(
-                $this->createOutput($player, $locale)
+            $this->createOutput(
+                $this->filesystem()->loadFile(
+                    __DIR__ . "/view-player/{$expectedOutputFile}"
+                ),
+                $locale,
+                $playerId
             ),
-            $this->mediaWiki()->canonicalizeHtml(
-                (string)$response->getBody()
+            (string)$response->getBody()
+        );
+    }
+
+    private function createOutput(
+        string $content,
+        Locale $locale,
+        int $playerId
+    ): string {
+        return $this->mediaWiki()->removePlaceholders(
+            $this->locale()->translate(
+                $locale,
+                $this->mediaWiki()->loadMainTemplate(
+                    $content,
+                    $locale,
+                    "/{locale}/players/{$playerId}",
+                )
             )
         );
     }
@@ -184,97 +218,5 @@ class ViewPlayerTest extends \Tests\TestCase
     {
         $this->data()->insertPlayer($player);
         $this->data()->insertScores($player->scores()->entries());
-    }
-
-    private function createOutput(PlayerEntry $player, Locale $locale): string
-    {
-        return $this->mediaWiki()->removePlaceholders(
-            $this->locale()->translate(
-                $locale,
-                $this->mediaWiki()->loadMainTemplate(
-                    $this->createPlayerOutput($player, $locale),
-                    $locale,
-                    "/{locale}/players/{$player->id()}",
-                )
-            )
-        );
-    }
-
-    private function createPlayerOutput(
-        PlayerEntry $player,
-        Locale $locale
-    ): string {
-        return $this->data()->replace(
-            $this->mediaWiki()->loadTemplate('Player', 'view-player/main'),
-            [
-                '{{ player.id }}' => $player->id(),
-                '{{ player.name }}' => $player->name(),
-                '{{ player.aliases|raw }}' => $this->createAliasesOutput(
-                    $player->aliases(),
-                    $locale
-                ),
-                '{{ scores|raw }}' => $this->createScoresOutput(
-                    $player->scores(),
-                    $locale
-                ),
-            ]
-        );
-    }
-
-    /**
-     * @param string[] $aliases
-     */
-    private function createAliasesOutput(
-        array $aliases,
-        Locale $locale
-    ): string {
-        if ($aliases == null) {
-            return '';
-        }
-
-        ksort($aliases);
-
-        return $this->data()->replace(
-            $this->mediaWiki()->loadTemplate('Player', 'view-player/aliases-list'),
-            [
-                "{{ aliases|join(', ') }}" => implode(', ', $aliases),
-            ]
-        );
-    }
-
-    private function createScoresOutput(
-        ScoreEntries $scores,
-        Locale $locale
-    ): string {
-        return $this->data()->replace(
-            $this->mediaWiki()->loadTemplate('Player', 'view-player/scores-list'),
-            [
-                "{{ scores|length }}" => $scores->numEntries(),
-                "{{ entry|raw }}" => implode(PHP_EOL, array_map(
-                    fn (ScoreEntry $score) => $this->createScoreOutput(
-                        $score,
-                        $locale
-                    ),
-                    $scores->sorted()
-                )),
-            ]
-        );
-    }
-
-    private function createScoreOutput(ScoreEntry $score, Locale $locale): string
-    {
-        $game = $score->game();
-
-        return $this->data()->replace(
-            $this->mediaWiki()->loadTemplate('Player', 'view-player/score-entry'),
-            [
-                '{{ score.id }}' => $score->id(),
-                '{{ game.id }}' => $game->id(),
-                '{{ game.name }}' => htmlentities($game->name($locale)),
-                '{{ score.playerName }}' => $score->playerName(),
-                '{{ score.scoreValue }}' => $score->scoreValue(),
-                '{{ links.game }}' => "/{$locale}/games/{$game->id()}",
-            ]
-        );
     }
 }

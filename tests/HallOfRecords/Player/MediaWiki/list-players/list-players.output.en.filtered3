@@ -1,0 +1,18 @@
+<h2>Players (2)</h2>
+
+<label for="filterBoxToggle"><small>Filter</small></label>
+<input type="checkbox" id="filterBoxToggle"/>
+<filterBox>
+  <form>
+    <input type="text" name="q" placeholder="Example: name like ktl" value="name like 3"/>
+    <input type="submit" value="Search"/>
+  </form>
+</filterBox>
+
+
+<ul>
+  <li><a href="/en/players/3">player3</a> <small>(2 scores)</small></li>
+
+  <li><a href="/en/players/6">プレイヤー3</a> <small>(5 scores)</small></li>
+
+</ul>

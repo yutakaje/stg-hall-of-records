@@ -29,13 +29,16 @@ class ListPlayersTest extends \Tests\TestCase
             $this->data()->createPlayer('player3'),
         ]);
 
-        foreach ($players->entries() as $player) {
-            $this->addScores($player);
+        foreach ($players->entries() as $i => $player) {
+            $this->addScores($player, $i + 1);
         }
 
         $this->insertPlayers($players);
 
-        $this->executeTest($players, $this->locale()->get('en'));
+        $this->executeTest(
+            'list-players.output.en',
+            $this->locale()->get('en')
+        );
     }
 
     public function testWithJaLocale(): void
@@ -46,13 +49,16 @@ class ListPlayersTest extends \Tests\TestCase
             $this->data()->createPlayer('プレイヤー3'),
         ]);
 
-        foreach ($players->entries() as $player) {
-            $this->addScores($player);
+        foreach ($players->entries() as $i => $player) {
+            $this->addScores($player, $i + 1);
         }
 
         $this->insertPlayers($players);
 
-        $this->executeTest($players, $this->locale()->get('ja'));
+        $this->executeTest(
+            'list-players.output.ja',
+            $this->locale()->get('ja')
+        );
     }
 
     public function testFiltering(): void
@@ -66,41 +72,31 @@ class ListPlayersTest extends \Tests\TestCase
             $this->data()->createPlayer('プレイヤー3'),
         ]);
 
-        foreach ($players->entries() as $player) {
-            $this->addScores($player);
+        foreach ($players->entries() as $i => $player) {
+            $this->addScores($player, $i);
         }
 
         $this->insertPlayers($players);
 
         $this->executeTest(
-            new PlayerEntries([
-                $players->entryAt(0),
-                $players->entryAt(1),
-                $players->entryAt(3),
-            ]),
+            'list-players.output.en.filtered1',
             $this->locale()->get('en'),
             'name like 1'
         );
         $this->executeTest(
-            new PlayerEntries([
-                $players->entryAt(1),
-                $players->entryAt(4),
-            ]),
+            'list-players.output.ja.filtered2',
             $this->locale()->get('ja'),
             'name like 2'
         );
         $this->executeTest(
-            new PlayerEntries([
-                $players->entryAt(2),
-                $players->entryAt(5),
-            ]),
+            'list-players.output.en.filtered3',
             $this->locale()->get('en'),
             'name like 3'
         );
     }
 
     private function executeTest(
-        PlayerEntries $players,
+        string $expectedOutputFile,
         Locale $locale,
         string $filterValue = ''
     ): void {
@@ -119,16 +115,31 @@ class ListPlayersTest extends \Tests\TestCase
 
         self::assertSame(StatusCodeInterface::STATUS_OK, $response->getStatusCode());
         self::assertSame(
-            $this->mediaWiki()->canonicalizeHtml(
-                $this->createOutput($players, $locale, $filterValue)
+            $this->createOutput(
+                $this->filesystem()->loadFile(
+                    __DIR__ . "/list-players/{$expectedOutputFile}"
+                ),
+                $locale
             ),
-            $this->mediaWiki()->canonicalizeHtml(
-                (string)$response->getBody()
+            (string)$response->getBody()
+        );
+    }
+
+    private function createOutput(string $content, Locale $locale): string
+    {
+        return $this->mediaWiki()->removePlaceholders(
+            $this->locale()->translate(
+                $locale,
+                $this->mediaWiki()->loadMainTemplate(
+                    $content,
+                    $locale,
+                    '/{locale}/players'
+                )
             )
         );
     }
 
-    private function addScores(PlayerEntry $player): void
+    private function addScores(PlayerEntry $player, int $numScores): void
     {
         // Adding scores ensures that the count functions work as expected.
         // The actual score properties are not important here.
@@ -142,7 +153,7 @@ class ListPlayersTest extends \Tests\TestCase
                 "player{$i}",
                 (string)random_int(1000, 99999)
             ),
-            range(1, random_int(1, 5))
+            range(1, $numScores)
         );
 
         $player->setScores(new ScoreEntries($scores));
@@ -154,63 +165,5 @@ class ListPlayersTest extends \Tests\TestCase
             $this->data()->insertPlayer($player);
             $this->data()->insertScores($player->scores()->entries());
         }
-    }
-
-    private function createOutput(
-        PlayerEntries $players,
-        Locale $locale,
-        string $filterValue
-    ): string {
-        return $this->mediaWiki()->removePlaceholders(
-            $this->locale()->translate(
-                $locale,
-                $this->mediaWiki()->loadMainTemplate(
-                    $this->createPlayersOutput($players, $locale, $filterValue),
-                    $locale,
-                    '/{locale}/players'
-                )
-            )
-        );
-    }
-
-    private function createPlayersOutput(
-        PlayerEntries $players,
-        Locale $locale,
-        string $filterValue
-    ): string {
-        return $this->data()->replace(
-            $this->mediaWiki()->loadTemplate('Player', 'list-players/main'),
-            [
-                '{{ players|length }}' => $players->numEntries(),
-                '{{ entry|raw }}' => implode(PHP_EOL, array_map(
-                    fn (PlayerEntry $player) => $this->createPlayerOutput(
-                        $player,
-                        $locale
-                    ),
-                    $players->sorted()
-                )),
-                '{{ filterBox|raw }}' => $this->mediaWiki()->loadFilterBoxTemplate(
-                    $filterValue,
-                    'list-players'
-                ),
-            ]
-        );
-    }
-
-    private function createPlayerOutput(
-        PlayerEntry $player,
-        Locale $locale
-    ): string {
-        $numScores = $player->scores()->numEntries();
-
-        return $this->data()->replace(
-            $this->mediaWiki()->loadTemplate('Player', 'list-players/player-entry'),
-            [
-                '{{ player.name }}' => $player->name(),
-                '{{ player.numScores }}' => $numScores,
-                "{'%count%': player.numScores}" => "{'%count%': {$numScores}}",
-                '{{ links.player }}' => "/{$locale}/players/{$player->id()}",
-            ]
-        );
     }
 }
