@@ -159,7 +159,7 @@ final class Scores
 
         $properties->remove('id', 'game-id');
 
-        /* @TODO Handle remaining properties */
+        /* @TODO Handle remaining properties  */
         $properties->remove(
             'is-current-record',
             'comments',
@@ -170,6 +170,7 @@ final class Scores
             'manual-sort',
             'difficulty',
             'game',
+            'player-id',
         );
 
         if ($this->checkForUnhandledProperties) {
@@ -286,7 +287,7 @@ final class Scores
         string $name,
         string $value
     ): string {
-        /* @TODO translate attribute */
+        /* @TODO translate attribute  */
         return $value;
     }
 }

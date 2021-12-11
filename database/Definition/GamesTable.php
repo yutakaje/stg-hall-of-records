@@ -27,6 +27,7 @@ use Symfony\Component\Yaml\Yaml;
  * @phpstan-import-type LocalizedValues from GameRecord
  * @phpstan-import-type LocalizedLinks from GameRecord
  * @phpstan-import-type LocalizedTranslations from GameRecord
+ * @phpstan-import-type Categories from GameRecord
  * @phpstan-import-type Counterstops from GameRecord
  */
 final class GamesTable extends AbstractTable
@@ -52,6 +53,7 @@ final class GamesTable extends AbstractTable
         $games->addColumn('last_modified_date', 'datetime');
         $games->addColumn('company_id', 'integer');
         $games->addColumn('name_filter', 'string', ['length' => 500]);
+        $games->addColumn('categories', 'string', ['length' => 200]);
         $games->addColumn('counterstops', 'string', ['length' => 100]);
         $games->setPrimaryKey(['id']);
         $games->addForeignKeyConstraint($companies, ['company_id'], ['id']);
@@ -93,6 +95,7 @@ final class GamesTable extends AbstractTable
             'company_name_filter',
             'description',
             'links',
+            'categories',
             'counterstops',
             'translations'
         )
@@ -118,6 +121,7 @@ final class GamesTable extends AbstractTable
             'companies.name_filter AS company_name_filter',
             'localized.description',
             'localized.links',
+            'games.categories',
             'games.counterstops',
             'localized.translations'
         )
@@ -146,6 +150,7 @@ final class GamesTable extends AbstractTable
      * @param LocalizedValues $descriptions
      * @param LocalizedLinks $links
      * @param LocalizedTranslations $translations
+     * @param Categories $categories
      * @param Counterstops $counterstops
      */
     public function createRecord(
@@ -155,6 +160,7 @@ final class GamesTable extends AbstractTable
         array $descriptions = [],
         array $links = [],
         array $translations = [],
+        array $categories = [],
         array $counterstops = []
     ): GameRecord {
         if ($translitNames == null) {
@@ -177,6 +183,7 @@ final class GamesTable extends AbstractTable
             $this->localizeValues($descriptions),
             $this->localizeValues($links),
             $this->localizeValues($translations),
+            $categories,
             $counterstops
         );
     }
@@ -190,12 +197,14 @@ final class GamesTable extends AbstractTable
                 'last_modified_date' => ':lastModifiedDate',
                 'company_id' => ':companyId',
                 'name_filter' => ':nameFilter',
+                'categories' => ':categories',
                 'counterstops' => ':counterstops',
             ])
             ->setParameter('createdDate', DateTime::now())
             ->setParameter('lastModifiedDate', DateTime::now())
             ->setParameter('companyId', $record->companyId())
             ->setParameter('nameFilter', $this->makeNameFilter($record))
+            ->setParameter('categories', $this->makeCategories($record))
             ->setParameter('counterstops', $this->makeCounterstops($record))
             ->executeStatement();
 
@@ -268,6 +277,13 @@ final class GamesTable extends AbstractTable
     {
         return Yaml::dump(
             $record->translations($locale)
+        );
+    }
+
+    private function makeCategories(GameRecord $record): string
+    {
+        return Yaml::dump(
+            $record->categories()
         );
     }
 

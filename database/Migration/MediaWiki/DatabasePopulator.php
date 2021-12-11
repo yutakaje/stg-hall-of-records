@@ -100,6 +100,8 @@ final class DatabasePopulator
             $this->logger,
             $companies,
             $this->games,
+            $this->settings,
+            $this->scores,
             $this->checkForUnhandledProperties
         );
         $games->insert();

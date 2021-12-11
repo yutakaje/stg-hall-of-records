@@ -23,6 +23,7 @@ use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
  * @phpstan-type Translation array{property:string, value:string, translation:string}
  * @phpstan-type Translations Translation[]
  * @phpstan-type LocalizedTranslations array<string,Translations>
+ * @phpstan-type Categories string[]
  * @phpstan-type Counterstop array{type:'hard'|'soft', score:string}
  * @phpstan-type Counterstops Counterstop[]
  */
@@ -39,6 +40,8 @@ final class GameRecord extends AbstractRecord
     private array $links;
     /** @var LocalizedTranslations */
     private array $translations;
+    /** @var Categories */
+    private array $categories;
     /** @var Counterstops */
     private array $counterstops;
 
@@ -48,6 +51,7 @@ final class GameRecord extends AbstractRecord
      * @param LocalizedValues $descriptions
      * @param LocalizedLinks $links
      * @param LocalizedTranslations $translations
+     * @param Categories $categories
      * @param Counterstops $counterstops
      */
     public function __construct(
@@ -57,6 +61,7 @@ final class GameRecord extends AbstractRecord
         array $descriptions,
         array $links,
         array $translations,
+        array $categories,
         array $counterstops
     ) {
         parent::__construct();
@@ -66,6 +71,7 @@ final class GameRecord extends AbstractRecord
         $this->descriptions = $descriptions;
         $this->links = $links;
         $this->translations = $translations;
+        $this->categories = $categories;
         $this->counterstops = $counterstops;
     }
 
@@ -103,6 +109,14 @@ final class GameRecord extends AbstractRecord
     public function translations(Locale $locale): array
     {
         return $this->localizedValue($this->translations, $locale);
+    }
+
+    /**
+     * @return Categories
+     */
+    public function categories(): array
+    {
+        return $this->categories;
     }
 
     /**

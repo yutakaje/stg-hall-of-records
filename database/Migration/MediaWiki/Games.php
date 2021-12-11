@@ -18,6 +18,9 @@ use Stg\HallOfRecords\Database\Database;
 use Stg\HallOfRecords\Database\Definition\GameRecord;
 use Stg\HallOfRecords\Data\Game\Game;
 use Stg\HallOfRecords\Data\Game\GameRepositoryInterface;
+use Stg\HallOfRecords\Data\Setting\SettingRepositoryInterface;
+use Stg\HallOfRecords\Data\Score\Score;
+use Stg\HallOfRecords\Data\Score\ScoreRepositoryInterface;
 use Stg\HallOfRecords\Shared\Infrastructure\Type\Locale;
 
 /**
@@ -33,7 +36,10 @@ final class Games
     private Database $database;
     private LoggerInterface $logger;
     private Companies $companies;
+    private LayoutProperties $layoutProperties;
     private GameRepositoryInterface $sourceGames;
+    private SettingRepositoryInterface $sourceSettings;
+    private ScoreRepositoryInterface $sourceScores;
     private bool $checkForUnhandledProperties;
     /** @var GameRecord[] */
     private array $records;
@@ -42,13 +48,19 @@ final class Games
         Database $database,
         LoggerInterface $logger,
         Companies $companies,
+        LayoutProperties $layoutProperties,
         GameRepositoryInterface $sourceGames,
+        SettingRepositoryInterface $sourceSettings,
+        ScoreRepositoryInterface $sourceScores,
         bool $checkForUnhandledProperties
     ) {
         $this->database = $database;
         $this->logger = $logger;
         $this->companies = $companies;
+        $this->layoutProperties = $layoutProperties;
         $this->sourceGames = $sourceGames;
+        $this->sourceSettings = $sourceSettings;
+        $this->sourceScores = $sourceScores;
         $this->checkForUnhandledProperties = $checkForUnhandledProperties;
         $this->records = [];
     }
@@ -132,6 +144,7 @@ final class Games
                 'en' => $this->createTranslations('en', $translations),
                 'ja' => $this->createTranslations('jp', $translations),
             ],
+            $this->createCategories($game->id()),
             $this->createCounterstops($counterstops)
         );
     }
@@ -147,6 +160,23 @@ final class Games
         throw new \InvalidArgumentException(
             "Game with id `{$id}` does not exist."
         );
+    }
+
+    /**
+     * @return string[]
+     */
+    private function createCategories(int $gameId): array
+    {
+        return array_values(array_intersect(
+            $this->layoutProperties->find('categories')->value(),
+            $this->sourceScores->filterByGame($gameId)->reduce(
+                fn (array $properties, Score $score) => array_merge(
+                    $properties,
+                    array_keys($score->properties())
+                ),
+                []
+            )
+        ));
     }
 
     /**
