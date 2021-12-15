@@ -5,7 +5,10 @@
     <th>{{ 'labels.game'|trans }}</th>
     <th>{{ 'labels.score'|trans }}</th>
   </tr>
-{% for entry in scores %}
-  {{ entry|raw }}
+{% for score in scores %}
+  <tr>
+    <td><a href="{{ score.game.link }}">{{ score.game.name }}</a></td>
+    <td>{{ score.value }}</td>
+  </tr>
 {% endfor %}
 </table>

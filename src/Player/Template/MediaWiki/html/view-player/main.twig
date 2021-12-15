@@ -1,5 +1,9 @@
 <h2>{{ player.name }}</h2>
 
-{{ player.aliases|raw }}
+{% if player.aliases %}
+<div>
+  {{ 'labels.aliases'|trans }}: {{ player.aliases|join(', ') }}
+</div>
+{% endif %}
 
 {{ scores|raw }}

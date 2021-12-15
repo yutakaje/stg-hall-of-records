@@ -11,8 +11,10 @@
 
 
 <ul>
-  <li><a href="/en/players/3">player3</a> <small>(2 scores)</small></li>
-
-  <li><a href="/en/players/6">プレイヤー3</a> <small>(5 scores)</small></li>
-
+  <li>
+    <a href="/en/players/3">player3</a> <small>(2 scores)</small>
+  </li>
+  <li>
+    <a href="/en/players/6">プレイヤー3</a> <small>(5 scores)</small>
+  </li>
 </ul>

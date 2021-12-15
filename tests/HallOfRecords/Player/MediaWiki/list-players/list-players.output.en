@@ -11,10 +11,13 @@
 
 
 <ul>
-  <li><a href="/en/players/1">player1</a> <small>(1 score)</small></li>
-
-  <li><a href="/en/players/2">player2</a> <small>(2 scores)</small></li>
-
-  <li><a href="/en/players/3">player3</a> <small>(3 scores)</small></li>
-
+  <li>
+    <a href="/en/players/1">player1</a> <small>(1 score)</small>
+  </li>
+  <li>
+    <a href="/en/players/2">player2</a> <small>(2 scores)</small>
+  </li>
+  <li>
+    <a href="/en/players/3">player3</a> <small>(3 scores)</small>
+  </li>
 </ul>

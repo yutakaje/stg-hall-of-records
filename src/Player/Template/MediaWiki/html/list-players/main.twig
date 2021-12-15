@@ -3,7 +3,9 @@
 {{ filterBox|raw }}
 
 <ul>
-{% for entry in players %}
-  {{ entry|raw }}
+{% for player in players %}
+  <li>
+    <a href="{{ player.link }}">{{ player.name }}</a> <small>({{ 'labels.num-of-scores'|trans({'%count%': player.numScores}) }})</small>
+  </li>
 {% endfor %}
 </ul>

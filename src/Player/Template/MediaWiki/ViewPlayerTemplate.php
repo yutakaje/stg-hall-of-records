@@ -56,51 +56,39 @@ final class ViewPlayerTemplate extends AbstractTemplate implements
     private function renderPlayer(Resource $player): string
     {
         return $this->renderer()->render('main', [
-            'player' => $this->createPlayerVar(
-                $player,
-                $this->renderAliases($player)
-            ),
+            'player' => $this->createPlayerVar($player),
             'scores' => $this->renderScores($player->scores),
         ]);
     }
 
-    private function createPlayerVar(
-        Resource $player,
-        string $renderedAliases
-    ): \stdClass {
+    private function createPlayerVar(Resource $player): \stdClass
+    {
         $var = new \stdClass();
         $var->id = $player->id;
         $var->name = $player->name;
-        $var->aliases = $renderedAliases;
+        $var->aliases = $player->aliases;
 
         return $var;
     }
 
-    private function renderAliases(Resource $player): string
-    {
-        return $this->renderer()->render('aliases-list', [
-            'aliases' => $player->aliases,
-        ]);
-    }
-
     private function renderScores(Resources $scores): string
     {
-        return $this->renderer()->render('scores-list', [
+        return $this->renderer()->render('scores', [
             'scores' => $scores->map(
-                fn (Resource $score) => $this->renderScore($score)
+                fn (Resource $score) => $this->createScoreVar($score)
             ),
         ]);
     }
 
-    private function renderScore(Resource $score): string
+    private function createScoreVar(Resource $score): \stdClass
     {
-        return $this->renderer()->render('score-entry', [
-            'game' => $this->createGameVar($score),
-            'score' => $this->createScoreVar($score),
-            'links' => [
-                'game' => $this->routes()->viewGame($score->gameId),
-            ],
-        ]);
+        $var = new \stdClass();
+        $var->id = $score->id;
+        $var->game = $this->createGameVar($score);
+        $var->playerName = $score->playerName;
+        $var->value = $score->scoreValue;
+
+        return $var;
     }
 
     private function createGameVar(Resource $score): \stdClass
@@ -108,16 +96,7 @@ final class ViewPlayerTemplate extends AbstractTemplate implements
         $var = new \stdClass();
         $var->id = $score->gameId;
         $var->name = $score->gameName;
-
-        return $var;
-    }
-
-    private function createScoreVar(Resource $score): \stdClass
-    {
-        $var = new \stdClass();
-        $var->id = $score->id;
-        $var->playerName = $score->playerName;
-        $var->scoreValue = $score->scoreValue;
+        $var->link = $this->routes()->viewGame($score->gameId);
 
         return $var;
     }

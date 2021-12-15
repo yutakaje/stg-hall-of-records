@@ -11,10 +11,13 @@
 
 
 <ul>
-  <li><a href="/ja/players/1">プレイヤー1</a> <small>(スコア数: 1)</small></li>
-
-  <li><a href="/ja/players/2">プレイヤー2</a> <small>(スコア数: 2)</small></li>
-
-  <li><a href="/ja/players/3">プレイヤー3</a> <small>(スコア数: 3)</small></li>
-
+  <li>
+    <a href="/ja/players/1">プレイヤー1</a> <small>(スコア数: 1)</small>
+  </li>
+  <li>
+    <a href="/ja/players/2">プレイヤー2</a> <small>(スコア数: 2)</small>
+  </li>
+  <li>
+    <a href="/ja/players/3">プレイヤー3</a> <small>(スコア数: 3)</small>
+  </li>
 </ul>

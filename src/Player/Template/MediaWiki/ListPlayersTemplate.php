@@ -57,22 +57,12 @@ final class ListPlayersTemplate extends AbstractTemplate implements
     {
         return $this->renderer()->render('main', [
             'players' => $players->map(
-                fn (Resource $player) => $this->renderPlayer($player)
+                fn (Resource $player) => $this->createPlayerVar($player)
             ),
             'filterBox' => $this->sharedTemplates()->filterBox(
                 $query->filter(),
                 'list-players'
             ),
-        ]);
-    }
-
-    private function renderPlayer(Resource $player): string
-    {
-        return $this->renderer()->render('player-entry', [
-            'player' => $this->createPlayerVar($player),
-            'links' => [
-                'player' => $this->routes()->viewPlayer($player->id),
-            ],
         ]);
     }
 
@@ -82,6 +72,7 @@ final class ListPlayersTemplate extends AbstractTemplate implements
         $var->id = $player->id;
         $var->name = $player->name;
         $var->numScores = $player->numScores;
+        $var->link = $this->routes()->viewPlayer($player->id);
 
         return $var;
     }
