@@ -11,8 +11,10 @@
 
 
 <ul>
-  <li><a href="/en/companies/4">Capcom-en</a> <small>(4 games)</small></li>
-
-  <li><a href="/en/companies/7">CAVE-en</a> <small>(7 games)</small></li>
-
+  <li>
+    <a href="/en/companies/4">Capcom-en</a> <small>(4 games)</small>
+  </li>
+  <li>
+    <a href="/en/companies/7">CAVE-en</a> <small>(7 games)</small>
+  </li>
 </ul>

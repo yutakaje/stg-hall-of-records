@@ -11,12 +11,16 @@
 
 
 <ul>
-  <li><a href="/ja/companies/3">カプコン-ja</a> <small>(ゲーム数: 15)</small></li>
-
-  <li><a href="/ja/companies/1">彩京-ja</a> <small>(ゲーム数: 9)</small></li>
-
-  <li><a href="/ja/companies/2">東亜プラン-ja</a> <small>(ゲーム数: 18)</small></li>
-
-  <li><a href="/ja/companies/4">四ツ羽根-ja</a> <small>(ゲーム数: 15)</small></li>
-
+  <li>
+    <a href="/ja/companies/3">カプコン-ja</a> <small>(ゲーム数: 15)</small>
+  </li>
+  <li>
+    <a href="/ja/companies/1">彩京-ja</a> <small>(ゲーム数: 9)</small>
+  </li>
+  <li>
+    <a href="/ja/companies/2">東亜プラン-ja</a> <small>(ゲーム数: 18)</small>
+  </li>
+  <li>
+    <a href="/ja/companies/4">四ツ羽根-ja</a> <small>(ゲーム数: 15)</small>
+  </li>
 </ul>

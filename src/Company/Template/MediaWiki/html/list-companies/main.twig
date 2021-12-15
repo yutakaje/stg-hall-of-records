@@ -3,7 +3,9 @@
 {{ filterBox|raw }}
 
 <ul>
-{% for entry in companies %}
-  {{ entry|raw }}
+{% for company in companies %}
+  <li>
+    <a href="{{ company.link }}">{{ company.name }}</a> <small>({{ 'labels.num-of-games'|trans({'%count%': company.numGames}) }})</small>
+  </li>
 {% endfor %}
 </ul>

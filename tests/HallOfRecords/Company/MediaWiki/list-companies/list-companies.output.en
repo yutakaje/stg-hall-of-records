@@ -11,12 +11,16 @@
 
 
 <ul>
-  <li><a href="/en/companies/4">Atlus-en</a> <small>(8 games)</small></li>
-
-  <li><a href="/en/companies/1">Capcom-en</a> <small>(9 games)</small></li>
-
-  <li><a href="/en/companies/3">CAVE-en</a> <small>(7 games)</small></li>
-
-  <li><a href="/en/companies/2">Coreland-en</a> <small>(11 games)</small></li>
-
+  <li>
+    <a href="/en/companies/4">Atlus-en</a> <small>(8 games)</small>
+  </li>
+  <li>
+    <a href="/en/companies/1">Capcom-en</a> <small>(9 games)</small>
+  </li>
+  <li>
+    <a href="/en/companies/3">CAVE-en</a> <small>(7 games)</small>
+  </li>
+  <li>
+    <a href="/en/companies/2">Coreland-en</a> <small>(11 games)</small>
+  </li>
 </ul>

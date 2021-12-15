@@ -56,22 +56,12 @@ final class ListCompaniesTemplate extends AbstractTemplate implements
     {
         return $this->renderer()->render('main', [
             'companies' => $companies->map(
-                fn (Resource $company) => $this->renderCompany($company)
+                fn (Resource $company) => $this->createCompanyVar($company)
             ),
             'filterBox' => $this->sharedTemplates()->filterBox(
                 $query->filter(),
                 'list-companies'
             ),
-        ]);
-    }
-
-    private function renderCompany(Resource $company): string
-    {
-        return $this->renderer()->render('company-entry', [
-            'company' => $this->createCompanyVar($company),
-            'links' => [
-                'company' => $this->routes()->viewCompany($company->id),
-            ],
         ]);
     }
 
@@ -81,6 +71,7 @@ final class ListCompaniesTemplate extends AbstractTemplate implements
         $var->id = $company->id;
         $var->name = $company->name;
         $var->numGames = $company->numGames;
+        $var->link = $this->routes()->viewCompany($company->id);
 
         return $var;
     }

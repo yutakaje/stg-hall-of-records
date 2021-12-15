@@ -11,8 +11,10 @@
 
 
 <ul>
-  <li><a href="/ja/companies/3">カプコン-ja</a> <small>(ゲーム数: 3)</small></li>
-
-  <li><a href="/ja/companies/2">東亜プラン-ja</a> <small>(ゲーム数: 2)</small></li>
-
+  <li>
+    <a href="/ja/companies/3">カプコン-ja</a> <small>(ゲーム数: 3)</small>
+  </li>
+  <li>
+    <a href="/ja/companies/2">東亜プラン-ja</a> <small>(ゲーム数: 2)</small>
+  </li>
 </ul>
