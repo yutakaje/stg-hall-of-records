@@ -56,6 +56,7 @@ final class DatabasePopulator
         $start = microtime(true);
 
         $companies = $this->populateCompanies();
+        $layoutProperties = $this->populateLayoutProperties();
         $games = $this->populateGames($companies);
         $players = $this->populatePlayers();
         $scores = $this->populateScores($games, $players);
@@ -63,6 +64,19 @@ final class DatabasePopulator
         $this->logger->info('Import finished', [
             'elapsed' => microtime(true) - $start,
         ]);
+    }
+
+    private function populateLayoutProperties(): LayoutProperties
+    {
+        $layoutProperties = new LayoutProperties(
+            $this->database,
+            $this->logger,
+            $this->settings,
+            $this->checkForUnhandledProperties
+        );
+        $layoutProperties->insert();
+
+        return $layoutProperties;
     }
 
     private function populateCompanies(): Companies
