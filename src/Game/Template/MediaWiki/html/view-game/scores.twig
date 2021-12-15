@@ -1,0 +1,33 @@
+<h3>{{ 'labels.scores'|trans }} ({{ scores|length }})</h3>
+
+<scores>
+<table class="wikitable">
+  <tr>
+    <th>{{ 'labels.player'|trans }}</th>
+    <th>{{ 'labels.score'|trans }}</th>
+    <th>{{ 'labels.sources'|trans }}</th>
+  </tr>
+{% for score in scores %}
+  <tr>
+    <td>{% if score.player.link %}<a href="{{ score.player.link }}">{{ score.player.name }}</a>{% else %}{{ score.player.name }}{% endif %}</td>
+    <td>
+      <scoreValue>{{ score.value }}{% if score.realValue != score.value %} [{{ score.realValue }}]{% endif %}</scoreValue>
+    </td>
+    <td>{% if score.sources %}
+      <sources>
+      {% for source in score.sources %}
+        <source>
+          {% if source.url %}
+            <a href="{{ source.url }}">{{ source.name }}</a>
+          {% else %}
+            {{ source.name|formatDate }}
+          {% endif %}
+          {% if source.date %} ({{ source.date|formatDate }}){% endif %}
+        </source>
+      {% endfor %}
+      </sources>
+    {% endif %}</td>
+  </tr>
+{% endfor %}
+</table>
+</scores>

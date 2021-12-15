@@ -11,8 +11,10 @@
 
 
 <ul>
-  <li><a href="/ja/games/5">エスプレイド-ja</a> <small>(スコア数: 5)</small></li>
-
-  <li><a href="/ja/games/8">バトルガレッガ-ja</a> <small>(スコア数: 8)</small></li>
-
+  <li>
+    <a href="/ja/games/5">エスプレイド-ja</a> <small>(スコア数: 5)</small>
+  </li>
+  <li>
+    <a href="/ja/games/8">バトルガレッガ-ja</a> <small>(スコア数: 8)</small>
+  </li>
 </ul>

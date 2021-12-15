@@ -9,7 +9,13 @@
       {{ game.description }}
   </description>
 
-  {{ gameLinks|raw }}
+{% if game.links %}
+  <links>
+    {% for link in game.links %}
+      <link>• <a href="{{ link.url }}">{{ link.title }}</a></link>
+    {% endfor %}
+  </links>
+{% endif %}
 
 </game>
 

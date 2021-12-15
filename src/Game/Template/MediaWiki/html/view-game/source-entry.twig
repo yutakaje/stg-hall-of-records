@@ -1,8 +1,0 @@
-<source>
-  {% if source.url %}
-    <a href="{{ source.url }}">{{ source.name }}</a>
-  {% else %}
-    {{ source.name|formatDate }}
-  {% endif %}
-  {% if source.date %} ({{ source.date|formatDate }}){% endif %}
-</source>

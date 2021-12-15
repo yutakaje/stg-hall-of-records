@@ -13,33 +13,33 @@
     <th>Source</th>
   </tr>
   <tr>
-  <td><a href="/en/players/1">player2</a></td>
-  <td><scoreValue>992,893,110</scoreValue>
-</td>
-  <td></td>
-</tr>
-
+    <td><a href="/en/players/1">player2</a></td>
+    <td>
+      <scoreValue>992,893,110</scoreValue>
+    </td>
+    <td></td>
+  </tr>
   <tr>
-  <td><a href="/en/players/2">player3</a></td>
-  <td><scoreValue>503,434,050</scoreValue>
-</td>
-  <td></td>
-</tr>
-
+    <td><a href="/en/players/2">player3</a></td>
+    <td>
+      <scoreValue>503,434,050</scoreValue>
+    </td>
+    <td></td>
+  </tr>
   <tr>
-  <td><a href="/en/players/3">player1</a></td>
-  <td><scoreValue>234,828,910</scoreValue>
-</td>
-  <td></td>
-</tr>
-
+    <td><a href="/en/players/3">player1</a></td>
+    <td>
+      <scoreValue>234,828,910</scoreValue>
+    </td>
+    <td></td>
+  </tr>
   <tr>
-  <td>[unknown]</td>
-  <td><scoreValue>234,828,910</scoreValue>
-</td>
-  <td></td>
-</tr>
-
+    <td>[unknown]</td>
+    <td>
+      <scoreValue>234,828,910</scoreValue>
+    </td>
+    <td></td>
+  </tr>
 </table>
 </scores>
 
@@ -48,7 +48,6 @@
       
   </description>
 
-  
 
 </game>
 

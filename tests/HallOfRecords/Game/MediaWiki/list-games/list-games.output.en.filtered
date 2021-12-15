@@ -11,8 +11,10 @@
 
 
 <ul>
-  <li><a href="/en/games/1">Aka to Blue Type-R-en</a> <small>(1 score)</small></li>
-
-  <li><a href="/en/games/2">Akai Katana-en</a> <small>(2 scores)</small></li>
-
+  <li>
+    <a href="/en/games/1">Aka to Blue Type-R-en</a> <small>(1 score)</small>
+  </li>
+  <li>
+    <a href="/en/games/2">Akai Katana-en</a> <small>(2 scores)</small>
+  </li>
 </ul>

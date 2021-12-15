@@ -57,22 +57,12 @@ final class ListGamesTemplate extends AbstractTemplate implements
     {
         return $this->renderer()->render('main', [
             'games' => $games->map(
-                fn (Resource $game) => $this->renderGame($game)
+                fn (Resource $game) => $this->createGameVar($game),
             ),
             'filterBox' => $this->sharedTemplates()->filterBox(
                 $query->filter(),
                 'list-games'
             ),
-        ]);
-    }
-
-    private function renderGame(Resource $game): string
-    {
-        return $this->renderer()->render('game-entry', [
-            'game' => $this->createGameVar($game),
-            'links' => [
-                'game' => $this->routes()->viewGame($game->id),
-            ],
         ]);
     }
 
@@ -82,6 +72,7 @@ final class ListGamesTemplate extends AbstractTemplate implements
         $var->id = $game->id;
         $var->name = $game->name;
         $var->numScores = $game->numScores;
+        $var->link = $this->routes()->viewGame($game->id);
 
         return $var;
     }

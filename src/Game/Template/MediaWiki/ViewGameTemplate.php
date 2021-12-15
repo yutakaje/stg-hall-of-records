@@ -59,7 +59,6 @@ final class ViewGameTemplate extends AbstractTemplate implements
             'game' => $this->createGameVar($game),
             'company' => $this->createCompanyVar($game->company),
             'scores' => $this->renderScores($game->scores),
-            'gameLinks' => $this->renderGameLinks($game->links),
             'links' => [
                 'company' => $this->routes()->viewCompany($game->company->id),
             ],
@@ -72,6 +71,9 @@ final class ViewGameTemplate extends AbstractTemplate implements
         $var->id = $game->id;
         $var->name = $game->name;
         $var->description = $game->description;
+        $var->links = $game->links->map(
+            fn (Resource $link) => $this->createGameLinkVar($link)
+        );
 
         return $var;
     }
@@ -87,20 +89,10 @@ final class ViewGameTemplate extends AbstractTemplate implements
 
     private function renderScores(Resources $scores): string
     {
-        return $this->renderer()->render('scores-list', [
+        return $this->renderer()->render('scores', [
             'scores' => $scores->map(
-                fn (Resource $score) => $this->renderScore($score)
+                fn (Resource $score) => $this->createScoreVar($score)
             ),
-        ]);
-    }
-
-    private function renderScore(Resource $score): string
-    {
-        return $this->renderer()->render('score-entry', [
-            'score' => $this->createScoreVar($score),
-            'player' => $this->renderPlayer($score),
-            'scoreValue' => $this->renderScoreValue($score),
-            'sources' => $this->renderSources($score->sources),
         ]);
     }
 
@@ -108,39 +100,27 @@ final class ViewGameTemplate extends AbstractTemplate implements
     {
         $var = new \stdClass();
         $var->id = $score->id;
-        $var->playerName = $score->playerName;
+        $var->player = $this->createPlayerVar($score);
+        $var->value = $score->scoreValue;
+        $var->realValue = $score->realScoreValue;
+        $var->sources = $score->sources->map(
+            fn (Resource $source) => $this->createSourceVar($source)
+        );
 
         return $var;
     }
 
-    private function renderPlayer(Resource $score): string
+    private function createPlayerVar(Resource $score): \stdClass
     {
-        $links = [];
+        $var = new \stdClass();
+        $var->id = $score->playerId;
+        $var->name = $score->playerName;
 
         if ($score->playerId !== null) {
-            $links['player'] = $this->routes()->viewPlayer($score->playerId);
+            $var->link = $this->routes()->viewPlayer($score->playerId);
         }
 
-        return trim($this->renderer()->render('player', [
-            'playerName' => $score->playerName,
-            'links' => $links,
-        ]));
-    }
-
-    private function renderGameLinks(Resources $links): string
-    {
-        return $this->renderer()->render('links-list', [
-            'links' => $links->map(
-                fn (Resource $link) => $this->renderGameLink($link)
-            ),
-        ]);
-    }
-
-    private function renderGameLink(Resource $link): string
-    {
-        return $this->renderer()->render('link-entry', [
-            'link' => $this->createGameLinkVar($link),
-        ]);
+        return $var;
     }
 
     private function createGameLinkVar(Resource $link): \stdClass
@@ -150,38 +130,6 @@ final class ViewGameTemplate extends AbstractTemplate implements
         $var->title = $link->title;
 
         return $var;
-    }
-
-    private function renderScoreValue(Resource $source): string
-    {
-        return $this->renderer()->render('score-value', [
-            'score' => $this->createScoreValueVar($source),
-        ]);
-    }
-
-    private function createScoreValueVar(Resource $score): \stdClass
-    {
-        $var = new \stdClass();
-        $var->value = $score->scoreValue;
-        $var->realValue = $score->realScoreValue;
-
-        return $var;
-    }
-
-    private function renderSources(Resources $sources): string
-    {
-        return $this->renderer()->render('sources-list', [
-            'sources' => $sources->map(
-                fn (Resource $source) => $this->renderSource($source)
-            ),
-        ]);
-    }
-
-    private function renderSource(Resource $source): string
-    {
-        return $this->renderer()->render('source-entry', [
-            'source' => $this->createSourceVar($source),
-        ]);
     }
 
     private function createSourceVar(Resource $source): \stdClass
